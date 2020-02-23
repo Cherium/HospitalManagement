@@ -20,11 +20,11 @@ public class Appointment {
         this.endTime = copy.getEnd();
     }
 
-    private LocalDateTime getEnd() {
+    LocalDateTime getEnd() {
         return endTime;
     }
 
-    private LocalDateTime getStart() {
+    LocalDateTime getStart() {
         return startTime;
     }
 

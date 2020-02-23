@@ -19,9 +19,35 @@ public class Schedule {
         }
     }
 
+    public HashMap<String, ArrayList<Appointment>> getSchedule() {
+        return userSchedule;
+    }
+
+    /**
+     * Can be modified to change or delete appointments
+     * @param ap
+     */
+
     public void addAppointment(Appointment ap) {
         // Initial thoughts: 
         // Appointments are added as hours, so have the time slot point to the appointment
+        int startIndex = ap.getStart().getHour();
+        int endIndex = ap.getEnd().getHour();
+        String day = ap.getStart().toLocalDate().toString();
+        for (int i = startIndex-1; i < endIndex; i++) {
+            userSchedule.replace(day, ap);
+        }
+    }
+
+    public void clearSchedule() {
+        
+    }
+
+    public void extendSchedule(int days) {
+        LocalDate date = LocalDate.now();
+        for (int i = 0; i < days; i++) {
+            userSchedule.put(date.plusDays(i+14).toString, new ArrayList<Appointment>(24));
+        }
     }
 
 
