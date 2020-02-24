@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class NurseFrame extends JFrame {
+public class PatientFrame extends JFrame {
 
 	private JPanel contentPane;
 
@@ -24,7 +24,7 @@ public class NurseFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NurseFrame frame = new NurseFrame();
+					PatientFrame frame = new PatientFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class NurseFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NurseFrame() {
+	public PatientFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -49,7 +49,7 @@ public class NurseFrame extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel lblWelcome = new JLabel("Welcome, Nurse");
+		JLabel lblWelcome = new JLabel("Welcome");
 		GridBagConstraints gbc_lblWelcome = new GridBagConstraints();
 		gbc_lblWelcome.insets = new Insets(0, 0, 5, 5);
 		gbc_lblWelcome.gridx = 0;
@@ -57,7 +57,7 @@ public class NurseFrame extends JFrame {
 		contentPane.add(lblWelcome, gbc_lblWelcome);
 		
 		JLabel lblName = new JLabel("Name");
-		lblName.setForeground(new Color(255, 0, 255));
+		lblName.setForeground(new Color(0, 255, 255));
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.insets = new Insets(0, 0, 5, 0);
 		gbc_lblName.gridx = 2;

@@ -22,7 +22,7 @@ import java.awt.event.MouseEvent;
 public class LoginGUI {
 	// https://www.color-hex.com/color-palette/88323
 
-	public JFrame frame;
+	private JFrame frame;
 	private JTextField usernameInput;
 	private JButton btnLogin;
 	private JTextField passwordInput;
@@ -48,6 +48,10 @@ public class LoginGUI {
 	 */
 	public LoginGUI() {
 		initialize();
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 
 	/**
@@ -113,6 +117,18 @@ public class LoginGUI {
 					NurseFrame nur = new NurseFrame();
 					nur.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					nur.setVisible(true);
+				} else if (usr.equals("patient")) {
+					PatientFrame pat = new PatientFrame();
+					pat.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					pat.setVisible(true);
+				} else if (usr.equals("admin")) { 
+					AdminFrame adm = new AdminFrame();
+					adm.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					adm.setVisible(true);
+				} else if (usr.equals("stats")) {
+					StatsFrame stat = new StatsFrame();
+					stat.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					stat.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(frame, "Invalid username or password");
 				}

@@ -69,7 +69,8 @@ public class DoctorFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				LoginGUI log = new LoginGUI();
-				log.frame.setVisible(true);
+				log.getFrame().setVisible(true);
+				contentPane.setVisible(false);
 			}
 		});
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
