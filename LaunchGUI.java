@@ -40,7 +40,8 @@ public class LaunchGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		// Initialize the 6 main frames. 
+		// Initialize the 6 main frames. This is a placeholder for later, when 
+		// a user authenthication system is in place.
 		// Login frame.
 		login = new LoginFrame();
 		// Doctor frame.
@@ -72,6 +73,9 @@ public class LaunchGUI {
 				// 	String role = aUser.getRole();
 				// 	// set the below fields to visible based on the role of the user
 					// move the if and else if statements here
+
+					// TODO: Once credentials are authenticated, initiaize the corresponding frame with
+					// details about the user. 
 				// } // move the else statement here
 
 				if (role.equals("doctor")) {
