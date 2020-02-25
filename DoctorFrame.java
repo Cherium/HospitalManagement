@@ -8,14 +8,13 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Color;
 import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class DoctorFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnBack;
 
 	/**
 	 * Launch the application.
@@ -36,49 +35,88 @@ public class DoctorFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DoctorFrame() {
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 301);
+	public DoctorFrame(LoginFrame main) {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 452, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel welcomeLabel = new JLabel("Welcome, Doctor");
-		GridBagConstraints gbc_welcomeLabel = new GridBagConstraints();
-		gbc_welcomeLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_welcomeLabel.gridx = 0;
-		gbc_welcomeLabel.gridy = 0;
-		contentPane.add(welcomeLabel, gbc_welcomeLabel);
+		JLabel lblWelcome = new JLabel("Welcome, Doctor");
+		GridBagConstraints gbc_lblWelcome = new GridBagConstraints();
+		gbc_lblWelcome.insets = new Insets(0, 0, 5, 5);
+		gbc_lblWelcome.gridx = 0;
+		gbc_lblWelcome.gridy = 0;
+		contentPane.add(lblWelcome, gbc_lblWelcome);
 		
-		JLabel nameLabel = new JLabel("Name");
-		nameLabel.setForeground(new Color(255, 20, 147));
-		GridBagConstraints gbc_nameLabel = new GridBagConstraints();
-		gbc_nameLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_nameLabel.gridx = 2;
-		gbc_nameLabel.gridy = 0;
-		contentPane.add(nameLabel, gbc_nameLabel);
+		JLabel lblName = new JLabel("Name");
+		lblName.setForeground(Color.PINK);
+		GridBagConstraints gbc_lblName = new GridBagConstraints();
+		gbc_lblName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblName.gridx = 1;
+		gbc_lblName.gridy = 0;
+		contentPane.add(lblName, gbc_lblName);
 		
-		JButton btnBack = new JButton("Back");
-		btnBack.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				LoginGUI log = new LoginGUI();
-				log.getFrame().setVisible(true);
-				contentPane.setVisible(false);
-			}
-		});
+		JButton btnModifySchedule = new JButton("Change Schedule");
+		GridBagConstraints gbc_btnModifySchedule = new GridBagConstraints();
+		gbc_btnModifySchedule.insets = new Insets(0, 0, 5, 5);
+		gbc_btnModifySchedule.gridx = 0;
+		gbc_btnModifySchedule.gridy = 1;
+		contentPane.add(btnModifySchedule, gbc_btnModifySchedule);
+		
+		JButton btnNurses = new JButton("Assigned Nurses");
+		GridBagConstraints gbc_btnNurses = new GridBagConstraints();
+		gbc_btnNurses.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNurses.gridx = 1;
+		gbc_btnNurses.gridy = 1;
+		contentPane.add(btnNurses, gbc_btnNurses);
+		
+		JButton btnUploadReferral = new JButton("UploadReferral");
+		GridBagConstraints gbc_btnUploadReferral = new GridBagConstraints();
+		gbc_btnUploadReferral.insets = new Insets(0, 0, 5, 0);
+		gbc_btnUploadReferral.gridx = 2;
+		gbc_btnUploadReferral.gridy = 1;
+		contentPane.add(btnUploadReferral, gbc_btnUploadReferral);
+		
+		JLabel lblDepartment = new JLabel("Department");
+		GridBagConstraints gbc_lblDepartment = new GridBagConstraints();
+		gbc_lblDepartment.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDepartment.gridx = 0;
+		gbc_lblDepartment.gridy = 2;
+		contentPane.add(lblDepartment, gbc_lblDepartment);
+		
+		JLabel lblDepartName = new JLabel("Department");
+		lblDepartName.setForeground(Color.ORANGE);
+		GridBagConstraints gbc_lblDepartName = new GridBagConstraints();
+		gbc_lblDepartName.anchor = GridBagConstraints.WEST;
+		gbc_lblDepartName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDepartName.gridx = 1;
+		gbc_lblDepartName.gridy = 2;
+		contentPane.add(lblDepartName, gbc_lblDepartName);
+		
+		JLabel lblSchedule = new JLabel("Schedule");
+		GridBagConstraints gbc_lblSchedule = new GridBagConstraints();
+		gbc_lblSchedule.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSchedule.gridx = 0;
+		gbc_lblSchedule.gridy = 3;
+		contentPane.add(lblSchedule, gbc_lblSchedule);
+		
+		btnBack = new JButton("Back");
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
-		gbc_btnBack.anchor = GridBagConstraints.SOUTH;
 		gbc_btnBack.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBack.gridx = 0;
-		gbc_btnBack.gridy = 6;
+		gbc_btnBack.gridy = 10;
 		contentPane.add(btnBack, gbc_btnBack);
+	}
+	
+	public JButton getReturnButton() {
+		return btnBack;
 	}
 
 }

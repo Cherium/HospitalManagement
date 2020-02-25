@@ -9,13 +9,15 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class StatsFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	private JButton btnBack;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -35,20 +37,20 @@ public class StatsFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StatsFrame() {
+	public StatsFrame(LoginFrame main) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel lblWelcome = new JLabel("Welcome Hospital Authority");
+		JLabel lblWelcome = new JLabel("Welcome");
 		GridBagConstraints gbc_lblWelcome = new GridBagConstraints();
 		gbc_lblWelcome.insets = new Insets(0, 0, 5, 5);
 		gbc_lblWelcome.gridx = 0;
@@ -56,18 +58,24 @@ public class StatsFrame extends JFrame {
 		contentPane.add(lblWelcome, gbc_lblWelcome);
 		
 		JLabel lblName = new JLabel("Name");
+		lblName.setForeground(Color.CYAN);
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.insets = new Insets(0, 0, 5, 0);
-		gbc_lblName.gridx = 2;
+		gbc_lblName.gridx = 1;
 		gbc_lblName.gridy = 0;
 		contentPane.add(lblName, gbc_lblName);
 		
-		JButton btnBack = new JButton("Back");
+		JLabel lblStatistics = new JLabel("Hospital Statistics");
+		GridBagConstraints gbc_lblStatistics = new GridBagConstraints();
+		gbc_lblStatistics.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStatistics.gridx = 0;
+		gbc_lblStatistics.gridy = 1;
+		contentPane.add(lblStatistics, gbc_lblStatistics);
+		
+		btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LoginGUI log = new LoginGUI();
-				log.getFrame().setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
@@ -75,6 +83,10 @@ public class StatsFrame extends JFrame {
 		gbc_btnBack.gridx = 0;
 		gbc_btnBack.gridy = 6;
 		contentPane.add(btnBack, gbc_btnBack);
+	}
+	
+	public JButton getReturnButton() {
+		return btnBack;
 	}
 
 }
