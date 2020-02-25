@@ -13,6 +13,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LoginFrame extends JFrame {
 
@@ -20,6 +22,7 @@ public class LoginFrame extends JFrame {
 	private JTextField usernameInput;
 	private JPasswordField passwordInput;
 	private JButton btnLogin;
+	private JButton btnNewPatient;
 
 	/**
 	 * Launch the application.
@@ -46,14 +49,14 @@ public class LoginFrame extends JFrame {
 	// public LoginFrame(Database dbase)
 	public LoginFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 500, 850, 700);
+		setBounds(300, 300, 617, 305);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.info);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWidths = new int[]{20, 20, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{20, 20, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
@@ -106,6 +109,18 @@ public class LoginFrame extends JFrame {
 		gbc_btnLogin.gridx = 4;
 		gbc_btnLogin.gridy = 5;
 		contentPane.add(btnLogin, gbc_btnLogin);
+		
+		btnNewPatient = new JButton("New Patient");
+		btnNewPatient.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+		});
+		GridBagConstraints gbc_btnNewPatient = new GridBagConstraints();
+		gbc_btnNewPatient.gridx = 6;
+		gbc_btnNewPatient.gridy = 5;
+		contentPane.add(btnNewPatient, gbc_btnNewPatient);
 	}
 	
 	// Returns the login button
