@@ -25,7 +25,7 @@ public class AdminFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminFrame frame = new AdminFrame();
+					AdminFrame frame = new AdminFrame(new LoginFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

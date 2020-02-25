@@ -25,7 +25,7 @@ public class PatientFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PatientFrame frame = new PatientFrame();
+					PatientFrame frame = new PatientFrame(new LoginFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -24,7 +24,7 @@ public class NurseFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NurseFrame frame = new NurseFrame();
+					NurseFrame frame = new NurseFrame(new LoginFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

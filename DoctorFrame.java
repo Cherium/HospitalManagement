@@ -23,7 +23,7 @@ public class DoctorFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DoctorFrame frame = new DoctorFrame();
+					DoctorFrame frame = new DoctorFrame(new LoginFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

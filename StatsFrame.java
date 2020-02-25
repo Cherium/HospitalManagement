@@ -25,7 +25,7 @@ public class StatsFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StatsFrame frame = new StatsFrame();
+					StatsFrame frame = new StatsFrame(new LoginFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
