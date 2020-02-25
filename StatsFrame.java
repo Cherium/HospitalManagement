@@ -20,6 +20,7 @@ public class StatsFrame extends JFrame {
 	
 	/**
 	 * Launch the application.
+	 * Launch application from LaunchGUI.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -37,6 +38,8 @@ public class StatsFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	// Change constructor to take in a user and database
+	// public StatsFrame(LoginFrame main, Database dbase, HospitalAuthority hospstats)
 	public StatsFrame(LoginFrame main) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -50,6 +53,7 @@ public class StatsFrame extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
+		// Label for welcome
 		JLabel lblWelcome = new JLabel("Welcome");
 		GridBagConstraints gbc_lblWelcome = new GridBagConstraints();
 		gbc_lblWelcome.insets = new Insets(0, 0, 5, 5);
@@ -57,6 +61,9 @@ public class StatsFrame extends JFrame {
 		gbc_lblWelcome.gridy = 0;
 		contentPane.add(lblWelcome, gbc_lblWelcome);
 		
+		// Label for name
+		// TODO: connect label to name of user
+		// JLabel lblName = new JLabel(hospstats.getName());
 		JLabel lblName = new JLabel("Name");
 		lblName.setForeground(Color.CYAN);
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
@@ -65,6 +72,7 @@ public class StatsFrame extends JFrame {
 		gbc_lblName.gridy = 0;
 		contentPane.add(lblName, gbc_lblName);
 		
+		// Label for statistics.
 		JLabel lblStatistics = new JLabel("Hospital Statistics");
 		GridBagConstraints gbc_lblStatistics = new GridBagConstraints();
 		gbc_lblStatistics.insets = new Insets(0, 0, 5, 5);
@@ -72,12 +80,12 @@ public class StatsFrame extends JFrame {
 		gbc_lblStatistics.gridy = 1;
 		contentPane.add(lblStatistics, gbc_lblStatistics);
 		
+		// TODO: Show the statistics of the hospital by department and lab tests
+
+		// TODO: Selecting department shows a list of doctors in that department and their statistics.
+
+		// Button for returning to login
 		btnBack = new JButton("Back");
-		btnBack.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
 		GridBagConstraints gbc_btnBack = new GridBagConstraints();
 		gbc_btnBack.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBack.gridx = 0;
@@ -85,6 +93,7 @@ public class StatsFrame extends JFrame {
 		contentPane.add(btnBack, gbc_btnBack);
 	}
 	
+	// Get a button that returns to login
 	public JButton getReturnButton() {
 		return btnBack;
 	}
