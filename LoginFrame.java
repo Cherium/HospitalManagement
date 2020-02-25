@@ -41,6 +41,9 @@ public class LoginFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
+	// TODO: Link login to database
+	// public LoginFrame(Database dbase)
 	public LoginFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(500, 500, 850, 700);
@@ -90,6 +93,12 @@ public class LoginFrame extends JFrame {
 		gbc_passwordInput.gridy = 3;
 		contentPane.add(passwordInput, gbc_passwordInput);
 		
+		// TODO: Create button for creating a new patient
+		// TODO: Link button to creating a new patient account. 
+		// Via a popup dialog box
+		// Screen username against existing usernames
+		// Show the login credentials user selected (username only) after successful registration
+
 		// Login button
 		btnLogin = new JButton("Login");
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();

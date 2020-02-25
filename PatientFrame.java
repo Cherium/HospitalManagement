@@ -101,6 +101,9 @@ public class PatientFrame extends JFrame {
 
 		// TODO: Set up viewing penalty fees if cancellation penalty is detacted
 
+		// TODO: Set up a button that allows modification of personal information on record
+		// Via a dialog box
+
 		// Button for returning to login screen		
 		btnBack = new JButton("Back");
 		
