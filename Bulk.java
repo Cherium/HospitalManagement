@@ -1,3 +1,6 @@
+// Note. This is a prototype. Ignore this.
+
+
 import java.util.Calendar;
 import java.util.Scanner;
 

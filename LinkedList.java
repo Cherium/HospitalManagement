@@ -1,3 +1,4 @@
+// Note. This is a prototype. Ignore this.
 import java.io.*;
 
 public class LinkedList{
