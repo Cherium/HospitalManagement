@@ -3,13 +3,15 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class Database {
-//	HashMap<ArrayList<String>, User> users;
 	HashMap<String[], User> users;
-	public HashMap<String[], User>() {
-		initialize();
+	
+	// public Database("database.txt");
+	public Database() {
+		dummyData();
+		// initialize("database.txt");
 	}
 	
-	private void initialize() {
+	private void dummyData() {
 		Doctor aDoc = new Doctor("Doctor Who", "doctor", "doctor", "Cardiology" , null);
 		Nurse aNurse = new Nurse("Nurse Joy", "nurse", "nurse", "Cardiology", aDoc);
 		aDoc.addNurse(aNurse);
@@ -38,8 +40,7 @@ public class Database {
 		}
 
 	}
-	
-	// TODO: check for replications of username when adding to database
+
 	public boolean userExists(User u) {
 		Set<String[]> keys = users.keySet();
 		for (String[] pair : keys) {
@@ -49,4 +50,13 @@ public class Database {
 		}
 		return false;
 	}
+	
+	// TODO: Implement input database from a text file.
+	
+	// TODO: Implement saving of database to text file.
+	// When saving, doctors have no list of assigned nurses. 
+	// Nurses are saved with the username of the doctors in the place where the
+	// doctor object would go. When initializing nurses, the username will match
+	// with the existing doctor object, adding the object to nurse, and adding
+	// the created nurse to the list of assigned doctors.
 }
