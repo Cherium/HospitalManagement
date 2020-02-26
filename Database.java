@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Database {
 //	HashMap<ArrayList<String>, User> users;
 	HashMap<String[], User> users;
-	public HashMap<ArrayList<String>, User>() {
+	public HashMap<String[], User>() {
 		initialize();
 	}
 	
@@ -24,12 +25,28 @@ public class Database {
 		addUser(aHigherPower);
 	} 
 	
+	public HashMap<String[], User> getUsers() {
+		return users;
+	}
+	
 	public void addUser(User u) {
-		String[] pair = new String[2];
-		pair[0] = u.getUsername();
-		pair[1] = u.getPassword();
-		users.put(pair, u);
+		if (!userExists(u)) {
+			String[] pair = new String[2];
+			pair[0] = u.getUsername();
+			pair[1] = u.getPassword();
+			users.put(pair, u);			
+		}
+
 	}
 	
 	// TODO: check for replications of username when adding to database
+	public boolean userExists(User u) {
+		Set<String[]> keys = users.keySet();
+		for (String[] pair : keys) {
+			if (u.getUsername().equals(pair[0])) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
