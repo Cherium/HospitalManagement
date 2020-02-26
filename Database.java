@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -27,20 +26,34 @@ public class Database {
 		addUser(aHigherPower);
 	} 
 	
+	/**
+	 * Function that returns all the users in the database
+	 * @return
+	 */
 	public HashMap<String[], User> getUsers() {
 		return users;
 	}
-	
+
+	/**
+	 * Function that adds a user to the system, checking for unique username. 
+	 * @param u
+	 */
 	public void addUser(User u) {
 		if (!userExists(u)) {
 			String[] pair = new String[2];
 			pair[0] = u.getUsername();
 			pair[1] = u.getPassword();
-			users.put(pair, u);			
+			users.put(pair, u);		
 		}
 
 	}
 
+	/**
+	 * Function that checks if a user is already present in the system by checking
+	 * the username against the database.
+	 * @param u
+	 * @return
+	 */
 	public boolean userExists(User u) {
 		Set<String[]> keys = users.keySet();
 		for (String[] pair : keys) {
@@ -49,6 +62,17 @@ public class Database {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Function that removes a user from the database.
+	 * @param u
+	 */
+	public void removeUser(User u) {
+		String[] pair = new String[2];
+		pair[0] = u.getUsername();
+		pair[1] = u.getPassword();
+		users.remove(pair, u);
 	}
 	
 	// TODO: Implement input database from a text file.

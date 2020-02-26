@@ -15,4 +15,13 @@ public class Nurse extends HospitalEmployee {
 	public Doctor getDoctor() {
 		return assignedDoctor;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder bob = new StringBuilder(super.toString());
+		bob.append("Assigned Doctor: ");
+		bob.append(getDoctor().getName());
+		bob.append("\n");
+		return bob.toString();
+	}
 }

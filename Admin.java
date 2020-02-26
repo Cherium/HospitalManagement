@@ -5,11 +5,11 @@ public class Admin extends User {
 		super(name, username, password);		
 	}
 	
-	public void createAccount() {
+	public void createAccount(User u) {
 		
 	}
 	
-	public void removeAccount() {
+	public void removeAccount(User u) {
 		
 	}
 	
