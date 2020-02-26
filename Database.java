@@ -7,7 +7,7 @@ public class Database {
 	public HashMap<ArrayList<String>, User>() {
 		initialize();
 	}
-	
+
 	private void initialize() {
 		Doctor aDoc = new Doctor("Doctor Who", "doctor", "doctor", "Cardiology" , null);
 		Nurse aNurse = new Nurse("Nurse Joy", "nurse", "nurse", "Cardiology", aDoc);
@@ -22,14 +22,14 @@ public class Database {
 		addUser(anotherPat);
 		addUser(aAdm);
 		addUser(aHigherPower);
-	} 
-	
+	}
+
 	public void addUser(User u) {
 		String[] pair = new String[2];
 		pair[0] = u.getUsername();
 		pair[1] = u.getPassword();
 		users.put(pair, u);
 	}
-	
+
 	// TODO: check for replications of username when adding to database
 }
