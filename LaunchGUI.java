@@ -29,6 +29,7 @@ public class LaunchGUI {
 	 * Create the application.
 	 */
 	public LaunchGUI() {
+		// Populate database with users
 		dbase = new Database();
 		initialize();
 	}
@@ -37,24 +38,42 @@ public class LaunchGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// Initialize a LoginFrame with database
 		loginFrame = new LoginFrame(dbase);
+		// Attach an action event to the login button in the login frame. This is
+		// to give the control of the application to the LaunchGUI. 
 		loginFrame.getLogin().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// The button has been clicked!
+				// Get the inputs from the login page.
 				String usr = loginFrame.getUsernameInput();
 				char[] pwd = loginFrame.getPasswordInput();
+				// Check if there is a user corresponding to the login credentials.
 				User logUser = dbase.getUser(usr, pwd);
 				if (logUser == null) {
+					// There is no user with these login credentials.
+					// Tell login frame to give an error message.
 					loginFrame.loginError();
 				} else {
-					if (logUser.getRole().equals("doctor")) {
-						docFrame = new DoctorFrame(dbase, loginFrame, usr);						
+					// There is a user!
+					String roleFrame = logUser.getRole();
+					if (roleFrame.equals("doctor")) {
+						// The user is a Doctor
+						// Initialize the doctor frame with the user's credentials
+						docFrame = new DoctorFrame(dbase, loginFrame, usr);
+						// Show the doctor frame						
 						docFrame.setVisible(true);
+						// Hide the login frame
 						loginFrame.setVisible(false);
+						// Attach an action event to the back button in the doctor frame.
+						// This gives control back to the LaunchGUI. 
 						docFrame.getBackButton().addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
+								// Hide the doctor frame.
 								docFrame.setVisible(false);
+								// Show the login frame.
 								loginFrame.setVisible(true);
 							}
 							
