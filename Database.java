@@ -81,6 +81,12 @@ public class Database {
 		users.remove(pair, u);
 	}
 	
+	public User getUser(String[] login) {
+		if (users.containsKey(login)) {
+			return users.get(login);
+		} 
+		return null;
+	}
 	
 	// TODO: Implement input database from a text file.
 	
