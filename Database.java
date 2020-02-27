@@ -86,7 +86,15 @@ public class Database {
 		return null;
 	}
 
-	
+	public User getUser(String userid, char[] pwd){
+		if (users.containsKey(userid)) {
+			User u = users.get(userid);
+			if (Arrays.equals(pwd, u.getPassword().toCharArray())) {
+				return u;
+			}
+		}
+		return null;
+	}
 
 	// TODO: Implement input database from a text file.
 
