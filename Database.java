@@ -6,6 +6,7 @@ public class Database {
 	
 	// public Database("database.txt");
 	public Database() {
+		users = new HashMap<String[], User>();
 		dummyData();
 		// initialize("database.txt");
 	}
@@ -39,7 +40,12 @@ public class Database {
 	 * @param u
 	 */
 	public void addUser(User u) {
-		if (!userExists(u)) {
+		if (users.isEmpty()) {
+			String[] pair = new String[2];
+			pair[0] = u.getUsername();
+			pair[1] = u.getPassword();
+			users.put(pair, u);	
+		} else if (!userExists(u)) {
 			String[] pair = new String[2];
 			pair[0] = u.getUsername();
 			pair[1] = u.getPassword();
@@ -74,6 +80,7 @@ public class Database {
 		pair[1] = u.getPassword();
 		users.remove(pair, u);
 	}
+	
 	
 	// TODO: Implement input database from a text file.
 	
