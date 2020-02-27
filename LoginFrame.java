@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -103,6 +105,18 @@ public class LoginFrame extends JFrame {
 		contentPane.add(passwordInput, gbc_passwordInput);
 		
 		btnLogin = new JButton("Login");
+		btnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String[] loginCreds = getCredentials();
+				User logUser = dbase.getUser(loginCreds);
+				if (!logUser.equals(null)) {
+					
+				} else {
+					JOptionPane.showMessageDialog(new JFrame(), "Invalid username or password");
+				}
+			}
+		});
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
 		gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLogin.gridx = 3;
@@ -141,4 +155,4 @@ public class LoginFrame extends JFrame {
 		return pair;
 	}
 
-	}
+}
