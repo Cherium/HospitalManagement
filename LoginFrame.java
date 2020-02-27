@@ -11,10 +11,20 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import javax.swing.JToolBar;
+import javax.swing.JSeparator;
+import java.awt.GridLayout;
 
 public class LoginFrame extends JFrame {
 
@@ -22,17 +32,16 @@ public class LoginFrame extends JFrame {
 	private JTextField usernameInput;
 	private JPasswordField passwordInput;
 	private JButton btnLogin;
-	private JButton btnNewPatient;
+	private NewPatientDialog popupMenu;
 
 	/**
 	 * Launch the application.
-	 * Application should be launched from LaunchGUI.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginFrame frame = new LoginFrame();
+					LoginFrame frame = new LoginFrame(new Database());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,97 +53,92 @@ public class LoginFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-
-	// TODO: Link login to database
-	// public LoginFrame(Database dbase)
-	public LoginFrame() {
+	public LoginFrame(Database dbase) {
+		popupMenu = new NewPatientDialog(dbase);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 300, 617, 305);
+		setSize(400,200);
+		setLocationRelativeTo(null);
+		
 		contentPane = new JPanel();
-		contentPane.setBackground(SystemColor.info);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{20, 20, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{20, 20, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{10, 10, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{10, 10, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		// Label for Username
-		JLabel lblUsername = new JLabel("Username");
-		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
-		gbc_lblUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUsername.gridx = 4;
-		gbc_lblUsername.gridy = 2;
-		contentPane.add(lblUsername, gbc_lblUsername);
+		JLabel lblNewLabel = new JLabel("Username");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 2;
+		gbc_lblNewLabel.gridy = 1;
+		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
-		// Input field for username
 		usernameInput = new JTextField();
 		GridBagConstraints gbc_usernameInput = new GridBagConstraints();
 		gbc_usernameInput.insets = new Insets(0, 0, 5, 0);
 		gbc_usernameInput.fill = GridBagConstraints.HORIZONTAL;
-		gbc_usernameInput.gridx = 6;
-		gbc_usernameInput.gridy = 2;
+		gbc_usernameInput.gridx = 4;
+		gbc_usernameInput.gridy = 1;
 		contentPane.add(usernameInput, gbc_usernameInput);
 		usernameInput.setColumns(10);
 		
-		// Label for password
-		JLabel lblPassword = new JLabel("Password");
-		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
-		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPassword.gridx = 4;
-		gbc_lblPassword.gridy = 3;
-		contentPane.add(lblPassword, gbc_lblPassword);
+		JLabel lblNewLabel_1 = new JLabel("Password");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 2;
+		gbc_lblNewLabel_1.gridy = 2;
+		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		// Password field input for password
 		passwordInput = new JPasswordField();
+		passwordInput.setColumns(10);
 		GridBagConstraints gbc_passwordInput = new GridBagConstraints();
 		gbc_passwordInput.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordInput.fill = GridBagConstraints.HORIZONTAL;
-		gbc_passwordInput.gridx = 6;
-		gbc_passwordInput.gridy = 3;
+		gbc_passwordInput.gridx = 4;
+		gbc_passwordInput.gridy = 2;
 		contentPane.add(passwordInput, gbc_passwordInput);
 		
-		// TODO: Create button for creating a new patient
-		// TODO: Link button to creating a new patient account. 
-		// Via a popup dialog box
-		// Screen username against existing usernames
-		// Show the login credentials user selected (username only) after successful registration
-
-		// Login button
 		btnLogin = new JButton("Login");
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
-		gbc_btnLogin.insets = new Insets(0, 0, 0, 5);
-		gbc_btnLogin.gridx = 4;
-		gbc_btnLogin.gridy = 5;
+		gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLogin.gridx = 3;
+		gbc_btnLogin.gridy = 4;
 		contentPane.add(btnLogin, gbc_btnLogin);
 		
-		btnNewPatient = new JButton("New Patient");
+		JButton btnNewPatient = new JButton("New Patient");
 		btnNewPatient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+				clearInputs();
+				popupMenu.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_btnNewPatient = new GridBagConstraints();
-		gbc_btnNewPatient.gridx = 6;
+		gbc_btnNewPatient.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewPatient.gridx = 3;
 		gbc_btnNewPatient.gridy = 5;
 		contentPane.add(btnNewPatient, gbc_btnNewPatient);
+		
 	}
 	
-	// Returns the login button
-	public JButton getLoginButton() {
+	protected void clearInputs() {
+		usernameInput.setText("");
+		passwordInput.setText("");
+	}
+
+	public JButton getLogin() {
 		return btnLogin;
 	}
 	
-	// Returns the text entered in username
-	public String getUsername() {
-		return usernameInput.getText();
+	public String[] getCredentials() {
+		String[] pair = new String[2];
+		pair[0] = usernameInput.getText();
+		pair[1] = passwordInput.getPassword().toString();
+		return pair;
 	}
 
-	// Returns the password entered in password field
-	public String getPassword() {
-		return passwordInput.getText();
 	}
-}
