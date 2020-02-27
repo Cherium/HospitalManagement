@@ -1,11 +1,15 @@
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class LaunchGUI {
 
 	private LoginFrame loginFrame;
 	private Database dbase;
+	private DoctorFrame docFrame;
 
 	/**
 	 * Launch the application.
@@ -37,6 +41,24 @@ public class LaunchGUI {
 	 */
 	private void initialize() {
 		loginFrame = new LoginFrame(dbase);
+		loginFrame.getLogin().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String usr = loginFrame.getUsernameInput();
+				char[] pwd = loginFrame.getPasswordInput();
+				User logUser = dbase.getUser(usr, pwd);
+				if (logUser == null) {
+					loginFrame.loginError();
+				} else {
+					if (logUser.getRole().equals("doctor")) {
+						docFrame = new DoctorFrame(dbase, loginFrame, usr);
+						docFrame.setVisible(true);
+						loginFrame.setVisible(false);
+					}
+				}
+
+			}
+		});
 	}
 
 }
