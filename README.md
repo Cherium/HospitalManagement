@@ -1,9 +1,5 @@
-2/25/2020 23:14
-Runs a Demo through the terminal starting at the welcome screen.  
-Options must be manually selected by choosing the associated number and pressing enter.  
-Any username/passwd entered will verify as database isnt yet setup.
-
-TODO
--Add code within the 'roles' section to deal with each specific role  
--Add code for option 2- 'create new user' to create a new user and add into database.  
-
+CreateAccount is an abstract class that can be extended to subclasses such as CreatePatient, CreateDoctor, etc...  
+  
+Database contains all the different databases for different roles, and will be instantiated as a global static variable  
+  
+//TODO create the rest of the 'Create' classes for use by the admin
