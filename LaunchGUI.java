@@ -48,9 +48,17 @@ public class LaunchGUI {
 					loginFrame.loginError();
 				} else {
 					if (logUser.getRole().equals("doctor")) {
-						docFrame = new DoctorFrame(dbase, loginFrame, usr);
+						docFrame = new DoctorFrame(dbase, loginFrame, usr);						
 						docFrame.setVisible(true);
 						loginFrame.setVisible(false);
+						docFrame.getBackButton().addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								docFrame.setVisible(false);
+								loginFrame.setVisible(true);
+							}
+							
+						});;
 					}
 				}
 
