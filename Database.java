@@ -40,18 +40,11 @@ public class Database {
 	 * @param u
 	 */
 	public void addUser(User u) {
-		if (users.isEmpty()) {
-			String[] pair = new String[2];
-			pair[0] = u.getUsername();
-			pair[1] = u.getPassword();
-			users.put(pair, u);	
-		} else if (!userExists(u)) {
-			String[] pair = new String[2];
-			pair[0] = u.getUsername();
-			pair[1] = u.getPassword();
-			users.put(pair, u);		
-		}
-
+		String[] pair = new String[2];
+		pair[0] = u.getUsername();
+		pair[1] = u.getPassword();
+		users.put(pair, u);	
+		System.out.println(u.toString());
 	}
 
 	/**

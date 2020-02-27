@@ -15,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+
 import javax.swing.JPopupMenu;
 import java.awt.Component;
 import javax.swing.JSplitPane;
@@ -56,6 +58,10 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame(Database dbase) {
+		JFrame frame = new JFrame();
+		frame.setSize(200,100);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		popupMenu = new NewPatientDialog(dbase);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,10 +116,10 @@ public class LoginFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				String[] loginCreds = getCredentials();
 				User logUser = dbase.getUser(loginCreds);
-				if (!logUser.equals(null)) {
-					
-				} else {
-					// JOptionPane.showMessageDialog(new JFrame(), "Invalid username or password");
+				if (logUser == null) {
+					JOptionPane.showMessageDialog(frame, "Invalid username or password");
+				} else {					
+					JOptionPane.showMessageDialog(frame, logUser.getName() + " has been logged in");
 				}
 			}
 		});
@@ -152,6 +158,7 @@ public class LoginFrame extends JFrame {
 		String[] pair = new String[2];
 		pair[0] = usernameInput.getText();
 		pair[1] = passwordInput.getPassword().toString();
+		System.out.println(Arrays.equals(pair[1].toCharArray(), "doctor".toCharArray()));
 		return pair;
 	}
 
