@@ -114,8 +114,9 @@ public class LoginFrame extends JFrame {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String[] loginCreds = getCredentials();
-				User logUser = dbase.getUser(loginCreds);
+				String userLogin = usernameInput.getText();
+				char[] pwdLogin = passwordInput.getPassword();
+				User logUser = dbase.getUser(userLogin, pwdLogin);
 				if (logUser == null) {
 					JOptionPane.showMessageDialog(frame, "Invalid username or password");
 				} else {					
@@ -155,10 +156,16 @@ public class LoginFrame extends JFrame {
 	}
 	
 	public String[] getCredentials() {
+		String username = usernameInput.getText();
+		char[] password = passwordInput.getPassword();
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(password.toString());
+
 		String[] pair = new String[2];
 		pair[0] = usernameInput.getText();
 		pair[1] = passwordInput.getPassword().toString();
-		System.out.println(Arrays.equals(pair[1].toCharArray(), "doctor".toCharArray()));
+		System.out.println(pair[1]);
 		return pair;
 	}
 
