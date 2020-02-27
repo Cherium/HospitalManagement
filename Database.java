@@ -46,7 +46,6 @@ public class Database {
 	public void addUser(User u) {
 		String key = u.getUsername();
 		users.put(key, u);
-		System.out.println(u.toString());
 	}
 
 	/**
