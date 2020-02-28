@@ -171,7 +171,7 @@ public class NewPatientDialog extends JDialog {
 			if (dbase.userExists(newPat)) {
 				//dbase.addUser(newPat);
 				//closeDialog();
-				JOptionPane.showMessageDialog(null, "Username taken.");
+				JOptionPane.showMessageDialog(contentPanel, "Username taken.");
 				//System.out.println("Username taken");
 			} else {
 				dbase.addUser(newPat);
@@ -180,7 +180,7 @@ public class NewPatientDialog extends JDialog {
 				//System.out.println("Account made succesfully!");
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Passwords don't match.");
+			JOptionPane.showMessageDialog(contentPanel, "Passwords don't match.");
 			//System.out.println("Passwords don't match");
 		}
 		
