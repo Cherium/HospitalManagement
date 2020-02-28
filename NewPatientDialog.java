@@ -31,12 +31,12 @@ public class NewPatientDialog extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		try {
-			NewPatientDialog dialog = new NewPatientDialog(new Database());
+			final NewPatientDialog dialog = new NewPatientDialog(new Database());
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -44,21 +44,21 @@ public class NewPatientDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public NewPatientDialog(Database dbase) {
+	public NewPatientDialog(final Database dbase) {
 		setSize(400, 200);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		final GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{50, 0, 25, 100, 0};
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblNewLabel = new JLabel("Name");
-			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+			final JLabel lblNewLabel = new JLabel("Name");
+			final GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel.gridx = 1;
@@ -67,7 +67,7 @@ public class NewPatientDialog extends JDialog {
 		}
 		{
 			nameInput = new JTextField();
-			GridBagConstraints gbc_nameInput = new GridBagConstraints();
+			final GridBagConstraints gbc_nameInput = new GridBagConstraints();
 			gbc_nameInput.insets = new Insets(0, 0, 5, 0);
 			gbc_nameInput.fill = GridBagConstraints.HORIZONTAL;
 			gbc_nameInput.gridx = 3;
@@ -76,8 +76,8 @@ public class NewPatientDialog extends JDialog {
 			nameInput.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel_1 = new JLabel("Username");
-			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+			final JLabel lblNewLabel_1 = new JLabel("Username");
+			final GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel_1.gridx = 1;
@@ -86,7 +86,7 @@ public class NewPatientDialog extends JDialog {
 		}
 		{
 			usernameInput = new JTextField();
-			GridBagConstraints gbc_usernameInput = new GridBagConstraints();
+			final GridBagConstraints gbc_usernameInput = new GridBagConstraints();
 			gbc_usernameInput.insets = new Insets(0, 0, 5, 0);
 			gbc_usernameInput.fill = GridBagConstraints.HORIZONTAL;
 			gbc_usernameInput.gridx = 3;
@@ -95,8 +95,8 @@ public class NewPatientDialog extends JDialog {
 			usernameInput.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel_2 = new JLabel("Password");
-			GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+			final JLabel lblNewLabel_2 = new JLabel("Password");
+			final GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 			gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel_2.gridx = 1;
@@ -105,7 +105,7 @@ public class NewPatientDialog extends JDialog {
 		}
 		{
 			passwordInput = new JPasswordField();
-			GridBagConstraints gbc_passwordInput = new GridBagConstraints();
+			final GridBagConstraints gbc_passwordInput = new GridBagConstraints();
 			gbc_passwordInput.insets = new Insets(0, 0, 5, 0);
 			gbc_passwordInput.fill = GridBagConstraints.HORIZONTAL;
 			gbc_passwordInput.gridx = 3;
@@ -113,9 +113,9 @@ public class NewPatientDialog extends JDialog {
 			contentPanel.add(passwordInput, gbc_passwordInput);
 		}
 		{
-			JLabel lblNewLabel_3 = new JLabel("Re-type password");
+			final JLabel lblNewLabel_3 = new JLabel("Re-type password");
 			lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
-			GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+			final GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 			gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel_3.insets = new Insets(0, 0, 0, 5);
 			gbc_lblNewLabel_3.gridx = 1;
@@ -124,21 +124,21 @@ public class NewPatientDialog extends JDialog {
 		}
 		{
 			passwordInputConfirm = new JPasswordField();
-			GridBagConstraints gbc_passwordInputConfirm = new GridBagConstraints();
+			final GridBagConstraints gbc_passwordInputConfirm = new GridBagConstraints();
 			gbc_passwordInputConfirm.fill = GridBagConstraints.HORIZONTAL;
 			gbc_passwordInputConfirm.gridx = 3;
 			gbc_passwordInputConfirm.gridy = 4;
 			contentPanel.add(passwordInputConfirm, gbc_passwordInputConfirm);
 		}
 		{
-			JPanel buttonPane = new JPanel();
+			final JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("Create");
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
-					public void mousePressed(MouseEvent e) {
+					public void mousePressed(final MouseEvent e) {
 						createAPatient(dbase);						
 					}
 				});
@@ -150,7 +150,7 @@ public class NewPatientDialog extends JDialog {
 				cancelButton = new JButton("Cancel");
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
-					public void mousePressed(MouseEvent arg0) {
+					public void mousePressed(final MouseEvent arg0) {
 						closeDialog();
 					}
 				});
@@ -159,20 +159,31 @@ public class NewPatientDialog extends JDialog {
 			}
 		}
 	}
-	
-	protected void createAPatient(Database dbase) {
-		String name = nameInput.getText();
-		String username = usernameInput.getText();
-		char[] pwd = passwordInput.getPassword();
-		char[] pwdCheck = passwordInputConfirm.getPassword();
+	// false = not valid password, true = valid password
+	protected boolean checkPassword(final char[] testPwd){
+		if (testPwd.length < 4){
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	protected void createAPatient(final Database dbase) {
+		final String name = nameInput.getText();
+		final String username = usernameInput.getText();
+		final char[] pwd = passwordInput.getPassword();
+		final char[] pwdCheck = passwordInputConfirm.getPassword();
 		
 		if (Arrays.equals(pwd, pwdCheck)) {
-			Patient newPat = new Patient(name, username, pwd.toString());
+			final Patient newPat = new Patient(name, username, pwd.toString());
 			if (dbase.userExists(newPat)) {
 				//dbase.addUser(newPat);
 				//closeDialog();
 				JOptionPane.showMessageDialog(contentPanel, "Username taken.");
 				//System.out.println("Username taken");
+			} else if (checkPassword(pwd) == false) {
+				JOptionPane.showMessageDialog(contentPanel, "Invalid password, password must be greater than 4 characters long.");
 			} else {
 				dbase.addUser(newPat);
 				closeDialog();
