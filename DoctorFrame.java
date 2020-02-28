@@ -26,7 +26,7 @@ public class DoctorFrame extends JFrame {
 					JFrame mframe = new JFrame();
 					mframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					mframe.setSize(400,400);
-					DoctorFrame frame = new DoctorFrame(new Database(), new LoginFrame(new Database()), "doctor");
+					DoctorFrame frame = new DoctorFrame(new Database(), new StartScreen(new Database()), "doctor");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class DoctorFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DoctorFrame(Database dbase, LoginFrame main, String user) {
+	public DoctorFrame(Database dbase, StartScreen main, String user) {
 		Doctor doc = (Doctor) dbase.getUsers().get(user);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800,700);

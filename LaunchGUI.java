@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class LaunchGUI {
 
-	private LoginFrame loginFrame;
+	private StartScreen loginFrame;
 	private Database dbase;
 	private DoctorFrame docFrame;
 
@@ -39,7 +39,7 @@ public class LaunchGUI {
 	 */
 	private void initialize() {
 		// Initialize a LoginFrame with database
-		loginFrame = new LoginFrame(dbase);
+		loginFrame = new StartScreen(dbase);
 		// Attach an action event to the login button in the login frame. This is
 		// to give the control of the application to the LaunchGUI. 
 		loginFrame.getLogin().addActionListener(new ActionListener() {

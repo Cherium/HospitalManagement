@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class LoginFrame extends JFrame {
+public class StartScreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usernameInput;
@@ -31,7 +31,7 @@ public class LoginFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginFrame frame = new LoginFrame(new Database());
+					StartScreen frame = new StartScreen(new Database());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class LoginFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginFrame(Database dbase) {
+	public StartScreen(Database dbase) {
 			
 		popupMenu = new NewPatientDialog(dbase);
 		
