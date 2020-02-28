@@ -56,7 +56,7 @@ public class Database {
 	 * @return
 	 */
 	public boolean userExists(User u) {
-		String[] usernames = (String[]) users.keySet().toArray();
+		Set<String> usernames = users.keySet();
 		for (String a : usernames) {
 			if (u.getUsername().equals(a)) {
 				return true;
