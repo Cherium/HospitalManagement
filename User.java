@@ -2,13 +2,19 @@ public class User {
 	private String name;
 	private String role;
 	private String username;
-	private String password;
+	private char[] password;
 	private Database dbase;
 	
-	public User(String name, String username, String password) {
+	public User(String name, String username, char[] password) {
 		this.name = name;
 		this.username = username;
 		this.password = password;
+	}
+
+	public User(String name, String username, String password) {
+		this.name = name;
+		this.username = username;
+		this.password = password.toCharArray();
 	}
 	
 	public void setName(String name) {
@@ -23,7 +29,7 @@ public class User {
 		this.username = username;
 	}
 	
-	public void setPassword(String password) {
+	public void setPassword(char[] password) {
 		this.password = password;
 	}
 	
@@ -39,7 +45,7 @@ public class User {
 		return username;
 	}
 	
-	public String getPassword() {
+	public char[] getPassword() {
 		return password;
 	}
 
@@ -51,7 +57,7 @@ public class User {
 		bob.append("Role: ");
 		bob.append(getRole());
 		bob.append("\n");
-		bob.append("Username: " + getUsername() + " Password: " + getPassword());
+		bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
 		bob.append("\n");
 		return bob.toString();	
 	}
