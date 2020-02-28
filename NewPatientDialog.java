@@ -138,7 +138,7 @@ public class NewPatientDialog extends JDialog {
 				okButton = new JButton("Create");
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
-					public void mouseClicked(MouseEvent e) {
+					public void mousePressed(MouseEvent e) {
 						createAPatient(dbase);						
 					}
 				});
@@ -150,7 +150,7 @@ public class NewPatientDialog extends JDialog {
 				cancelButton = new JButton("Cancel");
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
-					public void mouseClicked(MouseEvent arg0) {
+					public void mousePressed(MouseEvent arg0) {
 						closeDialog();
 					}
 				});
@@ -171,15 +171,17 @@ public class NewPatientDialog extends JDialog {
 			if (dbase.userExists(newPat)) {
 				//dbase.addUser(newPat);
 				//closeDialog();
-				JOptionPane.showMessageDialog(null, "Username taken");
-				System.out.println("Username taken");
+				JOptionPane.showMessageDialog(null, "Username taken.");
+				//System.out.println("Username taken");
 			} else {
 				dbase.addUser(newPat);
 				closeDialog();
-				//System.out.println("Username taken");
+				JOptionPane.showMessageDialog(null, "Account made succesfully!");
+				//System.out.println("Account made succesfully!");
 			}
 		} else {
-			System.out.println("Passwords don't match");
+			JOptionPane.showMessageDialog(null, "Passwords don't match.");
+			//System.out.println("Passwords don't match");
 		}
 		
 	}

@@ -21,6 +21,7 @@ public class LoginFrame extends JFrame {
 	private JTextField usernameInput;
 	private JPasswordField passwordInput;
 	private JButton btnLogin;
+	private JButton btnNewPatient;
 	private NewPatientDialog popupMenu;
 
 	/**
@@ -99,7 +100,7 @@ public class LoginFrame extends JFrame {
 		gbc_btnLogin.gridy = 4;
 		contentPane.add(btnLogin, gbc_btnLogin);
 		
-		JButton btnNewPatient = new JButton("New Patient");
+		btnNewPatient = new JButton("New Patient");
 		btnNewPatient.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -137,7 +138,7 @@ public class LoginFrame extends JFrame {
 		frame.setSize(200,100);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JOptionPane.showMessageDialog(frame, "Invalid username or password");
-		
+
 		
 		
 		System.out.println("Invalid username or password");

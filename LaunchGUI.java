@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 
 public class LaunchGUI {
 
-	private LoginFrame loginFrame;
-	private Database dbase;
+	public LoginFrame loginFrame;
+	public Database dbase;
 
 	/**
 	 * Launch the application.
