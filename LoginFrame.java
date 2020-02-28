@@ -138,10 +138,6 @@ public class LoginFrame extends JFrame {
 		frame.setSize(200,100);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JOptionPane.showMessageDialog(frame, "Invalid username or password");
-
-		
-		
-		System.out.println("Invalid username or password");
 	}
 	
 }

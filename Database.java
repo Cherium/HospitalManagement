@@ -75,20 +75,10 @@ public class Database {
 		users.remove(userid, u);
 	}
 
-	public User getUser(String userid, String userpwd) {
-		if (users.containsKey(userid)) {
-			User u = users.get(userid);
-			if (u.getPassword().equals(userpwd)) {
-				return u;
-			}
-		}
-		return null;
-	}
-
 	public User getUser(String userid, char[] pwd){
 		if (users.containsKey(userid)) {
 			User u = users.get(userid);
-			if (Arrays.equals(pwd, u.getPassword().toCharArray())) {
+			if (Arrays.equals(pwd, u.getPassword())) {
 				return u;
 			}
 		}
@@ -109,9 +99,9 @@ public class Database {
 		System.out.println("Finding a user in the system\n");
 		String username = "doctor";
 		String password = "doctor";
-		User one = testDB.getUser(username, password);
+		User one = testDB.getUser(username, password.toCharArray());
 		System.out.println(one.toString());
-		one = testDB.getUser("nurse", "nurse");
+		one = testDB.getUser("nurse", "nurse".toCharArray());
 		System.out.println(one.toString());
 	}
 }
