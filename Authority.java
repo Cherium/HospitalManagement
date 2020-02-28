@@ -1,7 +1,7 @@
 
 public class Authority extends User {
 
-	public Authority(String name, String username, String password) {
+	public Authority(String name, String username, char[] password) {
 		super(name, username, password);
 		setRole("head");
 	}

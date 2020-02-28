@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Doctor extends HospitalEmployee {
 	ArrayList<Nurse> assignedNurses = null;
 	
-	public Doctor(String name, String username, String password, String department, ArrayList<Nurse> nurses) {
+	public Doctor(String name, String username, char[] password, String department, ArrayList<Nurse> nurses) {
 		super(name, username, password, department);
 		setRole("doctor");
 		this.assignedNurses = new ArrayList<Nurse>();

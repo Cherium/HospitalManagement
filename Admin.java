@@ -1,7 +1,7 @@
 
 public class Admin extends User {
 
-	public Admin(String name, String username, String password) {
+	public Admin(String name, String username, char[] password) {
 		super(name, username, password);	
 		setRole("admin");
 	}
