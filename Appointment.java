@@ -32,7 +32,7 @@ public class Appointment {
     }
 
     // Constructor for an appoint between a doctor and a group of doctors
-    public Appointment(Doctor main, ArrayList<Doctor> docs; LocalDateTime start, LocalDateTime end) {
+    public Appointment(Doctor main, ArrayList<Doctor> docs, LocalDateTime start, LocalDateTime end) {
         this.mainDoctor = main;
         this.additionalDoctors = docs;
         this.startTime = start;
@@ -93,7 +93,7 @@ public class Appointment {
     // End time
     // Additional doctors
     public String formatAppointment(){
-        StringBuilder bob = null;
+        StringBuilder bob = new StringBuilder();
         bob.append("Main Doctor: " + mainDoctor.toString() + "\n");
         if (!patient.equals(null)){
             bob.append("Patient: " + patient.toString() + "\n");
@@ -103,6 +103,7 @@ public class Appointment {
         if (!additionalDoctors.equals(null)){
             bob.append("Attending Physicians: " + additionalDoctors.toString() + "\n");
         }
+        return bob.toString();
 
     }
     

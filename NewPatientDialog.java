@@ -5,9 +5,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -167,11 +168,15 @@ public class NewPatientDialog extends JDialog {
 		
 		if (Arrays.equals(pwd, pwdCheck)) {
 			Patient newPat = new Patient(name, username, pwd.toString());
-			if (!dbase.userExists(newPat)) {
+			if (dbase.userExists(newPat)) {
+				//dbase.addUser(newPat);
+				//closeDialog();
+				JOptionPane.showMessageDialog(null, "Username taken");
+				System.out.println("Username taken");
+			} else {
 				dbase.addUser(newPat);
 				closeDialog();
-			} else {
-				System.out.println("Username taken");
+				//System.out.println("Username taken");
 			}
 		} else {
 			System.out.println("Passwords don't match");

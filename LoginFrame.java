@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,18 +14,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import javax.swing.JToolBar;
-import javax.swing.JSeparator;
-import java.awt.GridLayout;
 
 public class LoginFrame extends JFrame {
 
@@ -56,6 +43,7 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame(Database dbase) {
+			
 		popupMenu = new NewPatientDialog(dbase);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,18 +93,6 @@ public class LoginFrame extends JFrame {
 		contentPane.add(passwordInput, gbc_passwordInput);
 		
 		btnLogin = new JButton("Login");
-		btnLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String[] loginCreds = getCredentials();
-				User logUser = dbase.getUser(loginCreds);
-				if (!logUser.equals(null)) {
-					
-				} else {
-					// JOptionPane.showMessageDialog(new JFrame(), "Invalid username or password");
-				}
-			}
-		});
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
 		gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLogin.gridx = 3;
@@ -126,7 +102,7 @@ public class LoginFrame extends JFrame {
 		JButton btnNewPatient = new JButton("New Patient");
 		btnNewPatient.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mousePressed(MouseEvent arg0) {
 				clearInputs();
 				popupMenu.setVisible(true);
 			}
@@ -147,12 +123,24 @@ public class LoginFrame extends JFrame {
 	public JButton getLogin() {
 		return btnLogin;
 	}
-	
-	public String[] getCredentials() {
-		String[] pair = new String[2];
-		pair[0] = usernameInput.getText();
-		pair[1] = passwordInput.getPassword().toString();
-		return pair;
+
+	public String getUsernameInput() {
+		return usernameInput.getText();
 	}
 
+	public char[] getPasswordInput() {
+		return passwordInput.getPassword();
+	}
+
+	public void loginError() {
+		JFrame frame = new JFrame();
+		frame.setSize(200,100);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JOptionPane.showMessageDialog(frame, "Invalid username or password");
+		
+		
+		
+		System.out.println("Invalid username or password");
+	}
+	
 }

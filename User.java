@@ -51,6 +51,8 @@ public class User {
 		bob.append("Role: ");
 		bob.append(getRole());
 		bob.append("\n");
+		bob.append("Username: " + getUsername() + " Password: " + getPassword());
+		bob.append("\n");
 		return bob.toString();	
 	}
 }
