@@ -14,13 +14,13 @@ public class Database {
 	}
 
 	private void dummyData() {
-		Doctor aDoc = new Doctor("Doctor Who", "doctor", "doctor", "Cardiology", null);
-		Nurse aNurse = new Nurse("Nurse Joy", "nurse", "nurse", "Cardiology", aDoc);
+		Doctor aDoc = new Doctor("Doctor Who", "doctor", "doctor".toCharArray(), "Cardiology", null);
+		Nurse aNurse = new Nurse("Nurse Joy", "nurse", "nurse".toCharArray(), "Cardiology", aDoc);
 		aDoc.addNurse(aNurse);
-		Patient aPat = new Patient("Healthy Person", "patient", "patient");
-		Patient anotherPat = new Patient("Sick Person", "patient2", "patient");
-		Admin aAdm = new Admin("Lowly Admin", "admin", "admin");
-		Authority aHigherPower = new Authority("Higher Power", "stats", "stats");
+		Patient aPat = new Patient("Healthy Person", "patient", "patient".toCharArray());
+		Patient anotherPat = new Patient("Sick Person", "patient2", "patient".toCharArray());
+		Admin aAdm = new Admin("Lowly Admin", "admin", "admin".toCharArray());
+		Authority aHigherPower = new Authority("Higher Power", "stats", "stats".toCharArray());
 		addUser(aDoc);
 		addUser(aNurse);
 		addUser(aPat);

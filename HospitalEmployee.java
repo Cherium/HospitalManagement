@@ -3,7 +3,7 @@ public class HospitalEmployee extends User {
 	// Schedule schedule;
 	String department;
 
-	public HospitalEmployee(String name, String username, String password, String department) {
+	public HospitalEmployee(String name, String username, char[] password, String department) {
 		super(name, username, password);
 		this.department = department;
 	}
