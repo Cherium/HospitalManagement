@@ -176,7 +176,7 @@ public class NewPatientDialog extends JDialog {
 		final char[] pwdCheck = passwordInputConfirm.getPassword();
 		
 		if (Arrays.equals(pwd, pwdCheck)) {
-			final Patient newPat = new Patient(name, username, pwd.toString());
+			final Patient newPat = new Patient(name, username, pwd);
 			if (dbase.userExists(newPat)) {
 				//dbase.addUser(newPat);
 				//closeDialog();
