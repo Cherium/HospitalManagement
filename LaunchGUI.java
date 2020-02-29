@@ -7,6 +7,10 @@ public class LaunchGUI {
 	private StartScreen loginFrame;
 	private Database dbase;
 	private DoctorFrame docFrame;
+	private PatientFrame patFrame;
+//	private NurseFrame nurseFrame;
+//	private AdminFrame admFrame;
+//	private StatsFrame statsFrame;
 
 	/**
 	 * Launch the application.
@@ -61,23 +65,33 @@ public class LaunchGUI {
 					if (roleFrame.equals("doctor")) {
 						// The user is a Doctor
 						// Initialize the doctor frame with the user's credentials
-						docFrame = new DoctorFrame(dbase, loginFrame, usr);
+						Doctor doc = (Doctor) logUser;
+						docFrame = new DoctorFrame(dbase, loginFrame, doc);
 						// Show the doctor frame						
 						docFrame.setVisible(true);
 						// Hide the login frame
 						loginFrame.setVisible(false);
-						// Attach an action event to the back button in the doctor frame.
-						// This gives control back to the LaunchGUI. 
-						docFrame.getBackButton().addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								// Hide the doctor frame.
-								docFrame.setVisible(false);
-								// Show the login frame.
-								loginFrame.setVisible(true);
-							}
-							
-						});;
+					
+					} else if (roleFrame.equals("patient")) {
+						Patient pat = (Patient) logUser;
+						patFrame = new PatientFrame(dbase, loginFrame, pat);
+						patFrame.setVisible(true);
+						loginFrame.setVisible(false);						
+					} else if (roleFrame.equals("nurse")) {
+//						Nurse nurse = (Nurse) logUser;
+//						nurseFrame = new NurseFrame(dbase, loginFrame, nurse);
+//						nurseFrame.setVisible(true);
+//						loginFrame.setVisible(false);						
+					} else if (roleFrame.equals("admin")) {
+
+						
+						
+						
+					} else if (roleFrame.equals("head")) {
+
+						
+						
+						
 					}
 				}
 
