@@ -51,6 +51,10 @@ public class DoctorFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public DoctorFrame(Database dbase, StartScreen main, Doctor user) {
+		// Test multiple nurses
+		Nurse newNurse = new Nurse("Mewtwo", "mew", "mewo".toCharArray(), user.getDepartment(), user);
+		user.addNurse(newNurse);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 700);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
