@@ -8,7 +8,7 @@ public class LaunchGUI {
 			private DoctorFrame docFrame;
 			private PatientFrame patFrame;
 			private NurseFrame nurseFrame;
-		//	private AdminFrame admFrame;
+			private AdminFrame adminFrame;
 		//	private StatsFrame statsFrame;
 
 
@@ -85,10 +85,10 @@ public class LaunchGUI {
 																loginFrame.setVisible(false);
 
 													} else if (roleFrame.equals("admin")) {
-																//Admin admin = (Admin) logUser;
-									  						//adminFrame = new AdminFrame(dbase, loginFrame, admin);
-																//adminFrame.setVisible(true);
-																//loginFrame.setVisible(false);
+																Admin admin = (Admin) logUser;
+									  						adminFrame = new AdminFrame(dbase, loginFrame, admin);
+																adminFrame.setVisible(true);
+																loginFrame.setVisible(false);
 													} else if (roleFrame.equals("head")) {
 													}
 										}

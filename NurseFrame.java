@@ -87,14 +87,6 @@ public class NurseFrame extends JFrame {
 				gbc_lblDoc.gridy = 2;
 				contentPane.add(lblDoc, gbc_lblDoc);
 
-				/*
-				////Added for testing but aslo for greeting
-				JLabel lblMsg = new JLabel("Good morning");
-				GridBagConstraints gbclblMsg = new GridBagConstraints();
-				gbclblMsg.gridx = 1;
-				gbclblMsg.gridy = 0;
-				contentPane.add(lblMsg, gbclblMsg);
-				//*/
 
 	}
 
