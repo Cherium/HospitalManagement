@@ -15,9 +15,11 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Container;
 
 public class DoctorFrame extends JFrame {
 
+	private Container titlePane, schedulePane, buttonPane;
 	private JPanel contentPane;
 	private JButton btnReturn;
 	private JLabel lblDepartment;
@@ -47,6 +49,10 @@ public class DoctorFrame extends JFrame {
 	// });
 	// }
 
+	// TODO: Divide interface into 3 containers
+
+	// TODO: Set up title container, button container, and schedule container
+
 	/**
 	 * Create the frame.
 	 */
@@ -69,6 +75,7 @@ public class DoctorFrame extends JFrame {
 		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
+		// Return to login page
 		btnReturn = new JButton("Back");
 		btnReturn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -84,6 +91,7 @@ public class DoctorFrame extends JFrame {
 		gbc_btnReturn.gridy = 0;
 		contentPane.add(btnReturn, gbc_btnReturn);
 
+		// Display name of doctor
 		JLabel lblName = new JLabel(user.getName());
 		lblName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -93,6 +101,7 @@ public class DoctorFrame extends JFrame {
 		gbc_lblName.gridy = 1;
 		contentPane.add(lblName, gbc_lblName);
 
+		// Display department of doctor
 		lblDepartment = new JLabel(user.getDepartment());
 		lblDepartment.setFont(new Font("Sitka Small", Font.ITALIC, 24));
 		GridBagConstraints gbc_lblDepartment = new GridBagConstraints();
@@ -101,6 +110,7 @@ public class DoctorFrame extends JFrame {
 		gbc_lblDepartment.gridy = 1;
 		contentPane.add(lblDepartment, gbc_lblDepartment);
 
+		// Display nurses assigned to doctor
 		lblNurses = new JLabel("Assigned nurses:");
 		lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_lblNurses = new GridBagConstraints();
@@ -110,16 +120,18 @@ public class DoctorFrame extends JFrame {
 		gbc_lblNurses.gridy = 3;
 		contentPane.add(lblNurses, gbc_lblNurses);
 
+		// Display nurses assigned to doctor and their schedules
 		comboBox = new JComboBox<String>();
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setForeground(new Color(0, 0, 0));
 		for (Nurse n : user.getNurses()){
 			comboBox.addItem(n.getName());
 		}
-		comboBox.setSelectedIndex(-1);
+		comboBox.setSelectedIndex(-1); // Set initial selection to be empty
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TODO: Use index of combo box to get the nurse object (from doctor) and to display the schedule.
 				lblSchedulePlaceholder.setText(comboBox.getSelectedItem() + "'s Schedule");
 				btnOwnSchedule.setVisible(true);
 			}
@@ -131,6 +143,7 @@ public class DoctorFrame extends JFrame {
 		gbc_comboBox.gridy = 3;
 		contentPane.add(comboBox, gbc_comboBox);
 		
+		// Display schedule
 		lblSchedule = new JLabel("Schedule");
 		lblSchedule.setHorizontalAlignment(SwingConstants.TRAILING);
 		GridBagConstraints gbc_lblSchedule = new GridBagConstraints();
@@ -139,6 +152,7 @@ public class DoctorFrame extends JFrame {
 		gbc_lblSchedule.gridy = 5;
 		contentPane.add(lblSchedule, gbc_lblSchedule);
 		
+		// Display doctor's schedule
 		btnOwnSchedule = new JButton("See my schedule");
 		btnOwnSchedule.addMouseListener(new MouseAdapter() {
 			@Override
@@ -146,8 +160,7 @@ public class DoctorFrame extends JFrame {
 				lblSchedulePlaceholder.setText("Doctor's Schedule");
 				btnOwnSchedule.setVisible(false);
 			}
-		});
-		
+		});		
 		btnOwnSchedule.setVisible(false);
 		GridBagConstraints gbc_btnOwnSchedule = new GridBagConstraints();
 		gbc_btnOwnSchedule.insets = new Insets(0, 0, 5, 5);
@@ -155,6 +168,7 @@ public class DoctorFrame extends JFrame {
 		gbc_btnOwnSchedule.gridy = 5;
 		contentPane.add(btnOwnSchedule, gbc_btnOwnSchedule);
 		
+		// Display schedule (either of doctor or a selected nurse)
 		lblSchedulePlaceholder = new JLabel("Doctor's Schedule");
 		GridBagConstraints gbc_lblSchedulePlaceholder = new GridBagConstraints();
 		gbc_lblSchedulePlaceholder.insets = new Insets(0, 0, 0, 5);
