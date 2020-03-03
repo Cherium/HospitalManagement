@@ -11,7 +11,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class DoctorFrame extends JFrame {
+public class NurseFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnReturn;
@@ -38,7 +38,7 @@ public class DoctorFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DoctorFrame(Database dbase, StartScreen main, Doctor user) {
+	public NurseFrame(Database dbase, StartScreen main, Nurse user) {
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setSize(800,700);
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -79,13 +79,13 @@ public class DoctorFrame extends JFrame {
 				contentPane.add(lblName, gbc_lblName);
 
 				////Nurse Display
-				////TODO Create an array display list for Nurses to be displayed for the day
+				////TODO Create an array display list for Doctor to be displayed for the day
 				////Adjust positioning to make this better
-				JLabel lblNurse = new JLabel("The nurses you are working with are: ");
-				GridBagConstraints gbc_lblNurse = new GridBagConstraints();
-				gbc_lblNurse.gridx = 1;
-				gbc_lblNurse.gridy = 2;
-				contentPane.add(lblNurse, gbc_lblNurse);
+				JLabel lblDoc = new JLabel("The doctor you are working with is: ");
+				GridBagConstraints gbc_lblDoc = new GridBagConstraints();
+				gbc_lblDoc.gridx = 1;
+				gbc_lblDoc.gridy = 2;
+				contentPane.add(lblDoc, gbc_lblDoc);
 
 				/*
 				////Added for testing but aslo for greeting

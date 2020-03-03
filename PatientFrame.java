@@ -49,7 +49,7 @@ public class PatientFrame extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		btnReturn = new JButton("Back");
 		btnReturn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -64,13 +64,13 @@ public class PatientFrame extends JFrame {
 		gbc_btnReturn.gridx = 0;
 		gbc_btnReturn.gridy = 0;
 		contentPane.add(btnReturn, gbc_btnReturn);
-		
-		JLabel lblNewLabel = new JLabel(user.getName());
+
+		JLabel lblNewLabel = new JLabel("Hello "+user.getName());
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 1;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 	}
-	
+
 
 }
