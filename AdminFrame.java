@@ -16,8 +16,11 @@ public class AdminFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnReturn;
+
+  ////Added for Account creaiton and deletion
   private JButton crtAccount;
   private JButton dltAccount;
+  private NewPatientDialog popupMenu;
 
 //	/**
 //	 * Launch the application.

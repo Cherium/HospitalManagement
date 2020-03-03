@@ -32,13 +32,13 @@ public class NewPatientDialog extends JDialog {
 			 * Launch the application.
 			 */
 			public static void main(final String[] args) {
-				try {
-					final NewPatientDialog dialog = new NewPatientDialog(new Database());
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setVisible(true);
-				} catch (final Exception e) {
-					e.printStackTrace();
-				}
+						try {
+									final NewPatientDialog dialog = new NewPatientDialog(new Database());
+									dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+									dialog.setVisible(true);
+						} catch (final Exception e) {
+									e.printStackTrace();
+						}
 			}
 
 			/**
@@ -190,7 +190,13 @@ public class NewPatientDialog extends JDialog {
 										//System.out.println("Username taken");
 							} else if (checkPassword(pwd) == false) {
 										JOptionPane.showMessageDialog(contentPanel, "Invalid password, password must be greater than 4 characters long.");
-							} else {
+							} else if (username.length()==0){
+										JOptionPane.showMessageDialog(contentPanel, "Username must not be blank");
+							} else if (name.length()==0){
+										JOptionPane.showMessageDialog(contentPanel, "Name must not be blank");
+							}
+
+							else {
 										////Can only be reached when it fulfills all other criteria
 										dbase.addUser(newPat);
 										closeDialog();
