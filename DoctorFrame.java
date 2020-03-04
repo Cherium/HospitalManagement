@@ -12,6 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
+
 import javax.swing.JComboBox;
 
 import java.awt.Font;
@@ -23,6 +28,7 @@ import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import javax.swing.border.LineBorder;
 
 public class DoctorFrame extends JFrame {
 
@@ -96,7 +102,7 @@ public class DoctorFrame extends JFrame {
 		// 	}
 		// });
 		// GridBagConstraints gbc_btnReturn = new GridBagConstraints();
-		// gbc_btnReturn.insets = new Insets(0, 0, 5, 5);
+		// gbc_btnReturn.insets = new Insets(5, 5, 5, 5);
 		// gbc_btnReturn.gridx = 0;
 		// gbc_btnReturn.gridy = 0;
 		// backPane.add(btnReturn);
@@ -107,7 +113,7 @@ public class DoctorFrame extends JFrame {
 		// lblName.setHorizontalAlignment(SwingConstants.LEFT);
 		// lblName.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		// GridBagConstraints gbc_lblName = new GridBagConstraints();
-		// gbc_lblName.insets = new Insets(0, 0, 5, 5);
+		// gbc_lblName.insets = new Insets(5, 5, 5, 5);
 		// gbc_lblName.gridx = 1;
 		// gbc_lblName.gridy = 1;
 		// contentPane.add(lblName, gbc_lblName);
@@ -128,7 +134,7 @@ public class DoctorFrame extends JFrame {
 		// lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
 		// GridBagConstraints gbc_lblNurses = new GridBagConstraints();
 		// gbc_lblNurses.anchor = GridBagConstraints.EAST;
-		// gbc_lblNurses.insets = new Insets(0, 0, 5, 5);
+		// gbc_lblNurses.insets = new Insets(5, 5, 5, 5);
 		// gbc_lblNurses.gridx = 1;
 		// gbc_lblNurses.gridy = 3;
 		// contentPane.add(lblNurses, gbc_lblNurses);
@@ -159,7 +165,7 @@ public class DoctorFrame extends JFrame {
 		// 	}
 		// });
 		// GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		// gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+		// gbc_comboBox.insets = new Insets(5, 5, 5, 5);
 		// gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		// gbc_comboBox.gridx = 2;
 		// gbc_comboBox.gridy = 3;
@@ -169,7 +175,7 @@ public class DoctorFrame extends JFrame {
 		// lblSchedule = new JLabel("Schedule");
 		// lblSchedule.setHorizontalAlignment(SwingConstants.TRAILING);
 		// GridBagConstraints gbc_lblSchedule = new GridBagConstraints();
-		// gbc_lblSchedule.insets = new Insets(0, 0, 5, 5);
+		// gbc_lblSchedule.insets = new Insets(5, 5, 5, 5);
 		// gbc_lblSchedule.gridx = 1;
 		// gbc_lblSchedule.gridy = 5;
 		// contentPane.add(lblSchedule, gbc_lblSchedule);
@@ -185,7 +191,7 @@ public class DoctorFrame extends JFrame {
 		// });		
 		// btnOwnSchedule.setVisible(false);
 		// GridBagConstraints gbc_btnOwnSchedule = new GridBagConstraints();
-		// gbc_btnOwnSchedule.insets = new Insets(0, 0, 5, 5);
+		// gbc_btnOwnSchedule.insets = new Insets(5, 5, 5, 5);
 		// gbc_btnOwnSchedule.gridx = 2;
 		// gbc_btnOwnSchedule.gridy = 5;
 		// contentPane.add(btnOwnSchedule, gbc_btnOwnSchedule);
@@ -206,10 +212,11 @@ public class DoctorFrame extends JFrame {
 	 */
 	public DoctorFrame(Database dbase, StartScreen main, Doctor doc) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 1000);
+		setSize(1000, 1000);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JPanel titleContainer = new JPanel();
+		titleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(titleContainer, BorderLayout.NORTH);
 		titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
 		
@@ -243,184 +250,172 @@ public class DoctorFrame extends JFrame {
 		namePane.add(lblName);
 		
 		JPanel contentPane = new JPanel();
-		getContentPane().add(contentPane, BorderLayout.CENTER);
+		getContentPane().add(contentPane, BorderLayout.WEST);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		
 		JPanel scheduleContainer = new JPanel();
+		scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
 		contentPane.add(scheduleContainer);
 		scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
 		
-		JPanel scheduleGrid = new JPanel();
-		scheduleGrid.setAlignmentY(Component.TOP_ALIGNMENT);
-		scheduleGrid.setBackground(Color.WHITE);
-		scheduleContainer.add(scheduleGrid);
-		GridBagLayout gbl_scheduleGrid = new GridBagLayout();
-		gbl_scheduleGrid.columnWidths = new int[]{0, 50, 50, 50, 50, 50, 50, 50, 0};
-		gbl_scheduleGrid.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_scheduleGrid.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_scheduleGrid.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		scheduleGrid.setLayout(gbl_scheduleGrid);
+		JPanel schedule = new JPanel();
+		schedule.setBackground(Color.WHITE);
+		schedule.setBorder(new LineBorder(Color.RED));
+		scheduleContainer.add(schedule);
+		GridBagLayout gbl_schedule = new GridBagLayout();
+		gbl_schedule.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_schedule.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_schedule.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_schedule.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		schedule.setLayout(gbl_schedule);
 		
-		JLabel lbl1 = new JLabel("Monday");
-		lbl1.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl1 = new GridBagConstraints();
-		gbc_lbl1.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl1.gridx = 1;
-		gbc_lbl1.gridy = 0;
-		scheduleGrid.add(lbl1, gbc_lbl1);
+		JLabel lblNewLabel_1 = new JLabel("Monday");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_1.gridx = 1;
+		gbc_lblNewLabel_1.gridy = 0;
+		schedule.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JLabel lbl2 = new JLabel("Tuesday");
-		lbl2.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl2 = new GridBagConstraints();
-		gbc_lbl2.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl2.gridx = 2;
-		gbc_lbl2.gridy = 0;
-		scheduleGrid.add(lbl2, gbc_lbl2);
+		JLabel lblNewLabel_8 = new JLabel("Tuesday");
+		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
+		gbc_lblNewLabel_8.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_8.gridx = 2;
+		gbc_lblNewLabel_8.gridy = 0;
+		schedule.add(lblNewLabel_8, gbc_lblNewLabel_8);
 		
-		JLabel lbl3 = new JLabel("Wednesday");
-		lbl3.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl3 = new GridBagConstraints();
-		gbc_lbl3.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl3.gridx = 3;
-		gbc_lbl3.gridy = 0;
-		scheduleGrid.add(lbl3, gbc_lbl3);
+		JLabel lblNewLabel_7 = new JLabel("Wednesday");
+		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
+		gbc_lblNewLabel_7.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_7.gridx = 3;
+		gbc_lblNewLabel_7.gridy = 0;
+		schedule.add(lblNewLabel_7, gbc_lblNewLabel_7);
 		
-		JLabel lbl4 = new JLabel("Thursday");
-		lbl4.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl4 = new GridBagConstraints();
-		gbc_lbl4.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl4.gridx = 4;
-		gbc_lbl4.gridy = 0;
-		scheduleGrid.add(lbl4, gbc_lbl4);
+		JLabel lblNewLabel_6 = new JLabel("Thursday");
+		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
+		gbc_lblNewLabel_6.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_6.gridx = 4;
+		gbc_lblNewLabel_6.gridy = 0;
+		schedule.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
-		JLabel lbl5 = new JLabel("Friday");
-		lbl5.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl5 = new GridBagConstraints();
-		gbc_lbl5.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl5.gridx = 5;
-		gbc_lbl5.gridy = 0;
-		scheduleGrid.add(lbl5, gbc_lbl5);
+		JLabel lblNewLabel_5 = new JLabel("Friday");
+		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_5.gridx = 5;
+		gbc_lblNewLabel_5.gridy = 0;
+		schedule.add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
-		JLabel lbl6 = new JLabel("Saturday");
-		lbl6.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl6 = new GridBagConstraints();
-		gbc_lbl6.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl6.gridx = 6;
-		gbc_lbl6.gridy = 0;
-		scheduleGrid.add(lbl6, gbc_lbl6);
+		JLabel lblNewLabel_4 = new JLabel("Saturday");
+		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
+		gbc_lblNewLabel_4.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_4.gridx = 6;
+		gbc_lblNewLabel_4.gridy = 0;
+		schedule.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
-		JLabel lbl7 = new JLabel("Sunday");
-		lbl7.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		GridBagConstraints gbc_lbl7 = new GridBagConstraints();
-		gbc_lbl7.insets = new Insets(0, 0, 5, 0);
-		gbc_lbl7.gridx = 7;
-		gbc_lbl7.gridy = 0;
-		scheduleGrid.add(lbl7, gbc_lbl7);
+		JLabel lblNewLabel_3 = new JLabel("Sunday");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_3.gridx = 7;
+		gbc_lblNewLabel_3.gridy = 0;
+		schedule.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		JLabel lbTime1 = new JLabel("7:00");
-		GridBagConstraints gbc_lblTime1 = new GridBagConstraints();
-		gbc_lblTime1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime1.gridx = 0;
-		gbc_lblTime1.gridy = 1;
-		scheduleGrid.add(lbTime1, gbc_lblTime1);
-		
-		JLabel lbTime2 = new JLabel("8:00");
-		GridBagConstraints gbc_lblTime2 = new GridBagConstraints();
-		gbc_lblTime2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime2.gridx = 0;
-		gbc_lblTime2.gridy = 3;
-		scheduleGrid.add(lbTime2, gbc_lblTime2);
-		
-		JLabel lbTime3 = new JLabel("9:00");
-		GridBagConstraints gbc_lblTime3 = new GridBagConstraints();
-		gbc_lblTime3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime3.gridx = 0;
-		gbc_lblTime3.gridy = 5;
-		scheduleGrid.add(lbTime3, gbc_lblTime3);
-		
-		JLabel lbTime4 = new JLabel("10:00");
-		GridBagConstraints gbc_lblTime4 = new GridBagConstraints();
-		gbc_lblTime4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime4.gridx = 0;
-		gbc_lblTime4.gridy = 7;
-		scheduleGrid.add(lbTime4, gbc_lblTime4);
-		
-		JLabel lbTime5 = new JLabel("11:00");
-		GridBagConstraints gbc_lblTime5 = new GridBagConstraints();
-		gbc_lblTime5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime5.gridx = 0;
-		gbc_lblTime5.gridy = 9;
-		scheduleGrid.add(lbTime5, gbc_lblTime5);
-		
-		JLabel lbTime6 = new JLabel("12:00");
-		GridBagConstraints gbc_lblTime6 = new GridBagConstraints();
-		gbc_lblTime6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime6.gridx = 0;
-		gbc_lblTime6.gridy = 11;
-		scheduleGrid.add(lbTime6, gbc_lblTime6);
-		
-		JLabel lbTime7 = new JLabel("13:00");
-		GridBagConstraints gbc_lblTime7 = new GridBagConstraints();
-		gbc_lblTime7.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime7.gridx = 0;
-		gbc_lblTime7.gridy = 13;
-		scheduleGrid.add(lbTime7, gbc_lblTime7);
-		
-		JLabel lbTime8 = new JLabel("14:00");
-		GridBagConstraints gbc_lblTime8 = new GridBagConstraints();
-		gbc_lblTime8.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime8.gridx = 0;
-		gbc_lblTime8.gridy = 15;
-		scheduleGrid.add(lbTime8, gbc_lblTime8);
-		
-		JLabel lbTime9 = new JLabel("15:00");
-		GridBagConstraints gbc_lblTime9 = new GridBagConstraints();
-		gbc_lblTime9.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTime9.gridx = 0;
-		gbc_lblTime9.gridy = 17;
-		scheduleGrid.add(lbTime9, gbc_lblTime9);
-		
-		JLabel lbTime10 = new JLabel("16:00");
-		GridBagConstraints gbc_lblTime10 = new GridBagConstraints();
-		gbc_lblTime10.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTime10.gridx = 0;
-		gbc_lblTime10.gridy = 19;
-		scheduleGrid.add(lbTime10, gbc_lblTime10);
+		// Add dates to the days of the week
+		LocalDate now = LocalDate.now();
+		TemporalField fieldISO = WeekFields.of(Locale.CANADA).dayOfWeek();
+		for (int i = 1; i < 8; i++) {
+			JLabel lblTemp = new JLabel(now.with(fieldISO, i).toString());
+			GridBagConstraints gbc_lblTemp = new GridBagConstraints();
+			gbc_lblTemp.insets = new Insets(5, 5, 5, 5);
+			gbc_lblTemp.gridx = i;
+			gbc_lblTemp.gridy = 1;
+			schedule.add(lblTemp, gbc_lblTemp);
+			System.out.println(now.with(fieldISO, i));
+		}
 
-		JLabel lbTime11 = new JLabel("17:00");
-		GridBagConstraints gbc_lblTime11 = new GridBagConstraints();
-		gbc_lblTime11.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTime11.gridx = 0;
-		gbc_lblTime11.gridy = 21;
-		scheduleGrid.add(lbTime11, gbc_lblTime11);
 
-		JLabel lbTime12 = new JLabel("18:00");
-		GridBagConstraints gbc_lblTime12 = new GridBagConstraints();
-		gbc_lblTime12.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTime12.gridx = 0;
-		gbc_lblTime12.gridy = 23;
-		scheduleGrid.add(lbTime12, gbc_lblTime12);
-
-		JLabel lbTime13 = new JLabel("19:00");
-		GridBagConstraints gbc_lblTime13 = new GridBagConstraints();
-		gbc_lblTime13.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTime13.gridx = 0;
-		gbc_lblTime13.gridy = 25;
-		scheduleGrid.add(lbTime13, gbc_lblTime13);
-
-		JLabel lbTime14 = new JLabel("20:00");
-		GridBagConstraints gbc_lblTime14 = new GridBagConstraints();
-		gbc_lblTime14.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTime14.gridx = 0;
-		gbc_lblTime14.gridy = 27;
-		scheduleGrid.add(lbTime14, gbc_lblTime14);
-
-		JLabel lbTime15= new JLabel("21:00");
-		GridBagConstraints gbc_lblTime15 = new GridBagConstraints();
-		gbc_lblTime15.insets = new Insets(0, 0, 0, 5);
-		gbc_lblTime15.gridx = 0;
-		gbc_lblTime15.gridy = 29;
-		scheduleGrid.add(lbTime15, gbc_lblTime15);
+		JLabel lblNewLabel = new JLabel("8:00");
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel.gridx = 0;
+		gbc_lblNewLabel.gridy = 2;
+		schedule.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JLabel lblNewLabel_9 = new JLabel("9:00");
+		GridBagConstraints gbc_lblNewLabel_9 = new GridBagConstraints();
+		gbc_lblNewLabel_9.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_9.gridx = 0;
+		gbc_lblNewLabel_9.gridy = 4;
+		schedule.add(lblNewLabel_9, gbc_lblNewLabel_9);
+		
+		JLabel lblNewLabel_10 = new JLabel("10:00");
+		GridBagConstraints gbc_lblNewLabel_10 = new GridBagConstraints();
+		gbc_lblNewLabel_10.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_10.gridx = 0;
+		gbc_lblNewLabel_10.gridy = 6;
+		schedule.add(lblNewLabel_10, gbc_lblNewLabel_10);
+		
+		JLabel lblNewLabel_11 = new JLabel("12:00");
+		GridBagConstraints gbc_lblNewLabel_11 = new GridBagConstraints();
+		gbc_lblNewLabel_11.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_11.gridx = 0;
+		gbc_lblNewLabel_11.gridy = 8;
+		schedule.add(lblNewLabel_11, gbc_lblNewLabel_11);
+		
+		JLabel lblNewLabel_12 = new JLabel("13:00");
+		GridBagConstraints gbc_lblNewLabel_12 = new GridBagConstraints();
+		gbc_lblNewLabel_12.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_12.gridx = 0;
+		gbc_lblNewLabel_12.gridy = 10;
+		schedule.add(lblNewLabel_12, gbc_lblNewLabel_12);
+		
+		JLabel lblNewLabel_13 = new JLabel("14:00");
+		GridBagConstraints gbc_lblNewLabel_13 = new GridBagConstraints();
+		gbc_lblNewLabel_13.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_13.gridx = 0;
+		gbc_lblNewLabel_13.gridy = 12;
+		schedule.add(lblNewLabel_13, gbc_lblNewLabel_13);
+		
+		JLabel lblNewLabel_14 = new JLabel("15:00");
+		GridBagConstraints gbc_lblNewLabel_14 = new GridBagConstraints();
+		gbc_lblNewLabel_14.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_14.gridx = 0;
+		gbc_lblNewLabel_14.gridy = 14;
+		schedule.add(lblNewLabel_14, gbc_lblNewLabel_14);
+		
+		JLabel lblNewLabel_15 = new JLabel("16:00");
+		GridBagConstraints gbc_lblNewLabel_15 = new GridBagConstraints();
+		gbc_lblNewLabel_15.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_15.gridx = 0;
+		gbc_lblNewLabel_15.gridy = 16;
+		schedule.add(lblNewLabel_15, gbc_lblNewLabel_15);
+		
+		JLabel lblNewLabel_16 = new JLabel("17:00");
+		GridBagConstraints gbc_lblNewLabel_16 = new GridBagConstraints();
+		gbc_lblNewLabel_16.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_16.gridx = 0;
+		gbc_lblNewLabel_16.gridy = 18;
+		schedule.add(lblNewLabel_16, gbc_lblNewLabel_16);
+		
+		JLabel lblNewLabel_17 = new JLabel("18:00");
+		GridBagConstraints gbc_lblNewLabel_17 = new GridBagConstraints();
+		gbc_lblNewLabel_17.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_17.gridx = 0;
+		gbc_lblNewLabel_17.gridy = 20;
+		schedule.add(lblNewLabel_17, gbc_lblNewLabel_17);
+		
+		JLabel lblNewLabel_18 = new JLabel("19:00");
+		GridBagConstraints gbc_lblNewLabel_18 = new GridBagConstraints();
+		gbc_lblNewLabel_18.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_18.gridx = 0;
+		gbc_lblNewLabel_18.gridy = 22;
+		schedule.add(lblNewLabel_18, gbc_lblNewLabel_18);
+		
+		JLabel lblNewLabel_19 = new JLabel("20:00");
+		GridBagConstraints gbc_lblNewLabel_19 = new GridBagConstraints();
+		gbc_lblNewLabel_19.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNewLabel_19.gridx = 0;
+		gbc_lblNewLabel_19.gridy = 24;
+		schedule.add(lblNewLabel_19, gbc_lblNewLabel_19);
 		
 		JPanel btnPaneSchedule = new JPanel();
 		scheduleContainer.add(btnPaneSchedule);
@@ -448,17 +443,20 @@ public class DoctorFrame extends JFrame {
 		JButton btnForward = new JButton(">");
 		btnPaneSchedule.add(btnForward);
 		
+		
 		JPanel buttonContainer = new JPanel();
-		buttonContainer.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
 		contentPane.add(buttonContainer);
 		GridBagLayout gbl_buttonContainer = new GridBagLayout();
 		gbl_buttonContainer.columnWidths = new int[]{0, 0};
-		gbl_buttonContainer.rowHeights = new int[]{35, 0, 35, 0};
+		gbl_buttonContainer.rowHeights = new int[]{35, 0, 0, 35, 0};
 		gbl_buttonContainer.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_buttonContainer.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_buttonContainer.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		buttonContainer.setLayout(gbl_buttonContainer);
-		
-		
+		buttonContainer.setMaximumSize(new Dimension(200, 1000));
+
+		buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
+
 		JButton btnPatients = new JButton("View patients");
 		GridBagConstraints gbc_btnPatients = new GridBagConstraints();
 		gbc_btnPatients.insets = new Insets(0, 0, 5, 0);
@@ -466,28 +464,45 @@ public class DoctorFrame extends JFrame {
 		gbc_btnPatients.gridy = 0;
 		buttonContainer.add(btnPatients, gbc_btnPatients);
 		
-		JComboBox nurseComboBox = new JComboBox();
+		JComboBox<String> nurseComboBox = new JComboBox<String>();
 		for (Nurse n : doc.getNurses()) {
 			nurseComboBox.addItem(n.getName());
-		}nurseComboBox.setBackground(Color.WHITE);
+		}
 		
+		JLabel lblNurses = new JLabel("Assigned nurses:");
+		lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNurses = new GridBagConstraints();
+		gbc_lblNurses.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNurses.gridx = 0;
+		gbc_lblNurses.gridy = 1;
+		buttonContainer.add(lblNurses, gbc_lblNurses);
+		nurseComboBox.setBackground(Color.WHITE);
 		nurseComboBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_nurseComboBox = new GridBagConstraints();
 		gbc_nurseComboBox.insets = new Insets(0, 0, 5, 0);
 		gbc_nurseComboBox.gridx = 0;
-		gbc_nurseComboBox.gridy = 1;
+		gbc_nurseComboBox.gridy = 2;
 		buttonContainer.add(nurseComboBox, gbc_nurseComboBox);
 		
 		JButton btnOwn = new JButton("View own schedule");
+		btnOwn.setVisible(false);
 		btnOwn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				nurseComboBox.setSelectedIndex(-1);
+				btnOwn.setVisible(false);
 			}
 		});
+		
+		nurseComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnOwn.setVisible(true);
+			}
+		});
+		
 		GridBagConstraints gbc_btnOwn = new GridBagConstraints();
 		gbc_btnOwn.gridx = 0;
-		gbc_btnOwn.gridy = 2;
+		gbc_btnOwn.gridy = 3;
 		buttonContainer.add(btnOwn, gbc_btnOwn);
 	}
 
