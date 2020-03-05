@@ -76,6 +76,16 @@ public class Database {
 						users.remove(userid, u);
 			}
 
+			public User getUser(String userid){
+						if (users.containsKey(userid)){
+									User u = users.get(userid);
+									return u;
+								}
+						else
+									return null;
+			}
+
+
 			public User getUser(String userid, char[] pwd){
 						if (users.containsKey(userid)) {
 									User u = users.get(userid);

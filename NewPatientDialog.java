@@ -45,6 +45,7 @@ public class NewPatientDialog extends JDialog {
 			 * Create the dialog.
 			 */
 			public NewPatientDialog(final Database dbase) {
+
 						setSize(400, 200);
 						setLocationRelativeTo(null);
 						getContentPane().setLayout(new BorderLayout());
@@ -173,41 +174,41 @@ public class NewPatientDialog extends JDialog {
 
 			////Records input values
 			protected void createAPatient(final Database dbase) {
-				final String name = nameInput.getText();
-				final String username = usernameInput.getText();
-				final char[] pwd = passwordInput.getPassword();
-				final char[] pwdCheck = passwordInputConfirm.getPassword();
+						final String name = nameInput.getText();
+						final String username = usernameInput.getText();
+						final char[] pwd = passwordInput.getPassword();
+						final char[] pwdCheck = passwordInputConfirm.getPassword();
 
-				////Create Account - Compares if the 2 passwords are equal
-				////
-				if (Arrays.equals(pwd, pwdCheck)) {
-							////Creates the actual account. No error.
-							final Patient newPat = new Patient(name, username, pwd);
-							if (dbase.userExists(newPat)) {
-										//dbase.addUser(newPat);
-										//closeDialog();
-										JOptionPane.showMessageDialog(contentPanel, "Username taken.");
-										//System.out.println("Username taken");
-							} else if (checkPassword(pwd) == false) {
-										JOptionPane.showMessageDialog(contentPanel, "Invalid password, password must be greater than 4 characters long.");
-							} else if (username.length()==0){
-										JOptionPane.showMessageDialog(contentPanel, "Username must not be blank");
-							} else if (name.length()==0){
-										JOptionPane.showMessageDialog(contentPanel, "Name must not be blank");
-							}
+						////Create Account - Compares if the 2 passwords are equal
+						////
+						if (Arrays.equals(pwd, pwdCheck)) {
+									////Creates the actual account. No error.
+									final Patient newPat = new Patient(name, username, pwd);
+									if (dbase.userExists(newPat)) {
+												//dbase.addUser(newPat);
+												//closeDialog();
+												JOptionPane.showMessageDialog(contentPanel, "Username taken.");
+												//System.out.println("Username taken");
+									} else if (checkPassword(pwd) == false) {
+												JOptionPane.showMessageDialog(contentPanel, "Invalid password, password must be greater than 4 characters long.");
+									} else if (username.length()==0){
+												JOptionPane.showMessageDialog(contentPanel, "Username must not be blank");
+									} else if (name.length()==0){
+												JOptionPane.showMessageDialog(contentPanel, "Name must not be blank");
+									}
 
-							else {
-										////Can only be reached when it fulfills all other criteria
-										dbase.addUser(newPat);
-										closeDialog();
-										JOptionPane.showMessageDialog(null, "Account made succesfully!");
-										//System.out.println("Account made succesfully!");
-							}
-						} else {
-									////Passwords non-matching means none
-									JOptionPane.showMessageDialog(contentPanel, "Passwords don't match.");
-									//System.out.println("Passwords don't match");
-						}
+									else {
+												////Can only be reached when it fulfills all other criteria
+												dbase.addUser(newPat);
+												closeDialog();
+												JOptionPane.showMessageDialog(null, "Account made succesfully!");
+												//System.out.println("Account made succesfully!");
+									}
+								} else {
+											////Passwords non-matching means none
+											JOptionPane.showMessageDialog(contentPanel, "Passwords don't match.");
+											//System.out.println("Passwords don't match");
+								}
 			}
 
 			public JButton getCancelButton() {
