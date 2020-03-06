@@ -125,44 +125,57 @@ public class DoctorFrame extends JFrame {
 		schedule.setBorder(new LineBorder(Color.RED));
 		scheduleContainer.add(schedule);
 		GridBagLayout gbl_schedule = new GridBagLayout();
-		// I think you can remove these constraints below but not touching that for now
-		// These are remnants of Eclipse
-		gbl_schedule.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_schedule.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_schedule.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_schedule.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		// Do not remove these column restraints!
+		// To add a new column (and have the whole schedule not be centered on the X and Y axis)
+		// - add 0, 0 (2 zeros! and a comma) to columnWidths
+		// - add 0.0, 0.0 (2 zero floats! and a comma) to columnWeights
+		// * the last item of _Weights is Double.MIN_VALUE
+		// - a new column would be adding to the elements in days of week row
+		// For adding a new row, do the above but for different fields
+		// - a new row would be adding new row to the times row
+		gbl_schedule.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_schedule.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_schedule.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_schedule.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		schedule.setLayout(gbl_schedule);
 		
 		// Creating labels for the days of the week 
 		JLabel lblDayWeek = new JLabel("Monday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gdb_lbl = new GridBagConstraints();
 		gdb_lbl.insets = new Insets(5, 5, 5, 5);
-		gdb_lbl.gridx = 1;
+		gdb_lbl.gridx = 2;
 		gdb_lbl.gridy = 1;
 		schedule.add(lblDayWeek, gdb_lbl);
 		
 		lblDayWeek = new JLabel("Tuesday");
-		gdb_lbl.gridx = 2;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Wednesday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 3;
 		schedule.add(lblDayWeek, gdb_lbl);
 		
-		lblDayWeek = new JLabel("Thursday");
+		lblDayWeek = new JLabel("Wednesday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 4;
 		schedule.add(lblDayWeek, gdb_lbl);
 		
-		lblDayWeek = new JLabel("Friday");
+		lblDayWeek = new JLabel("Thursday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 5;
 		schedule.add(lblDayWeek, gdb_lbl);
 		
-		lblDayWeek = new JLabel("Saturday");
+		lblDayWeek = new JLabel("Friday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 6;
 		schedule.add(lblDayWeek, gdb_lbl);
 		
-		lblDayWeek = new JLabel("Sunday");
+		lblDayWeek = new JLabel("Saturday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 7;
+		schedule.add(lblDayWeek, gdb_lbl);
+		
+		lblDayWeek = new JLabel("Sunday");
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		gdb_lbl.gridx = 8;
 		schedule.add(lblDayWeek, gdb_lbl);
 				
 		// Add dates to the days of the week
@@ -170,34 +183,36 @@ public class DoctorFrame extends JFrame {
 		TemporalField fieldISO = WeekFields.of(Locale.CANADA).dayOfWeek();
 		for (int i = 1; i < 8; i++) {
 			JLabel lblTemp = new JLabel(now.with(fieldISO, i).toString());
+			lblTemp.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			gdb_lbl.insets = new Insets(15, 15, 15, 15);
-			gdb_lbl.gridx = i;
+			gdb_lbl.gridx = i+1;
 			gdb_lbl.gridy = 0;
 			schedule.add(lblTemp, gdb_lbl);
 			weekdays.add(lblTemp);
 		}
 
 		// Creating labels for times
-		gdb_lbl.gridx = 0;
+		gdb_lbl.gridx = 1;
 		JLabel lblTime = new JLabel("");
-		for (int i = 0; i < 12; i++) {
-			lblTime = new JLabel(i+8+":00");
+		for (int i = 0; i < 16; i++) {
+			lblTime = new JLabel(i+7+":00");
+			lblTime.setFont(new Font("Tahoma", Font.PLAIN, 10));
 			gdb_lbl.insets = new Insets(5, 5, 5, 5);
 			gdb_lbl.gridy = 2 + 2*i;
 			schedule.add(lblTime, gdb_lbl);
 		}
 
 		// Invisible labels for making schedule larger and centering schedule
-		gdb_lbl.gridx = 8;
+		gdb_lbl.gridx = 9;
 		gdb_lbl.gridy = 0;
-		gdb_lbl.insets = new Insets(5, 5, 5, 250);
+		gdb_lbl.insets = new Insets(5, 5, 5, 200);
 		lblDayWeek = new JLabel("");
 		schedule.add(lblDayWeek, gdb_lbl);
 
 		lblTime = new JLabel("");
 		gdb_lbl.gridx = 0;
 		gdb_lbl.gridy = 0;
-		gdb_lbl.insets = new Insets(5, 300, 5, 5);
+		gdb_lbl.insets = new Insets(5, 200, 5, 5);
 		schedule.add(lblTime, gdb_lbl);
 
 		// Create a panel for the buttons that manipulate the schedule
@@ -265,6 +280,28 @@ public class DoctorFrame extends JFrame {
 			}
 		});
 		btnPaneSchedule.add(btnForward);
+
+		JButton btnSaveChanges = new JButton("Save changes");
+		btnSaveChanges.setVisible(false);
+		btnSaveChanges.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveChanges.setVisible(false);
+			}
+		});
+		btnPaneSchedule.add(btnSaveChanges);
+
+		JButton btnOwnSchedule = new JButton("View current schedule");
+		btnOwnSchedule.setVisible(false);
+		btnOwnSchedule.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnOwnSchedule.setVisible(false);
+				btnSaveChanges.setVisible(false);
+			}
+		});
+		btnPaneSchedule.add(btnOwnSchedule);
+
 		
 		// Create panel for the right hand side components
 		JPanel buttonContainer = new JPanel();
@@ -272,9 +309,9 @@ public class DoctorFrame extends JFrame {
 		contentPane.add(buttonContainer);
 		GridBagLayout gbl_buttonContainer = new GridBagLayout();
 		gbl_buttonContainer.columnWidths = new int[]{0, 0};
-		gbl_buttonContainer.rowHeights = new int[]{35, 0, 0, 35, 0};
+		gbl_buttonContainer.rowHeights = new int[]{35, 0, 0, 35, 0, 0, 0};
 		gbl_buttonContainer.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_buttonContainer.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_buttonContainer.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		buttonContainer.setLayout(gbl_buttonContainer);
 		buttonContainer.setMaximumSize(new Dimension(200, 1000));
 
@@ -341,6 +378,18 @@ public class DoctorFrame extends JFrame {
 		gbc_btnOwn.gridx = 0;
 		gbc_btnOwn.gridy = 3;
 		buttonContainer.add(btnOwn, gbc_btnOwn);
+
+		JButton btnChange = new JButton("Make changes");
+		btnChange.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveChanges.setVisible(true);
+				btnOwnSchedule.setVisible(true);
+			}
+		});
+
+		gbc_btnOwn.gridy = 4;
+		buttonContainer.add(btnChange, gbc_btnOwn);
 
 
 	}
