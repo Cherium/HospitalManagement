@@ -63,7 +63,7 @@ public class DeleteAccount extends JDialog{
 						gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 						contentPanel.setLayout(gbl_contentPanel);
 						{
-									final JLabel lblNewLabel = new JLabel("Name");
+									final JLabel lblNewLabel = new JLabel("Username");
 									final GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 									gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 									gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -95,7 +95,6 @@ public class DeleteAccount extends JDialog{
                                     JFrame frame = new JFrame();
                         						frame.setSize(200,100);
                         						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        						JOptionPane.showMessageDialog(frame, "Account Deleted");
                                     deleteAPatient(dbase);
 
       												}
@@ -123,8 +122,15 @@ public class DeleteAccount extends JDialog{
 
       protected void deleteAPatient(Database dbase){
             final String name = nameInput.getText();
-            User u = dbase.getUser(name);
-            dbase.removeUser(u);
+            if (dbase.findUser(name)){
+                  User u = dbase.getUser(name);
+                  dbase.removeUser(u);
+                  JOptionPane.showMessageDialog(contentPanel, "Account deleted");
+            }
+            else{
+                  JOptionPane.showMessageDialog(contentPanel, "No Account detected.");
+            }
+
       }
 
 }

@@ -31,6 +31,7 @@ public class AdminFrame extends JFrame {
 
       private final JPanel contentPanel = new JPanel();
       private DeleteAccount deleter;
+      private NewPatientDialog creator;
 
 
 //	/**
@@ -118,10 +119,17 @@ public class AdminFrame extends JFrame {
                     ////You're going to have to utilize the class as it is
 
                     ///*
-                    JFrame frame = new JFrame();
-        						frame.setSize(200,100);
-        						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        						JOptionPane.showMessageDialog(frame, "Staff Account created");
+                    creator = new NewPatientDialog(dbase);
+                    //creator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        						creator.setSize(400,200);
+        						//creator.setLocationRelativeTo(null);
+                    creator.setVisible(true);
+
+
+                    //JFrame frame = new JFrame();
+        						//frame.setSize(200,100);
+        						//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        						//JOptionPane.showMessageDialog(frame, "Staff Account created");
 
                     //main.setVisible(false);
                     //main.clearInputs();
