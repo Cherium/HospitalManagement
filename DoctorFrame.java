@@ -205,14 +205,14 @@ public class DoctorFrame extends JFrame {
 		// Invisible labels for making schedule larger and centering schedule
 		gdb_lbl.gridx = 9;
 		gdb_lbl.gridy = 0;
-		gdb_lbl.insets = new Insets(5, 5, 5, 200);
+		gdb_lbl.insets = new Insets(5, 5, 5, 150);
 		lblDayWeek = new JLabel("");
 		schedule.add(lblDayWeek, gdb_lbl);
 
 		lblTime = new JLabel("");
 		gdb_lbl.gridx = 0;
 		gdb_lbl.gridy = 0;
-		gdb_lbl.insets = new Insets(5, 200, 5, 5);
+		gdb_lbl.insets = new Insets(5, 175, 5, 5);
 		schedule.add(lblTime, gdb_lbl);
 
 		// Create a panel for the buttons that manipulate the schedule
