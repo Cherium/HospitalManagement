@@ -34,6 +34,7 @@ public class DoctorFrame extends JFrame {
 	Container frame;
 	ArrayList<JLabel> weekdays = new ArrayList<JLabel>(7);
 	LocalDate now = LocalDate.now();
+	JPanel schedule;
 
 	/*
 		default frame (getContentFrame()): BorderLayout
@@ -117,103 +118,17 @@ public class DoctorFrame extends JFrame {
 		scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
 		contentPane.add(scheduleContainer);
 		scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
-		
+
+
 		// Create a panel for the schedule itself
-		// TODO: Move this to an external function, to implement a switch between monthly and weekly view
-		JPanel schedule = new JPanel();
-		schedule.setBackground(Color.WHITE);
-		schedule.setBorder(new LineBorder(Color.RED));
-		scheduleContainer.add(schedule);
-		GridBagLayout gbl_schedule = new GridBagLayout();
-		// Do not remove these column restraints!
-		// To add a new column (and have the whole schedule not be centered on the X and Y axis)
-		// - add 0, 0 (2 zeros! and a comma) to columnWidths
-		// - add 0.0, 0.0 (2 zero floats! and a comma) to columnWeights
-		// * the last item of _Weights is Double.MIN_VALUE
-		// - a new column would be adding to the elements in days of week row
-		// For adding a new row, do the above but for different fields
-		// - a new row would be adding new row to the times row
-		gbl_schedule.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_schedule.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_schedule.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_schedule.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		schedule.setLayout(gbl_schedule);
-		
-		// Creating labels for the days of the week 
-		JLabel lblDayWeek = new JLabel("Monday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		GridBagConstraints gdb_lbl = new GridBagConstraints();
-		gdb_lbl.insets = new Insets(5, 5, 5, 5);
-		gdb_lbl.gridx = 2;
-		gdb_lbl.gridy = 1;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Tuesday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		gdb_lbl.gridx = 3;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Wednesday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		gdb_lbl.gridx = 4;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Thursday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		gdb_lbl.gridx = 5;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Friday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		gdb_lbl.gridx = 6;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Saturday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		gdb_lbl.gridx = 7;
-		schedule.add(lblDayWeek, gdb_lbl);
-		
-		lblDayWeek = new JLabel("Sunday");
-		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		gdb_lbl.gridx = 8;
-		schedule.add(lblDayWeek, gdb_lbl);
-				
-		// Add dates to the days of the week
-		// LocalDate now = LocalDate.now();
 		TemporalField fieldISO = WeekFields.of(Locale.CANADA).dayOfWeek();
 		for (int i = 1; i < 8; i++) {
 			JLabel lblTemp = new JLabel(now.with(fieldISO, i).toString());
 			lblTemp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			gdb_lbl.insets = new Insets(15, 15, 15, 15);
-			gdb_lbl.gridx = i+1;
-			gdb_lbl.gridy = 0;
-			schedule.add(lblTemp, gdb_lbl);
 			weekdays.add(lblTemp);
 		}
-
-		// Creating labels for times
-		gdb_lbl.gridx = 1;
-		JLabel lblTime = new JLabel("");
-		for (int i = 0; i < 16; i++) {
-			lblTime = new JLabel(i+7+":00");
-			lblTime.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			gdb_lbl.insets = new Insets(5, 5, 5, 5);
-			gdb_lbl.gridy = 2 + 2*i;
-			schedule.add(lblTime, gdb_lbl);
-		}
-
-		// Invisible labels for making schedule larger and centering schedule
-		gdb_lbl.gridx = 9;
-		gdb_lbl.gridy = 0;
-		gdb_lbl.insets = new Insets(5, 5, 5, 150);
-		lblDayWeek = new JLabel("");
-		schedule.add(lblDayWeek, gdb_lbl);
-
-		lblTime = new JLabel("");
-		gdb_lbl.gridx = 0;
-		gdb_lbl.gridy = 0;
-		gdb_lbl.insets = new Insets(5, 175, 5, 5);
-		schedule.add(lblTime, gdb_lbl);
+		initializeWeeklySchedule();
+		scheduleContainer.add(schedule);
 
 		// Create a panel for the buttons that manipulate the schedule
 		JPanel btnPaneSchedule = new JPanel();
@@ -301,12 +216,12 @@ public class DoctorFrame extends JFrame {
 			}
 		});
 		btnPaneSchedule.add(btnOwnSchedule);
-
+		btnPaneSchedule.setMaximumSize(btnPaneSchedule.getPreferredSize());
 		
 		// Create panel for the right hand side components
 		JPanel buttonContainer = new JPanel();
 		buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
-		contentPane.add(buttonContainer);
+		getContentPane().add(buttonContainer, BorderLayout.EAST);
 		GridBagLayout gbl_buttonContainer = new GridBagLayout();
 		gbl_buttonContainer.columnWidths = new int[]{0, 0};
 		gbl_buttonContainer.rowHeights = new int[]{35, 0, 0, 35, 0, 0, 0};
@@ -390,9 +305,262 @@ public class DoctorFrame extends JFrame {
 
 		gbc_btnOwn.gridy = 4;
 		buttonContainer.add(btnChange, gbc_btnOwn);
-
+		buttonContainer.setPreferredSize(buttonContainer.getPreferredSize());
 
 	}
 
+	public void initializeWeeklySchedule() {
+		schedule = new JPanel();
+		schedule.setBackground(Color.WHITE);
+		schedule.setBorder(new LineBorder(Color.RED));
+
+		FlowLayout flowLayout = (FlowLayout) schedule.getLayout();
+		flowLayout.setAlignment(FlowLayout.CENTER);
+
+		// Create a panel for the times
+		JPanel timePanel = new JPanel();
+		timePanel.setBackground(Color.WHITE);
+		timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.Y_AXIS));
+		schedule.add(timePanel);
+
+		JLabel dates = new JLabel(" ");
+		timePanel.add(dates);
+
+		dates = new JLabel(" ");
+		timePanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel(i+":00");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			timePanel.add(dates);
+			dates = new JLabel(" ");
+			timePanel.add(dates);
+		}
+
+		// Create a panel for Monday
+		JPanel mondayPanel = new JPanel();
+		mondayPanel.setBackground(Color.WHITE);
+		mondayPanel.setLayout(new BoxLayout(mondayPanel, BoxLayout.Y_AXIS));
+		schedule.add(mondayPanel);
+
+		mondayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (mondayPanel.getBackground().equals(Color.WHITE)) {
+					mondayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					mondayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+		mondayPanel.add(weekdays.get(0));
+		dates = new JLabel("Monday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		mondayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			mondayPanel.add(dates);
+			dates = new JLabel(" ");
+			mondayPanel.add(dates);
+
+		}
+
+		// Create a panel for Tuesday
+
+		JPanel tuesdayPanel = new JPanel();
+		tuesdayPanel.setBackground(Color.WHITE);
+		tuesdayPanel.setLayout(new BoxLayout(tuesdayPanel, BoxLayout.Y_AXIS));
+		schedule.add(tuesdayPanel);
+		tuesdayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (tuesdayPanel.getBackground().equals(Color.WHITE)) {
+					tuesdayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					tuesdayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+
+		tuesdayPanel.add(weekdays.get(1));
+		dates = new JLabel("Tuesday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		tuesdayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tuesdayPanel.add(dates);
+			dates = new JLabel(" ");
+			tuesdayPanel.add(dates);
+
+		}
+
+		// Create a panel for Wednesday
+
+		JPanel wednesdayPanel = new JPanel();
+		wednesdayPanel.setBackground(Color.WHITE);
+		wednesdayPanel.setLayout(new BoxLayout(wednesdayPanel, BoxLayout.Y_AXIS));
+		schedule.add(wednesdayPanel);
+
+		wednesdayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (wednesdayPanel.getBackground().equals(Color.WHITE)) {
+					wednesdayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					wednesdayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+
+		wednesdayPanel.add(weekdays.get(2));
+		dates = new JLabel("Wednesday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		wednesdayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			wednesdayPanel.add(dates);
+			dates = new JLabel(" ");
+			wednesdayPanel.add(dates);
+
+		}
+
+		// Create a panel for Thursday
+
+		JPanel thursdayPanel = new JPanel();
+		thursdayPanel.setBackground(Color.WHITE);
+		thursdayPanel.setLayout(new BoxLayout(thursdayPanel, BoxLayout.Y_AXIS));
+		schedule.add(thursdayPanel);
+
+		thursdayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (thursdayPanel.getBackground().equals(Color.WHITE)) {
+					thursdayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					thursdayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+
+		thursdayPanel.add(weekdays.get(3));
+		dates = new JLabel("Thursday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		thursdayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			thursdayPanel.add(dates);
+			dates = new JLabel(" ");
+			thursdayPanel.add(dates);
+
+		}
+
+		// Create a panel for Friday
+
+		JPanel fridayPanel = new JPanel();
+		fridayPanel.setBackground(Color.WHITE);
+		fridayPanel.setLayout(new BoxLayout(fridayPanel, BoxLayout.Y_AXIS));
+		schedule.add(fridayPanel);
+
+		fridayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (fridayPanel.getBackground().equals(Color.WHITE)) {
+					fridayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					fridayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+
+
+		fridayPanel.add(weekdays.get(4));
+		dates = new JLabel("Friday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		fridayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			fridayPanel.add(dates);
+			dates = new JLabel(" ");
+			fridayPanel.add(dates);
+
+		}
+
+		// Create a panel for Saturday
+
+		JPanel saturdayPanel = new JPanel();
+		saturdayPanel.setBackground(Color.WHITE);
+		saturdayPanel.setLayout(new BoxLayout(saturdayPanel, BoxLayout.Y_AXIS));
+		schedule.add(saturdayPanel);
+
+		saturdayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (saturdayPanel.getBackground().equals(Color.WHITE)) {
+					saturdayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					saturdayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+
+
+		saturdayPanel.add(weekdays.get(5));
+		dates = new JLabel("Saturday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		saturdayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			saturdayPanel.add(dates);
+			dates = new JLabel(" ");
+			saturdayPanel.add(dates);
+
+		}
+
+		// Create a panel for Sunday
+
+		JPanel sundayPanel = new JPanel();
+		sundayPanel.setBackground(Color.WHITE);
+		sundayPanel.setLayout(new BoxLayout(sundayPanel, BoxLayout.Y_AXIS));
+		schedule.add(sundayPanel);
+
+		sundayPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent arg0) {
+				if (sundayPanel.getBackground().equals(Color.WHITE)) {
+					sundayPanel.setBackground(Color.LIGHT_GRAY);
+				} else {
+					sundayPanel.setBackground(Color.WHITE);
+				}
+			}
+		});
+
+
+		sundayPanel.add(weekdays.get(6));
+		dates = new JLabel("Sunday");
+		dates.setFont(new Font("Tahoma", Font.BOLD, 18));
+		sundayPanel.add(dates);
+
+		for (int i = 8; i < 20; i++) {
+			dates = new JLabel("TIME SLOT");
+			dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			sundayPanel.add(dates);
+			dates = new JLabel(" ");
+			sundayPanel.add(dates);
+
+		}
+
+	}
 
 }
