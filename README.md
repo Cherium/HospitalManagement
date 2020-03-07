@@ -40,4 +40,4 @@ See the list of [contributors] (https://github.com/Cherium/HospitalManagement/gr
 
 ## Acknowledgments
 
-Thank you for reading thus far! Please contact one of the above contributors if you have any problems running thr software.
+Thank you for reading thus far! Please contact one of the above contributors if you have any problems running the software.
