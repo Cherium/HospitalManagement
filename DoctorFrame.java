@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -34,8 +36,9 @@ public class DoctorFrame extends JFrame {
 	Container frame;
 	ArrayList<JLabel> weekdays = new ArrayList<JLabel>(7);
 	LocalDate now = LocalDate.now();
-	JPanel schedule;
+	JPanel scheduleWeekly, scheduleMonthly;
 	ArrayList<JLabel> daysOfWeek = new ArrayList<JLabel>(7);
+	ArrayList<JPanel> daysofMonths = new ArrayList<JPanel>(7);
 
 	/*
 		default frame (getContentFrame()): BorderLayout
@@ -163,7 +166,9 @@ public class DoctorFrame extends JFrame {
 			weekdays.add(lblTemp);
 		}
 		initializeWeeklySchedule();
-		scheduleContainer.add(schedule);
+		scheduleContainer.add(scheduleWeekly);
+		initializeMonthlySchedule();
+		scheduleContainer.add(scheduleMonthly);
 
 
 		/* 
@@ -215,8 +220,12 @@ public class DoctorFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (btnToggle.getText().equals("Monthly view")){
 					btnToggle.setText("Weekly view");
+					scheduleMonthly.setVisible(true);
+					scheduleWeekly.setVisible(false);
 				} else {
 					btnToggle.setText("Monthly view");
+					scheduleWeekly.setVisible(true);
+					scheduleMonthly.setVisible(false);
 				}
 			}
 		});
@@ -369,42 +378,71 @@ public class DoctorFrame extends JFrame {
 	}
 
 	private void initializeVariables() {
-		JLabel lblDay = new JLabel("Monday");
+		JLabel lblDay = new JLabel("Sunday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		daysOfWeek.add(lblDay);
+		JPanel dayPanel7 = new JPanel();
+		dayPanel7.setLayout(new BoxLayout(dayPanel7, BoxLayout.Y_AXIS));
+		dayPanel7.add(lblDay);
+		daysofMonths.add(dayPanel7);
+
+		lblDay = new JLabel("Monday");
+		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
+		daysOfWeek.add(lblDay);
+		JPanel dayPanel1 = new JPanel();
+		dayPanel1.setLayout(new BoxLayout(dayPanel1, BoxLayout.Y_AXIS));
+		dayPanel1.add(lblDay);
+		daysofMonths.add(dayPanel1);
 		lblDay = new JLabel("Tuesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		daysOfWeek.add(lblDay);
+		JPanel dayPanel2 = new JPanel();
+		dayPanel2.setLayout(new BoxLayout(dayPanel2, BoxLayout.Y_AXIS));
+		dayPanel2.add(lblDay);
+		daysofMonths.add(dayPanel2);
 		lblDay = new JLabel("Wednesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		daysOfWeek.add(lblDay);
+		JPanel dayPane3 = new JPanel();
+		dayPane3.setLayout(new BoxLayout(dayPane3, BoxLayout.Y_AXIS));
+		dayPane3.add(lblDay);
+		daysofMonths.add(dayPane3);
 		lblDay = new JLabel("Thursday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		daysOfWeek.add(lblDay);
+		JPanel dayPanel4 = new JPanel();
+		dayPanel4.setLayout(new BoxLayout(dayPanel4, BoxLayout.Y_AXIS));
+		dayPanel4.add(lblDay);
+		daysofMonths.add(dayPanel4);
 		lblDay = new JLabel("Friday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		daysOfWeek.add(lblDay);
+		JPanel dayPanel5 = new JPanel();
+		dayPanel5.setLayout(new BoxLayout(dayPanel5, BoxLayout.Y_AXIS));
+		dayPanel5.add(lblDay);
+		daysofMonths.add(dayPanel5);
 		lblDay = new JLabel("Saturday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		daysOfWeek.add(lblDay);
-		lblDay = new JLabel("Sunday");
-		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		JPanel dayPanel6 = new JPanel();
+		dayPanel6.setLayout(new BoxLayout(dayPanel6, BoxLayout.Y_AXIS));
+		dayPanel6.add(lblDay);
+		daysofMonths.add(dayPanel6);
 	}
 
 	public void initializeWeeklySchedule() {
-		schedule = new JPanel();
-		schedule.setBackground(Color.WHITE);
-		schedule.setBorder(new LineBorder(Color.RED));
+		scheduleWeekly = new JPanel();
+		scheduleWeekly.setBackground(Color.WHITE);
+		scheduleWeekly.setBorder(new LineBorder(Color.RED));
 
-		FlowLayout flowLayout = (FlowLayout) schedule.getLayout();
+		FlowLayout flowLayout = (FlowLayout) scheduleWeekly.getLayout();
 		flowLayout.setAlignment(FlowLayout.CENTER);
 
 		// Create a panel for the times
 		JPanel timePanel = new JPanel();
 		timePanel.setBackground(Color.WHITE);
 		timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.Y_AXIS));
-		schedule.add(timePanel);
+		scheduleWeekly.add(timePanel);
 
 		JLabel dates = new JLabel(" ");
 		timePanel.add(dates);
@@ -425,7 +463,7 @@ public class DoctorFrame extends JFrame {
 			JPanel dayPanel = new JPanel();
 			dayPanel.setBackground(Color.WHITE);
 			dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.Y_AXIS));
-			schedule.add(dayPanel);
+			scheduleWeekly.add(dayPanel);
 			dayPanel.add(weekdays.get(i));
 			dayPanel.add(daysOfWeek.get(i));
 
@@ -452,9 +490,34 @@ public class DoctorFrame extends JFrame {
 	}
 
 	public void initializeMonthlySchedule() {
-		schedule = new JPanel();
-		schedule.setBackground(Color.WHITE);
-		schedule.setBorder(new LineBorder(Color.RED));
+		scheduleMonthly = new JPanel();
+		scheduleMonthly.setBackground(Color.WHITE);
+		scheduleMonthly.setBorder(new LineBorder(Color.RED));
+
+		scheduleMonthly.setLayout(new BoxLayout(scheduleMonthly, BoxLayout.Y_AXIS));
+		JPanel monthPanel = new JPanel();
+		monthPanel.setBackground(Color.WHITE);
+		monthPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JLabel month = new JLabel(now.getMonth().toString());
+		monthPanel.add(month);
+		scheduleMonthly.add(monthPanel);
+
+		LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
+		TemporalField fieldISO = WeekFields.of(Locale.CANADA).dayOfWeek();
+		LocalDate startDate = firstDayOfMonth.with(fieldISO, 1);
+		for (int i = 0; i < 35; i++) {
+			LocalDate meh = startDate.plusDays(i);
+			System.out.println(meh);
+			// Check if meh is Sunday, Monday, ..., Saturday
+			// Use a switch to move between days
+			// Create a JPanel 
+			// * add a label with the day value of meh
+			// * add a scrollpane (Y-axis) with appointment information
+			// Add this JPanel to the corresponding JPanel in daysOfWeek
+		}
+
+
+		scheduleMonthly.setVisible(false);
 
 	}
 
