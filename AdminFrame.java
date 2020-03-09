@@ -28,8 +28,10 @@ public class AdminFrame extends JFrame {
       private JButton dltAccount;
       private NewPatientDialog popupMenu;
       private StartScreen loginFrame;
-      private final JPanel contentPanel = new JPanel();
 
+      private final JPanel contentPanel = new JPanel();
+      private DeleteAccount deleter;
+      private NewPatientDialog creator;
 
 
 //	/**
@@ -114,117 +116,20 @@ public class AdminFrame extends JFrame {
 
 
                     ////TODO Implement creation
-                    ////Adjust this. This might be too messy
-                    ///Honestly I can just copy and paste but that might make this too messy
-                    ///Nothing would pop up at all
-                    ////As of right now it logs you out
-                    ///*
-
-                    main.setVisible(true);
-                    main.clearInputs();
-                    setVisible(false);
-
-                    NewPatientDialog popupMenu = new NewPatientDialog(dbase);
-                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    setSize(400,200);
-                    setLocationRelativeTo(null);
-
-                    contentPane = new JPanel();
-                    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        						setContentPane(contentPane);
-        						GridBagLayout gbl_contentPane = new GridBagLayout();
-        						gbl_contentPane.columnWidths = new int[]{10, 10, 0, 0, 0, 0};
-        						gbl_contentPane.rowHeights = new int[]{10, 10, 0, 0, 0, 0, 0};
-        						gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        						gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        						contentPane.setLayout(gbl_contentPane);
+                    ////You're going to have to utilize the class as it is
 
                     ///*
-
-                    {
-                          final JLabel lblNewLabel = new JLabel("Name");
-        									final GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-        									gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-        									gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-        									gbc_lblNewLabel.gridx = 1;
-        									gbc_lblNewLabel.gridy = 1;
-        									contentPanel.add(lblNewLabel, gbc_lblNewLabel);
-        						}
-        						{
-        									JTextField nameInput = new JTextField();
-        									final GridBagConstraints gbc_nameInput = new GridBagConstraints();
-        									gbc_nameInput.insets = new Insets(0, 0, 5, 0);
-        									gbc_nameInput.fill = GridBagConstraints.HORIZONTAL;
-        									gbc_nameInput.gridx = 3;
-        									gbc_nameInput.gridy = 1;
-        									contentPanel.add(nameInput, gbc_nameInput);
-        									nameInput.setColumns(10);
-        						}
-
-                    {
-        									final JLabel lblNewLabel_1 = new JLabel("Username");
-        									final GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-        									gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-        									gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-        									gbc_lblNewLabel_1.gridx = 1;
-        									gbc_lblNewLabel_1.gridy = 2;
-        									contentPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
-        						}
-        						{
-        									JTextField usernameInput = new JTextField();
-        									final GridBagConstraints gbc_usernameInput = new GridBagConstraints();
-        									gbc_usernameInput.insets = new Insets(0, 0, 5, 0);
-        									gbc_usernameInput.fill = GridBagConstraints.HORIZONTAL;
-        									gbc_usernameInput.gridx = 3;
-        									gbc_usernameInput.gridy = 2;
-        									contentPanel.add(usernameInput, gbc_usernameInput);
-        									usernameInput.setColumns(10);
-        						}
-        						{
-        									final JLabel lblNewLabel_2 = new JLabel("Password");
-        									final GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-        									gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
-        									gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-        									gbc_lblNewLabel_2.gridx = 1;
-        									gbc_lblNewLabel_2.gridy = 3;
-        									contentPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
-        						}
-        						{
-        									JPasswordField passwordInput = new JPasswordField();
-        									final GridBagConstraints gbc_passwordInput = new GridBagConstraints();
-        									gbc_passwordInput.insets = new Insets(0, 0, 5, 0);
-        									gbc_passwordInput.fill = GridBagConstraints.HORIZONTAL;
-        									gbc_passwordInput.gridx = 3;
-        									gbc_passwordInput.gridy = 3;
-        									contentPanel.add(passwordInput, gbc_passwordInput);
-        						}
-        						{
-        									final JLabel lblNewLabel_3 = new JLabel("Re-type password");
-        									lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
-        									final GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-        									gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
-        									gbc_lblNewLabel_3.insets = new Insets(0, 0, 0, 5);
-        									gbc_lblNewLabel_3.gridx = 1;
-        									gbc_lblNewLabel_3.gridy = 4;
-        									contentPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
-        						}
-        						{
-        									JPasswordField passwordInputConfirm = new JPasswordField();
-        									final GridBagConstraints gbc_passwordInputConfirm = new GridBagConstraints();
-        									gbc_passwordInputConfirm.fill = GridBagConstraints.HORIZONTAL;
-        									gbc_passwordInputConfirm.gridx = 3;
-        									gbc_passwordInputConfirm.gridy = 4;
-        									contentPanel.add(passwordInputConfirm, gbc_passwordInputConfirm);
-        						}
-                    //*/
+                    creator = new NewPatientDialog(dbase);
+                    //creator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        						creator.setSize(400,200);
+        						//creator.setLocationRelativeTo(null);
+                    creator.setVisible(true);
 
 
-
-                    ///*
-                    JFrame frame = new JFrame();
-        						frame.setSize(200,100);
-        						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        						JOptionPane.showMessageDialog(frame, "Staff Account created");
+                    //JFrame frame = new JFrame();
+        						//frame.setSize(200,100);
+        						//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        						//JOptionPane.showMessageDialog(frame, "Staff Account created");
 
                     //main.setVisible(false);
                     //main.clearInputs();
@@ -246,10 +151,14 @@ public class AdminFrame extends JFrame {
               public void mouseClicked(MouseEvent e) {
                     ////TODO Implement deletion
 
-                    JFrame frame = new JFrame();
-        						frame.setSize(200,100);
-        						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        						JOptionPane.showMessageDialog(frame, "Account Deleted");
+                    //JFrame frame = new JFrame();
+        						//frame.setSize(200,100);
+        						//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        						//JOptionPane.showMessageDialog(frame, "Account Deleted");
+
+                    deleter = new DeleteAccount(dbase);
+                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
               }
         });

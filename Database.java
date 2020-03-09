@@ -76,6 +76,24 @@ public class Database {
 						users.remove(userid, u);
 			}
 
+
+			public boolean findUser(String userid){
+						if(users.containsKey(userid))
+									return true;
+						return false;
+			}
+
+			//Quite vital for Admin deletion
+			public User getUser(String userid){
+						if (users.containsKey(userid)){
+									User u = users.get(userid);
+									return u;
+								}
+						else
+									return null;
+			}
+
+
 			public User getUser(String userid, char[] pwd){
 						if (users.containsKey(userid)) {
 									User u = users.get(userid);

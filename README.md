@@ -35,8 +35,9 @@ The software is built using Java, with love.
 * **Jeremy Fan**
 * **Neil Mariano**
 * **Qian Ni Zhang**
+
 See the list of [contributors] (https://github.com/Cherium/HospitalManagement/graphs/contributors) who made this project possible.
 
 ## Acknowledgments
 
-Thank you for reading thus far! Please contact one of the above contributors if you have any problems running thr software.
+Thank you for reading thus far! Please contact one of the above contributors if you have any problems running the software.
