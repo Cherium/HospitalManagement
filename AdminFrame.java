@@ -30,7 +30,7 @@ public class AdminFrame extends JFrame {
       private StartScreen loginFrame;
 
       private final JPanel contentPanel = new JPanel();
-      private DeleteAccount deleter;
+    //   private DeleteAccount deleter;
       private NewPatientDialog creator;
 
 
@@ -156,7 +156,7 @@ public class AdminFrame extends JFrame {
         						//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         						//JOptionPane.showMessageDialog(frame, "Account Deleted");
 
-                    deleter = new DeleteAccount(dbase);
+                    // deleter = new DeleteAccount(dbase);
                     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
