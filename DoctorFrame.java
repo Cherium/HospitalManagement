@@ -65,32 +65,20 @@ public class DoctorFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1000, 1000);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Create title frame and set it as top of page
 		JPanel titleContainer = new JPanel();
 		titleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(titleContainer, BorderLayout.NORTH);
 		titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Create separate panels for the two lines of information
 		// Create a panel for the sign out button
 		JPanel backPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) backPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		titleContainer.add(backPanel);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Sign out button, returns to login screen when clicked
 		JButton button = new JButton("Sign out");
 		button.addMouseListener(new MouseAdapter() {
@@ -102,27 +90,12 @@ public class DoctorFrame extends JFrame {
 			}
 		});
 		backPanel.add(button);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Name panel, displays department and name of the doctor
 		JPanel namePane = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) namePane.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		titleContainer.add(namePane);
-<<<<<<< HEAD
-
-		JLabel lblDepartment = new JLabel(doc.getDepartment()+": ");
-		lblDepartment.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		namePane.add(lblDepartment);
-
-		JLabel lblName = new JLabel(doc.getName() + ", M.D.");
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		namePane.add(lblName);
-
-=======
 		
 		JLabel lblDepartment = new JLabel(doc.getDepartment()+": ");
 		lblDepartment.setFont(new Font("Tahoma", Font.PLAIN, 34));
@@ -132,29 +105,19 @@ public class DoctorFrame extends JFrame {
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		namePane.add(lblName);
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Create a content pane centered at the middle of the page
 		JPanel contentPane = new JPanel();
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-<<<<<<< HEAD
-
-		// Create a container for the schedule, for the schedule itself and for the
-=======
 		
 		// Create a container for the schedule, for the schedule itself and for the 
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// button panel associated with it
 		JPanel scheduleContainer = new JPanel();
 		scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
 		scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
 		contentPane.add(scheduleContainer);
 		scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Create a panel for the schedule itself
 		// TODO: Move this to an external function, to implement a switch between monthly and weekly view
 		JPanel schedule = new JPanel();
@@ -175,13 +138,8 @@ public class DoctorFrame extends JFrame {
 		gbl_schedule.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_schedule.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		schedule.setLayout(gbl_schedule);
-<<<<<<< HEAD
-
-		// Creating labels for the days of the week
-=======
 		
 		// Creating labels for the days of the week 
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		JLabel lblDayWeek = new JLabel("Monday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gdb_lbl = new GridBagConstraints();
@@ -189,65 +147,39 @@ public class DoctorFrame extends JFrame {
 		gdb_lbl.gridx = 2;
 		gdb_lbl.gridy = 1;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("Tuesday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 3;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("Wednesday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 4;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("Thursday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 5;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("Friday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 6;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("Saturday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 7;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("Sunday");
 		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		gdb_lbl.gridx = 8;
 		schedule.add(lblDayWeek, gdb_lbl);
-<<<<<<< HEAD
 
-=======
 				
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Add dates to the days of the week
 		// LocalDate now = LocalDate.now();
 		TemporalField fieldISO = WeekFields.of(Locale.CANADA).dayOfWeek();
@@ -275,33 +207,22 @@ public class DoctorFrame extends JFrame {
 		// Invisible labels for making schedule larger and centering schedule
 		gdb_lbl.gridx = 9;
 		gdb_lbl.gridy = 0;
-<<<<<<< HEAD
 		gdb_lbl.insets = new Insets(5, 5, 5, 170);
-=======
-		gdb_lbl.insets = new Insets(5, 5, 5, 150);
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		lblDayWeek = new JLabel("");
 		schedule.add(lblDayWeek, gdb_lbl);
 
 		lblTime = new JLabel("");
 		gdb_lbl.gridx = 0;
 		gdb_lbl.gridy = 0;
-<<<<<<< HEAD
 		gdb_lbl.insets = new Insets(5, 170, 5, 5);
-=======
-		gdb_lbl.insets = new Insets(5, 175, 5, 5);
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		schedule.add(lblTime, gdb_lbl);
 
 		// Create a panel for the buttons that manipulate the schedule
 		JPanel btnPaneSchedule = new JPanel();
 		scheduleContainer.add(btnPaneSchedule);
 		btnPaneSchedule.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Create a button that goes back one week/one month
 		// Currently only one week
 		// ActionListeners handle disabled buttons, mouse click does not
@@ -322,26 +243,20 @@ public class DoctorFrame extends JFrame {
 				now = past;
 			}
 		});
-<<<<<<< HEAD
 		// Button starts out disabled as schedule starts out on current week
 		btnBack.setEnabled(false);
 		btnPaneSchedule.add(btnBack);
 
-=======
 		// Button starts out disabled as schedule starts out on current week		
 		btnBack.setEnabled(false); 
 		btnPaneSchedule.add(btnBack);
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Button that selects a day from a day picker
 		// Not implemented. May remove function altogether
 		JButton btnDaySelecter = new JButton("Select day");
 		btnPaneSchedule.add(btnDaySelecter);
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Button that changes schedule between weekly and monthly views
 		// Currently only weekly view is setup
 		JButton btnToggle = new JButton("Monthly view");
@@ -356,11 +271,8 @@ public class DoctorFrame extends JFrame {
 			}
 		});
 		btnPaneSchedule.add(btnToggle);
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Button that goes foward 1 week/1 month in time
 		// Current only set to go foward 1 week
 		JButton btnForward = new JButton(">");
@@ -399,11 +311,8 @@ public class DoctorFrame extends JFrame {
 		});
 		btnPaneSchedule.add(btnOwnSchedule);
 
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Create panel for the right hand side components
 		JPanel buttonContainer = new JPanel();
 		buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -426,11 +335,7 @@ public class DoctorFrame extends JFrame {
 		gbc_btnPatients.gridx = 0;
 		gbc_btnPatients.gridy = 0;
 		buttonContainer.add(btnPatients, gbc_btnPatients);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Combobox that shows a given nurses schedule when selected
 		// Currently does nothing
 		// Comboboxes are messed up under box layout, which is why this is in grid bag
@@ -438,11 +343,7 @@ public class DoctorFrame extends JFrame {
 		for (Nurse n : doc.getNurses()) {
 			nurseComboBox.addItem(n.getName());
 		}
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Label for the above combo box
 		JLabel lblNurses = new JLabel("Assigned nurses:");
 		lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
@@ -461,11 +362,7 @@ public class DoctorFrame extends JFrame {
 		gbc_nurseComboBox.gridx = 0;
 		gbc_nurseComboBox.gridy = 2;
 		buttonContainer.add(nurseComboBox, gbc_nurseComboBox);
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Button that allows the doctor to view his own schedule
 		JButton btnOwn = new JButton("View own schedule");
 		btnOwn.setEnabled(false);
@@ -476,11 +373,7 @@ public class DoctorFrame extends JFrame {
 				btnOwn.setEnabled(false);
 			}
 		});
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		// Action event on the nurse combo box, once a nurse is selected only then
 		// can the doctor have the option to returning to his own schedule
 		// Is set after the creation of the button
@@ -489,11 +382,7 @@ public class DoctorFrame extends JFrame {
 				btnOwn.setEnabled(true);
 			}
 		});
-<<<<<<< HEAD
-
-=======
 		
->>>>>>> d663f9da576ed9a8826bfebb5264d206569a5e4a
 		GridBagConstraints gbc_btnOwn = new GridBagConstraints();
 		gbc_btnOwn.insets = new Insets(5, 5, 5, 5);
 		gbc_btnOwn.gridx = 0;
