@@ -11,7 +11,7 @@ public class Nurse extends HospitalEmployee {
 	public void setDoctor(Doctor doc) {
 		assignedDoctor = doc;
 	}
-	
+
 	public Doctor getDoctor() {
 		return assignedDoctor;
 	}

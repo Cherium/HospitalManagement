@@ -19,7 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 
-public class AdminFrame extends JFrame {
+public class AuthorityFrame extends JFrame {
 
     	private JPanel contentPane;
     	private JButton btnReturn;
@@ -59,7 +59,7 @@ public class AdminFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdminFrame(Database dbase, StartScreen main, Admin user) {
+	public AuthorityFrame(Database dbase, StartScreen main, Authority user) {
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setSize(800,700);
 				setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -93,7 +93,7 @@ public class AdminFrame extends JFrame {
 
 
 
-				JLabel lblName = new JLabel("Hello "+user.getName());
+				JLabel lblName = new JLabel("Thank you for your time Authority "+user.getName());
 				GridBagConstraints gbc_lblName = new GridBagConstraints();
 				gbc_lblName.gridx = 1;
 				gbc_lblName.gridy = 1;
@@ -101,11 +101,6 @@ public class AdminFrame extends JFrame {
 
 				////Admin Display
 				////TODO Adjust the buttons that will allow for creation and deletion of accounts
-				JLabel lblPlaceholder = new JLabel("What would you like to do today?");
-				GridBagConstraints gbcPlaceholder = new GridBagConstraints();
-				gbcPlaceholder.gridx = 1;
-				gbcPlaceholder.gridy = 2;
-				contentPane.add(lblPlaceholder, gbcPlaceholder);
 
 
         ////Currently these two are placeholders till they can be successfully ustilized

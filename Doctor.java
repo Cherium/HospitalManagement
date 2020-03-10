@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Doctor extends HospitalEmployee {
 	ArrayList<Nurse> assignedNurses = null;
-	
+
 	public Doctor(String name, String username, char[] password, String department, ArrayList<Nurse> nurses) {
 		super(name, username, password, department);
 		setRole("doctor");
@@ -12,11 +12,11 @@ public class Doctor extends HospitalEmployee {
 	public void removeNurse(Nurse nurse) {
 		assignedNurses.remove(nurse);
 	}
-	
+
 	public void addNurse(Nurse nurse) {
 		assignedNurses.add(nurse);
 	}
-	
+
 	public ArrayList<Nurse> getNurses() {
 		return assignedNurses;
 	}
