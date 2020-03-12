@@ -75,6 +75,8 @@ public class DatabaseModel {
 													int flag = 0;
 													for (int j = 0; j < d.getNurses().size(); j++) 
 													{
+														//compare each import list assignedNurse (i)
+														//with Doctors already existing assignedNurses(first line)
 														if(d.getNurses().get(j).getUsername()
 																.compareTo(i) == 0)
 														{
@@ -84,20 +86,26 @@ public class DatabaseModel {
 													}
 													if(flag == 0)
 													{
-														//nurse not found in list; add nurse
+														//import nurse not found in doc assigned list; add nurse
+														//assumption nurse in import assignedNurses 
+														//	already exists in dbase(line73)
 														d.getNurses().add((NurseModel)users.get(i));
 													}
 													else
 													{
-														//nurse found in list, check next 'i'
+														//import list nurse found in doc assigned list
+														//	, check next 'i'
+														flag = 0;
+														
 													}
 												}
-												else
+												else	//because one nurse might have created doc(and she exits in dbase, but others in import list might not be in dbase yet
 												{
-													//else the import list nurse is not in the database, create that nurse object in dbase, add it to assignedNurses
+													//else the import list nurse is not in the database
+													//	, create that nurse object in dbase, add it to assignedNurses
 													//can only add Nurse username, assignedDoc
 													users.put(i,new NurseModel(i, d));
-													d.getNurses().add((NurseModel)users.get(i));
+													d.getNurses().add((NurseModel)users.get(i));	//add new nurse object to Doctor assignedNurses
 													
 												}
 											}
@@ -105,7 +113,8 @@ public class DatabaseModel {
 										else
 										{
 											//the doctor does not already exist in the database
-											//his assigned nurses still might exist
+											//one or more of his assigned nurses still might exist
+											//	(might not have reached them in dbase yet)
 											
 											//create doctor from text file info
 											DoctorModel z = new DoctorModel(split[3],split[1]
@@ -134,8 +143,8 @@ public class DatabaseModel {
 											
 											z.setNurses(temp);		//set temp nurse list as doctors actual assignedNurse list
 											users.put(split[1], z);	//add new completed doctor to database
-											
-											
+//Test: Does New Doc have assigned nurses in internal dbase. Passed test.											
+//System.out.println("hi"+ ((NurseModel)( (DoctorModel)users.get(split[1]) ).getNurses().get(1)).getUsername() );
 										}
 
 										//Add Doctor to the HashMap database (String username, Object Doctor)
@@ -152,6 +161,8 @@ public class DatabaseModel {
 										//check if Nurse already exists from a Doctor potentially creating them already
 										if(users.containsKey(split[1]))
 										{
+//test: did docs created nurses get created in dbase? Passed
+//System.out.println("hi"+ ((NurseModel)users.get(split[1])).getUsername()  );
 											//this means a doctor already created part of this nurse (username, assignedDoc)
 											//finish setting this nurse
 											NurseModel n = (NurseModel) users.get(split[1]);
@@ -160,15 +171,18 @@ public class DatabaseModel {
 											n.setRole(split[0]);
 							//TODO set department here if Nurse is given that instance var
 
-											users.put(split[1], n);	//reassign the value for that nurse username with the updated details
+											//users.put(split[1], n);	//reassign the value for that nurse username with the updated details
+											//no need- n is reference, not deep copy
 										}
 										else
 										{
 											//nurse not in database, add everything
-											//assumption: doc will always be in database of newly created Nurse
+											//assumption: assigneddoc(split[6]) will always be in database of newly created Nurse
 											users.put(split[1], new NurseModel(split[3],split[1],split[2].toCharArray()
 													,split[4], ((DoctorModel) users.get(split[6])) ));											
 										}
+										
+									
 
 									}
 									
@@ -176,6 +190,7 @@ public class DatabaseModel {
 									else if(split[0].compareTo("patient")== 0)
 									{
 										users.put(split[1], new PatientModel( split[3],split[1],split[2].toCharArray() ));
+								//System.out.println("hi222 "+ ((PatientModel) users.get(split[1])).getName() );
 									}
 									
 									else if(split[0].compareTo("admin")== 0)

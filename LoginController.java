@@ -29,7 +29,7 @@ public class LoginController {
 
 	public void newPatient() {
 		// TODO Auto-generated method stub
-		
+		model.openNewPatientDialog();
 	}
 
 

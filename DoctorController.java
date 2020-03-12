@@ -22,7 +22,7 @@ public class DoctorController {
 		view.getDeptLabel().setText(model.getDepartment()+": ");
 		view.getNameLabel().setText(model.getName()+", M.D.");
 		
-		System.out.println(model.getNurses().get(0).getName());
+
 		for(NurseModel n: model.getNurses())
 		{
 			

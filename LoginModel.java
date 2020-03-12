@@ -44,15 +44,28 @@ public class LoginModel {
 		}
 	}
 	
-	////change the GUI the user sees and update the MVC to the new role
+	
+	
+	
+	//change the GUI the user sees to a 'role screen' (ex.Patient) and update the MVC to the new role
 	public void changePerspective()
 	{
 		String roleFrame = user.getRole();
 		if (roleFrame.compareTo("doctor") == 0)
 		{
-			new DoctorController( ((DoctorModel) user) , new DoctorView("") );
+			new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
+		}
+		if(roleFrame.compareTo("patient") == 0)
+		{
+			new PatientController( ((PatientModel) user) , new PatientView("Patient Portal") );
 		}
 		
+	}
+	
+	//open the dialog box MVC for Creating a new patient
+	public void openNewPatientDialog()
+	{
+		new CreateNewPatientController(new CreateNewPatientModel(), new CreateNewPatientView("New Patient Registration") );
 	}
 
 	

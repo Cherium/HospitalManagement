@@ -100,7 +100,7 @@ public class DoctorView {
 	{
 		//create frame container
 		frame = new JFrame(title);
-			frame.setSize(400,200);
+			//frame.setSize(400,200);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
