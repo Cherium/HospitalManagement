@@ -11,21 +11,42 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class PatientView extends JFrame{
+/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+ * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
+ * does not interact with the controller)
+ * 
+ * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
+ * with the model.)
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+public class NurseView extends JFrame{
 	
 	private JPanel panel;
 	
 	private JButton btn;
 	
 	private JLabel label;
+	private JLabel label2;
 	
 	
 
 	
-	//Constructor
-	public PatientView(String title)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Constructor, takes in its title from Login Model class
+	public NurseView(String title)
 	{
-		//create frame container
+		//sets frame containers attributes
 		setTitle(title);
 		setSize(700,700);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,15 +59,14 @@ public class PatientView extends JFrame{
 	
 	
 
-	
+	/**initialize the panels and components that will go inside the frame*/
 	public void initializeGUI() 
 	{
 		
 		//set panel container(with a layout) inside the frame
 		panel = new JPanel();
 			panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(panel);						//set panel as frames inner container
-		
+		setContentPane(panel);						//set 'panel' as frames inner container
 		GridBagLayout gbl_panel = new GridBagLayout();
 			gbl_panel.columnWidths = new int[]{10, 10, 0, 0, 0, 0};
 			gbl_panel.rowHeights = new int[]{10, 10, 0, 0, 0, 0, 0};
@@ -58,24 +78,29 @@ public class PatientView extends JFrame{
 		
 		//create UI elements and add to panel
 		GridBagConstraints c = new GridBagConstraints();
-		
+//LABELS		
 		label = new JLabel("Username");
 			c.insets = new Insets(0, 0, 5, 5);
 			c.gridx = 3;
 			c.gridy = 4;
 			panel.add(label, c);
 			
+		label2 = new JLabel("Username");
+			c.insets = new Insets(0, 0, 5, 5);
+			c.gridx = 3;
+			c.gridy = 5;
+			panel.add(label2, c);
 
-
-			
-		btn = new JButton("back");
+//BUTTONS			
+		btn = new JButton("Sign Out");
+			btn.addActionListener(e -> setVisible(false));
 			c.insets = new Insets(0, 0, 5, 5);
 			c.gridx = 2;
 			c.gridy = 1;
 			panel.add(btn, c);
 			
 
-			
+
 		setVisible(true);
 	}
 
@@ -120,6 +145,24 @@ public class PatientView extends JFrame{
 
 	public void setLabel(JLabel label) {
 		this.label = label;
+	}
+
+
+
+
+
+
+	public JLabel getLabel2() {
+		return label2;
+	}
+
+
+
+
+
+
+	public void setLabel2(JLabel label2) {
+		this.label2 = label2;
 	}	
 
 

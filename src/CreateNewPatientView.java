@@ -14,6 +14,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+ * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
+ * does not interact with the controller)
+ * 
+ * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
+ * with the model.)
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class CreateNewPatientView  extends JDialog{
 	
 	
@@ -25,8 +32,20 @@ public class CreateNewPatientView  extends JDialog{
 		private JButton cancelButton;
 		private JButton okButton;	
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//constructor
 		public CreateNewPatientView(String title)
 		{
+			//sets frame containers attributes
 			setTitle(title);
 			setSize(400, 200);
 			setLocationRelativeTo(null);
@@ -38,7 +57,7 @@ public class CreateNewPatientView  extends JDialog{
 		}
 		
 		
-		
+		/**initialize the panels and components that will go inside the frame*/
 		public void initializeGUI()
 		{
 	
@@ -131,9 +150,11 @@ public class CreateNewPatientView  extends JDialog{
 	//Buttons
 			okButton = new JButton("Create");
 				buttonPane.add(okButton);
+				
+			// clear inputs and close dialog box
 			cancelButton = new JButton("Cancel");
-			
-			cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(e -> {clearInputs(); 
+													 setVisible(false);} );
 				buttonPane.add(cancelButton);
 			
 				
@@ -148,7 +169,7 @@ public class CreateNewPatientView  extends JDialog{
 		
 		
 		
-		//clear inputs in current dialog... should not need
+		//clear inputs- prob dont need this function, since closing a dialog deletes all references to the instantiation
 		public void clearInputs() 
 		{
 			nameInput.setText("");
@@ -157,6 +178,8 @@ public class CreateNewPatientView  extends JDialog{
 			passwordInputConfirm.setText("");		
 		}	
 		
+
+		
 		
 		public void showDialogToUser(String message)
 		{
@@ -164,9 +187,9 @@ public class CreateNewPatientView  extends JDialog{
 		}
 		
 		
-		//GETTERS AND SETTERS//
+
 		
-		
+/**Getter and Setter Methods*/		
 		public JTextField getNameInput() {
 			return nameInput;
 		}

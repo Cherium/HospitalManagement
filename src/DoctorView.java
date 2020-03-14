@@ -36,7 +36,13 @@ import javax.swing.border.LineBorder;
 
 
 
-
+/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+ * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
+ * does not interact with the controller)
+ * 
+ * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
+ * with the model.)
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class DoctorView {
 	
 	private JFrame frame;
@@ -95,10 +101,16 @@ public class DoctorView {
 	
 	
 	
+	
+	
+	
+	
+	
 	//Constructor
 	public DoctorView(String title)
 	{
 		//create frame container
+		//sets frame containers attributes
 		frame = new JFrame(title);
 			//frame.setSize(400,200);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,7 +124,7 @@ public class DoctorView {
 	
 	
 
-	
+	/**initialize the panels and components that will go inside the frame*/
 	public void initializeGUI() 
 	{
 		
@@ -476,7 +488,7 @@ public class DoctorView {
 		
 		
 		
-		
+	/**Getter and Setter Methods*/		
 		
 		
 		
@@ -491,7 +503,7 @@ public class DoctorView {
 		
 		
 		
-	//Only happens in login screen. No combination of user and password detected
+	//show a dialog message if credentials do not validate
 	public void loginError(String message) 
 	{
 				JFrame frame = new JFrame();

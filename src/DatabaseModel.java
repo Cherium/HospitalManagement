@@ -13,8 +13,8 @@ public class DatabaseModel {
 	
 		public HashMap<String, UserModel> users;
 
-		
-		
+		//Can later be expanded by the appropriate user adding a department
+		private ArrayList<String> departmentList = new ArrayList<>(List.of("cardiology", "nephrology", "neurology"));
 		
 		/*provide filename to import when initializing database*/
 		public DatabaseModel(String filePath) {
@@ -230,6 +230,22 @@ public class DatabaseModel {
 
 		public void setUsers(HashMap<String, UserModel> users) {
 			this.users = users;
+		}
+
+
+
+
+
+		public ArrayList<String> getDepartmentList() {
+			return departmentList;
+		}
+
+
+
+
+
+		public void setDepartmentList(ArrayList<String> departmentList) {
+			this.departmentList = departmentList;
 		}
 		
 

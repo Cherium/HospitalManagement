@@ -12,12 +12,23 @@ public class LoginController {
 	{
 		this.model = m;
 		this.view = v;
+		initView();
 		initListeners();
 	}
 
 
+	
+	
+	//initialize the elements that the GUI sees from the database 
+	//	as soon as the view first opens for the user	
+	public void initView()
+	{
+		
+	}
 
-
+	
+	//initialize 'only' the listeners the GUI handles 'that
+	//	need interaction with the model'
 	public void initListeners() 
 	{
 		view.getBtnLogin().addActionListener(e -> verifyCredentials() );

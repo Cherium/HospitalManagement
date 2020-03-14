@@ -1,5 +1,9 @@
 import java.util.Arrays;
 
+
+/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
+ * class interacts with this class, not the other way around.)*/
 public class CreateNewPatientModel {
 	
 	private String name;
@@ -7,10 +11,24 @@ public class CreateNewPatientModel {
 	private char[] pwd;
 	private char[] pwd2;
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	public CreateNewPatientModel()
 	{
-
+		//empty constructor
 	}
+	
+	
+	
+	
+	
+	
 	
 	//verify entered information and return an appropriate debug message accordingly
 	public String storeInDatabase()
@@ -54,7 +72,7 @@ public class CreateNewPatientModel {
 	
 
 	
-	
+/**Getters and Setters*/
 
 	public String getName() {
 		return name;

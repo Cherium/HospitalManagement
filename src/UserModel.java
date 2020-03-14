@@ -8,7 +8,7 @@ public class UserModel {
 
 			public UserModel()
 			{
-				
+	
 			}
 		
 			public UserModel(String name, String username, char[] password) {

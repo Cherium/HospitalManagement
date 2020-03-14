@@ -1,5 +1,10 @@
 import java.util.Arrays;
 
+
+/**Handles calculations, database, etc that the Controller may need.
+ * Does NOT initialize anything from the view or use any view methods.
+ * If the methods of this class return anything, then it is likely the 
+ * controller will use them.*/
 public class LoginModel {
 	
 	private String username;
@@ -15,7 +20,7 @@ public class LoginModel {
 	}
 	
 	
-	
+	//verify entered information in database and change the GUI view the user sees
 	public boolean validate()
 	{
 		if(Main.dbase.users.containsKey(username))
@@ -24,9 +29,9 @@ public class LoginModel {
 			char[] pwdInDatabase = Main.dbase.users.get(username).getPassword();
 			if(Arrays.equals(pwdInDatabase, password) )
 			{
-				this.user = Main.dbase.users.get(username);		//retrieve the User object of the logged-in user
-				System.out.println(Main.dbase.users.get(username).getPassword());
-				changePerspective();							//change the GUI the user sees
+				this.user = Main.dbase.users.get(username);							//retrieve the User object of the logged-in user
+//System.out.println(Main.dbase.users.get(username).getPassword());
+				changePerspective();												//change the GUI the user sees
 				return true;
 			}
 			else
@@ -59,8 +64,22 @@ public class LoginModel {
 		{
 			new PatientController( ((PatientModel) user) , new PatientView("Patient Portal") );
 		}
-		
+		if(roleFrame.compareTo("nurse") == 0)
+		{
+			new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
+		}
+		if(roleFrame.compareTo("admin") == 0)
+		{
+			new AdminController( ((AdminModel) user) , new AdminView("Admin Portal") );
+		}
+		if(roleFrame.compareTo("authority") == 0)
+		{
+			new AuthorityController( ((AuthorityModel) user) , new AuthorityView("Authority Portal") );
+		}
 	}
+	
+	
+	
 	
 	//open the dialog box MVC for Creating a new patient
 	public void openNewPatientDialog()
@@ -69,7 +88,18 @@ public class LoginModel {
 	}
 
 	
-	/**Getter and setter methods*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**Getter and setter methods*/
+	
+	
 	public String getUsername() {
 		return username;
 	}

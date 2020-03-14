@@ -1,7 +1,13 @@
 
+/** Main function that starts the initial GUI*/
 public class Main {
 	
-	public static DatabaseModel dbase = new DatabaseModel("dbase.txt");		//Global var; Main Database; available everywhere; access with Login.data outside this class
+	/**Global variable; 
+	 * The Main Database that is available in all classes.
+	 * Usage:
+	 * 		'Main.dbase.users' is used to access the object that represents the HashMap database.
+	 * 			ex. 'Main.dbase.users.containsKey()' checks the HashMap to see if a key is contained within it. */
+	public static DatabaseModel dbase = new DatabaseModel("dbase.txt");		
 
 	public static void main(String[] args) {
 		
@@ -10,10 +16,29 @@ public class Main {
 		LoginController c = new LoginController(new LoginModel(), new LoginView("Login Screen") );
 		
 
+
 		
 		
 		
-		//testing stuff, disregard///////////////////
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+/*	
+//testing stuff, disregard///////////////////
 		UserModel t;
 		UserModel s = (dbase.users.get("doctor") );
 		//UserModel s = ((DoctorModel) dbase.users.get("doctor") ).getDepartment();
@@ -27,8 +52,8 @@ public class Main {
 			System.out.println(dbase.users.get("nancy") );
 			//System.out.println(((DoctorModel) dbase.users.get("doctor")).getNurses().size());
 			System.out.println(((DoctorModel) dbase.users.get("doctor")).toString());
-		/////////////end testing stuff////////////////////////////////////////////////////////////////////
-
+/////////////end testing stuff////////////////////////////////////////////////////////////////////
+*/
 	}
 
 }

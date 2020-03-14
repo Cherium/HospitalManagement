@@ -6,7 +6,7 @@ public class DoctorController {
 	private DoctorView view;
 	
 	
-	
+	//constructor
 	public DoctorController(DoctorModel m, DoctorView v)
 	{
 		this.model = m;
@@ -15,7 +15,12 @@ public class DoctorController {
 		initListeners();
 	}
 
-	//initialize the view components from grabbing them from the model and sending them to the view
+	
+	
+	
+	
+	//initialize the elements that the GUI sees from the database 
+	//	as soon as the view first opens for the user
 	public void initView()
 	{
 		//set the Labels for view
@@ -31,17 +36,14 @@ public class DoctorController {
 		
 	}
 	
+	//initialize 'only' the listeners the GUI handles 'that
+	//	need interaction with the model'
 	public void initListeners() 
 	{
 		
 		//does not seem to be any listeners in the view that require interaction with the model
-		
 	}
 
-	//unused
-	public void returnToPrevious() {
-		// TODO Auto-generated method stub
-		view.setVisibility(false);
-	}
+	
 
 }
