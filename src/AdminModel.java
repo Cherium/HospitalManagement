@@ -25,27 +25,27 @@ public class AdminModel extends UserModel {
 	//bring up the dialog box to handle New Account creation for various oles
 	public void createAccount(String selectedItem) {
 		
-		if(selectedItem.compareTo("patient") == 0)
+		if(selectedItem.compareTo("Patient") == 0)
 		{
 			new CreateNewPatientController(new CreateNewPatientModel(), new CreateNewPatientView("Create a New Patient"));
 		}
-		else if(selectedItem.compareTo("doctor") == 0)
+		else if(selectedItem.compareTo("Doctor") == 0)
 		{
 			new CreateNewDoctorController(new CreateNewDoctorModel(), new CreateNewDoctorView("Create a New Doctor"));
 		}
-		else if(selectedItem.compareTo("nurse") == 0)
+		else if(selectedItem.compareTo("Nurse") == 0)
 		{
 			//TODO
 		}
-		else if(selectedItem.compareTo("admin") == 0)
+		else if(selectedItem.compareTo("Admin") == 0)
 		{
 			//TODO
 		}
-		else if(selectedItem.compareTo("hospital authority") == 0)
+		else if(selectedItem.compareTo("Hospital Authority") == 0)
 		{
 			//TODO
 		}
-		else if(selectedItem.compareTo("receptionist") == 0)
+		else if(selectedItem.compareTo("Receptionist") == 0)
 		{
 			//TODO
 		}

@@ -25,11 +25,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 
@@ -263,10 +261,12 @@ public class DoctorView {
 					btnToggle.setText("Weekly view");
 					scheduleMonthly.setVisible(true);
 					scheduleWeekly.setVisible(false);
+					setMonthDateLabels(getNow());
 				} else {
 					btnToggle.setText("Monthly view");
 					scheduleWeekly.setVisible(true);
 					scheduleMonthly.setVisible(false);
+					setWeekDateLabels(getNow());
 				}
 			}
 		});
@@ -279,9 +279,7 @@ public class DoctorView {
 				if (btnToggle.getText().equals("Monthly view")) {
 					past = now.minusWeeks(1);
 					tempTime = past.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-					for (JLabel lbl : weekdays) {
-						lbl.setText(tempTime.plusDays(weekdays.indexOf(lbl)).toString());
-					}
+					setWeekDateLabels(past);
 					now = past;
 					if (tempTime.compareTo(LocalDate.now()) < 0) {
 						btnBack.setEnabled(false);
@@ -290,15 +288,12 @@ public class DoctorView {
 				} else {
 					past = now.minusMonths(1).withDayOfMonth(1);
 					tempTime = past.withDayOfMonth(1).with(fieldISO, 1);
-					for (JLabel lbl : monthdays) {
-						lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
-					}
+					setMonthDateLabels(past);
 					now = past;
 					if (tempTime.compareTo(LocalDate.now()) < 0) {
 						btnBack.setEnabled(false);
 						now = LocalDate.now();
 					}
-					displayMonth.setText(past.getMonth().toString()+" "+past.getYear());
 				}
 			}
 		});
@@ -311,20 +306,13 @@ public class DoctorView {
 			btnForward.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					LocalDate future, tempTime;
+					LocalDate future;
 					if (btnToggle.getText().equals("Monthly view")) {
 						future = now.plusWeeks(1);
-						tempTime = future.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-						for (JLabel lbl : weekdays) {
-							lbl.setText(tempTime.plusDays(weekdays.indexOf(lbl)).toString());
-						}
+						setWeekDateLabels(future);
 					} else {
 						future = now.plusMonths(1);
-						tempTime = future.withDayOfMonth(1).with(fieldISO, 1);
-						for (JLabel lbl : monthdays) {
-							lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
-						}
-						displayMonth.setText(future.getMonth().toString()+" "+future.getYear());
+						setMonthDateLabels(future);
 					}
 					if (!btnBack.isEnabled())
 						btnBack.setEnabled(true);
@@ -581,6 +569,7 @@ public class DoctorView {
 		LocalDate firstMonth = now.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		for (int i = 0; i < 35; i++) {
 			monthdays.add(new JLabel(firstMonth.plusDays(i).getDayOfMonth()+""));
+			monthdays.get(i).setFont(new Font ("Tahoma", Font.BOLD, 14));
 		}
 
 
@@ -657,12 +646,12 @@ public class DoctorView {
 	public void initializeMonthlySchedule() {
 		scheduleMonthly = new JPanel();
 			scheduleMonthly.setBackground(Color.WHITE);
-			scheduleMonthly.setBorder(new LineBorder(Color.RED));
+			// scheduleMonthly.setBorder(new LineBorder(Color.RED)); // highlights borders for visual gauging
 			scheduleMonthly.setLayout(new BoxLayout(scheduleMonthly, BoxLayout.Y_AXIS));
 		
 		JPanel monthPanel = new JPanel();
 			monthPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			monthPanel.setBackground(Color.PINK);
+			monthPanel.setBackground(new Color(203, 217, 249)); 
 
 		displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
 			displayMonth.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -670,8 +659,8 @@ public class DoctorView {
 		JPanel monthLabelPanel = new JPanel();
 			monthLabelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			monthLabelPanel.add(displayMonth);
-			// monthLabelPanel.setMaximumSize(displayMonth.getPreferredSize());
-			monthLabelPanel.setBackground(Color.YELLOW);
+			monthLabelPanel.setMaximumSize(displayMonth.getPreferredSize()); // uncommenting this makes the label very small
+			monthLabelPanel.setBackground(new Color(158, 182, 238));
 
 		scheduleMonthly.add(monthLabelPanel);
 		scheduleMonthly.add(monthPanel);
@@ -697,16 +686,18 @@ public class DoctorView {
 				scrollAppoint.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				scrollAppoint.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 				day.add(scrollAppoint);
-				monthDate.setBackground(Color.LIGHT_GRAY);
+				monthDate.setBackground(new Color(59, 198, 198));
+				scrollAppoint.setBackground(new Color(147, 234, 234));
 				
 			day.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(final MouseEvent arg0) {
-					if (monthDate.getBackground().equals(Color.LIGHT_GRAY)){
-						monthDate.setBackground(Color.ORANGE);
+					if (monthDate.getBackground().equals(new Color(59, 198, 198))){
+						monthDate.setBackground(new Color(255, 157, 76));
+						scrollAppoint.setBackground(new Color(255, 203, 160));
 					} else {
-						monthDate.setBackground(Color.LIGHT_GRAY);
-						
+						monthDate.setBackground(new Color(59, 198, 198));
+						scrollAppoint.setBackground(new Color(147, 234, 234));
 					}
 				}
 			});
@@ -1130,7 +1121,20 @@ public class DoctorView {
 	}
 
 
+	public void setMonthDateLabels(LocalDate ld) {
+		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		for (JLabel lbl : monthdays) {
+			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
+		}
+		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
+	}
 
+	public void setWeekDateLabels(LocalDate ld) {
+		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		for (JLabel lbl : weekdays) {
+			lbl.setText(tempTime.plusDays(weekdays.indexOf(lbl)).toString());
+		}
+	}
 
 	
 

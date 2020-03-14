@@ -39,6 +39,14 @@ public class CreateNewDoctorController {
 	{
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle create button pressed
 		view.getAddNurse().addActionListener(e -> addNurseToList() );		//handle 'add' button pressed
+		view.getDepartmentDropDown().addActionListener(e -> 
+			{if (view.getDepartmentDropDown().getSelectedItem().equals("ER")) {
+				view.getNurseDropDown().setEnabled(false);
+				view.getAddNurse().setEnabled(false);			
+			} else {
+				view.getNurseDropDown().setEnabled(true);
+				view.getAddNurse().setEnabled(true);			
+			}});
 		
 	}
 

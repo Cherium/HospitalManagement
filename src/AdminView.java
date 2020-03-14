@@ -82,12 +82,12 @@ public class AdminView extends JFrame {
 	//Labels
 				JLabel chooseRole = new JLabel("Choose Role to Manage:");
 				rolesDropDown = new JComboBox<String>();
-					rolesDropDown.addItem("patient");
-					rolesDropDown.addItem("doctor");
-					rolesDropDown.addItem("admin");
-					rolesDropDown.addItem("hospital authority");
-					rolesDropDown.addItem("nurse");
-					rolesDropDown.addItem("receptionist");
+					rolesDropDown.addItem("Patient");
+					rolesDropDown.addItem("Doctor");
+					rolesDropDown.addItem("Admin");
+					rolesDropDown.addItem("Hospital Authority");
+					rolesDropDown.addItem("Nurse");
+					rolesDropDown.addItem("Receptionist");
 					
 	//Buttons			
 				crtAccount = new JButton("Create Account");

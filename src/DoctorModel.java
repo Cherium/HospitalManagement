@@ -8,8 +8,8 @@ public class DoctorModel extends UserModel {
 	
 	//private DoctorModel doctor;
 	private String department;
-	private ArrayList<NurseModel> nurses = new ArrayList<NurseModel>(10);
-	
+	private ArrayList<NurseModel> nurses = new ArrayList<NurseModel>(0);
+	private ArrayList<PatientModel> scheduledPatients = new ArrayList<PatientModel>(0);
 	
 
 	//constructor for import/export from database
@@ -66,6 +66,14 @@ public class DoctorModel extends UserModel {
 
 	public void setNurses(ArrayList<NurseModel> nurses) {
 		this.nurses = nurses;
+	}
+
+	public ArrayList<PatientModel> getScheduledPatients() {
+		return scheduledPatients;
+	}
+
+	public void addScheduledPatients(ArrayList<PatientModel> pats) {
+		this.scheduledPatients = pats;
 	}
 
 //testing class; will later be export class for database

@@ -2,8 +2,6 @@ import java.util.HashMap;
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -14,7 +12,7 @@ public class DatabaseModel {
 		public HashMap<String, UserModel> users;
 
 		//Can later be expanded by the appropriate user adding a department
-		private ArrayList<String> departmentList = new ArrayList<>(List.of("cardiology", "nephrology", "neurology"));
+		private ArrayList<String> departmentList = new ArrayList<>(List.of("Cardiology", "Nephrology", "Neurology", "ER"));
 		
 		/*provide filename to import when initializing database*/
 		public DatabaseModel(String filePath) {
