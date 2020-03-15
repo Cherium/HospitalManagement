@@ -24,7 +24,7 @@ Example: 10 mar 21:13 SAJID
 
 **CreateNewDoctorModel**
 * changed order of constructor arguments in storeInDatabase()
-* getNurseList() retrieves ArrayList<String> instead of ArrayList<NurseModel>
+* getNurseList() retrieves ArrayList\<String> instead of ArrayList\<NurseModel>
 * storeinDatabase() passes String[] instead of ArrayList<NurseModel> to DoctorModel
 
 **CreateNewDoctorView & CreateNewDoctorController**
