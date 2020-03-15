@@ -12,7 +12,8 @@ public class DatabaseModel {
 		public HashMap<String, UserModel> users;
 
 		//Can later be expanded by the appropriate user that has rights to add a department
-		private ArrayList<String> departmentList = new ArrayList<>(List.of("Cardiology", "Nephrology", "Neurology", "ER"));
+		private ArrayList<String> departmentList = new ArrayList<>
+					(List.of("Cardiology", "Nephrology", "Neurology", "Receptionist", "ER"));
 		
 		
 		
@@ -101,7 +102,13 @@ public class DatabaseModel {
 											
 											users.put(importUsername, temp);
 										}
-									
+										
+										else if(importRole.compareTo("receptionist")== 0)
+										{
+											ReceptionistModel temp = new ReceptionistModel(importUsername, importPassword, importName);
+											
+											users.put(importUsername, temp);
+										}
 								}
 						
 								

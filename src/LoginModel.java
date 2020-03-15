@@ -76,6 +76,10 @@ public class LoginModel {
 		{
 			new AuthorityController( ((AuthorityModel) user) , new AuthorityView("Authority Portal") );
 		}
+		if(roleFrame.compareTo("receptionist") == 0)
+		{
+			new ReceptionistController( ((ReceptionistModel) user) , new ReceptionistView("Receptionist Portal") );
+		}
 	}
 	
 	
