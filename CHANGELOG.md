@@ -4,6 +4,9 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID
 
 
+## 15 MARCH 8:53 Jenny
+**CreateNewDoctorView**
+* Fixed issue where selecting a ER department for doctor and switching to another department does not reenable add nurses button. 
 
 ## 10 mar 21:51 Sajid
 **Main**
@@ -33,3 +36,4 @@ Example: 10 mar 21:13 SAJID
 
 **All Model classes**
 * changed order of constructor arguments to reflect format in external database
+
