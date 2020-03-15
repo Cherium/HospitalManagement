@@ -22,6 +22,13 @@ public class UserModel {
 						this.username = username;
 						this.password = password.toCharArray();
 			}
+			
+			//returns the 'name' associated with an object in the database
+			public String getObjectsName(String username)
+			{
+				
+				return Main.dbase.get(username).name;
+			}
 		
 			public void setName(String name) {
 						this.name = name;

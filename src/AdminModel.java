@@ -11,17 +11,17 @@ public class AdminModel extends UserModel {
 	
 	
 	//constructor
-	public AdminModel(String name, String username, char[] password) {
+	public AdminModel(String username, char[] password, String name) {
+
 		super(name, username, password);
 		setRole("admin");
-		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	//bring up the dialog box to handle New Account creation for various oles
 	public void createAccount(String selectedItem) {
 		

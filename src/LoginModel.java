@@ -23,13 +23,13 @@ public class LoginModel {
 	//verify entered information in database and change the GUI view the user sees
 	public boolean validate()
 	{
-		if(Main.dbase.users.containsKey(username))
+		if(Main.dbase.containsKey(username))
 		{
 			//compare entered password against database password for entered username
-			char[] pwdInDatabase = Main.dbase.users.get(username).getPassword();
+			char[] pwdInDatabase = Main.dbase.get(username).getPassword();
 			if(Arrays.equals(pwdInDatabase, password) )
 			{
-				this.user = Main.dbase.users.get(username);							//retrieve the User object of the logged-in user
+				this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
 //System.out.println(Main.dbase.users.get(username).getPassword());
 				changePerspective();												//change the GUI the user sees
 				return true;

@@ -23,13 +23,13 @@ public class DeleteAccountModel {
 	public String deleteAccount()
 	{
 		//check if the username is NOT on file
-		if(!Main.dbase.users.containsKey(username) )
+		if(!Main.dbase.containsKey(username) )
 		{
 			return "That Account does not exist!";
 		}
 		
 		//otherwise delete the account from the HashMap
-		Main.dbase.users.remove(username);
+		Main.dbase.remove(username);
 		return "Account successfully deleted!";
 		
 		

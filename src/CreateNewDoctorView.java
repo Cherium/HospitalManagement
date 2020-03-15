@@ -104,7 +104,7 @@ public class CreateNewDoctorView  extends JDialog{
 				//ComboBox drop down lists	
 					nurseDropDown = new JComboBox<String>();
 					departmentDropDown = new JComboBox<String>();
-					
+						departmentDropDown.addActionListener(e -> disableNurseSelection() );
 					
 				//Add components to panel in order	
 					contentPanel.add(name, "right");								//add name label to the right side of the current column
@@ -177,6 +177,18 @@ public class CreateNewDoctorView  extends JDialog{
 		}	
 		
 		
+		
+		//disable the nurse selection option for when the ER department is chosen by the User
+		public void disableNurseSelection()
+		{
+			if (departmentDropDown.getSelectedItem().equals("ER")) {
+				nurseDropDown.setEnabled(false);
+				addNurse.setEnabled(false);			
+			} else {
+				nurseDropDown.setEnabled(true);
+				nurseDropDown.setEnabled(true);			
+			}
+		}
 
 		
 		

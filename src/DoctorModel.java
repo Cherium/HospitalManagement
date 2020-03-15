@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
@@ -8,36 +9,25 @@ public class DoctorModel extends UserModel {
 	
 	//private DoctorModel doctor;
 	private String department;
-	private ArrayList<NurseModel> nurses = new ArrayList<NurseModel>(0);
-	private ArrayList<PatientModel> scheduledPatients = new ArrayList<PatientModel>(0);
+	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
+	private ArrayList<PatientModel> scheduledPatients = new ArrayList<PatientModel>(5);
 	
 
-	//constructor for import/export from database
-	public DoctorModel(String name, String username, char[] password, String department)
-	{
-		super(name, username, password);
-		this.department = department;
-		setRole("doctor");
-	}
 	
 	//constructor
-	public DoctorModel(String name, String username, char[]password, String department, ArrayList<NurseModel> nurses) {
+	public DoctorModel(String username, char[]password, String name, String department, String[] nurses) {
 		
 			super(name, username, password);
 			this.department = department;
 			setRole("doctor");
 			
-			//get list of nurses and add them to the instance variable to later add attributes to the database
-			for (int i = 0; i < nurses.size(); i++) {
-				
-				this.nurses.add(nurses.get(i) );
+			//add nurses to array
+			for(String i: nurses)
+			{
+				this.assignedNurseUsernames.add(i);
 			}
 			
-			
 	}
-
-
-	
 	
 	
 	
@@ -57,15 +47,12 @@ public class DoctorModel extends UserModel {
 
 
 
-	public ArrayList<NurseModel> getNurses() {
-		return nurses;
+	public ArrayList<String> getAssignedNurseUsernames() {
+		return assignedNurseUsernames;
 	}
 
-
-
-
-	public void setNurses(ArrayList<NurseModel> nurses) {
-		this.nurses = nurses;
+	public void setAssignedNurseUsernames(ArrayList<String> nurses) {
+		this.assignedNurseUsernames = nurses;
 	}
 
 	public ArrayList<PatientModel> getScheduledPatients() {
@@ -88,9 +75,17 @@ public String toString()
 	bob.append("\n");
 	bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
 	bob.append("\n");
-	bob.append("Nurse1: "+ nurses.get(0).getName());
+	//bob.append("Nurse1: "+ nurses.get(0).getName());
 	return bob.toString();
 }
+
+
+
+
+
+
+
+
 
 	
 }

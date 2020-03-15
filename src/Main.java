@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 /** Main function that starts the initial GUI*/
 public class Main {
@@ -5,9 +6,10 @@ public class Main {
 	/**Global variable; 
 	 * The Main Database that is available in all classes.
 	 * Usage:
-	 * 		'Main.dbase.users' is used to access the object that represents the HashMap database.
-	 * 			ex. 'Main.dbase.users.containsKey()' checks the HashMap to see if a key is contained within it. */
-	public static DatabaseModel dbase = new DatabaseModel("dbase.txt");		
+	 * 		'Main.dbase' is used to access the object that represents the HashMap database.
+	 * 			ex. 'Main.dbase.containsKey()' checks the HashMap to see if a key is contained within it. */
+	public static DatabaseModel dbaseClass = new DatabaseModel("dbase.txt");
+	public static HashMap<String, UserModel> dbase = dbaseClass.users;
 
 	public static void main(String[] args) {
 		

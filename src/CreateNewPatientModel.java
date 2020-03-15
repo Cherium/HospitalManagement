@@ -34,7 +34,7 @@ public class CreateNewPatientModel {
 	public String storeInDatabase()
 	{
 		//check if username already exists in database
-		if( Main.dbase.users.containsKey(username))
+		if( Main.dbase.containsKey(username))
 		{
 			return "Username already exists!";
 		}
@@ -65,7 +65,7 @@ public class CreateNewPatientModel {
 		
 		
 		//store in database if all checks pass
-		Main.dbase.users.put(username, new PatientModel(name, username, pwd));
+		Main.dbase.put(username, new PatientModel(username, pwd, name));
 		return "Account successfully created!";
 	}
 	

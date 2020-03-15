@@ -6,13 +6,10 @@ public class PatientModel extends UserModel {
 
 
 	//constructor
-	public PatientModel(String name, String username, char[] password) 
-	{
+	public PatientModel(String username, char[] password, String name) {
 		
 		super(name,username,password);
 		setRole("patient");
-		// TODO Auto-generated constructor stub
-		
 		
 	}
 	

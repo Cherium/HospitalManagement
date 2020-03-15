@@ -40,22 +40,14 @@ public class CreateNewDoctorController {
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle create button pressed
 		view.getAddNurse().addActionListener(e -> addNurseToList() );		//handle 'add' button pressed
 		
-		view.getDepartmentDropDown().addActionListener(e -> disableNurseSelection() );
+		
 		
 	}
 
+	
 
-	//disable the nurse selection option for when the ER department is chosen by the User
-	public void disableNurseSelection()
-	{
-		if (view.getDepartmentDropDown().getSelectedItem().equals("ER")) {
-			view.getNurseDropDown().setEnabled(false);
-			view.getAddNurse().setEnabled(false);			
-		} else {
-			view.getNurseDropDown().setEnabled(true);
-			view.getAddNurse().setEnabled(true);			
-		}
-	}
+	
+	
 	
 	//add nurse to GUI Textbox if it already isn't in the Textbox
 	public void addNurseToList() 

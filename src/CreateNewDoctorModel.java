@@ -38,7 +38,7 @@ public class CreateNewDoctorModel {
 	public String storeInDatabase()
 	{
 		//check if username already exists in database
-		if( Main.dbase.users.containsKey(username))
+		if( Main.dbase.containsKey(username))
 		{
 			return "Username already exists!";
 		}
@@ -82,20 +82,19 @@ public class CreateNewDoctorModel {
 		
 		/**store in database if all checks pass*/
 		
-		//get NurseModel object list of nurses to assign
-		ArrayList<NurseModel> temp = new ArrayList<NurseModel>(10);
-		for(Map.Entry<String, UserModel> i: Main.dbase.users.entrySet())
+		//get list of nurses to assign
+		ArrayList<String> temp = new ArrayList<String>(5);
+		for(Map.Entry<String, UserModel> i: Main.dbase.entrySet())
 		{
-			//if Object in DBase has name that matches User selected name
+			//if entry 'i' in DBase has 'name' that matches User selected nurse name
 			if(nurseListToAdd.contains(i.getValue().getName()) )
 			{
-				//add that Object to the Nurse List
-				temp.add((NurseModel)i.getValue() );
+				//add the associated username to temp
+				temp.add(i.getKey() );
 			}
 		}
 		//Create a new doctor with all information collected and store in database
-		Main.dbase.users.put(username, new DoctorModel(name, username, 
-													pwd, department, temp) );
+		Main.dbase.put(username, new DoctorModel(username,pwd, name,  department, temp.toArray(new String[0]) ) );
 		return "Account successfully created!";
 	}
 	
@@ -110,13 +109,13 @@ public class CreateNewDoctorModel {
 		
 		//get all nurses in HashMap database into an array
 		//https://javatutorial.net/java-iterate-hashmap-example
-		for(Map.Entry<String, UserModel> i: Main.dbase.users.entrySet())
+		for(Map.Entry<String, UserModel> i: Main.dbase.entrySet())
 		{
 			//if role is nurse, return nurse name
 			if(i.getValue().getRole().compareTo("nurse") == 0)
 			{
 				
-				temp.add(i.getValue().getName());
+				temp.add(i.getValue().getName() );
 			}
 		}
 		
@@ -130,7 +129,7 @@ public class CreateNewDoctorModel {
 	//return the department list in a string[] format for use with combobox
 	public String[] getDeptList() {
 		
-		ArrayList<String> temp = Main.dbase.getDepartmentList();
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
 		temp.add(0, "");
 		
 		return temp.toArray(new String[0]);

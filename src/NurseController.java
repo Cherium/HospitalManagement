@@ -31,8 +31,12 @@ public class NurseController {
 	//get information from model, and set labels, etc in view
 	public void initView()
 	{
-		view.getLabel().setText("Hello "+ model.getName() );													//retrieve name for displaying
-		view.getLabel2().setText("The Doctor you are working with is: "+ model.getAssignedDoc().getName() );	//retrieve assigned doc for displaying
+		view.getLabel().setText("Hello "+ model.getName() );						//retrieve name for displaying
+		
+		view.getLabel2().setText("The Doctor you are working with is: "+ 			//retrieve doc name for displaying
+					Main.dbase.get(
+							model.getAssignedDocUsername()).getName()
+					);
 	}
 	
 	//initialize the listeners from the view class that need to interact with model

@@ -6,8 +6,8 @@
 public class AuthorityModel extends UserModel {
 
 	//constructor
-	public AuthorityModel(String name, String username, char[] password) 
-	{
+	public AuthorityModel(String username, char[] password, String name) {
+
 		super(name, username, password);
 		setRole("authority");
 	}

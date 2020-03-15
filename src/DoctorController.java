@@ -28,10 +28,10 @@ public class DoctorController {
 		view.getNameLabel().setText(model.getName()+", M.D.");
 		
 
-		for(NurseModel n: model.getNurses())
+		for(String n: model.getAssignedNurseUsernames())
 		{
 			
-			view.getNurseComboBox().addItem(n.getName() );
+			view.getNurseComboBox().addItem(model.getObjectsName(n) );
 		}
 		
 	}

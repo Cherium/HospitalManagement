@@ -5,23 +5,23 @@ public class NurseModel extends UserModel {
 	
 	private String department;
 	
-	private DoctorModel assignedDoc;
+	private String assignedDocUsername;
+
 
 	
-	//constructor for database reading
-	public NurseModel(String username, DoctorModel assignedDoc)
-	{
-		this.assignedDoc = assignedDoc;
-		this.username = username;
-	}
 	
-	//another constructor
-	public NurseModel(String name, String username, char[] password
-			, String department, DoctorModel assignedDoc){
+	
+	
+	//constructor
+	public NurseModel(String username, char[] password, String name
+			, String department, String assignedDocUsername){
 		
 		super(name, username, password);
-		this.setAssignedDoc(assignedDoc);
+		this.assignedDocUsername = assignedDocUsername;
+		this.department = department;
 		setRole("nurse");
+		//provide an ease-of-use doctor object for assigned doc of this Nurse, retrieved from the database
+		//any changes to this object are not reflected in the database, and must be done manually
 	}
 
 	
@@ -33,12 +33,12 @@ public class NurseModel extends UserModel {
 	
 /**Getters and Setters*/
 	
-	public DoctorModel getAssignedDoc() {
-		return assignedDoc;
+	public String getAssignedDocUsername() {
+		return assignedDocUsername;
 	}
 
-	public void setAssignedDoc(DoctorModel assignedDoc) {
-		this.assignedDoc = assignedDoc;
+	public void setAssignedDocUsername(String assignedDoc) {
+		this.assignedDocUsername = assignedDoc;
 	}
 	
 
