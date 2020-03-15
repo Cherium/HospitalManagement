@@ -186,7 +186,7 @@ public class CreateNewDoctorView  extends JDialog{
 				addNurse.setEnabled(false);			
 			} else {
 				nurseDropDown.setEnabled(true);
-				nurseDropDown.setEnabled(true);			
+				addNurse.setEnabled(true);			
 			}
 		}
 
