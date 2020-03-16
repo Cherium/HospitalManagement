@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import net.miginfocom.swing.MigLayout;
+
 /**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
@@ -23,14 +25,19 @@ import javax.swing.border.EmptyBorder;
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class CreateNewPatientView  extends JDialog{
 	
+	private JPanel contentPanel;
 	
-		private JPanel contentPanel = new JPanel();
-		private JTextField nameInput;
-		private JTextField usernameInput;
-		private JPasswordField passwordInput;
-		private JPasswordField passwordInputConfirm;
-		private JButton cancelButton;
-		private JButton okButton;	
+	private JTextField nameInput;
+	private JTextField usernameInput;
+	private JTextField address;
+	private JTextField phone;
+	private JTextField email;
+	
+	private JPasswordField passwordInput;
+	private JPasswordField passwordInputConfirm;
+	
+	private JButton cancelButton;
+	private JButton createButton;
 		
 		
 		
@@ -47,10 +54,9 @@ public class CreateNewPatientView  extends JDialog{
 		{
 			//sets frame containers attributes
 			setTitle(title);
-			setSize(400, 200);
+			setSize(370, 450);
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			getContentPane().setLayout(new BorderLayout());
 			
 			initializeGUI();
 				
@@ -61,101 +67,57 @@ public class CreateNewPatientView  extends JDialog{
 		public void initializeGUI()
 		{
 	
-			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-				getContentPane().add(contentPanel, BorderLayout.CENTER);
-				GridBagLayout gbl_contentPanel = new GridBagLayout();
-				gbl_contentPanel.columnWidths = new int[]{50, 0, 25, 100, 0};
-				gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-				gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-				gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};			
-				contentPanel.setLayout(gbl_contentPanel);
+			//Main panel background
+			contentPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );		//initialize jpanel and set its layout
+			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
+			
+		
+			//Labels
+				JLabel nameLab = new JLabel("Name:");
+				JLabel usernameLab = new JLabel("Username:");
+				JLabel addressLab = new JLabel("Address:");
+				JLabel PhoneNumLab = new JLabel("Phone #:");
+				JLabel emailLab = new JLabel("Email:");
+				JLabel pwd = new JLabel("Password:");
+				JLabel pwd2 = new JLabel("Re-enter Password:");
 			
 				
-	//Labels
-			JLabel lblNewLabel = new JLabel("Name");
-				GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-				gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-				gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-				gbc_lblNewLabel.gridx = 1;
-				gbc_lblNewLabel.gridy = 1;
-				contentPanel.add(lblNewLabel, gbc_lblNewLabel);
-
-			JLabel lblNewLabel_1 = new JLabel("Username");
-				GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-				gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-				gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-				gbc_lblNewLabel_1.gridx = 1;
-				gbc_lblNewLabel_1.gridy = 2;
-				contentPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
-
-			JLabel lblNewLabel_2 = new JLabel("Password");
-				GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-				gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
-				gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-				gbc_lblNewLabel_2.gridx = 1;
-				gbc_lblNewLabel_2.gridy = 3;
-				contentPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
-
-			JLabel lblNewLabel_3 = new JLabel("Re-type password");
-				lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
-				GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-				gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
-				gbc_lblNewLabel_3.insets = new Insets(0, 0, 0, 5);
-				gbc_lblNewLabel_3.gridx = 1;
-				gbc_lblNewLabel_3.gridy = 4;
-				contentPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);				
-	
-	//TextFields	
-			nameInput = new JTextField();
-				GridBagConstraints gbc_nameInput = new GridBagConstraints();
-				gbc_nameInput.insets = new Insets(0, 0, 5, 0);
-				gbc_nameInput.fill = GridBagConstraints.HORIZONTAL;
-				gbc_nameInput.gridx = 3;
-				gbc_nameInput.gridy = 1;
-				contentPanel.add(nameInput, gbc_nameInput);
-				nameInput.setColumns(10);
-
-			usernameInput = new JTextField();
-				GridBagConstraints gbc_usernameInput = new GridBagConstraints();
-				gbc_usernameInput.insets = new Insets(0, 0, 5, 0);
-				gbc_usernameInput.fill = GridBagConstraints.HORIZONTAL;
-				gbc_usernameInput.gridx = 3;
-				gbc_usernameInput.gridy = 2;
-				contentPanel.add(usernameInput, gbc_usernameInput);
-				usernameInput.setColumns(10);
+			//TextFields
+				nameInput = new JTextField(20);
+				usernameInput = new JTextField(20);
+				address = new JTextField(20);
+				phone = new JTextField(20);
+				email = new JTextField(20);
 				
-	//Passwords TextFields			
-			passwordInput = new JPasswordField();
-				final GridBagConstraints gbc_passwordInput = new GridBagConstraints();
-				gbc_passwordInput.insets = new Insets(0, 0, 5, 0);
-				gbc_passwordInput.fill = GridBagConstraints.HORIZONTAL;
-				gbc_passwordInput.gridx = 3;
-				gbc_passwordInput.gridy = 3;
-				contentPanel.add(passwordInput, gbc_passwordInput);			
+			//PasswordFields
+				passwordInput = new JPasswordField(20);
+				passwordInputConfirm = new JPasswordField(20);
 				
-
-			passwordInputConfirm = new JPasswordField();
-				GridBagConstraints gbc_passwordInputConfirm = new GridBagConstraints();
-				gbc_passwordInputConfirm.fill = GridBagConstraints.HORIZONTAL;
-				gbc_passwordInputConfirm.gridx = 3;
-				gbc_passwordInputConfirm.gridy = 4;
-				contentPanel.add(passwordInputConfirm, gbc_passwordInputConfirm);	
-
+			//Buttons
+				createButton = new JButton("Create Account");
+				cancelButton = new JButton("Cancel");
 				
-	//Panel for buttons
-			JPanel buttonPane = new JPanel();
-				buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-				getContentPane().add(buttonPane, BorderLayout.SOUTH);
 				
-	//Buttons
-			okButton = new JButton("Create");
-				buttonPane.add(okButton);
-				
-			// clear inputs and close dialog box
-			cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(e -> {clearInputs(); 
-													 setVisible(false);} );
-				buttonPane.add(cancelButton);
+			//Add to main panel
+			contentPanel.add(nameLab);
+			contentPanel.add(nameInput, "wrap");
+			contentPanel.add(addressLab);
+			contentPanel.add(address, "wrap");
+			contentPanel.add(PhoneNumLab);
+			contentPanel.add(phone, "wrap");
+			contentPanel.add(emailLab);
+			contentPanel.add(email, "wrap");
+			contentPanel.add(usernameLab);
+			contentPanel.add(usernameInput, "wrap");
+			contentPanel.add(pwd);
+			contentPanel.add(passwordInput, "wrap");
+			contentPanel.add(pwd2);
+			contentPanel.add(passwordInputConfirm, "wrap 10");
+			
+			contentPanel.add(createButton, "sg a");
+			contentPanel.add(cancelButton, "sg a");
+			
 			
 				
 				
@@ -249,19 +211,54 @@ public class CreateNewPatientView  extends JDialog{
 		}
 
 
-
-		public JButton getOkButton() {
-			return okButton;
+		public JPanel getContentPanel() {
+			return contentPanel;
 		}
 
 
-
-		public void setOkButton(JButton okButton) {
-			this.okButton = okButton;
+		public void setContentPanel(JPanel contentPanel) {
+			this.contentPanel = contentPanel;
 		}
-		
-		
-		
+
+
+		public JTextField getAddress() {
+			return address;
+		}
+
+
+		public void setAddress(JTextField address) {
+			this.address = address;
+		}
+
+
+		public JTextField getPhone() {
+			return phone;
+		}
+
+
+		public void setPhone(JTextField phone) {
+			this.phone = phone;
+		}
+
+
+		public JTextField getEmail() {
+			return email;
+		}
+
+
+		public void setEmail(JTextField email) {
+			this.email = email;
+		}
+
+
+		public JButton getCreateButton() {
+			return createButton;
+		}
+
+
+		public void setCreateButton(JButton createButton) {
+			this.createButton = createButton;
+		}
 		
 		
 		

@@ -41,7 +41,7 @@ public class DatabaseModel {
 			
 			try {
 						Scanner sc = new Scanner(file);
-						sc.next();								//ignore first line of headers
+						sc.nextLine();								//ignore first line of headers
 						
 						//import database, line by line
 						while(sc.hasNextLine()) {
@@ -58,6 +58,12 @@ public class DatabaseModel {
 										String importDepartment					 = split[4];
 										String[] importAssignedNurseUsernames	 = split[5].split(",");
 										String importAssignedDocUsername		 = split[6];
+										String importAddress						= split[7];
+										System.out.println(split[8]);
+										String importPhoneNumber			 = split[8];
+										String importEmail 								= split[9];
+										float importAmountDue			 = Float.parseFloat(split[10]);
+										
 	
 										
 								//import fields into internal database
@@ -83,8 +89,9 @@ public class DatabaseModel {
 										}
 										
 										else if(importRole.compareTo("patient")== 0)
-										{
-											PatientModel temp = new PatientModel(importUsername, importPassword, importName);
+										{ System.out.println(importAmountDue);
+											PatientModel temp = new PatientModel(importUsername, importPassword, importName
+													, importAddress, importPhoneNumber, importEmail, importAmountDue);
 											
 											users.put(importUsername, temp);
 										}

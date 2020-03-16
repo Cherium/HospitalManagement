@@ -43,6 +43,14 @@ public class CreateNewDoctorModel {
 			return "Username already exists!";
 		}
 		
+		
+		//check that password is long enough; pwd's already verified at this point
+		if(pwd.length < 4)
+		{
+			return "Password must be at least 4 characters!";
+		}
+		
+		
 		//check if passwords match
 		if(Arrays.equals(pwd,pwd2) == false)
 		{
@@ -55,11 +63,7 @@ public class CreateNewDoctorModel {
 			return "Username must be at least 4 characters!";
 		}
 		
-		//check that password is long enough; pwd's already verified at this point
-		if(pwd.length < 4)
-		{
-			return "Password must be at least 4 characters!";
-		}
+
 
 		//check that a name was entered
 		if(name.length() < 1)

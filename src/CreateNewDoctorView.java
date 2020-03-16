@@ -98,7 +98,7 @@ public class CreateNewDoctorView  extends JDialog{
 				//Buttons
 					addNurse = new JButton("add");
 					
-				//TextBoc
+				//TextBox
 					box = new JTextArea("List of nurses to be assigned: \n");
 					
 				//ComboBox drop down lists	

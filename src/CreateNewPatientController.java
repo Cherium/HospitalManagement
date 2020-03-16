@@ -33,7 +33,7 @@ public class CreateNewPatientController {
 	//	need interaction with the model'
 	public void initListeners() 
 	{
-		view.getOkButton().addActionListener(e -> parseEntry() );		//handle okay button being pressed
+		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle okay button being pressed
 		
 	}
 
@@ -44,6 +44,9 @@ public class CreateNewPatientController {
 //TODO could also change get methods in view to return .getText versions		
 		// Get input from view and pass to model
 		model.setName(view.getNameInput().getText());
+		model.setAddress(view.getAddress().getText() );
+		model.setPhoneNumber(view.getPhone().getText() );
+		model.setEmail(view.getEmail().getText() );
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());

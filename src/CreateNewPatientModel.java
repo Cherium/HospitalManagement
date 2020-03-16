@@ -10,6 +10,9 @@ public class CreateNewPatientModel {
 	private String username;
 	private char[] pwd;
 	private char[] pwd2;
+	private String address;
+	private String phoneNumber;
+	private String email;
 	
 	
 	
@@ -63,9 +66,16 @@ public class CreateNewPatientModel {
 			return "Please enter a name!";
 		}
 		
+		//check that remaining fields are not empty
+		if(address.length() == 0 || phoneNumber.length() == 0 || email.length() == 0)
+		{
+			return "No Field Should be empty!";
+		}
+		
 		
 		//store in database if all checks pass
-		Main.dbase.put(username, new PatientModel(username, pwd, name));
+		Main.dbase.put(username
+				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0));
 		return "Account successfully created!";
 	}
 	
@@ -104,6 +114,66 @@ public class CreateNewPatientModel {
 
 	public void setPwd2(char[] pwd2) {
 		this.pwd2 = pwd2;
+	}
+
+
+
+
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+
+
+
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+
+
+
+
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
+
+
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
