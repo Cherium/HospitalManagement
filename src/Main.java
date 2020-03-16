@@ -8,9 +8,14 @@ public class Main {
 	 * Usage:
 	 * 		'Main.dbase' is used to access the object that represents the HashMap database.
 	 * 			ex. 'Main.dbase.containsKey()' checks the HashMap to see if a key is contained within it. */
+	
 	public static DatabaseModel dbaseClass = new DatabaseModel("dbase.txt");
 	public static HashMap<String, UserModel> dbase = dbaseClass.users;
 
+	
+	
+	
+	
 	public static void main(String[] args) {
 		
 		//initialize the MVC for the login screen

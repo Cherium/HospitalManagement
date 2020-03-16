@@ -1,7 +1,10 @@
 import java.util.HashMap;
 import java.util.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -33,14 +36,18 @@ public class DatabaseModel {
 		//import information from the provided file
 		public void importDatabase(String filePath) {
 
-			//String executionPath = System.getProperty("user.dir"+"\\database.csv");
-			//System.out.print("Executing at =>"+executionPath.replace("\\", "/"));
 			
 			//TODO implement so a .jar can find file in a given build
-			File file = new File(filePath);
+			//1/File file = new File(filePath);
 			
-			try {
-						Scanner sc = new Scanner(file);
+			/*
+			 * https://stackoverflow.com/questions/1464291/how-to-really-read-text-file-from-classpath-in-java
+			 * https://stackoverflow.com/questions/21023065/open-file-that-is-in-the-resource-folder-inside-jar?noredirect=1&lq=1
+			 * https://stackoverflow.com/questions/24521830/how-to-convert-an-inputstream-to-a-scanner-java*/
+			InputStream stream = getClass().getClassLoader().getResourceAsStream("dbase.txt");
+			
+			
+						Scanner sc = new Scanner(stream);
 						sc.nextLine();								//ignore first line of headers
 						
 						//import database, line by line
@@ -67,7 +74,8 @@ public class DatabaseModel {
 	
 										
 								//import fields into internal database
-/**{TODO expand as we determine more information for each role	}*/
+										
+										
 										//if the data to import pertains to a doctor
 										if(importRole.compareTo("doctor") == 0)
 										{
@@ -125,10 +133,7 @@ public class DatabaseModel {
 								
 								
 								
-			} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-			}
+
 			
 			
 			

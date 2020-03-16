@@ -4,6 +4,8 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID
 
 
+## 16 mar 17:20 Sajid
+* changed relative path of dbase so that .jar can be exported
 
 ## 16 mar 06:01 Sajid
 **patient portal functionality created**
