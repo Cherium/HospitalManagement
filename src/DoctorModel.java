@@ -63,6 +63,15 @@ public class DoctorModel extends UserModel {
 		this.scheduledPatients = pats;
 	}
 
+
+	public String[] getPatientNames() {
+		String[] nameStrs = new String[getScheduledPatients().size()];
+		for (int i = 0; i < getScheduledPatients().size(); i++) {
+			nameStrs[i] = getScheduledPatients().get(i).getName();
+		}
+		return nameStrs;
+	}
+
 //testing class; will later be export class for database
 public String toString()
 {

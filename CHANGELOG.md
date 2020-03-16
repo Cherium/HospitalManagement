@@ -3,6 +3,12 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 15 MARCH 20:32 Jenny
+**DoctorModel & DoctorController & DoctorView**
+* Added a field of scheduled patients to doctor and implemented a view within doctor view. When logging in, a list of patients scheduled under the doctor will be loaded. 
+
+**PatientModel**
+* Added a field for treatment record to patient. 
 
 ## 15 MARCH 8:53 Jenny
 **CreateNewDoctorView**

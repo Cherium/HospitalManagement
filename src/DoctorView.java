@@ -50,6 +50,7 @@ public class DoctorView {
 	private JPanel scheduleMonthly;
 	private JPanel titleContainer;
 	private JPanel backPanel;
+	private JPanel patientPanel;
 	//private JPanel dayPanel;
 	
 	private JButton btnSignOut;
@@ -67,6 +68,7 @@ public class DoctorView {
 	private ArrayList<JLabel> daysOfWeek = new ArrayList<JLabel>(7);
 	private ArrayList<JPanel> panelsOfWeekMonth = new ArrayList<JPanel>(7);
 	private ArrayList<JLabel> monthdays = new ArrayList<JLabel>(35);
+	private ArrayList<JPanel> patientListPanels = new ArrayList<JPanel>(0);
 	
 	JComboBox<String> nurseComboBox;
 	
@@ -194,8 +196,9 @@ public class DoctorView {
 			scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
 			contentPane.add(scheduleContainer);
 				
+		initializePatients();
+		contentPane.add(patientPanel);
 			
-		
 		
 /*
  	#################################
@@ -346,6 +349,7 @@ public class DoctorView {
 				public void mouseClicked(MouseEvent e) {
 					btnOwnSchedule.setVisible(false);
 					btnSaveChanges.setVisible(false);
+					patientPanel.setVisible(false);
 				}
 			});
 			
@@ -389,7 +393,14 @@ public class DoctorView {
 					gbc_btnPatients.gridx = 0;
 					gbc_btnPatients.gridy = 0;
 				buttonContainer.add(btnPatients, gbc_btnPatients);
-				
+				btnPatients.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						contentPane.setVisible(false);
+						patientPanel.setVisible(true);
+					}
+				});
+					
 		
 				
 				
@@ -430,6 +441,8 @@ public class DoctorView {
 				public void actionPerformed(ActionEvent e) {
 					nurseComboBox.setSelectedIndex(-1);
 					btnOwn.setEnabled(false);
+					contentPane.setVisible(true);
+					patientPanel.setVisible(false);
 				}
 			});
 
@@ -476,7 +489,7 @@ public class DoctorView {
 		
 		
 		
-	/**Getter and Setter Methods*/		
+	/** Getter and Setter Methods */
 		
 		
 		
@@ -738,6 +751,28 @@ public class DoctorView {
 
 	}
 
+	
+	public void initializePatients() {
+		patientPanel = new JPanel();
+		patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel listPatientsPanel = new JPanel();
+		listPatientsPanel.setLayout(new BoxLayout(listPatientsPanel, BoxLayout.Y_AXIS));
+		// For each patient scheduled, add a panel to listPatientsPanel
+		for (JPanel patient : getPatientListPanels()) {
+			listPatientsPanel.add(patient);
+		}
+		listPatientsPanel.setMaximumSize(listPatientsPanel.getPreferredSize());
+		JPanel specificPatientPanel = new JPanel();
+		specificPatientPanel.setLayout(new BoxLayout(specificPatientPanel, BoxLayout.Y_AXIS));
+
+
+
+		patientPanel.add(listPatientsPanel);
+		patientPanel.add(specificPatientPanel);
+
+		patientPanel.setVisible(false);
+	}
+
 	/**Getter and Setter Methods*/
 
 	public JFrame getFrame() {
@@ -808,7 +843,13 @@ public class DoctorView {
 	}
 
 
+	public JPanel getPatientPanel() {
+		return patientPanel;
+	}
 
+	public void setPatientPanel(JPanel patPanel) {
+		this.patientPanel = patPanel;
+	}
 
 
 
@@ -1118,6 +1159,26 @@ public class DoctorView {
 
 	public void setNurseComboBox(JComboBox<String> nurseComboBox) {
 		this.nurseComboBox = nurseComboBox;
+	}
+
+
+	public void setPatientListPanels(ArrayList<JPanel> patList) {
+		this.patientListPanels = patList;
+	}
+
+
+	public ArrayList<JPanel> getPatientListPanels() {
+		return patientListPanels;
+	}
+
+
+
+	public void setPatientListPanels(String[] patList) {
+		for (String p : patList) {
+			JPanel aPat = new JPanel();
+			aPat.add(new JLabel(p));
+			patientListPanels.add(aPat);
+		}
 	}
 
 
