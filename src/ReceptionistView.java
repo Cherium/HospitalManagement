@@ -19,7 +19,7 @@ public class ReceptionistView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(400,400);
 		setLocationRelativeTo(null);
 		

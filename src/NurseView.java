@@ -49,7 +49,7 @@ public class NurseView extends JFrame{
 		//sets frame containers attributes
 		setTitle(title);
 		setSize(700,700);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		initializeGUI();
