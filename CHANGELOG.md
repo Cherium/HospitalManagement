@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+##15 mar 00:30 Sajid
+* added 'create department' functionality for admin
+
 ## 15 mar 15:50 Sajid
 * Created three classes: Receptionist M,V,C, to handle the receptionist class
 * updates dbase.txt with a receptionist user, with username= recipe, password = recipe
