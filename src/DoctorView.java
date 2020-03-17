@@ -397,13 +397,6 @@ public class DoctorView {
 					gbc_btnPatients.gridx = 0;
 					gbc_btnPatients.gridy = 0;
 				buttonContainer.add(btnPatients, gbc_btnPatients);
-				btnPatients.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						contentPane.setVisible(false);
-						patientPanel.setVisible(true);
-					}
-				});
 					
 		
 				
@@ -449,6 +442,14 @@ public class DoctorView {
 					patientPanel.setVisible(false);
 				}
 			});
+				btnPatients.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						contentPane.setVisible(false);
+						patientPanel.setVisible(true);
+						btnOwn.setEnabled(true);
+					}
+				});
 
 			// Action event on the nurse combo box, once a nurse is selected only then
 			// can the doctor have the option to returning to his own schedule
