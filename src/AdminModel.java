@@ -60,4 +60,26 @@ public class AdminModel extends UserModel {
 		
 	}
 
+
+
+
+
+	//add the department to the DatabaseModel list of departments, send a debug message back
+	public String addDept(String toAdd) {
+		
+		//convert string to have first letter capitalized
+		String temp = toAdd.substring(0,1).toUpperCase() + toAdd.substring(1).toLowerCase();
+		
+		//check if department already exists
+		if(Main.dbaseClass.getDepartmentList().contains(temp) )
+		{
+			return "Department already exists!";
+		}
+
+		//else add department
+		Main.dbaseClass.getDepartmentList().add(temp);
+		return "Department created!";
+
+	}
+
 }

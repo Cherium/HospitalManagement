@@ -1,0 +1,9 @@
+role	username	password	name	department	nursesUsernames	assignedDoctorUsername	address	phoneNumber	email	amountDue
+doctor	doctor	doctor	doctor who	cardiology	nancy,drew	null	null	0	null	0
+nurse	nurse	nurse	Nurse Joy	cardiology	null	doctor	null	0	null	0
+patient	patient	patient	Healthy Person	null	null	null	99 University Way	4039999999	patient@ucalgary.ca	25
+patient	patient2	patient	Sick Person	null	null	null	lane	999	pcpcpc	20
+admin	admin	admin	Lowly Admin	null	null	null	null	0	null	0
+nurse	nancy	nancy	Nurse Nance	cardiology	null	doctor	null	0	null	0
+nurse	drew	drew	Nurse Ew	cardiology	null	doctor	null	0	null	0
+receptionist	recipe	recipe	ronald	null	null	null	null	0	null	0

@@ -25,6 +25,8 @@ public class AdminController {
 	public void initView()
 	{
 		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
+		
+
 	}
 	
 	
@@ -40,6 +42,28 @@ public class AdminController {
 		
 		
 		view.getDelAccount().addActionListener(e -> model.deleteAccount() );								//handle 'delete account' button pressed
+		
+		view.getCrtDepartment().addActionListener(e -> addDepartment() );
+		
+	}
+	
+	
+	
+	public void addDepartment()
+	{
+		String response;
+		
+		//if textbox isn't empty- handles Excelption thrown if textbox is empty.
+		if(!view.getCreateDeptText().getText().isEmpty() )
+		{
+			//create the department, send message back to User
+			response = model.addDept( view.getCreateDeptText().getText() );
+			view.showDialogToUser(response);
+		}
+		else
+		{
+			view.showDialogToUser("Enter a Department Name!");
+		}
 		
 	}
 }

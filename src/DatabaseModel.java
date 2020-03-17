@@ -1,7 +1,10 @@
 import java.util.HashMap;
 import java.util.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -12,7 +15,8 @@ public class DatabaseModel {
 		public HashMap<String, UserModel> users;
 
 		//Can later be expanded by the appropriate user that has rights to add a department
-		private ArrayList<String> departmentList = new ArrayList<>(List.of("Cardiology", "Nephrology", "Neurology", "ER"));
+		private ArrayList<String> departmentList = new ArrayList<>
+					(List.of("Cardiology", "Nephrology", "Neurology", "Receptionist", "ER"));
 		
 		
 		
@@ -32,15 +36,19 @@ public class DatabaseModel {
 		//import information from the provided file
 		public void importDatabase(String filePath) {
 
-			//String executionPath = System.getProperty("user.dir"+"\\database.csv");
-			//System.out.print("Executing at =>"+executionPath.replace("\\", "/"));
 			
 			//TODO implement so a .jar can find file in a given build
-			File file = new File(filePath);
+			//1/File file = new File(filePath);
 			
-			try {
-						Scanner sc = new Scanner(file);
-						sc.next();								//ignore first line of headers
+			/*
+			 * https://stackoverflow.com/questions/1464291/how-to-really-read-text-file-from-classpath-in-java
+			 * https://stackoverflow.com/questions/21023065/open-file-that-is-in-the-resource-folder-inside-jar?noredirect=1&lq=1
+			 * https://stackoverflow.com/questions/24521830/how-to-convert-an-inputstream-to-a-scanner-java*/
+			InputStream stream = getClass().getClassLoader().getResourceAsStream("dbase.txt");
+			
+			
+						Scanner sc = new Scanner(stream);
+						sc.nextLine();								//ignore first line of headers
 						
 						//import database, line by line
 						while(sc.hasNextLine()) {
@@ -57,10 +65,17 @@ public class DatabaseModel {
 										String importDepartment					 = split[4];
 										String[] importAssignedNurseUsernames	 = split[5].split(",");
 										String importAssignedDocUsername		 = split[6];
+										String importAddress						= split[7];
+										System.out.println(split[8]);
+										String importPhoneNumber			 = split[8];
+										String importEmail 								= split[9];
+										float importAmountDue			 = Float.parseFloat(split[10]);
+										
 	
 										
 								//import fields into internal database
-/**{TODO expand as we determine more information for each role	}*/
+										
+										
 										//if the data to import pertains to a doctor
 										if(importRole.compareTo("doctor") == 0)
 										{
@@ -82,8 +97,9 @@ public class DatabaseModel {
 										}
 										
 										else if(importRole.compareTo("patient")== 0)
-										{
-											PatientModel temp = new PatientModel(importUsername, importPassword, importName);
+										{ System.out.println(importAmountDue);
+											PatientModel temp = new PatientModel(importUsername, importPassword, importName
+													, importAddress, importPhoneNumber, importEmail, importAmountDue);
 											
 											users.put(importUsername, temp);
 										}
@@ -101,7 +117,13 @@ public class DatabaseModel {
 											
 											users.put(importUsername, temp);
 										}
-									
+										
+										else if(importRole.compareTo("receptionist")== 0)
+										{
+											ReceptionistModel temp = new ReceptionistModel(importUsername, importPassword, importName);
+											
+											users.put(importUsername, temp);
+										}
 								}
 						
 								
@@ -111,10 +133,7 @@ public class DatabaseModel {
 								
 								
 								
-			} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-			}
+
 			
 			
 			

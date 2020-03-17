@@ -10,6 +10,34 @@ Example: 10 mar 21:13 SAJID
 **PatientModel**
 * Added a field for treatment record to patient. 
 
+## 16 mar 17:20 Sajid
+* changed relative path of dbase so that .jar can be exported
+
+## 16 mar 06:01 Sajid
+**patient portal functionality created**
+* uploads patient information from the database
+* checks that no fields are empty when save button is pressed
+* doesnt do error checking or update the database on 'patient info' box yet when save button is pressed-- maybe leave it for next iteration
+* patient credentials panel does error checking and updates the database to the changed password
+**databaseModel updated**
+* new fields added" address, ph#, email, amountDue
+**dbase.txt updated with new fields**
+* new fields added" address, ph#, email, amountDue
+**PatientModel**
+* constructor changed to reflect changes above
+**CreateNewPatientMVC**
+* refactored View using MigLayout
+* Added fields address, email, phone number which store in database as is
+* changed the controller and model to reflect these new fields
+
+## 15 mar 00:30 Sajid
+* added 'create department' functionality for admin
+
+## 15 mar 15:50 Sajid
+* Created three classes: Receptionist M,V,C, to handle the receptionist class
+* updates dbase.txt with a receptionist user, with username= recipe, password = recipe
+
+
 ## 15 MARCH 8:53 Jenny
 **CreateNewDoctorView**
 * Fixed issue where selecting a ER department for doctor and switching to another department does not reenable add nurses button. 

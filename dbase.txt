@@ -1,8 +1,0 @@
-role	username	password	name	department	nurses usernames	assignedDoctorUsername
-doctor	doctor	doctor	Doctor Who	Cardiology	nancy,drew	null
-nurse	nurse	nurse	Nurse Joy	Cardiology	null	doctor
-patient	patient	patient	Healthy Person	null	null	null
-patient	patient2	patient	Sick Person	null	null	null
-admin	admin	admin	Lowly Admin	null	null	null
-nurse	nancy	nancy	Nurse Nance	Cardiology	null	doctor
-nurse	drew	drew	Nurse Ew	Cardiology	null	doctor
