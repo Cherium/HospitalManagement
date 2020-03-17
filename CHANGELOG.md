@@ -3,12 +3,8 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
-## 15 MARCH 20:32 Jenny
-**DoctorModel & DoctorController & DoctorView**
-* Added a field of scheduled patients to doctor and implemented a view within doctor view. When logging in, a list of patients scheduled under the doctor will be loaded. 
-
-**PatientModel**
-* Added a field for treatment record to patient. 
+## 16 MARCH 21:08 Jenny
+* Started implementation of a patient view into doctor. Added patient record field into patient model and created a panel that allows toggling between patient view and schedule.
 
 ## 16 mar 17:20 Sajid
 * changed relative path of dbase so that .jar can be exported
@@ -29,6 +25,14 @@ Example: 10 mar 21:13 SAJID
 * refactored View using MigLayout
 * Added fields address, email, phone number which store in database as is
 * changed the controller and model to reflect these new fields
+
+## 15 MARCH 20:32 Jenny
+**DoctorModel & DoctorController & DoctorView**
+* Added a field of scheduled patients to doctor and implemented a view within doctor view. When logging in, a list of patients scheduled under the doctor will be loaded. 
+
+**PatientModel**
+* Added a field for treatment record to patient. 
+
 
 ## 15 mar 00:30 Sajid
 * added 'create department' functionality for admin
