@@ -18,6 +18,7 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,7 +29,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import net.miginfocom.swing.MigLayout;
 
 
 
@@ -762,10 +766,26 @@ public class DoctorView {
 			listPatientsPanel.add(patient);
 		}
 		listPatientsPanel.setMaximumSize(listPatientsPanel.getPreferredSize());
-		JPanel specificPatientPanel = new JPanel();
-		specificPatientPanel.setLayout(new BoxLayout(specificPatientPanel, BoxLayout.Y_AXIS));
+		JPanel specificPatientPanel = new JPanel(new MigLayout(""));
+		specificPatientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 
+		JTextField patientInfo = new JTextField();
+		patientInfo.setColumns(10);
+		patientInfo.setText("Detailed Patient information:\nName\nAge\nSex\nMedical histories");
 
+		JTextField patientRecord = new JTextField();
+		patientRecord.setColumns(10);
+		patientRecord.setText("Recommend a healthy lifestyle\n\tProfessor Birch, M.D.");
+
+		JTextField addToRecord = new JTextField();
+		addToRecord.setColumns(10);
+
+		JButton btnAddRecord = new JButton("Add to record");
+
+		specificPatientPanel.add(patientInfo);
+		specificPatientPanel.add(patientRecord);
+		specificPatientPanel.add(addToRecord);
+		specificPatientPanel.add(btnAddRecord);
 
 		patientPanel.add(listPatientsPanel);
 		patientPanel.add(specificPatientPanel);
