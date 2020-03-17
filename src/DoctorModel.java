@@ -11,6 +11,7 @@ public class DoctorModel extends UserModel {
 	private String department;
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<PatientModel> scheduledPatients = new ArrayList<PatientModel>(5);
+	private ScheduleModel schedule;
 	
 
 	
@@ -33,6 +34,15 @@ public class DoctorModel extends UserModel {
 	
 
 /**Getters and Setters*/
+	public void setSchedule(ScheduleModel schedule) {
+		this.schedule = schedule;
+	}
+
+
+	public ScheduleModel getSchedule() {
+		return schedule;
+	}
+
 	public String getDepartment() {
 		return department;
 	}
@@ -84,7 +94,7 @@ public String toString()
 	bob.append("\n");
 	bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
 	bob.append("\n");
-	//bob.append("Nurse1: "+ nurses.get(0).getName());
+	// bob.append("Schedule: " + \n\t + getSchedule().toString());
 	return bob.toString();
 }
 
