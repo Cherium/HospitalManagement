@@ -31,6 +31,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.DimensionUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -193,15 +194,24 @@ public class DoctorView {
 			contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
 		// Create a container for the schedule, for the schedule itself and for the
-		// button panel associated with it
+		// button panel associated with it (on the buttom)
 		JPanel scheduleContainer = new JPanel();
 			scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
 			scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
 			scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
 			contentPane.add(scheduleContainer);
-				
-		initializePatients();
+		
+		
+		patientPanel = new JPanel();
+		patientPanel.setBorder(new LineBorder(Color.CYAN));
+		patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+		// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		patientPanel.setLayout(new BorderLayout());
+		patientPanel.setBackground(Color.WHITE);
+		patientPanel.setVisible(false);
 		contentPane.add(patientPanel);
+
+		initializePatients();
 			
 		
 /*
@@ -438,18 +448,22 @@ public class DoctorView {
 				public void actionPerformed(ActionEvent e) {
 					nurseComboBox.setSelectedIndex(-1);
 					btnOwn.setEnabled(false);
-					contentPane.setVisible(true);
+					// contentPane.setVisible(true);
+					scheduleContainer.setVisible(true);
 					patientPanel.setVisible(false);
 				}
 			});
-				btnPatients.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						contentPane.setVisible(false);
-						patientPanel.setVisible(true);
-						btnOwn.setEnabled(true);
-					}
-				});
+
+			btnPatients.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// contentPane.setVisible(false);
+					scheduleContainer.setVisible(false);
+					patientPanel.setVisible(true);
+					btnOwn.setEnabled(true);
+					System.out.println("Viewing patients");
+				}
+			});
 
 			// Action event on the nurse combo box, once a nurse is selected only then
 			// can the doctor have the option to returning to his own schedule
@@ -758,40 +772,40 @@ public class DoctorView {
 
 	
 	public void initializePatients() {
-		patientPanel = new JPanel();
-		patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		// patientPanel = new JPanel();
+		// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		// patientPanel.setBackground(Color.WHITE);
+		
 		JPanel listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new BoxLayout(listPatientsPanel, BoxLayout.Y_AXIS));
-		// For each patient scheduled, add a panel to listPatientsPanel
-		for (JPanel patient : getPatientListPanels()) {
-			listPatientsPanel.add(patient);
+		for (int i = 0; i < 10; i++) {
+			JPanel aPatient = new JPanel();
+			aPatient.setLayout(new BoxLayout(aPatient, BoxLayout.Y_AXIS));
+			JLabel patient = new JLabel("Patient " + (i+1));
+			JLabel age = new JLabel("Age " + (int)(0 + Math.random() * 500));
+			aPatient.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			aPatient.add(patient);
+			aPatient.add(age);
+			aPatient.setPreferredSize(new Dimension(175, 75));
+
+			listPatientsPanel.add(aPatient);
 		}
-		listPatientsPanel.setMaximumSize(listPatientsPanel.getPreferredSize());
-		JPanel specificPatientPanel = new JPanel(new MigLayout(""));
-		specificPatientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
+		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		listPatientsPanel.setPreferredSize(new DimensionUIResource(200, 0));
 
-		JTextField patientInfo = new JTextField();
-		patientInfo.setColumns(10);
-		patientInfo.setText("Detailed Patient information:\nName\nAge\nSex\nMedical histories");
+		JPanel selectedPatient = new JPanel(new MigLayout("insets 30"));
+		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient information"));
+		selectedPatient.setBackground(Color.WHITE);
+		selectedPatient.add(new JLabel("Patient Information"), "wrap");
+		selectedPatient.add(new JLabel("Detailed Treatment History"), "wrap");
+		selectedPatient.add(new JTextField("Past treatment historys and doctors who recommended treatment"), "wrap");
+		selectedPatient.add(new JButton("Add treatment notes"), "wrap");
 
-		JTextField patientRecord = new JTextField();
-		patientRecord.setColumns(10);
-		patientRecord.setText("Recommend a healthy lifestyle\n\tProfessor Birch, M.D.");
+		patientPanel.add(listPatientsPanel, BorderLayout.WEST);
+		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
-		JTextField addToRecord = new JTextField();
-		addToRecord.setColumns(10);
-
-		JButton btnAddRecord = new JButton("Add to record");
-
-		specificPatientPanel.add(patientInfo);
-		specificPatientPanel.add(patientRecord);
-		specificPatientPanel.add(addToRecord);
-		specificPatientPanel.add(btnAddRecord);
-
-		patientPanel.add(listPatientsPanel);
-		patientPanel.add(specificPatientPanel);
-
-		patientPanel.setVisible(false);
+		// patientPanel.setVisible(false);
+		System.out.print("Initialized patients");
 	}
 
 	/**Getter and Setter Methods*/

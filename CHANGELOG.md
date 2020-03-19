@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 19 MARCH 12:29 Jenny
+* Went back and redid patient information in doctor. Currently has dummy data. 
+
 ## 17 MARCH 9:40 Jenny
 ** ScheduleModel + DoctorModel + NurseModel**
 * Created a rough guide of schedule for doctors and nurses. Currently only indicates the days of a week that a doctor/nurse is scheduled to work. This hasn't been implemented into the GUI.
