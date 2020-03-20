@@ -6,6 +6,9 @@ Example: 10 mar 21:13 SAJID
 
 
 
+## 20 MARCH 11:53 Jenny
+**DoctorModel + DoctorView**
+* Added an empty listener in doctor view and text fields to patient view inside doctor. The functionality isn't incorporated but all the pieces are in place.
 
 ### 20 mar 00:14 Sajid
 **CreateNewDoctoModel**
@@ -14,7 +17,10 @@ Example: 10 mar 21:13 SAJID
 **CreatNewPatientView**
 * added a listener to handle the cancel button
 
-### 17 MARCH 9:40 Jenny
+## 19 MARCH 12:29 Jenny
+* Went back and redid patient information in doctor. Currently has dummy data. 
+
+## 17 MARCH 9:40 Jenny
 ** ScheduleModel + DoctorModel + NurseModel**
 * Created a rough guide of schedule for doctors and nurses. Currently only indicates the days of a week that a doctor/nurse is scheduled to work. This hasn't been implemented into the GUI.
 
