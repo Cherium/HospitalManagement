@@ -1,6 +1,7 @@
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-
 
 import javax.swing.JPanel;
 
@@ -39,15 +40,22 @@ public class DoctorController {
 				}
 			});
 		}
-		
+
 	}
-	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
-	public void initListeners() 
-	{
-		
-		//does not seem to be any listeners in the view that require interaction with the model
+
+	// initialize 'only' the listeners the GUI handles 'that
+	// need interaction with the model'
+	public void initListeners() {
+
+		// TODO: Set up listener for button that adds to treatment record
+		view.getButtonTreatmentNotes().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Add the input box text to the selected patient record
+				// Update view
+
+			}
+		});
 	}
 
 	

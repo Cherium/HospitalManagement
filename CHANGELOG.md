@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 20 MARCH 11:53 Jenny
+** DoctorModel + DoctorView **
+* Added an empty listener and text fields to patient view inside doctor. The functionality isn't incorporated but all the pieces are in place.
+
 ## 19 MARCH 12:29 Jenny
 * Went back and redid patient information in doctor. Currently has dummy data. 
 
