@@ -10,6 +10,7 @@ Example: 10 mar 21:13 SAJID
 ### 20 mar 00:14 Sajid
 **CreateNewDoctoModel**
 * fixed bug causing duplicate blank spaces in combobox  
+
 **CreatNewPatientView**
 * added a listener to handle the cancel button
 
