@@ -30,8 +30,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.plaf.BorderUIResource.BevelBorderUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -272,8 +274,6 @@ public class DoctorView {
 		btnToggle.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO: Set things up for showing proper dates when toggling between views
-
 				if (btnToggle.getText().equals("Monthly view")){
 					btnToggle.setText("Weekly view");
 					scheduleMonthly.setVisible(true);
@@ -772,24 +772,30 @@ public class DoctorView {
 
 	
 	public void initializePatients() {
-		// patientPanel = new JPanel();
-		// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		// patientPanel.setBackground(Color.WHITE);
-		
 		JPanel listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new BoxLayout(listPatientsPanel, BoxLayout.Y_AXIS));
-		for (int i = 0; i < 10; i++) {
+		JScrollPane scrollPane = new JScrollPane(listPatientsPanel);
+
+		// Actual patient information
+
+		// for (JPanel panel : getPatientListPanels()) {
+		// 	listPatientsPanel.add(panel);
+		// }
+
+		// Dummy "data"
+		for (int i = 0; i < 30; i++) {
 			JPanel aPatient = new JPanel();
 			aPatient.setLayout(new BoxLayout(aPatient, BoxLayout.Y_AXIS));
 			JLabel patient = new JLabel("Patient " + (i+1));
 			JLabel age = new JLabel("Age " + (int)(0 + Math.random() * 500));
-			aPatient.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			aPatient.setBorder(BorderFactory.createBevelBorder(BevelBorderUIResource.RAISED));
 			aPatient.add(patient);
 			aPatient.add(age);
 			aPatient.setPreferredSize(new Dimension(175, 75));
-
 			listPatientsPanel.add(aPatient);
 		}
+
+
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		listPatientsPanel.setPreferredSize(new DimensionUIResource(200, 0));
 
@@ -801,11 +807,9 @@ public class DoctorView {
 		selectedPatient.add(new JTextField("Past treatment historys and doctors who recommended treatment"), "wrap");
 		selectedPatient.add(new JButton("Add treatment notes"), "wrap");
 
-		patientPanel.add(listPatientsPanel, BorderLayout.WEST);
+		patientPanel.add(scrollPane, BorderLayout.WEST);
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
-		// patientPanel.setVisible(false);
-		System.out.print("Initialized patients");
 	}
 
 	/**Getter and Setter Methods*/
@@ -1211,7 +1215,10 @@ public class DoctorView {
 	public void setPatientListPanels(String[] patList) {
 		for (String p : patList) {
 			JPanel aPat = new JPanel();
+			aPat.setLayout(new BoxLayout(aPat, BoxLayout.Y_AXIS));
 			aPat.add(new JLabel(p));
+			aPat.add(new JLabel("I am an age label"));
+			aPat.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 			patientListPanels.add(aPat);
 		}
 	}

@@ -62,15 +62,15 @@ public class DoctorModel extends UserModel {
 	}
 
 	public void setAssignedNurseUsernames(ArrayList<String> nurses) {
-		this.assignedNurseUsernames = nurses;
+		this.assignedNurseUsernames = new ArrayList<String>(nurses);
 	}
 
 	public ArrayList<PatientModel> getScheduledPatients() {
 		return scheduledPatients;
 	}
 
-	public void addScheduledPatients(ArrayList<PatientModel> pats) {
-		this.scheduledPatients = pats;
+	public void setScheduledPatients(ArrayList<PatientModel> pats) {
+		this.scheduledPatients = new ArrayList<PatientModel>(pats);
 	}
 
 
@@ -80,6 +80,13 @@ public class DoctorModel extends UserModel {
 			nameStrs[i] = getScheduledPatients().get(i).getName();
 		}
 		return nameStrs;
+	}
+
+	public void addPatient(PatientModel p) {
+		// ArrayList<PatientModel> ps = new ArrayList<PatientModel>(getScheduledPatients());
+		// ps.add(p);
+		// setScheduledPatients(ps);
+		this.scheduledPatients.add(p);
 	}
 
 //testing class; will later be export class for database
