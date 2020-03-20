@@ -1,8 +1,12 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * handles all calculations, database queries, and the overall work needed to be
+ * done for handling this associated role Does NOT interact with the view class
+ * directly, and also does NOT interact with the Controller class(The Controller
+ * class interacts with this class, not the other way around.)
+ */
 public class PatientModel extends UserModel {
 
 	private String address;
@@ -10,6 +14,7 @@ public class PatientModel extends UserModel {
 	private String email;
 	private char[] password2;
 	private float amountDue;
+	private String record;
 	
 
 	//constructor
@@ -138,7 +143,16 @@ public class PatientModel extends UserModel {
 	public void setPassword2(char[] password2) {
 		this.password2 = password2;
 	}
+	// TODO: Change constructor to load patient record
+
+	// Getters and setters
+
+	public void setRecord(String record) {
+		this.record = record;
+	}
 	
-	
+	public String getRecord() {
+		return record;
+	}
 
 }

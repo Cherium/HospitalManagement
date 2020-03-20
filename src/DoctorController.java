@@ -33,6 +33,7 @@ public class DoctorController {
 			
 			view.getNurseComboBox().addItem(model.getObjectsName(n) );
 		}
+		view.setPatientListPanels(model.getPatientNames());
 		
 	}
 	

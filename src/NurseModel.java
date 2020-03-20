@@ -7,8 +7,7 @@ public class NurseModel extends UserModel {
 	
 	private String assignedDocUsername;
 
-
-	
+	private ScheduleModel schedule;
 	
 	
 	
@@ -41,5 +40,20 @@ public class NurseModel extends UserModel {
 		this.assignedDocUsername = assignedDoc;
 	}
 	
+	public ScheduleModel getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(ScheduleModel x) {
+		this.schedule = x;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String d) {
+		this.department = d;
+	}
 
 }

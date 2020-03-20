@@ -13,8 +13,14 @@ tmp/
 local.properties
 .loadpath
 .recommenders
+<<<<<<< HEAD
 .classpath
 .project
+=======
+
+.project
+
+>>>>>>> 67fdb59afdc7bf547b278f59e49ec0b284b4e9be
 # External tool builders
 .externalToolBuilders/
 
