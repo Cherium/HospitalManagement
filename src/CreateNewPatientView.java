@@ -97,7 +97,8 @@ public class CreateNewPatientView  extends JDialog{
 			//Buttons
 				createButton = new JButton("Create Account");
 				cancelButton = new JButton("Cancel");
-				
+					cancelButton.addActionListener(e -> {setVisible(false);} );		
+
 				
 			//Add to main panel
 			contentPanel.add(nameLab);
