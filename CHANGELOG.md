@@ -29,13 +29,17 @@ Example: 10 mar 21:13 SAJID
 * uploads patient information from the database
 * checks that no fields are empty when save button is pressed
 * doesnt do error checking or update the database on 'patient info' box yet when save button is pressed-- maybe leave it for next iteration
-* patient credentials panel does error checking and updates the database to the changed password
+* patient credentials panel does error checking and updates the database to the changed password  
+
 **databaseModel updated**
-* new fields added" address, ph#, email, amountDue
+* new fields added" address, ph#, email, amountDue  
+
 **dbase.txt updated with new fields**
-* new fields added" address, ph#, email, amountDue
+* new fields added" address, ph#, email, amountDue  
+
 **PatientModel**
-* constructor changed to reflect changes above
+* constructor changed to reflect changes above  
+
 **CreateNewPatientMVC**
 * refactored View using MigLayout
 * Added fields address, email, phone number which store in database as is
