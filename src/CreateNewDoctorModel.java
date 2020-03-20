@@ -128,16 +128,22 @@ public class CreateNewDoctorModel {
 	}
 
 	
-	
-/**Getters and Setters*/
 	//return the department list in a string[] format for use with combobox
 	public String[] getDeptList() {
 		
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
-		temp.add(0, "");
+		if(temp.get(0).compareTo("") != 0)
+		{
+			temp.add(0, "");
+		}
+		
 		
 		return temp.toArray(new String[0]);
 	}
+	
+	
+/**Getters and Setters*/
+
 
 	public String getName() {
 		return name;

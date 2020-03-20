@@ -104,6 +104,7 @@ public class CreateNewDoctorView  extends JDialog{
 				//ComboBox drop down lists	
 					nurseDropDown = new JComboBox<String>();
 					departmentDropDown = new JComboBox<String>();
+						departmentDropDown.insertItemAt("", 0);
 						departmentDropDown.addActionListener(e -> disableNurseSelection() );
 					
 				//Add components to panel in order	
