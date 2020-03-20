@@ -1,0 +1,24 @@
+This build contains a library, and as such it needs to be imported into your project (preferably as a relative path instead of an absolute)
+
+-1. Uninstall everything Java. Find and delete your Eclipse folder. Find and Delete your workspace folder. Find and delete your hidden '.p2' folder which is in the same folder as the others. Restart your system.
+	
+
+0. Ensure you have the latest JDK (version 14 as of writing this: https://www.oracle.com/java/technologies/javase-downloads.html).
+	Once installed, set up your PATH(https://stackoverflow.com/questions/1672281/environment-variables-for-java-installation/26640589#26640589) 
+	HOWEVER, make sure you are using the correct jdk version for the name, instead of those older versions.
+	To test, open up a terminal. and check `java -version` and `javac -version` to make sure those commands work, and that the version is the latesest.
+		If not, then you need to set up your path properly.
+	
+1.Install the latest Eclipse IDE(https://www.eclipse.org/downloads/packages/). Open Eclipse now and choose a new workspace and create a new project.
+
+2. Copy and replace the 'libs' folder and 'src' folder from your local git folder to your local project folder. This will replace the 'src' folder in your local project folder.
+
+3. Right click the project name in the project explorer of eclipse. Click refresh.
+
+4. Again, right click the project name in the project explorer of eclipse. Click build path -> configure -> build path.
+
+5. Click the libraries tab -> click classpath -> 'Add JAR'.
+
+6. Now find your MigLayour JAR file in the libs folder in your project name tree and select it and add.
+
+7. Click Apply, refresh your project again, and everything should work now.
