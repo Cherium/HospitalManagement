@@ -5,13 +5,13 @@ import java.util.Iterator;
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)*/
-public class DoctorModel extends UserModel {
+public class DoctorModel extends UserSuperClass {
 	
 	//private DoctorModel doctor;
 	private String department;
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<PatientModel> scheduledPatients = new ArrayList<PatientModel>(5);
-	private ScheduleModel schedule;
+	private Schedule schedule;
 	
 
 	
@@ -34,12 +34,12 @@ public class DoctorModel extends UserModel {
 	
 
 /**Getters and Setters*/
-	public void setSchedule(ScheduleModel schedule) {
+	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
 	}
 
 
-	public ScheduleModel getSchedule() {
+	public Schedule getSchedule() {
 		return schedule;
 	}
 

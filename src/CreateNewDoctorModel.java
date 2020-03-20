@@ -88,7 +88,7 @@ public class CreateNewDoctorModel {
 		
 		//get list of nurses to assign
 		ArrayList<String> temp = new ArrayList<String>(5);
-		for(Map.Entry<String, UserModel> i: Main.dbase.entrySet())
+		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
 		{
 			//if entry 'i' in DBase has 'name' that matches User selected nurse name
 			if(nurseListToAdd.contains(i.getValue().getName()) )
@@ -113,7 +113,7 @@ public class CreateNewDoctorModel {
 		
 		//get all nurses in HashMap database into an array
 		//https://javatutorial.net/java-iterate-hashmap-example
-		for(Map.Entry<String, UserModel> i: Main.dbase.entrySet())
+		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
 		{
 			//if role is nurse, return nurse name
 			if(i.getValue().getRole().compareTo("nurse") == 0)

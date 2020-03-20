@@ -4,9 +4,13 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID
 
 
+### 20 mar 12:03 Sajid
+* DatabaseModel name changed to Database
+* ScheduleModel changed to Schedule
+* UserModel changed to UserSuperClass
 
 
-## 20 MARCH 11:53 Jenny
+### 20 MARCH 11:53 Jenny
 **DoctorModel + DoctorView**
 * Added an empty listener in doctor view and text fields to patient view inside doctor. The functionality isn't incorporated but all the pieces are in place.
 

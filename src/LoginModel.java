@@ -10,7 +10,7 @@ public class LoginModel {
 	private String username;
 	private char[] password;
 	
-	private UserModel user;
+	private UserSuperClass user;
 	private String errorMessage;
 	
 	
@@ -119,13 +119,13 @@ public class LoginModel {
 
 
 
-	public UserModel getUser() {
+	public UserSuperClass getUser() {
 		return user;
 	}
 
 
 
-	public void setUser(UserModel user) {
+	public void setUser(UserSuperClass user) {
 		this.user = user;
 	}
 

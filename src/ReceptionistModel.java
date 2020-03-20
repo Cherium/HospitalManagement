@@ -1,5 +1,5 @@
 
-public class ReceptionistModel extends UserModel {
+public class ReceptionistModel extends UserSuperClass {
 	
 	
 	

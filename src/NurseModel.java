@@ -1,13 +1,13 @@
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)*/
-public class NurseModel extends UserModel {
+public class NurseModel extends UserSuperClass {
 	
 	private String department;
 	
 	private String assignedDocUsername;
 
-	private ScheduleModel schedule;
+	private Schedule schedule;
 	
 	
 	
@@ -40,11 +40,11 @@ public class NurseModel extends UserModel {
 		this.assignedDocUsername = assignedDoc;
 	}
 	
-	public ScheduleModel getSchedule() {
+	public Schedule getSchedule() {
 		return schedule;
 	}
 
-	public void setSchedule(ScheduleModel x) {
+	public void setSchedule(Schedule x) {
 		this.schedule = x;
 	}
 

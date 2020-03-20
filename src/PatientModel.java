@@ -7,7 +7,7 @@ import java.util.Arrays;
  * directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)
  */
-public class PatientModel extends UserModel {
+public class PatientModel extends UserSuperClass {
 
 	private String address;
 	private String phoneNumber;
