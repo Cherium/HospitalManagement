@@ -4,6 +4,9 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID
 
 
+## 20 mar 13:13 Sajid
+* added welcome label and sign out button to patient view, both with functionality.
+
 ### 20 mar 12:03 Sajid
 * DatabaseModel name changed to Database
 * ScheduleModel changed to Schedule

@@ -164,6 +164,8 @@ public class PatientView extends JFrame{
 					
 				
 		//Add components to main panel
+			contentPanel.add(btnReturn, "wrap");
+			contentPanel.add(welcomeLabel, "wrap");
 			contentPanel.add(infoPanel);
 			contentPanel.add(credentialPanel);
 			
