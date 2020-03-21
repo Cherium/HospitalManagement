@@ -60,6 +60,7 @@ public class DoctorView {
 	private JPanel backPanel;
 	private JPanel patientPanel;
 	//private JPanel dayPanel;
+	private JPanel listPatientsPanel;
 	
 	private JButton btnSignOut;
 	private JButton btnViewPatient;
@@ -72,6 +73,7 @@ public class DoctorView {
 	private JLabel nameLabel;
 	private JLabel deptLabel;
 
+	private JTextArea patientInformation = new JTextArea(7, 90);
 	private JTextArea pastTreatments;
 	private JTextArea currentTreatment;
 	
@@ -777,8 +779,8 @@ public class DoctorView {
 
 	
 	public void initializePatients() {
-		JPanel listPatientsPanel = new JPanel();
-		listPatientsPanel.setLayout(new BoxLayout(listPatientsPanel, BoxLayout.Y_AXIS));
+		listPatientsPanel = new JPanel();
+		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
 
 		// Actual patient information
 
@@ -794,41 +796,61 @@ public class DoctorView {
 			JLabel patient = new JLabel("Patient " + (i+1));
 			JLabel age = new JLabel("Age " + (int)(0 + Math.random() * 500));
 			aPatient.setBorder(BorderFactory.createBevelBorder(BevelBorderUIResource.RAISED));
+			aPatient.setBackground(Color.WHITE);
 			aPatient.add(patient);
 			aPatient.add(age);
 			listPatientsPanel.add(aPatient);
+			// To test clicking, DUMMY COMPONENTS
+			aPatient.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent a) {
+					// Clear all components
+					for (Component c : listPatientsPanel.getComponents()) {
+						c.setBackground(Color.WHITE);
+					}
+					
+					if (aPatient.getBackground().equals(Color.RED)) {
+						aPatient.setBackground(Color.WHITE);
+					} else {
+						aPatient.setBackground(Color.RED);
+					}
+				}
+			});
 		}
 
 
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		listPatientsPanel.setPreferredSize(new DimensionUIResource(200, 0));
+		JScrollPane scroll = new JScrollPane(listPatientsPanel);
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
-		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient information"));
+		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
 		selectedPatient.setBackground(Color.WHITE);
 		selectedPatient.add(new JLabel("Patient Information"));
+		patientInformation.setText("Name\nAge\nSex\nBlood type\nAddress\nPhone\nEmail\n");
+		patientInformation.setEnabled(false);
+		selectedPatient.add(patientInformation);
 		selectedPatient.add(new JLabel("Detailed Treatment History"));
 		pastTreatments = new JTextArea(0,90);
 		pastTreatments.setLineWrap(true);
 		pastTreatments.setText("Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
 		pastTreatments.setEnabled(false);
 		JScrollPane sp1 = new JScrollPane(pastTreatments);
-		selectedPatient.add(sp1);
+		selectedPatient.add(sp1, "span 1 10, height 300");
 		// selectedPatient.add(pastTreatments);
 		currentTreatment = new JTextArea(0, 90);
-		currentTreatment.setText("I am a box for a doctor to enter treatment notes in\n\n\n\n\n\n\n\n");
+		currentTreatment.setText("I am a box for a doctor to enter treatment notes in");
 		currentTreatment.setLineWrap(true);
-		currentTreatment.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK, Color.DARK_GRAY));
+		// currentTreatment.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK, Color.DARK_GRAY));
 
-		// Doesn't work, changes to a horizontal scroll instead
-		// JScrollPane sp2 = new JScrollPane(currentTreatment);
-		// selectedPatient.add(sp2);
+		JScrollPane sp2 = new JScrollPane(currentTreatment);
+		selectedPatient.add(sp2, "span 1 10, height 175");
 		
-		selectedPatient.add(currentTreatment);
+		// selectedPatient.add(currentTreatment, "span 1 10, height 150");
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
-		patientPanel.add(listPatientsPanel, BorderLayout.WEST);
+		patientPanel.add(scroll, BorderLayout.WEST);
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
 	}
@@ -1235,6 +1257,22 @@ public class DoctorView {
 
 	public void setCurrentTreatmentBox(JTextArea x) {
 		this.currentTreatment = x;
+	}
+
+	public JTextArea getPatientInformation() {
+		return patientInformation;
+	}
+
+	public void setPatientInformation(JTextArea pi) {
+		this.patientInformation = pi;
+	}
+
+	public JPanel getListPatientsPanels() {
+		return listPatientsPanel;
+	}
+
+	public void setListPatientsPanel(JPanel p) {
+		this.listPatientsPanel = p;
 	}
 
 	public JButton getButtonTreatmentNotes() {
