@@ -1,9 +1,12 @@
+import java.awt.Color;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class DoctorController {
 
@@ -32,10 +35,22 @@ public class DoctorController {
 		view.getNurseComboBox().setSelectedIndex(-1);
 		view.setPatientListPanels(model.getPatientNames());
 		for (JPanel p : view.getPatientListPanels()) {
-			// TODO: Add listener to panel
 			p.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent a) {
+					// TODO: Populate patient information
+					// TODO: Populate the past treatments of the patient
+					for (JPanel c : view.getPatientListPanels()) {
+						c.setBackground(Color.WHITE);
+					}
+					
+					if (p.getBackground().equals(Color.RED)) {
+						p.setBackground(Color.WHITE);
+					} else {
+						p.setBackground(Color.RED);
+					}
+
+
 
 				}
 			});
@@ -47,12 +62,16 @@ public class DoctorController {
 	// need interaction with the model'
 	public void initListeners() {
 
-		// TODO: Set up listener for button that adds to treatment record
 		view.getButtonTreatmentNotes().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Add the input box text to the selected patient record
 				// Update view
+				String updateTreatment = view.getPastTreatmentBox().getText() + "\n" + view.getCurrentTreatmentBox().getText() + "\n\t- " + model.getName() + "\n";
+				view.getPastTreatmentBox().setText(updateTreatment);
+				// TODO: Update the record in patient object
+
+
 
 			}
 		});

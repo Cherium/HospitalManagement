@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DatabaseModel {
 
 	
-		public HashMap<String, UserModel> users;
+		public HashMap<String, UserSuperClass> users;
 
 		//Can later be expanded by the appropriate user that has rights to add a department
 		private ArrayList<String> departmentList = new ArrayList<>
@@ -26,7 +26,7 @@ public class DatabaseModel {
 		//Constructor: provide filename to import when initializing database
 		public DatabaseModel(String filePath) {
 			
-			users = new HashMap<String, UserModel>();
+			users = new HashMap<String, UserSuperClass>();
 			importDatabase(filePath);
 		}
 
@@ -143,11 +143,11 @@ public class DatabaseModel {
 		}
 
 	/**Getters and Setters*/	
-		public HashMap<String, UserModel> getUsers() {
+		public HashMap<String, UserSuperClass> getUsers() {
 			return users;
 		}
 
-		public void setUsers(HashMap<String, UserModel> users) {
+		public void setUsers(HashMap<String, UserSuperClass> users) {
 			this.users = users;
 		}
 

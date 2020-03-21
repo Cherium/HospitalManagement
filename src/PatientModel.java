@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,11 +17,16 @@ public class PatientModel extends UserSuperClass {
 	private char[] password2;
 	private float amountDue;
 	private String record;
+	private LocalDate birthday;
+	private String bloodtype;
+	private char sex;
 	
 
 	//constructor
 	public PatientModel(String username, char[] password, String name
 			, String addr, String phNumber, String email, float amountDue)
+	// public PatientModel(String username, char[] password, String name
+	// , String addr, String phNumber, String email, float amountDue, String bday, String btype, char sex)
 	{
 		
 		super(name,username,password);
@@ -28,6 +35,9 @@ public class PatientModel extends UserSuperClass {
 		this.phoneNumber = phNumber;
 		this.email = email;
 		this.amountDue = amountDue;
+		// this.birthday = LocalDate.parse(bday);
+		// this.bloodtype = btype;
+		// this.sex = sex;
 	}
 	
 	
@@ -84,7 +94,31 @@ public class PatientModel extends UserSuperClass {
 		return "Information Successfully Updated";
 	}
 	
+	public String getPatientInformation() {
+		StringBuilder bob = new StringBuilder();
+
+		bob.append("Name: " + getName());
+		bob.append("\n");
+		bob.append("Age: " + getAge());
+		bob.append("\n");
+		bob.append("Sex: " + getSex());
+		bob.append("\n");
+		bob.append("Blood type: " + getBlood());
+		bob.append("\n");
+		bob.append("Address: " + getAddress());
+		bob.append("\n");
+		bob.append("Phone: " + getPhoneNumber());
+		bob.append("\n");
+		bob.append("Email: " + getEmail());
+
+
+		return bob.toString();
+	}
 	
+	public int getAge() {
+		// https://stackoverflow.com/questions/1116123/how-do-i-calculate-someones-age-in-java
+		return Period.between(getBirthday(), LocalDate.now()).getYears();
+	}
 	
 /**Getters and Setters*/
 	public String getAddress() {
@@ -153,6 +187,32 @@ public class PatientModel extends UserSuperClass {
 	
 	public String getRecord() {
 		return record;
+	}
+
+	public void setBirthday(LocalDate db) {
+		this.birthday = db;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setSex(char s) {
+		this.sex = s;
+	} 
+
+	public char getSex() {
+		return sex;
+	}
+
+	public void setBlood(String b) {
+		if (b.equals("A-") || b.equals("A+") || b.equals("B-") || b.equals("B+") || b.equals("AB-") || b.equals("AB+") || b.equals("O-") || b.equals("O+")) {
+			this.bloodtype = b;
+		}
+	}
+
+	public String getBlood() {
+		return bloodtype;
 	}
 
 }

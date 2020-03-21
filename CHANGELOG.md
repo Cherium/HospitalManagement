@@ -3,6 +3,15 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+### 20 MARCH 21:19 Jenny
+* Fixed issue where in DoctorView, the interactive text area resizes to a single line when attached to a scrollpane. 
+* In DoctorView, selections can be made (indicated by color changes, does not actually populate selected patient).
+* Still couldn't attach a scrollpanel to list of patients, may have to change to a list instead.
+
+### 20 MARCH 20:43 Jenny
+* Changed parts in database that didn't get refactored in view/doctor branch.
+* Fleshed out listener for adding treatment notes to a patient, can add treatment (hard coded, not saved).
+* Added sections to patient that are relevant to treatment record (currently commented out as it's not implemented in database).
 
 ## 20 mar 13:13 Sajid
 * added welcome label and sign out button to patient view, both with functionality.
