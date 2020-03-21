@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class DoctorController {
 
@@ -47,12 +48,16 @@ public class DoctorController {
 	// need interaction with the model'
 	public void initListeners() {
 
-		// TODO: Set up listener for button that adds to treatment record
 		view.getButtonTreatmentNotes().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Add the input box text to the selected patient record
 				// Update view
+				String updateTreatment = view.getPastTreatmentBox().getText() + view.getCurrentTreatmentBox().getText() + "\n\t- " + model.getName() + "\n";
+				view.getPastTreatmentBox().setText(updateTreatment);
+				// TODO: Update the record in patient object
+
+
 
 			}
 		});
