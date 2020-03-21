@@ -50,6 +50,7 @@ public class CreateNewPatientController {
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());
+		model.setBday(view.getBirthday());
 		
 		
 		

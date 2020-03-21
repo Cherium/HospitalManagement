@@ -13,7 +13,7 @@ public class CreateNewPatientModel {
 	private String address;
 	private String phoneNumber;
 	private String email;
-	
+	private String bday;
 	
 	
 	
@@ -174,6 +174,14 @@ public class CreateNewPatientModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getBday() {
+		return bday;
+	}
+
+	public void setBday(String bd) {
+		this.bday = bd;
 	}
 	
 	

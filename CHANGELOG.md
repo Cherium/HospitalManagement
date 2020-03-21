@@ -3,6 +3,16 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+
+### 21 MARCH 10:22 Jenny
+**CreateNewPatientModel+View+Controller**
+* Implemented date of birth combo boxes, for year, month, and day. Selecting both month and year will populate the day combo box. There is also a getBirthday() function that returns the string of YYYY-MM-DD when called. During testing, sometimes returns YYYY-MM-null.
+* The birthday field is reflected in CreateNewPatientModel and CreateNewPatientController. However, it does not impact the creation of a new patient account (birthday isn't stored).
+**PatientView**
+* Implemented the same 3 combo boxes as above, with all the same functions. As of now, the date of birth on record isn't show as the default option (as there is currently no date of birth in the database). 
+* The birthday field is currently commented out in PatientModel.
+
+
 ### 20 MARCH 21:19 Jenny
 * Fixed issue where in DoctorView, the interactive text area resizes to a single line when attached to a scrollpane. 
 * In DoctorView, selections can be made (indicated by color changes, does not actually populate selected patient).
