@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +48,8 @@ public class CreateNewPatientView  extends JDialog{
 	private JButton createButton;
 
 	private JComboBox<String> year, month, day;
-	private Map<String, Integer> mapdays = new HashMap<String, Integer>(12);
+	private JComboBox<String> blood, posNeg;
+	private JComboBox<String> sex;
 		
 		
 		
@@ -66,8 +69,7 @@ public class CreateNewPatientView  extends JDialog{
 			setSize(370, 450);
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			
-			defaultDays();
+
 			initializeGUI();
 				
 		}
@@ -85,13 +87,16 @@ public class CreateNewPatientView  extends JDialog{
 		
 			//Labels
 				JLabel nameLab = new JLabel("Name:");
+				JLabel birthday = new JLabel("Date of birth:");
+				JLabel bloodLabel = new JLabel("Blood Type:");
+				JLabel sexLabel = new JLabel("Sex:");
 				JLabel usernameLab = new JLabel("Username:");
 				JLabel addressLab = new JLabel("Address:");
 				JLabel PhoneNumLab = new JLabel("Phone #:");
 				JLabel emailLab = new JLabel("Email:");
 				JLabel pwd = new JLabel("Password:");
 				JLabel pwd2 = new JLabel("Re-enter Password:");
-				JLabel birthday = new JLabel("Date of birth:");
+				
 			
 				
 			//TextFields
@@ -110,40 +115,42 @@ public class CreateNewPatientView  extends JDialog{
 				cancelButton = new JButton("Cancel");
 					cancelButton.addActionListener(e -> {setVisible(false);} );	
 					
-			//Combo boxes
-			initYearCombo();
-			initMonthCombo();
-			day = new JComboBox<String>();
-				day.setEnabled(false);
-				year.addActionListener(e -> {
-					if((year.getSelectedIndex() != -1) && (month.getSelectedIndex() != -1)) {
-						initDayCombo((String) month.getSelectedItem(), (String) year.getSelectedItem());
-						day.setEnabled(true);
-					} else {
-						day.setEnabled(false);
-					}
-				});
-				month.addActionListener(e -> {
-					if((year.getSelectedIndex() != -1) && (month.getSelectedIndex() != -1)) {
-						initDayCombo((String) month.getSelectedItem(), (String) year.getSelectedItem());
-						day.setEnabled(true);
-					} else {
-						day.setEnabled(false);
-					}
-				});
-
-			// JPanel, for having the combo boxes in one line
-			JPanel bdayP = new JPanel();
-			bdayP.add(year);
-			bdayP.add(month);
-			bdayP.add(day);
+			//ComboBoxes
+				year = initYearCombo();
+					year.addActionListener(e -> initDaysinBox());
+				month = initMonthCombo();
+					month.addActionListener(e -> initDaysinBox());
+				day = initDayCombo();
+					initDaysinBox();
+				sex = new JComboBox<String>();
+					sex.addItem("Male");
+					sex.addItem("Female");
+				blood = new JComboBox<String>();
+					blood.addItem("A+"); blood.addItem("A-");
+					blood.addItem("B+"); blood.addItem("B-");
+					blood.addItem("AB+"); blood.addItem("AB-");
+					blood.addItem("O+"); blood.addItem("O+");
+				
+					
+					
+				
 
 				
 			//Add to main panel
 			contentPanel.add(nameLab);
 			contentPanel.add(nameInput, "wrap");
+			
 			contentPanel.add(birthday);
-			contentPanel.add(bdayP, "wrap");
+			contentPanel.add(year, "sg b, split");	//split splits a current column into 2. Everything in 'sgroup b' will be the same size
+			contentPanel.add(month, "sg b, split");
+			contentPanel.add(day, "sg b, wrap");
+			
+			contentPanel.add(bloodLabel);
+			contentPanel.add(blood, "wrap");
+			
+			contentPanel.add(sexLabel);
+			contentPanel.add(sex, "wrap");
+			
 			contentPanel.add(addressLab);
 			contentPanel.add(address, "wrap");
 			contentPanel.add(PhoneNumLab);
@@ -190,61 +197,70 @@ public class CreateNewPatientView  extends JDialog{
 			JOptionPane.showMessageDialog(contentPanel, message);
 		}
 
-		public void initYearCombo() {
-			year = new JComboBox<String>();
+		//create box for year
+		public JComboBox<String> initYearCombo() {
+			JComboBox<String> temp = new JComboBox<String>();
 			for (int i = 0; i < 120; i++) {
-				year.addItem((LocalDate.now().getYear()-i)+"");
+				temp.addItem((LocalDate.now().getYear()-i)+"");
 			}
-			year.setSelectedIndex(-1);
-			year.setBackground(Color.WHITE);
+			temp.setBackground(Color.WHITE);
+			
+			return temp;
 		}
-
-		public void initMonthCombo() {
-			month = new JComboBox<String>();
+		
+		//create box for month
+		public JComboBox<String> initMonthCombo() {
+			JComboBox<String> temp = new JComboBox<String>();
 			for (int i = 0; i < 12; i++) {
-				month.addItem((i+1)+"");
+				temp.addItem((i+1)+"");
 			}
-			month.setSelectedIndex(-1);
-			month.setBackground(Color.WHITE);
+			temp.setBackground(Color.WHITE);
+			
+			return temp;
 		}
-
-		public void initDayCombo(String m, String y) {
-			// Check if leap year
-			int yr = Integer.parseInt(y);
-			if (yr % 400 == 0) {
-				getDays().put("2", 29);
-			} else if (yr % 4 == 0) {
-				getDays().put("2", 29);
-			} else {
-				getDays().put("2", 28);
-			}
-
-			day.removeAllItems();
-			int x = getDays().get(m);
-			for (int i = 1; i < x+1; i++) {
-				day.addItem(i+"");
-			}
-			System.out.println("here");
-			day.setSelectedIndex(-1);
-			day.setBackground(Color.WHITE);
-			day.setEnabled(true);
+		
+		//create box for day
+		public JComboBox<String> initDayCombo() {
+			JComboBox<String> temp = new JComboBox<String>();
+			temp.setBackground(Color.WHITE);
+			
+			return temp;
 		}
-
-		public void defaultDays() {
-			for (int i = 1; i < 13; i++) {
-				if (i == 2) {
-					getDays().put(i+"", 28);
-				} else if ((i == 1) || (i == 3) || (i == 5) || (i == 7) || (i == 8) || (i == 10) || (i == 12)) {
-					getDays().put(i+"", 31);
-				} else {
-					getDays().put(i+"", 30);
+		
+		//add days to day box
+		public void initDaysinBox()
+		{//
+			//https://www.youtube.com/watch?v=yylaqeWkPmM
+			//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+			DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+					.withResolverStyle(ResolverStyle.STRICT);
+			for (int i = 1; i <= 31 ; i++)
+			{
+				try
+				{
+					df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+						+"/"+ Integer.toString(i));
+					day.addItem(Integer.toString(i));
+				}
+				catch(Exception e)
+				{
+					continue;
 				}
 			}
+			
 		}
-
+		
+		//return the entire birth-date as a LocalDateTime object//~~string uuuu-M-d~~
 		public String getBirthday() {
-			return (String) year.getSelectedItem() +"-"+(String) month.getSelectedItem() +"-"+(String) day.getSelectedItem();
+			return (String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() +"/"+(String) day.getSelectedItem();
 		}
+		
+		
+		
+		
+		
+		
+		
 		
 		
 
@@ -381,13 +397,65 @@ public class CreateNewPatientView  extends JDialog{
 		public void setDayCombo(JComboBox<String> d) {
 			this.day = d;
 		}
-		
-		public Map<String, Integer> getDays() {
-			return mapdays;
+
+
+		public JComboBox<String> getYear() {
+			return year;
 		}
 
-		public void setDays(HashMap<String, Integer> hm) {
-			this.mapdays = hm;
+
+		public void setYear(JComboBox<String> year) {
+			this.year = year;
+		}
+
+
+		public JComboBox<String> getMonth() {
+			return month;
+		}
+
+
+		public void setMonth(JComboBox<String> month) {
+			this.month = month;
+		}
+
+
+		public JComboBox<String> getDay() {
+			return day;
+		}
+
+
+		public void setDay(JComboBox<String> day) {
+			this.day = day;
+		}
+
+
+		public JComboBox<String> getBlood() {
+			return blood;
+		}
+
+
+		public void setBlood(JComboBox<String> blood) {
+			this.blood = blood;
+		}
+
+
+		public JComboBox<String> getPosNeg() {
+			return posNeg;
+		}
+
+
+		public void setPosNeg(JComboBox<String> posNeg) {
+			this.posNeg = posNeg;
+		}
+
+
+		public JComboBox<String> getSex() {
+			return sex;
+		}
+
+
+		public void setSex(JComboBox<String> sex) {
+			this.sex = sex;
 		}
 
 		

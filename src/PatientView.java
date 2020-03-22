@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,8 @@ public class PatientView extends JFrame{
 	private JLabel welcomeLabel;
 	private JLabel usernameLabel;
 	private JLabel amountDue;
+	private JLabel age;
+
 
 	private JButton btnReturn;
 	private JButton save;
@@ -55,7 +59,8 @@ public class PatientView extends JFrame{
 	private JPasswordField passwordInputConfirm;
 
 	private JComboBox<String> year, month, day;
-	private Map<String, Integer> mapdays = new HashMap<String, Integer>(12);
+	private JComboBox<String> blood, posNeg;
+	private JComboBox<String> sex;
 	
 	
 	
@@ -98,12 +103,16 @@ public class PatientView extends JFrame{
 				
 		//Labels
 				JLabel nameLabel = new JLabel("Name:");
+				JLabel agelabel = new JLabel("Age:");
+					age = new JLabel();
 				JLabel addrLabel = new JLabel("Address:");
 				JLabel phLabel = new JLabel("Phone Number:");
 				JLabel emailLabel = new JLabel("Email:");
 				JLabel amountDueLabel = new JLabel("Amount Owing:");
 					amountDue = new JLabel();
-				JLabel birthdayLabel = new JLabel("Date of birth:");
+				JLabel birthday = new JLabel("Date of birth:");
+				JLabel bloodLabel = new JLabel("Blood Type:");
+				JLabel sexLabel = new JLabel("Sex:");
 
 				
 		//TextFields
@@ -122,30 +131,22 @@ public class PatientView extends JFrame{
 					
 		//Buttons
 				save = new JButton("Save Changes");
-					save.setEnabled(false);
 		
 		//Combo boxes
-		// TODO: Set the selected index for the combo boxes as the birthday on file
-			initYearCombo();
-			initMonthCombo();
-			day = new JComboBox<String>();
-				day.setEnabled(false);
-				year.addActionListener(e -> {
-					if((year.getSelectedIndex() != -1) && (month.getSelectedIndex() != -1)) {
-						initDayCombo((String) month.getSelectedItem(), (String) year.getSelectedItem());
-						day.setEnabled(true);
-					} else {
-						day.setEnabled(false);
-					}
-				});
-				month.addActionListener(e -> {
-					if((year.getSelectedIndex() != -1) && (month.getSelectedIndex() != -1)) {
-						initDayCombo((String) month.getSelectedItem(), (String) year.getSelectedItem());
-						day.setEnabled(true);
-					} else {
-						day.setEnabled(false);
-					}
-				});
+				year = initYearCombo();
+					year.addActionListener(e -> initDaysinBox());
+				month = initMonthCombo();
+					month.addActionListener(e -> initDaysinBox());
+				day = initDayCombo();
+					initDaysinBox();
+				sex = new JComboBox<String>();
+					sex.addItem("Male");
+					sex.addItem("Female");
+				blood = new JComboBox<String>();
+					blood.addItem("A+"); blood.addItem("A-");
+					blood.addItem("B+"); blood.addItem("B-");
+					blood.addItem("AB+"); blood.addItem("AB-");
+					blood.addItem("O+"); blood.addItem("O+");
 
 			// JPanel, for having the combo boxes in one line
 			JPanel bdayP = new JPanel();
@@ -156,16 +157,33 @@ public class PatientView extends JFrame{
 		//Add components to inner panel
 					infoPanel.add(nameLabel);
 					infoPanel.add(nameText, "wrap");
-					infoPanel.add(birthdayLabel);
-					infoPanel.add(bdayP, "wrap");
+					
+					infoPanel.add(agelabel);
+					infoPanel.add(age, "wrap");
+					
+					infoPanel.add(birthday);
+					infoPanel.add(year, "sg b, split");	//split splits a current column into 2. Everything in 'sgroup b' will be the same size
+					infoPanel.add(month, "sg b, split");
+					infoPanel.add(day, "sg b, wrap");
+					
+					infoPanel.add(bloodLabel);
+					infoPanel.add(blood, "wrap");
+					
+					infoPanel.add(sexLabel);
+					infoPanel.add(sex, "wrap");
+					
 					infoPanel.add(addrLabel);
 					infoPanel.add(addrText, "wrap");
+					
 					infoPanel.add(phLabel);
 					infoPanel.add(phText, "wrap");
+					
 					infoPanel.add(emailLabel);
 					infoPanel.add(emailText, "wrap");
+					
 					infoPanel.add(amountDueLabel);
 					infoPanel.add(amountDue, "wrap 20");
+					
 					
 					infoPanel.add(save, "span, center");
 					
@@ -178,7 +196,7 @@ public class PatientView extends JFrame{
 			
 		//Labels
 				JLabel usernameTitleLabel = new JLabel("Username:");
-				usernameLabel	= new JLabel();
+					usernameLabel	= new JLabel();
 				JLabel pwdLabel = new JLabel("New Password:");
 				JLabel pwd2Label = new JLabel("Re-Enter Password:");
 			
@@ -214,61 +232,62 @@ public class PatientView extends JFrame{
 	}
 
 
-
-	public void initYearCombo() {
-		year = new JComboBox<String>();
+	//create box for year
+	public JComboBox<String> initYearCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 120; i++) {
-			year.addItem((LocalDate.now().getYear()-i)+"");
+			temp.addItem((LocalDate.now().getYear()-i)+"");
 		}
-		year.setSelectedIndex(-1);
-		year.setBackground(Color.WHITE);
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
 	}
-
-	public void initMonthCombo() {
-		month = new JComboBox<String>();
+	
+	//create box for month
+	public JComboBox<String> initMonthCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 12; i++) {
-			month.addItem((i+1)+"");
+			temp.addItem((i+1)+"");
 		}
-		month.setSelectedIndex(-1);
-		month.setBackground(Color.WHITE);
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
 	}
-
-	public void initDayCombo(String m, String y) {
-		// Check if leap year
-		int yr = Integer.parseInt(y);
-		if (yr % 400 == 0) {
-			getDays().put("2", 29);
-		} else if (yr % 4 == 0) {
-			getDays().put("2", 29);
-		} else {
-			getDays().put("2", 28);
-		}
-
-		day.removeAllItems();
-		int x = getDays().get(m);
-		for (int i = 1; i < x+1; i++) {
-			day.addItem(i+"");
-		}
-		System.out.println("here");
-		day.setSelectedIndex(-1);
-		day.setBackground(Color.WHITE);
-		day.setEnabled(true);
+	
+	//create box for day
+	public JComboBox<String> initDayCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
 	}
-
-	public void defaultDays() {
-		for (int i = 1; i < 13; i++) {
-			if (i == 2) {
-				getDays().put(i+"", 28);
-			} else if ((i == 1) || (i == 3) || (i == 5) || (i == 7) || (i == 8) || (i == 10) || (i == 12)) {
-				getDays().put(i+"", 31);
-			} else {
-				getDays().put(i+"", 30);
+	
+	//add days to day box
+	public void initDaysinBox()
+	{//
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
 			}
 		}
+		
 	}
-
+	
+	//return the entire birth-date as a LocalDateTime object//~~string uuuu-M-d~~
 	public String getBirthday() {
-		return (String) year.getSelectedItem() +"-"+(String) month.getSelectedItem() +"-"+(String) day.getSelectedItem();
+		return (String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() +"/"+(String) day.getSelectedItem();
 	}
 	
 
@@ -564,15 +583,118 @@ public class PatientView extends JFrame{
 	public void setDayCombo(JComboBox<String> d) {
 		this.day = d;
 	}
-	
-	public Map<String, Integer> getDays() {
-		return mapdays;
+
+
+
+
+
+	public JComboBox<String> getYear() {
+		return year;
 	}
 
-	public void setDays(HashMap<String, Integer> hm) {
-		this.mapdays = hm;
+
+
+
+
+	public void setYear(JComboBox<String> year) {
+		this.year = year;
 	}
 
+
+
+
+
+	public JComboBox<String> getMonth() {
+		return month;
+	}
+
+
+
+
+
+	public void setMonth(JComboBox<String> month) {
+		this.month = month;
+	}
+
+
+
+
+
+	public JComboBox<String> getDay() {
+		return day;
+	}
+
+
+
+
+
+	public void setDay(JComboBox<String> day) {
+		this.day = day;
+	}
+
+
+
+
+
+	public JComboBox<String> getBlood() {
+		return blood;
+	}
+
+
+
+
+
+	public void setBlood(JComboBox<String> blood) {
+		this.blood = blood;
+	}
+
+
+
+
+
+	public JComboBox<String> getPosNeg() {
+		return posNeg;
+	}
+
+
+
+
+
+	public void setPosNeg(JComboBox<String> posNeg) {
+		this.posNeg = posNeg;
+	}
+
+
+
+
+
+	public JComboBox<String> getSex() {
+		return sex;
+	}
+
+
+
+
+
+	public void setSex(JComboBox<String> sex) {
+		this.sex = sex;
+	}
+
+
+
+
+
+	public JLabel getAge() {
+		return age;
+	}
+
+
+
+
+
+	public void setAge(JLabel age) {
+		this.age = age;
+	}
 
 	
 	
