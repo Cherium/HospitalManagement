@@ -1,7 +1,10 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
 
 /**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
@@ -28,6 +33,7 @@ public class LoginView {
 	
 	private JButton btnLogin;
 	private JButton btnNewPatient;
+	private JButton btnExit;
 	
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
@@ -50,7 +56,7 @@ public class LoginView {
 	{
 		//sets frame containers attributes
 		frame = new JFrame(title);
-			frame.setSize(400,200);
+			frame.setSize(460,170);
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
 		
@@ -65,59 +71,65 @@ public class LoginView {
 	public void initializeGUI() 
 	{
 		
-		//set panel container(with a layout) inside the frame
-		panel = new JPanel();
-			panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(panel);						//set panel as frames inner container
-		
-		GridBagLayout gbl_panel = new GridBagLayout();
-			gbl_panel.columnWidths = new int[]{10, 10, 0, 0, 0, 0};
-			gbl_panel.rowHeights = new int[]{10, 10, 0, 0, 0, 0, 0};
-			gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};		
-		panel.setLayout(gbl_panel);
+		//Main panel background
+		JPanel contentPanel = new JPanel(new MigLayout(""));		//initialize jpanel and set its layout
+			contentPanel.setBorder(new EmptyBorder(10, 10, 5, 5));	//set insets for the panel		
+			contentPanel.setBackground(new Color(179, 173, 191));
+			frame.add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 
-		
-		
-		//create UI elements and add to panel
-		GridBagConstraints c = new GridBagConstraints();
-		
-		usernameLabel = new JLabel("Username");
-			c.insets = new Insets(0, 0, 5, 5);
-			c.gridx = 2;
-			c.gridy = 1;
-			panel.add(usernameLabel, c);
-			
-		passwordLabel = new JLabel("Password");
-			c.insets= new Insets(0, 0, 5, 5);
-			c.gridx = 2;
-			c.gridy = 2;
-			panel.add(passwordLabel, c);
 
-		usernameField = new JTextField(10);
-			c.insets = new Insets(0, 0, 5, 0);
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 4;
-			c.gridy = 1;
-			panel.add(usernameField, c);
 			
-		passwordField = new JPasswordField(10);		//10 columns
-			c.insets= new Insets(0, 0, 5, 0);
-			c.gridx = 4;
-			c.gridy = 2;
-			panel.add(passwordField, c);	
 			
-		btnLogin = new JButton("Login");
-			c.insets = new Insets(0, 0, 5, 5);
-			c.gridx = 3;
-			c.gridy = 4;
-			panel.add(btnLogin, c);
+
+		JPanel accountPanel = new JPanel(new MigLayout("wrap 2", "[align right] 40 [align left]") );
+		accountPanel.setBorder(BorderFactory.createMatteBorder(
+                2, 5, 1, 1, new Color(79,60,115)));
+			//accountPanel.setOpaque(false);
+				
+			usernameLabel = new JLabel("Username");
+			passwordLabel = new JLabel("Password");
+	
+	
+			usernameField = new JTextField(25);
+			passwordField = new JPasswordField(25);		//25 columns
 			
-		btnNewPatient = new JButton("New Patient");
-			c.insets = new Insets(0, 0, 0, 5);
-			c.gridx = 3;
-			c.gridy = 5;
-			panel.add(btnNewPatient, c);	
+			accountPanel.add(usernameLabel);
+			accountPanel.add(usernameField);
+			accountPanel.add(passwordLabel);
+			accountPanel.add(passwordField);
+		
+		
+		
+		
+		
+		JPanel deptPanel = new JPanel(new MigLayout("wrap 3", "[align center] 16 [align center] 16 [align center]") );
+			deptPanel.setOpaque(false);
+		//https://stackoverflow.com/questions/33954698/jbutton-change-default-border
+		//https://stackoverflow.com/questions/3420311/java-swing-button-colors
+			btnLogin = new JButton("Login");
+				btnLogin.setBackground(Color.DARK_GRAY);
+				btnLogin.setForeground(Color.WHITE);
+				btnLogin.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
+			btnNewPatient = new JButton("New Patient");
+				btnNewPatient.setBackground(Color.DARK_GRAY);
+				btnNewPatient.setForeground(Color.WHITE);
+	
+			btnExit = new JButton("Exit");
+				btnExit.setBackground(new Color(154,50,50));
+				btnExit.setForeground(Color.WHITE);
+				btnExit.addActionListener(e -> frame.setVisible(false));
+
+			deptPanel.add(btnExit, " sg a");
+			deptPanel.add(btnNewPatient, "sg a");
+			deptPanel.add(btnLogin, "sg a");
+			
+			
+			
+			
+			
+			
+		contentPanel.add(accountPanel, "wrap");
+		contentPanel.add(deptPanel);
 			
 		frame.setVisible(true);
 	}

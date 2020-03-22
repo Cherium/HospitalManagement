@@ -3,6 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 22 mar 07:30
+**Login**
+* designed layout
+* added exit button and functionality
+
 ### 22 mar 01:00 Sajid
 **CreateNewPatient**
 * view
