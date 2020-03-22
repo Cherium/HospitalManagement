@@ -19,7 +19,6 @@ Example: 10 mar 21:13 SAJID
 * Still couldn't attach a scrollpanel to list of patients, may have to change to a list instead.
 
 ### 20 MARCH 20:43 Jenny
-* Changed parts in database that didn't get refactored in view/doctor branch.
 * Fleshed out listener for adding treatment notes to a patient, can add treatment (hard coded, not saved).
 * Added sections to patient that are relevant to treatment record (currently commented out as it's not implemented in database).
 
