@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -78,7 +79,10 @@ public class LoginView {
 			frame.add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 
-			
+			JLabel title = new JLabel("Hospital Management System");
+				title.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 22));
+				title.setForeground(Color.DARK_GRAY);
+				contentPanel.add(title, "wrap -6");
 			
 
 		JPanel accountPanel = new JPanel(new MigLayout("wrap 2", "[align right] 40 [align left]") );
