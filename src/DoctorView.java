@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -72,14 +75,16 @@ public class DoctorView {
 	private JLabel displayMonth;
 	private JLabel nameLabel;
 	private JLabel deptLabel;
+	private JLabel scheduleNameLabelWeek, scheduleNameLabelMonth;
 
 	private JTextArea patientInformation = new JTextArea(7, 90);
 	private JTextArea pastTreatments;
 	private JTextArea currentTreatment;
 	
 	
-	private ArrayList<JLabel> weekdays = new ArrayList<JLabel>(7);
-	private ArrayList<JLabel> daysOfWeek = new ArrayList<JLabel>(7);
+	private ArrayList<JLabel> weekDayOfWeek = new ArrayList<JLabel>(7);
+	private ArrayList<JLabel> monthDayOfWeek = new ArrayList<JLabel>(7);
+	private ArrayList<JLabel> weekYYYYMMDD = new ArrayList<JLabel>(7);
 	private ArrayList<JPanel> panelsOfWeekMonth = new ArrayList<JPanel>(7);
 	private ArrayList<JLabel> monthdays = new ArrayList<JLabel>(35);
 	private ArrayList<JPanel> patientListPanels = new ArrayList<JPanel>(0);
@@ -240,7 +245,7 @@ public class DoctorView {
 		for (int i = 1; i < 8; i++) {
 			JLabel lblTemp = new JLabel(now.with(fieldISO, i).toString());
 			lblTemp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			weekdays.add(lblTemp);
+			weekDayOfWeek.add(lblTemp);
 		}
 		initializeWeeklySchedule();
 		scheduleContainer.add(scheduleWeekly);
@@ -544,66 +549,83 @@ public class DoctorView {
 	public void initializeVariables() {
 		JLabel lblDay = new JLabel("Sunday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPanel7 = new JPanel();
 		dayPanel7.setLayout(new BoxLayout(dayPanel7, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Sunday");
 		dayPanel7.add(lblDay);
 		panelsOfWeekMonth.add(dayPanel7);
+		lblDay = new JLabel("Sunday");
+		monthDayOfWeek.add(lblDay);
 
 		lblDay = new JLabel("Monday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPanel1 = new JPanel();
 		dayPanel1.setLayout(new BoxLayout(dayPanel1, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Monday");
 		dayPanel1.add(lblDay);
 		panelsOfWeekMonth.add(dayPanel1);
+		lblDay = new JLabel("Monday");
+		monthDayOfWeek.add(lblDay);
+
 
 		lblDay = new JLabel("Tuesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPanel2 = new JPanel();
 		dayPanel2.setLayout(new BoxLayout(dayPanel2, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Tuesday");
 		dayPanel2.add(lblDay);
 		panelsOfWeekMonth.add(dayPanel2);
+		lblDay = new JLabel("Tuesday");
+		monthDayOfWeek.add(lblDay);
 
 		lblDay = new JLabel("Wednesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPane3 = new JPanel();
 		dayPane3.setLayout(new BoxLayout(dayPane3, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Wednesday");
 		dayPane3.add(lblDay);
 		panelsOfWeekMonth.add(dayPane3);
+		lblDay = new JLabel("Wednesday");
+		monthDayOfWeek.add(lblDay);
+
 
 		lblDay = new JLabel("Thursday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPanel4 = new JPanel();
 		dayPanel4.setLayout(new BoxLayout(dayPanel4, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Thursday");
 		dayPanel4.add(lblDay);
 		panelsOfWeekMonth.add(dayPanel4);
+		lblDay = new JLabel("Thursday");
+		monthDayOfWeek.add(lblDay);
+
 
 		lblDay = new JLabel("Friday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPanel5 = new JPanel();
 		dayPanel5.setLayout(new BoxLayout(dayPanel5, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Friday");
 		dayPanel5.add(lblDay);
 		panelsOfWeekMonth.add(dayPanel5);
+		lblDay = new JLabel("Friday");
+		monthDayOfWeek.add(lblDay);
 
 		lblDay = new JLabel("Saturday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
-		daysOfWeek.add(lblDay);
+		weekYYYYMMDD.add(lblDay);
 		JPanel dayPanel6 = new JPanel();
 		dayPanel6.setLayout(new BoxLayout(dayPanel6, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Saturday");
 		dayPanel6.add(lblDay);
 		panelsOfWeekMonth.add(dayPanel6);
+		lblDay = new JLabel("Saturday");
+		monthDayOfWeek.add(lblDay);
 
 		LocalDate firstMonth = now.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		for (int i = 0; i < 35; i++) {
@@ -617,6 +639,25 @@ public class DoctorView {
 	
 
 	public void initializeWeeklySchedule() {
+		// scheduleWeekly = new JPanel();
+		// 	scheduleWeekly.setLayout(new MigLayout("wrap 8", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
+		// 	scheduleWeekly.setBackground(Color.WHITE);
+		// 	scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		// scheduleNameLabel = new JLabel("I am a label: <Name>");
+		// scheduleWeekly.add(scheduleNameLabel, "span");
+		// // scheduleWeekly.add(Box.createHorizontalStrut(50));
+		// scheduleWeekly.add(Box.createHorizontalGlue());
+		
+		// setWeekDateLabels(LocalDate.now());
+		// for (JLabel wd : weekDayOfWeek) {
+		// 	scheduleWeekly.add(wd);
+		// }
+		// scheduleWeekly.add(Box.createHorizontalGlue());
+		// for (JLabel lbl : weekYYYYMMDD) {
+		// 	scheduleWeekly.add(lbl);
+		// }
+
 		scheduleWeekly = new JPanel();
 			scheduleWeekly.setBackground(Color.WHITE);
 			scheduleWeekly.setBorder(new LineBorder(Color.RED));
@@ -650,8 +691,8 @@ public class DoctorView {
 			JPanel dayPanel = new JPanel();
 				dayPanel.setBackground(Color.WHITE);
 				dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.Y_AXIS));
-				dayPanel.add(weekdays.get(i));
-				dayPanel.add(daysOfWeek.get(i));
+				dayPanel.add(weekDayOfWeek.get(i));
+				dayPanel.add(weekYYYYMMDD.get(i));
 				scheduleWeekly.add(dayPanel);
 				
 				//listener for the panels
@@ -683,6 +724,29 @@ public class DoctorView {
 	
 	
 	public void initializeMonthlySchedule() {
+		// scheduleMonthly = new JPanel();
+		// 	scheduleMonthly.setLayout(new MigLayout("wrap 7", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
+		// 	scheduleMonthly.setBackground(Color.WHITE);
+		// 	scheduleMonthly.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// 	scheduleMonthly.setBorder(new LineBorder(Color.RED));
+		
+		
+		// scheduleNameLabelMonth = new JLabel("I am <Name>'s schedule: Monthly");
+		// scheduleMonthly.add(scheduleNameLabelMonth, "span");
+		// displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
+		// scheduleMonthly.add(displayMonth, "span");
+		// for (JLabel d : monthDayOfWeek) {
+		// 	scheduleMonthly.add(d);
+		// }
+		// for (JLabel day : monthdays) {
+		// 	scheduleMonthly.add(day);
+		// }
+
+
+		// scheduleMonthly.setVisible(false);
+
+		//////////////////////////////////////////////////////////////
+
 		scheduleMonthly = new JPanel();
 			scheduleMonthly.setBackground(Color.WHITE);
 			// scheduleMonthly.setBorder(new LineBorder(Color.RED)); // highlights borders for visual gauging
@@ -781,7 +845,9 @@ public class DoctorView {
 	public void initializePatients() {
 		listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
-
+		listPatientsPanel.setBackground(Color.WHITE);
+		JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setLayout(new ScrollPaneLayout());
 		// Actual patient information
 
 		// for (JPanel panel : getPatientListPanels()) {
@@ -791,14 +857,11 @@ public class DoctorView {
 		// Dummy "data"
 		for (int i = 0; i < 30; i++) {
 			JPanel aPatient = new JPanel();
-			aPatient.setPreferredSize(new Dimension(175, 75));
-			aPatient.setLayout(new BoxLayout(aPatient, BoxLayout.Y_AXIS));
-			JLabel patient = new JLabel("Patient " + (i+1));
-			JLabel age = new JLabel("Age " + (int)(0 + Math.random() * 500));
-			aPatient.setBorder(BorderFactory.createBevelBorder(BevelBorderUIResource.RAISED));
-			aPatient.setBackground(Color.WHITE);
-			aPatient.add(patient);
-			aPatient.add(age);
+			aPatient.setPreferredSize(new Dimension(150, 0));
+			aPatient.setBackground(Color.LIGHT_GRAY);
+			JLabel patLabel = new JLabel("<html>Patient " + (i+1) + "<br>Age " + (int)(0+Math.random()*500));
+			aPatient.add(patLabel);
+			aPatient.getAccessibleContext().setAccessibleName(patLabel.getText());
 			listPatientsPanel.add(aPatient);
 			// To test clicking, DUMMY COMPONENTS
 			aPatient.addMouseListener(new MouseAdapter() {
@@ -806,22 +869,24 @@ public class DoctorView {
 				public void mousePressed(MouseEvent a) {
 					// Clear all components
 					for (Component c : listPatientsPanel.getComponents()) {
-						c.setBackground(Color.WHITE);
+						c.setBackground(Color.LIGHT_GRAY);
 					}
-					
+					patientInformation.setText(aPatient.getAccessibleContext().getAccessibleName());
 					if (aPatient.getBackground().equals(Color.RED)) {
-						aPatient.setBackground(Color.WHITE);
+						aPatient.setBackground(Color.LIGHT_GRAY);
 					} else {
 						aPatient.setBackground(Color.RED);
 					}
 				}
 			});
 		}
-
+		
 
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		listPatientsPanel.setPreferredSize(new DimensionUIResource(200, 0));
-		JScrollPane scroll = new JScrollPane(listPatientsPanel);
+		scroll.setPreferredSize(new DimensionUIResource(200, 0));
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		listPatientsPanel.revalidate();
+		listPatientsPanel.repaint();
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
 		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
@@ -831,14 +896,14 @@ public class DoctorView {
 		patientInformation.setEnabled(false);
 		selectedPatient.add(patientInformation);
 		selectedPatient.add(new JLabel("Detailed Treatment History"));
-		pastTreatments = new JTextArea(0,90);
+		pastTreatments = new JTextArea(0,200);
 		pastTreatments.setLineWrap(true);
 		pastTreatments.setText("Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
 		pastTreatments.setEnabled(false);
 		JScrollPane sp1 = new JScrollPane(pastTreatments);
 		selectedPatient.add(sp1, "span 1 10, height 300");
 		// selectedPatient.add(pastTreatments);
-		currentTreatment = new JTextArea(0, 90);
+		currentTreatment = new JTextArea(0, 200);
 		currentTreatment.setText("I am a box for a doctor to enter treatment notes in");
 		currentTreatment.setLineWrap(true);
 		// currentTreatment.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK, Color.DARK_GRAY));
@@ -1123,7 +1188,7 @@ public class DoctorView {
 
 
 	public ArrayList<JLabel> getWeekdays() {
-		return weekdays;
+		return weekDayOfWeek;
 	}
 
 
@@ -1131,8 +1196,8 @@ public class DoctorView {
 
 
 
-	public void setWeekdays(ArrayList<JLabel> weekdays) {
-		this.weekdays = weekdays;
+	public void setWeekdays(ArrayList<JLabel> weekDayOfWeek) {
+		this.weekDayOfWeek = weekDayOfWeek;
 	}
 
 
@@ -1141,7 +1206,7 @@ public class DoctorView {
 
 
 	public ArrayList<JLabel> getDaysOfWeek() {
-		return daysOfWeek;
+		return weekYYYYMMDD;
 	}
 
 
@@ -1149,8 +1214,8 @@ public class DoctorView {
 
 
 
-	public void setDaysOfWeek(ArrayList<JLabel> daysOfWeek) {
-		this.daysOfWeek = daysOfWeek;
+	public void setDaysOfWeek(ArrayList<JLabel> weekYYYYMMDD) {
+		this.weekYYYYMMDD = weekYYYYMMDD;
 	}
 
 
@@ -1292,7 +1357,21 @@ public class DoctorView {
 		return patientListPanels;
 	}
 
+	public void setScheduleNameLabelWeek (JLabel s) {
+		this.scheduleNameLabelWeek = s;
+	}
 
+	public JLabel getScheduleNameLabelWeek() {
+		return scheduleNameLabelWeek;
+	}
+
+	public void setScheduleNameLabelMonth (JLabel s) {
+		this.scheduleNameLabelMonth = s;
+	}
+
+	public JLabel getScheduleNameLabelMonth() {
+		return scheduleNameLabelMonth;
+	}
 
 	public void setPatientListPanels(String[] patList) {
 		for (String p : patList) {
@@ -1316,11 +1395,26 @@ public class DoctorView {
 
 	public void setWeekDateLabels(LocalDate ld) {
 		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		for (JLabel lbl : weekdays) {
-			lbl.setText(tempTime.plusDays(weekdays.indexOf(lbl)).toString());
+		for (JLabel lbl : weekDayOfWeek) {
+			lbl.setText(tempTime.plusDays(weekDayOfWeek.indexOf(lbl)).toString());
 		}
 	}
 
+	public void addPatient(String name) {
+		// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
+		JPanel pat = new JPanel();
+		JLabel patLbl = new JLabel(name);
+
+		// Let name be the detailed patient information
+		pat.getAccessibleContext().setAccessibleName(name);
+
+		// And let description be the detailed treatment history
+		// pat.getAccessibleContext().setAccessibleDescription(treathis);
+
+		pat.add(patLbl);
+		pat.setBackground(Color.LIGHT_GRAY);
+		patientListPanels.add(pat);
+	}
 	
 
 	
