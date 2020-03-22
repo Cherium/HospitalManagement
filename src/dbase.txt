@@ -1,9 +1,9 @@
-role	username	password	name	department	nursesUsernames	assignedDoctorUsername	address	phoneNumber	email	amountDue
-doctor	doctor	doctor	Doctor Who	Cardiology	nancy,drew	null	null	0	null	0
-nurse	nurse	nurse	Nurse Joy	Cardiology	null	doctor	null	0	null	0
-patient	patient	patient	Healthy Person	null	null	null	99 University Way	4039999999	patient@ucalgary.ca	25
-patient	patient2	patient	Sick Person	null	null	null	lane	999	pcpcpc	20
-admin	admin	admin	Lowly Admin	null	null	null	null	0	null	0
-nurse	nancy	nancy	Nurse Nance	Cardiology	null	doctor	null	0	null	0
-nurse	drew	drew	Nurse Ew	Cardiology	null	doctor	null	0	null	0
-receptionist	recipe	recipe	ronald	null	null	null	null	0	null	0
+role	username	password	name	department	nursesUsernames	assignedDoctorUsername	address	phoneNumber	email	amountDue	dob	blood	\sex	\recordID
+doctor	doctor	doctor	Doctor Who	Cardiology	nancy,drew	null	null	0	null	0	0	null	null
+nurse	nurse	nurse	Nurse Joy	Cardiology	null	doctor	null	0	null	0	0	null	null
+patient	patient	patient	Healthy Person	null	null	null	99 University Way	4039999999	patient@ucalgary.ca	25	1990/10/10	AB-	Male
+patient	patient2	patient	Sick Person	null	null	null	lane	999	pcpcpc	20	2018/9/2	A+	Female
+admin	admin	admin	Lowly Admin	null	null	null	null	0	null	0	0	null	null
+nurse	nancy	nancy	Nurse Nance	Cardiology	null	doctor	null	0	null	0	0	null	null
+nurse	drew	drew	Nurse Ew	Cardiology	null	doctor	null	0	null	0	0	null	null
+receptionist	recipe	recipe	ronald	null	null	null	null	0	null	0	0	null	null

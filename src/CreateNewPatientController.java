@@ -25,7 +25,7 @@ public class CreateNewPatientController {
 	//	as soon as the view first opens for the user
 	public void initView()
 	{
-		
+
 	}
 	
 	
@@ -50,7 +50,10 @@ public class CreateNewPatientController {
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());
-		model.setBday(view.getBirthday());
+		
+		model.setDob(view.getBirthday() );	//uuuu-M-d
+		model.setBloodType(view.getBlood().getItemAt(view.getBlood().getSelectedIndex() ));
+		model.setSex(view.getSex().getItemAt(view.getSex().getSelectedIndex() ));
 		
 		
 		
