@@ -35,12 +35,19 @@ public class PatientController {
 		view.getEmailText().setText(model.getEmail() );
 		view.getAmountDue().setText(model.convertToDollar() );
 		view.getUsernameLabel().setText(model.getUsername() );
+		view.getAge().setText(Integer.toString(model.getAge()));
+		view.getYear().setSelectedItem(Integer.toString(model.getBirthday().getYear()));
+		view.getMonth().setSelectedItem(Integer.toString(model.getBirthday().getMonthValue()));
+		view.getDay().setSelectedItem(Integer.toString(model.getBirthday().getDayOfMonth()));
+		view.getBlood().setSelectedItem(model.getBlood());
+		view.getSex().setSelectedItem(model.getSex());
 	}
 	
 	//initialize 'only' the listeners the GUI handles 'that
 	//	need interaction with the model'
 	public void initListeners() 
-	{
+	{/*
+		commenting out, low prioirty but still functional
 		//add listener to each TextField in infopanel that listens for any change in text
 		//	It enables th save button in its handler
 		for( JTextField j: view.getInfoFields() )
@@ -75,7 +82,7 @@ public class PatientController {
 		}
 		
 		
-		
+		*/
 		view.getSave().addActionListener(e -> updateInfo() );
 		view.getChangePassword().addActionListener(e -> changePass() );
 		
@@ -106,6 +113,9 @@ public class PatientController {
 		model.setAddress(view.getAddrText().getText());
 		model.setPhoneNumber(view.getPhText().getText());
 		model.setEmail(view.getEmailText().getText());
+		model.setBlood(view.getBlood().getItemAt(view.getBlood().getSelectedIndex() ));
+		model.setSex(view.getSex().getItemAt(view.getSex().getSelectedIndex() ));
+		model.setBirthdayFromString(view.getBirthday());
 		
 		//do checks on the information and store it
 		String response = model.verifyInfo();

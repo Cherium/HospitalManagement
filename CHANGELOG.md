@@ -3,6 +3,43 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 22 mar 07:30
+**Login**
+* designed layout
+* added exit button and functionality
+
+### 22 mar 01:00 Sajid
+**CreateNewPatient**
+* view
+    * changed default combobox to non-blank (saves error checking)
+    * Created method to return oject LocalDateTimeObject
+    * created fields for blood type, sex, dob
+    * fixed sizing of components
+* Model
+    * sex,dob, and bloodtype now are stored in internal database as string when patient is created.
+    * now extends UserSuperClass to use its methods for date
+    * changed constructor to accomodate loading in new fields
+
+**Patient**
+* Controller
+    * commented out 'false state' listener for the save button to make things simpler
+    * load in patient data for dob, age, sec, blood type from internal/external database when page opens.
+        * patient page now views all 'information' other than scheduling :)
+* View
+    * created fields for blood type, sex, dob
+* Model
+    * created method to set the LocalDate dob object from an entered string of the format "yyyy/M/d"
+        * used for taking view entered date, and storing it in PatientModel.
+    * changed constructor to allow new fields to load form database
+
+**Database**
+* added fields for sec, dob, bloodtype
+
+**UserSuperClass**
+* Added a bunch of utility methods for converting strings to LocalDate and back. Subclasses will use these methods when needed
+    * Also created methods to change from LocalDate to int and back, but not sure we will implement those at the end since LocalDate and LocalDateTime are pretty useful already.
+* Added some date to int conversions for unix time, but thinking of keeping it simple so likely wont use those.
+
 
 ### 21 MARCH 10:22 Jenny
 **CreateNewPatientModel+View+Controller**
@@ -19,7 +56,6 @@ Example: 10 mar 21:13 SAJID
 * Still couldn't attach a scrollpanel to list of patients, may have to change to a list instead.
 
 ### 20 MARCH 20:43 Jenny
-* Changed parts in database that didn't get refactored in view/doctor branch.
 * Fleshed out listener for adding treatment notes to a patient, can add treatment (hard coded, not saved).
 * Added sections to patient that are relevant to treatment record (currently commented out as it's not implemented in database).
 

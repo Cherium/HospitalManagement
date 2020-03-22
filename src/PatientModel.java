@@ -1,7 +1,10 @@
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 /**
  * handles all calculations, database queries, and the overall work needed to be
@@ -19,14 +22,12 @@ public class PatientModel extends UserSuperClass {
 	private String record;
 	private LocalDate birthday;
 	private String bloodtype;
-	private char sex;
+	private String sex;
 	
 
 	//constructor
 	public PatientModel(String username, char[] password, String name
-			, String addr, String phNumber, String email, float amountDue)
-	// public PatientModel(String username, char[] password, String name
-	// , String addr, String phNumber, String email, float amountDue, String bday, String btype, char sex)
+			, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2)
 	{
 		
 		super(name,username,password);
@@ -35,16 +36,21 @@ public class PatientModel extends UserSuperClass {
 		this.phoneNumber = phNumber;
 		this.email = email;
 		this.amountDue = amountDue;
-		// this.birthday = LocalDate.parse(bday);
+		
+		//convert date to LocalDate object
+		this.birthday = dateStringToLocalDate(dob);
+		this.bloodtype = bloodType;
+		this.sex = sex2;
 		// this.bloodtype = btype;
 		// this.sex = sex;
 	}
 	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	//convert a string of digits to a phone number
 	public String convertToPhoneNumber()
 	{
@@ -117,7 +123,8 @@ public class PatientModel extends UserSuperClass {
 	
 	public int getAge() {
 		// https://stackoverflow.com/questions/1116123/how-do-i-calculate-someones-age-in-java
-		return Period.between(getBirthday(), LocalDate.now()).getYears();
+		//https://howtodoinjava.com/java/date-time/localdate-localdatetime-conversions/
+		return Period.between(birthday, LocalDate.now()).getYears();
 	}
 	
 /**Getters and Setters*/
@@ -180,6 +187,11 @@ public class PatientModel extends UserSuperClass {
 	// TODO: Change constructor to load patient record
 
 	// Getters and setters
+	
+	public void setBirthdayFromString(String date)
+	{
+		this.birthday = dateStringToLocalDate(date);
+	}
 
 	public void setRecord(String record) {
 		this.record = record;
@@ -197,22 +209,21 @@ public class PatientModel extends UserSuperClass {
 		return birthday;
 	}
 
-	public void setSex(char s) {
+	public void setSex(String s) {
 		this.sex = s;
 	} 
 
-	public char getSex() {
+	public String getSex() {
 		return sex;
 	}
 
 	public void setBlood(String b) {
-		if (b.equals("A-") || b.equals("A+") || b.equals("B-") || b.equals("B+") || b.equals("AB-") || b.equals("AB+") || b.equals("O-") || b.equals("O+")) {
-			this.bloodtype = b;
-		}
+		this.bloodtype = b;
 	}
 
 	public String getBlood() {
 		return bloodtype;
 	}
+
 
 }

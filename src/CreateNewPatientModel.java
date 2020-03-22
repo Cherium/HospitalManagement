@@ -4,7 +4,7 @@ import java.util.Arrays;
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)*/
-public class CreateNewPatientModel {
+public class CreateNewPatientModel extends UserSuperClass {
 	
 	private String name;
 	private String username;
@@ -13,7 +13,10 @@ public class CreateNewPatientModel {
 	private String address;
 	private String phoneNumber;
 	private String email;
-	private String bday;
+	
+	private String dob;
+	private String bloodType;
+	private String sex;
 	
 	
 	
@@ -72,11 +75,13 @@ public class CreateNewPatientModel {
 			return "No Field Should be empty!";
 		}
 		
-		
+
 		//store in database if all checks pass
 		Main.dbase.put(username
-				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0));
+				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0
+						, dob, bloodType, sex));
 		return "Account successfully created!";
+		
 	}
 	
 	
@@ -176,12 +181,52 @@ public class CreateNewPatientModel {
 		this.email = email;
 	}
 
-	public String getBday() {
-		return bday;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setBday(String bd) {
-		this.bday = bd;
+	public void setDob(String bd) {
+		this.dob = bd;
+	}
+
+
+
+
+
+
+
+	public String getBloodType() {
+		return bloodType;
+	}
+
+
+
+
+
+
+
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
+	}
+
+
+
+
+
+
+
+	public String getSex() {
+		return sex;
+	}
+
+
+
+
+
+
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 	
 	

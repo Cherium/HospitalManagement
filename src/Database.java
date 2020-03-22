@@ -66,10 +66,12 @@ public class Database {
 										String[] importAssignedNurseUsernames	 = split[5].split(",");
 										String importAssignedDocUsername		 = split[6];
 										String importAddress						= split[7];
-										System.out.println(split[8]);
-										String importPhoneNumber			 = split[8];
+										String importPhoneNumber			 			= split[8];
 										String importEmail 								= split[9];
 										float importAmountDue			 = Float.parseFloat(split[10]);
+										String importDob								= split[11];
+										String importBlood								=split[12];
+										String importSex								=split[13];
 										
 	
 										
@@ -99,7 +101,8 @@ public class Database {
 										else if(importRole.compareTo("patient")== 0)
 										{ System.out.println(importAmountDue);
 											PatientModel temp = new PatientModel(importUsername, importPassword, importName
-													, importAddress, importPhoneNumber, importEmail, importAmountDue);
+													, importAddress, importPhoneNumber, importEmail, importAmountDue
+													, importDob, importBlood, importSex);
 											
 											users.put(importUsername, temp);
 										}
