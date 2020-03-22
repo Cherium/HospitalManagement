@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -722,118 +724,120 @@ public class DoctorView {
 	
 	
 	public void initializeMonthlySchedule() {
-		scheduleMonthly = new JPanel();
-			scheduleMonthly.setLayout(new MigLayout("wrap 7", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
-			scheduleMonthly.setBackground(Color.WHITE);
-			scheduleMonthly.setBorder(new EmptyBorder(5, 5, 5, 5));
-			scheduleMonthly.setBorder(new LineBorder(Color.RED));
-		
-		
-		scheduleNameLabelMonth = new JLabel("I am <Name>'s schedule: Monthly");
-		scheduleMonthly.add(scheduleNameLabelMonth, "span");
-		displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
-		scheduleMonthly.add(displayMonth, "span");
-		for (JLabel d : monthDayOfWeek) {
-			scheduleMonthly.add(d);
-		}
-		for (JLabel day : monthdays) {
-			scheduleMonthly.add(day);
-		}
-
-
-		scheduleMonthly.setVisible(false);
-
 		// scheduleMonthly = new JPanel();
+		// 	scheduleMonthly.setLayout(new MigLayout("wrap 7", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
 		// 	scheduleMonthly.setBackground(Color.WHITE);
-		// 	// scheduleMonthly.setBorder(new LineBorder(Color.RED)); // highlights borders for visual gauging
-		// 	scheduleMonthly.setLayout(new BoxLayout(scheduleMonthly, BoxLayout.Y_AXIS));
+		// 	scheduleMonthly.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// 	scheduleMonthly.setBorder(new LineBorder(Color.RED));
 		
-		// JPanel monthPanel = new JPanel();
-		// 	monthPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		// 	monthPanel.setBackground(new Color(203, 217, 249)); 
-
+		
+		// scheduleNameLabelMonth = new JLabel("I am <Name>'s schedule: Monthly");
+		// scheduleMonthly.add(scheduleNameLabelMonth, "span");
 		// displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
-		// 	displayMonth.setFont(new Font("Tahoma", Font.BOLD, 18));
-
-		// JPanel monthLabelPanel = new JPanel();
-		// 	monthLabelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		// 	monthLabelPanel.add(displayMonth);
-		// 	monthLabelPanel.setMaximumSize(displayMonth.getPreferredSize()); // uncommenting this makes the label very small
-		// 	monthLabelPanel.setBackground(new Color(158, 182, 238));
-
-		// scheduleMonthly.add(monthLabelPanel);
-		// scheduleMonthly.add(monthPanel);
-
-		// for (int j = 0; j < 7; j++) {
-		// 	monthPanel.add(panelsOfWeekMonth.get(j));
+		// scheduleMonthly.add(displayMonth, "span");
+		// for (JLabel d : monthDayOfWeek) {
+		// 	scheduleMonthly.add(d);
+		// }
+		// for (JLabel day : monthdays) {
+		// 	scheduleMonthly.add(day);
 		// }
 
-
-		// for (int i = 0; i < 35; i++) {
-		// 	// Overall panel for one day
-		// 	JPanel day = new JPanel();
-		// 		day.setBackground(Color.WHITE);
-		// 		day.setForeground(Color.WHITE);
-		// 		day.setLayout(new BoxLayout(day, BoxLayout.Y_AXIS));
-		// 	JPanel monthDate = new JPanel();
-		// 		// monthDate.setAlignmentX(FlowLayout.RIGHT);
-		// 		monthDate.add(monthdays.get(i));
-		// 		day.add(monthDate);
-		// 	JPanel appointments = new JPanel();
-		// 		appointments.setLayout(new BoxLayout(appointments, BoxLayout.Y_AXIS));
-		// 	JScrollPane scrollAppoint = new JScrollPane(appointments);
-		// 		scrollAppoint.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		// 		scrollAppoint.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// 		day.add(scrollAppoint);
-		// 		monthDate.setBackground(new Color(59, 198, 198));
-		// 		scrollAppoint.setBackground(new Color(147, 234, 234));
-				
-		// 	day.addMouseListener(new MouseAdapter() {
-		// 		@Override
-		// 		public void mousePressed(final MouseEvent arg0) {
-		// 			if (monthDate.getBackground().equals(new Color(59, 198, 198))){
-		// 				monthDate.setBackground(new Color(255, 157, 76));
-		// 				scrollAppoint.setBackground(new Color(255, 203, 160));
-		// 			} else {
-		// 				monthDate.setBackground(new Color(59, 198, 198));
-		// 				scrollAppoint.setBackground(new Color(147, 234, 234));
-		// 			}
-		// 		}
-		// 	});
-
-
-		// 	// LocalDate meh = startDate.plusDays(i);
-		// 	// System.out.println(meh);
-		// 	switch (i%7) {
-		// 		case 0:
-		// 			panelsOfWeekMonth.get(0).add(day);
-		// 			break;
-		// 		case 1:
-		// 			panelsOfWeekMonth.get(1).add(day);
-		// 			break;
-		// 		case 2:
-		// 			panelsOfWeekMonth.get(2).add(day);
-		// 			break;
-		// 		case 3:
-		// 			panelsOfWeekMonth.get(3).add(day);
-
-		// 			break;
-		// 		case 4:
-		// 			panelsOfWeekMonth.get(4).add(day);
-
-		// 			break;
-		// 		case 5:
-		// 			panelsOfWeekMonth.get(5).add(day);
-
-		// 			break;
-		// 		case 6:
-		// 			panelsOfWeekMonth.get(6).add(day);
-
-		// 			break;
-		// 	}
-		// }
 
 		// scheduleMonthly.setVisible(false);
+
+		//////////////////////////////////////////////////////////////
+
+		scheduleMonthly = new JPanel();
+			scheduleMonthly.setBackground(Color.WHITE);
+			// scheduleMonthly.setBorder(new LineBorder(Color.RED)); // highlights borders for visual gauging
+			scheduleMonthly.setLayout(new BoxLayout(scheduleMonthly, BoxLayout.Y_AXIS));
+		
+		JPanel monthPanel = new JPanel();
+			monthPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			monthPanel.setBackground(new Color(203, 217, 249)); 
+
+		displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
+			displayMonth.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+		JPanel monthLabelPanel = new JPanel();
+			monthLabelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+			monthLabelPanel.add(displayMonth);
+			monthLabelPanel.setMaximumSize(displayMonth.getPreferredSize()); // uncommenting this makes the label very small
+			monthLabelPanel.setBackground(new Color(158, 182, 238));
+
+		scheduleMonthly.add(monthLabelPanel);
+		scheduleMonthly.add(monthPanel);
+
+		for (int j = 0; j < 7; j++) {
+			monthPanel.add(panelsOfWeekMonth.get(j));
+		}
+
+
+		for (int i = 0; i < 35; i++) {
+			// Overall panel for one day
+			JPanel day = new JPanel();
+				day.setBackground(Color.WHITE);
+				day.setForeground(Color.WHITE);
+				day.setLayout(new BoxLayout(day, BoxLayout.Y_AXIS));
+			JPanel monthDate = new JPanel();
+				// monthDate.setAlignmentX(FlowLayout.RIGHT);
+				monthDate.add(monthdays.get(i));
+				day.add(monthDate);
+			JPanel appointments = new JPanel();
+				appointments.setLayout(new BoxLayout(appointments, BoxLayout.Y_AXIS));
+			JScrollPane scrollAppoint = new JScrollPane(appointments);
+				scrollAppoint.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollAppoint.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+				day.add(scrollAppoint);
+				monthDate.setBackground(new Color(59, 198, 198));
+				scrollAppoint.setBackground(new Color(147, 234, 234));
+				
+			day.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(final MouseEvent arg0) {
+					if (monthDate.getBackground().equals(new Color(59, 198, 198))){
+						monthDate.setBackground(new Color(255, 157, 76));
+						scrollAppoint.setBackground(new Color(255, 203, 160));
+					} else {
+						monthDate.setBackground(new Color(59, 198, 198));
+						scrollAppoint.setBackground(new Color(147, 234, 234));
+					}
+				}
+			});
+
+
+			// LocalDate meh = startDate.plusDays(i);
+			// System.out.println(meh);
+			switch (i%7) {
+				case 0:
+					panelsOfWeekMonth.get(0).add(day);
+					break;
+				case 1:
+					panelsOfWeekMonth.get(1).add(day);
+					break;
+				case 2:
+					panelsOfWeekMonth.get(2).add(day);
+					break;
+				case 3:
+					panelsOfWeekMonth.get(3).add(day);
+
+					break;
+				case 4:
+					panelsOfWeekMonth.get(4).add(day);
+
+					break;
+				case 5:
+					panelsOfWeekMonth.get(5).add(day);
+
+					break;
+				case 6:
+					panelsOfWeekMonth.get(6).add(day);
+
+					break;
+			}
+		}
+
+		scheduleMonthly.setVisible(false);
 
 	}
 
@@ -841,7 +845,9 @@ public class DoctorView {
 	public void initializePatients() {
 		listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
-
+		listPatientsPanel.setBackground(Color.WHITE);
+		JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setLayout(new ScrollPaneLayout());
 		// Actual patient information
 
 		// for (JPanel panel : getPatientListPanels()) {
@@ -851,14 +857,11 @@ public class DoctorView {
 		// Dummy "data"
 		for (int i = 0; i < 30; i++) {
 			JPanel aPatient = new JPanel();
-			aPatient.setPreferredSize(new Dimension(175, 75));
-			aPatient.setLayout(new BoxLayout(aPatient, BoxLayout.Y_AXIS));
-			JLabel patient = new JLabel("Patient " + (i+1));
-			JLabel age = new JLabel("Age " + (int)(0 + Math.random() * 500));
-			aPatient.setBorder(BorderFactory.createBevelBorder(BevelBorderUIResource.RAISED));
-			aPatient.setBackground(Color.WHITE);
-			aPatient.add(patient);
-			aPatient.add(age);
+			aPatient.setPreferredSize(new Dimension(150, 0));
+			aPatient.setBackground(Color.LIGHT_GRAY);
+			JLabel patLabel = new JLabel("<html>Patient " + (i+1) + "<br>Age " + (int)(0+Math.random()*500));
+			aPatient.add(patLabel);
+			aPatient.getAccessibleContext().setAccessibleName(patLabel.getText());
 			listPatientsPanel.add(aPatient);
 			// To test clicking, DUMMY COMPONENTS
 			aPatient.addMouseListener(new MouseAdapter() {
@@ -866,22 +869,24 @@ public class DoctorView {
 				public void mousePressed(MouseEvent a) {
 					// Clear all components
 					for (Component c : listPatientsPanel.getComponents()) {
-						c.setBackground(Color.WHITE);
+						c.setBackground(Color.LIGHT_GRAY);
 					}
-					
+					patientInformation.setText(aPatient.getAccessibleContext().getAccessibleName());
 					if (aPatient.getBackground().equals(Color.RED)) {
-						aPatient.setBackground(Color.WHITE);
+						aPatient.setBackground(Color.LIGHT_GRAY);
 					} else {
 						aPatient.setBackground(Color.RED);
 					}
 				}
 			});
 		}
-
+		
 
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		listPatientsPanel.setPreferredSize(new DimensionUIResource(200, 0));
-		JScrollPane scroll = new JScrollPane(listPatientsPanel);
+		scroll.setPreferredSize(new DimensionUIResource(200, 0));
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		listPatientsPanel.revalidate();
+		listPatientsPanel.repaint();
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
 		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
@@ -891,14 +896,14 @@ public class DoctorView {
 		patientInformation.setEnabled(false);
 		selectedPatient.add(patientInformation);
 		selectedPatient.add(new JLabel("Detailed Treatment History"));
-		pastTreatments = new JTextArea(0,90);
+		pastTreatments = new JTextArea(0,200);
 		pastTreatments.setLineWrap(true);
 		pastTreatments.setText("Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
 		pastTreatments.setEnabled(false);
 		JScrollPane sp1 = new JScrollPane(pastTreatments);
 		selectedPatient.add(sp1, "span 1 10, height 300");
 		// selectedPatient.add(pastTreatments);
-		currentTreatment = new JTextArea(0, 90);
+		currentTreatment = new JTextArea(0, 200);
 		currentTreatment.setText("I am a box for a doctor to enter treatment notes in");
 		currentTreatment.setLineWrap(true);
 		// currentTreatment.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK, Color.DARK_GRAY));
@@ -1395,6 +1400,21 @@ public class DoctorView {
 		}
 	}
 
+	public void addPatient(String name) {
+		// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
+		JPanel pat = new JPanel();
+		JLabel patLbl = new JLabel(name);
+
+		// Let name be the detailed patient information
+		pat.getAccessibleContext().setAccessibleName(name);
+
+		// And let description be the detailed treatment history
+		// pat.getAccessibleContext().setAccessibleDescription(treathis);
+
+		pat.add(patLbl);
+		pat.setBackground(Color.LIGHT_GRAY);
+		patientListPanels.add(pat);
+	}
 	
 
 	

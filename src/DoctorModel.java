@@ -10,7 +10,7 @@ public class DoctorModel extends UserSuperClass {
 	//private DoctorModel doctor;
 	private String department;
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
-	private ArrayList<PatientModel> scheduledPatients = new ArrayList<PatientModel>(5);
+	private ArrayList<String> scheduledPatientsUsernames = new ArrayList<String>(5);
 	private Schedule schedule;
 	
 
@@ -65,28 +65,20 @@ public class DoctorModel extends UserSuperClass {
 		this.assignedNurseUsernames = new ArrayList<String>(nurses);
 	}
 
-	public ArrayList<PatientModel> getScheduledPatients() {
-		return scheduledPatients;
+	public ArrayList<String> getScheduledPatientsUsernames() {
+		return scheduledPatientsUsernames;
 	}
 
-	public void setScheduledPatients(ArrayList<PatientModel> pats) {
-		this.scheduledPatients = new ArrayList<PatientModel>(pats);
+	public void setScheduledPatientsUsernames(ArrayList<String> pats) {
+		this.scheduledPatientsUsernames = new ArrayList<String>(pats);
 	}
 
 
-	public String[] getPatientNames() {
-		String[] nameStrs = new String[getScheduledPatients().size()];
-		for (int i = 0; i < getScheduledPatients().size(); i++) {
-			nameStrs[i] = getScheduledPatients().get(i).getName();
-		}
-		return nameStrs;
-	}
-
-	public void addPatient(PatientModel p) {
+	public void addPatient(String p) {
 		// ArrayList<PatientModel> ps = new ArrayList<PatientModel>(getScheduledPatients());
 		// ps.add(p);
 		// setScheduledPatients(ps);
-		this.scheduledPatients.add(p);
+		this.scheduledPatientsUsernames.add(p);
 	}
 
 //testing class; will later be export class for database

@@ -33,13 +33,28 @@ public class DoctorController {
 			view.getNurseComboBox().addItem(model.getObjectsName(n));
 		}
 		view.getNurseComboBox().setSelectedIndex(-1);
-		view.setPatientListPanels(model.getPatientNames());
+
+		for (String pU : model.getScheduledPatientsUsernames()) {
+			// TODO: Figure out how to get the age, treatment history, and detailed patient information of the patient from here
+			view.addPatient(model.getObjectsName(pU));
+		}
+
+
+	}
+
+	// initialize 'only' the listeners the GUI handles 'that
+	// need interaction with the model'
+	public void initListeners() {
 		for (JPanel p : view.getPatientListPanels()) {
 			p.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent a) {
-					// TODO: Populate patient information
-					// TODO: Populate the past treatments of the patient
+					// Populate patient information
+					view.getPatientInformation().setText(p.getAccessibleContext().getAccessibleName());
+
+					// Populate the past treatments of the patient
+					view.getPastTreatmentBox().setText(p.getAccessibleContext().getAccessibleDescription());
+
 					for (JPanel c : view.getPatientListPanels()) {
 						c.setBackground(Color.WHITE);
 					}
@@ -56,11 +71,6 @@ public class DoctorController {
 			});
 		}
 
-	}
-
-	// initialize 'only' the listeners the GUI handles 'that
-	// need interaction with the model'
-	public void initListeners() {
 
 		view.getButtonTreatmentNotes().addActionListener(new ActionListener() {
 			@Override
@@ -71,7 +81,7 @@ public class DoctorController {
 				view.getPastTreatmentBox().setText(updateTreatment);
 				// TODO: Update the record in patient object
 
-
+				// TODO: Make sure that the updated record will show up when the patient is selected again
 
 			}
 		});

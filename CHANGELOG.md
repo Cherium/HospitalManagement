@@ -3,7 +3,16 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
-## 22 mar 07:30
+### 22 MARCH 18:33 Jenny
+**DoctorModel**
+* Changed the array of scheduled patients to store Strings of patient usernames instead, to maintain consistency with the array of assigned nurses being Strings.
+**DoctorController + DoctorView**
+* The scrolling issue (couldn't get the list of patients panel in View Patients to scroll) has been fixed. The problem was that the component that JScrollPane was mounted on had a setPreferredSize method, which JScrollPane did not like. Move the method to JScrollPane instead.
+* Default scrolling was too slow, changed the vertical unit scrolling increment to 10.
+* Currently the patient panel still has dummy data. Clicking on a dummy data will cause the information in the data to be shown in the Patient Information box. 
+* The controller is set up to populate the patient list with actual, scheduled patients. Currently, it only displays patient names. 
+
+## 22 mar 07:30 
 **Login**
 * designed layout
 * added exit button and functionality
