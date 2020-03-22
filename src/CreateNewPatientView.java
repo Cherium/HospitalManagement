@@ -224,6 +224,7 @@ public class CreateNewPatientView  extends JDialog{
 			for (int i = 1; i < x+1; i++) {
 				day.addItem(i+"");
 			}
+
 			System.out.println("here");
 			day.setSelectedIndex(-1);
 			day.setBackground(Color.WHITE);
