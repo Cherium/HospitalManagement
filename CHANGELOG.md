@@ -3,7 +3,7 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
-##23 mar 06:30
+## 23 mar 06:30
 ** The following is done in a new branch masterBranch; fully functioning code**
 
 **Doctor**
