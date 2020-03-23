@@ -65,11 +65,17 @@ public class DoctorView {
 	private JPanel patientPanel;
 	//private JPanel dayPanel;
 	private JPanel listPatientsPanel;
+	private JPanel btnPaneSchedule;
+	private JPanel buttonContainer;
+	private JPanel scheduleContainer;
 	
 	private JButton btnSignOut;
 	private JButton btnViewPatient;
 	private JButton btnMakeChanges;
 	private JButton btnAddTreatmentNotes;
+	private JButton btnSaveChanges;
+	private JButton btnOwnSchedule;
+	private JButton btnOwn;
 	
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
@@ -99,23 +105,23 @@ public class DoctorView {
 	private JScrollPane scroll;
 	private JList listPatients;
 
-/*
-	default frame (getContentFrame()): BorderLayout
-	#################################################################
-	# Sign out						 								# title frame: BoxLayout.Y-Axis
-	# Department: Name												# BorderLayout.North
-	#---------------------------------------------------------------#
-	# 				Schedule						|	Patients	# content frame: BoxLayout.X-Axis
-	# 												|	 Nurses		# BorderLayout.CENTER
-	#												| Own schedule	#
-	#												|				#
-	#												|				#
-	#												|				#
-	#												|				#
-	#-----------------------------------------------|				#
-	#			manipulate schedule					|				#
-	#################################################################
-*/	
+		/*
+			default frame (getContentFrame()): BorderLayout
+			#################################################################
+			# Sign out						 								# title frame: BoxLayout.Y-Axis
+			# Department: Name												# BorderLayout.North
+			#---------------------------------------------------------------#
+			# 				Schedule						|	Patients	# content frame: BoxLayout.X-Axis
+			# 												|	 Nurses		# BorderLayout.CENTER
+			#												| Own schedule	#
+			#												|				#
+			#												|				#
+			#												|				#
+			#												|				#
+			#-----------------------------------------------|				#
+			#			manipulate schedule					|				#
+			#################################################################
+		*/	
 
 	
 	
@@ -162,13 +168,14 @@ public class DoctorView {
 			titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
 			frame.getContentPane().add(titleContainer, BorderLayout.NORTH);		//Add the JPanel to the frame
 			
-/*
-	#################################################
-	#	Back										#
-	#	Department: Name, M.D.						#
-	#												#
-	#################################################
-*/
+		/*
+			#################################################
+			#	Back										#
+			#	Department: Name, M.D.						#
+			#												#
+			#################################################
+		*/
+
 		// Create a panel for the sign out button
 		backPanel = new JPanel();
 			FlowLayout flowLayout = (FlowLayout) backPanel.getLayout();
@@ -197,19 +204,19 @@ public class DoctorView {
 			nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
 			namePane.add(nameLabel);
 			
-/*
-	#####################################
-	#			Schedule				#
-	#									#
-	#									#
-	#									#
-	#									#
-	#									#
-	#-----------------------------------#
-	#		buttons for schedule		#
-	#									#
-	#####################################
-*/
+		/*
+			#####################################
+			#			Schedule				#
+			#									#
+			#									#
+			#									#
+			#									#
+			#									#
+			#-----------------------------------#
+			#		buttons for schedule		#
+			#									#
+			#####################################
+		*/
 	
 		// Create a content pane centered at the middle of the page
 		JPanel contentPane = new JPanel();
@@ -218,10 +225,11 @@ public class DoctorView {
 
 		// Create a container for the schedule, for the schedule itself and for the
 		// button panel associated with it (on the buttom)
-		JPanel scheduleContainer = new JPanel();
+		scheduleContainer = new JPanel();
 			scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
-			scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
-			scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
+			// scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
+			// scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
+			scheduleContainer.setLayout(new MigLayout());
 			contentPane.add(scheduleContainer);
 		
 		
@@ -237,16 +245,16 @@ public class DoctorView {
 		initializePatients();
 			
 		
-/*
- 	#################################
-	# 			Schedule			#
-	#_______________________________#
-	# 	|	|	|	|	|	|	|	#
-	# 	|	|	|	|	|	|	|	#
-	# 	|	|	|	|	|	|	|	#
-	# 	|	|	|	|	|	|	|	#
- 	#-------------------------------#
-*/			
+		/*
+			#################################
+			# 			Schedule			#
+			#_______________________________#
+			# 	|	|	|	|	|	|	|	#
+			# 	|	|	|	|	|	|	|	#
+			# 	|	|	|	|	|	|	|	#
+			# 	|	|	|	|	|	|	|	#
+			#-------------------------------#
+		*/			
 			
 			
 		// Create a panel for the schedule itself
@@ -256,155 +264,74 @@ public class DoctorView {
 			lblTemp.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			weekYYYYMMDD.add(lblTemp);
 		}
-		initializeWeeklySchedule();
-		scheduleContainer.add(scheduleWeekly);
-		initializeMonthlySchedule();
-		scheduleContainer.add(scheduleMonthly);
-			
-/*
-	#-----------------------------------#
-	#		buttons for schedule		#
-	#									#
-	#####################################
-*/		
-			
-			
-		// Create a panel for the buttons that manipulate the schedule
-		JPanel btnPaneSchedule = new JPanel();
-			btnPaneSchedule.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			scheduleContainer.add(btnPaneSchedule);
-			
-		
-		// Create a button that goes back one week/one month
-		// Currently only one week
-		// ActionListeners handle disabled buttons, mouse click does not
-		JButton btnBack = new JButton("<");
-			// Button starts out disabled as schedule starts out on current week
-			btnBack.setEnabled(false);
-			btnPaneSchedule.add(btnBack);
-		
-		// Button that selects a day from a day picker
-		// Not implemented. May remove function altogether
-		JButton btnDaySelecter = new JButton("Select day");
-			btnPaneSchedule.add(btnDaySelecter);
-		
-		// Button that changes schedule between weekly and monthly views
-		// Currently only weekly view is setup
-		JButton btnToggle = new JButton("Monthly view");
-			btnPaneSchedule.add(btnToggle);
-		btnToggle.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (btnToggle.getText().equals("Monthly view")){
-					btnToggle.setText("Weekly view");
-					scheduleMonthly.setVisible(true);
-					scheduleWeekly.setVisible(false);
-					setMonthDateLabels(getNow());
-				} else {
-					btnToggle.setText("Monthly view");
-					scheduleWeekly.setVisible(true);
-					scheduleMonthly.setVisible(false);
-					setWeekDateLabels(getNow());
-				}
-			}
-		});
-		
-		
-		btnBack.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LocalDate past, tempTime;
-				if (btnToggle.getText().equals("Monthly view")) {
-					past = now.minusWeeks(1);
-					tempTime = past.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-					setWeekDateLabels(past);
-					now = past;
-					if (tempTime.compareTo(LocalDate.now()) < 0) {
-						btnBack.setEnabled(false);
-						now = LocalDate.now();
-					}
-				} else {
-					past = now.minusMonths(1).withDayOfMonth(1);
-					tempTime = past.withDayOfMonth(1).with(fieldISO, 1);
-					setMonthDateLabels(past);
-					now = past;
-					if (tempTime.compareTo(LocalDate.now()) < 0) {
-						btnBack.setEnabled(false);
-						now = LocalDate.now();
-					}
-				}
-			}
-		});
-			
-		
-		
-		
-		JButton btnForward = new JButton(">");
-			btnPaneSchedule.add(btnForward);
-			btnForward.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					LocalDate future;
-					if (btnToggle.getText().equals("Monthly view")) {
-						future = now.plusWeeks(1);
-						setWeekDateLabels(future);
-					} else {
-						future = now.plusMonths(1);
-						setMonthDateLabels(future);
-					}
-					if (!btnBack.isEnabled())
-						btnBack.setEnabled(true);
-					now = future;
-				}
-			});
-			
-			
-			
-		JButton btnSaveChanges = new JButton("Save changes");
-			btnSaveChanges.setVisible(false);
-			btnPaneSchedule.add(btnSaveChanges);
 
-			btnSaveChanges.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					btnSaveChanges.setVisible(false);
-				}
-			});
+		scheduleMonthly = new JPanel();
+		scheduleWeekly = new JPanel();
+
+		// initializeWeeklySchedule();
+		scheduleContainer.add(scheduleWeekly);
+		// initializeMonthlySchedule();
+		scheduleContainer.add(scheduleMonthly);
+
+		initializeButtonsSchedule(fieldISO);
+		scheduleContainer.add(btnPaneSchedule, "south");
+
 			
 			
-			
-			
-		JButton btnOwnSchedule = new JButton("View current schedule");
-			btnOwnSchedule.setVisible(false);
-			btnPaneSchedule.setMaximumSize(btnPaneSchedule.getPreferredSize());
-			btnPaneSchedule.add(btnOwnSchedule);
-			
-			btnOwnSchedule.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					btnOwnSchedule.setVisible(false);
-					btnSaveChanges.setVisible(false);
-					patientPanel.setVisible(false);
-				}
-			});
-			
-/*
-		|############
-		| Things 	#
-		| Doctor 	#
-		| Can do 	#
-		|		 	#
-		|		 	#
-		|		 	#
-		|		 	#
-		|		 	#
-		|		 	#
-		|		 	#
-		|############
-*/
+		initializeButtonsRight();
+		frame.getContentPane().add(buttonContainer, BorderLayout.EAST);
+		frame.setVisible(true);
+
+	}
+
+////////////////////////////////////////////////////
 		
-		// Create panel for the right hand side components
-		JPanel buttonContainer = new JPanel();
+		
+		
+		
+		
+		
+	/** Getter and Setter Methods */
+		
+		
+		
+		
+		
+		
+	public void setVisibility(Boolean a)
+	{
+		frame.setVisible(a);
+	}
+		
+		
+		
+		
+	//show a dialog message if credentials do not validate
+	public void loginError(String message) 
+	{
+				JFrame frame = new JFrame();
+				frame.setSize(200,100);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				JOptionPane.showMessageDialog(frame, message);
+	}
+
+	public void initializeButtonsRight() {
+		/*
+				|############
+				| Things 	#
+				| Doctor 	#
+				| Can do 	#
+				|		 	#
+				|		 	#
+				|		 	#
+				|		 	#
+				|		 	#
+				|		 	#
+				|		 	#
+				|############
+		*/
+		
+		buttonContainer = new JPanel();
 			buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
 			GridBagLayout gbl_buttonContainer = new GridBagLayout();
 				gbl_buttonContainer.columnWidths = new int[]{0, 0};
@@ -414,7 +341,6 @@ public class DoctorView {
 			buttonContainer.setLayout(gbl_buttonContainer);
 			buttonContainer.setMaximumSize(new Dimension(200, 1000));
 			buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
-			frame.getContentPane().add(buttonContainer, BorderLayout.EAST);
 			
 			buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
 			
@@ -462,7 +388,7 @@ public class DoctorView {
 				
 				
 			// Button that allows the doctor to view his own schedule
-			JButton btnOwn = new JButton("View own schedule");
+			btnOwn = new JButton("View own schedule");
 			btnOwn.setEnabled(false);
 			btnOwn.addActionListener(new ActionListener() {
 				@Override
@@ -513,47 +439,141 @@ public class DoctorView {
 			gbc_btnOwn.gridy = 4;
 			buttonContainer.add(btnChange, gbc_btnOwn);
 			buttonContainer.setPreferredSize(buttonContainer.getPreferredSize());
+	}
+
+
+	public void initializeButtonsSchedule(TemporalField fieldISO) {
+		/*
+			#-----------------------------------#
+			#		buttons for schedule		#
+			#									#
+			#####################################
+		*/		
+					
+		// Create a panel for the buttons that manipulate the schedule
+		btnPaneSchedule = new JPanel();
+			btnPaneSchedule.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			
-	
-			frame.setVisible(true);
-		
-		
-		//create UI elements and add to panel
 
-	}
+		// Create a button that goes back one week/one month
+		// Currently only one week
+		// ActionListeners handle disabled buttons, mouse click does not
+		JButton btnBack = new JButton("<");
+			// Button starts out disabled as schedule starts out on current week
+			btnBack.setEnabled(false);
+			btnPaneSchedule.add(btnBack);
 
-////////////////////////////////////////////////////
-		
-		
-		
-		
-		
-		
-	/** Getter and Setter Methods */
-		
-		
-		
-		
-		
-		
-	public void setVisibility(Boolean a)
-	{
-		frame.setVisible(a);
-	}
-		
-		
-		
-		
-	//show a dialog message if credentials do not validate
-	public void loginError(String message) 
-	{
-				JFrame frame = new JFrame();
-				frame.setSize(200,100);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				JOptionPane.showMessageDialog(frame, message);
-	}
+		// Button that selects a day from a day picker
+		// Not implemented. May remove function altogether
+		JButton btnDaySelecter = new JButton("Select day");
+			btnPaneSchedule.add(btnDaySelecter);
 
-	
+		// Button that changes schedule between weekly and monthly views
+		// Currently only weekly view is setup
+		JButton btnToggle = new JButton("Monthly view");
+			btnPaneSchedule.add(btnToggle);
+		btnToggle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (btnToggle.getText().equals("Monthly view")){
+					btnToggle.setText("Weekly view");
+					scheduleMonthly.setVisible(true);
+					scheduleWeekly.setVisible(false);
+					setMonthDateLabels(getNow());
+				} else {
+					btnToggle.setText("Monthly view");
+					scheduleWeekly.setVisible(true);
+					scheduleMonthly.setVisible(false);
+					setWeekDateLabels(getNow());
+				}
+			}
+		});
+
+
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LocalDate past, tempTime;
+				if (btnToggle.getText().equals("Monthly view")) {
+					past = now.minusWeeks(1);
+					tempTime = past.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+					setWeekDateLabels(past);
+					now = past;
+					if (tempTime.compareTo(LocalDate.now()) < 0) {
+						btnBack.setEnabled(false);
+						now = LocalDate.now();
+					}
+				} else {
+					past = now.minusMonths(1).withDayOfMonth(1);
+					tempTime = past.withDayOfMonth(1).with(fieldISO, 1);
+					setMonthDateLabels(past);
+					now = past;
+					if (tempTime.compareTo(LocalDate.now()) < 0) {
+						btnBack.setEnabled(false);
+						now = LocalDate.now();
+					}
+				}
+			}
+		});
+			
+
+
+
+		JButton btnForward = new JButton(">");
+			btnPaneSchedule.add(btnForward);
+			btnForward.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					LocalDate future;
+					if (btnToggle.getText().equals("Monthly view")) {
+						future = now.plusWeeks(1);
+						setWeekDateLabels(future);
+					} else {
+						future = now.plusMonths(1);
+						setMonthDateLabels(future);
+					}
+					if (!btnBack.isEnabled())
+						btnBack.setEnabled(true);
+					now = future;
+				}
+			});
+			
+			
+			
+		btnSaveChanges = new JButton("Save changes");
+			btnPaneSchedule.add(btnSaveChanges);
+
+			btnSaveChanges.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					btnSaveChanges.setVisible(false);
+				}
+			});
+			
+			
+			
+			
+		btnOwnSchedule = new JButton("View current schedule");
+			btnPaneSchedule.add(btnOwnSchedule);
+			
+			btnOwnSchedule.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					btnOwnSchedule.setVisible(false);
+					btnSaveChanges.setVisible(false);
+					patientPanel.setVisible(false);
+				}
+			});
+
+		btnPaneSchedule.setPreferredSize(new Dimension(500, 0));
+
+		btnSaveChanges.setVisible(false);
+		btnOwnSchedule.setVisible(false);
+
+
+		btnPaneSchedule.setBorder(BorderFactory.createEtchedBorder());
+	}	
+
 	
 	public void initializeVariables() {
 		JLabel lblDay = new JLabel("Sunday");
@@ -647,18 +667,10 @@ public class DoctorView {
 	
 	
 
-	public void initializeWeeklySchedule() {
-		// dummy "schedule"
-		Boolean[] scheduledDays = new Boolean[7];
-			scheduledDays[0] = false;
-			scheduledDays[1] = true;
-			scheduledDays[2] = true;
-			scheduledDays[3] = true;
-			scheduledDays[4] = true;
-			scheduledDays[5] = true;
-			scheduledDays[6] = false;
-
-		scheduleWeekly = new JPanel();
+	public void initializeWeeklySchedule(Boolean[] schDays) {
+		scheduleWeekly.removeAll();
+		scheduleWeekly.revalidate();
+		scheduleWeekly.repaint();
 			scheduleWeekly.setLayout(new MigLayout("wrap 8", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
 			scheduleWeekly.setBackground(Color.WHITE);
 			scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -671,12 +683,12 @@ public class DoctorView {
 		setWeekDateLabels(LocalDate.now());
 		for (JLabel wd : weekYYYYMMDD) {
 			scheduleWeekly.add(wd);
-			wd.setEnabled(scheduledDays[weekYYYYMMDD.indexOf(wd)]);
+			wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
 		}
 		scheduleWeekly.add(Box.createHorizontalGlue());
 		for (JLabel lbl : sunToSatWeek) {
 			scheduleWeekly.add(lbl);
-			lbl.setEnabled(scheduledDays[sunToSatWeek.indexOf(lbl)]);
+			lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
 		}
 
 		for (int i = 8; i < 20; i++) {
@@ -684,89 +696,21 @@ public class DoctorView {
 			for (int j = 0; j < 7; j++) {
 				JLabel templbl = new JLabel("<html>"+sunToSatWeek.get(j).getText()+"<br>Time:"+i+":00");
 				scheduleWeekly.add(templbl);
-				templbl.setEnabled(scheduledDays[j]);
+				templbl.setEnabled(schDays[j]);
 
 			}
 		}
 
-		////////////////////////////////////////////////////////////////////////////
-
-		// scheduleWeekly = new JPanel();
-		// 	scheduleWeekly.setBackground(Color.WHITE);
-		// 	scheduleWeekly.setBorder(new LineBorder(Color.RED));
-		// 	FlowLayout flowLayout = (FlowLayout) scheduleWeekly.getLayout();
-		// 	flowLayout.setAlignment(FlowLayout.CENTER);
-		
-		// // Create a panel for the times
-		// JPanel timePanel = new JPanel();
-		// 	timePanel.setBackground(Color.WHITE);
-		// 	timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.Y_AXIS));
-		// 	scheduleWeekly.add(timePanel);
-		
-		// JLabel dates = new JLabel(" ");
-		// 	timePanel.add(dates);
-
-		// dates = new JLabel(" ");
-		// 	timePanel.add(dates);
-
-		// for (int i = 8; i < 20; i++) 
-		// {
-		// 	dates = new JLabel(i+":00");
-		// 	dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		// 	timePanel.add(dates);
-		// 	dates = new JLabel(" ");
-		// 	timePanel.add(dates);
-		// }
-		
-		// // Create a panel for Monday
-		// for (int i = 0; i < 7; i++) 
-		// {
-		// 	JPanel dayPanel = new JPanel();
-		// 		dayPanel.setBackground(Color.WHITE);
-		// 		dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.Y_AXIS));
-		// 		dayPanel.add(weekYYYYMMDD.get(i));
-		// 		dayPanel.add(sunToSatWeek.get(i));
-		// 		scheduleWeekly.add(dayPanel);
-				
-		// 		//listener for the panels
-		// 		dayPanel.addMouseListener(new MouseAdapter() {
-		// 			@Override
-		// 			public void mousePressed(final MouseEvent arg0) {
-						
-		// 				if (dayPanel.getBackground().equals(Color.WHITE)) {
-		// 					dayPanel.setBackground(Color.LIGHT_GRAY);
-		// 				} else {
-		// 					dayPanel.setBackground(Color.WHITE);
-		// 				}
-		// 			}
-		// 		});
-
-		// 	for (int j = 8; j < 20; j++) 
-		// 	{
-		// 		dates = new JLabel("TIME SLOT");
-		// 		dates.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		// 		dayPanel.add(dates);
-		// 		dates = new JLabel(" ");
-		// 		dayPanel.add(dates);
-		// 	}
-
-		// }
+		scheduleWeekly.setPreferredSize(new Dimension(2000,1000));
 
 	}
 	
 	
 	
-	public void initializeMonthlySchedule() {
-		Boolean[] scheduledDays = new Boolean[7];
-			scheduledDays[0] = false;
-			scheduledDays[1] = true;
-			scheduledDays[2] = true;
-			scheduledDays[3] = true;
-			scheduledDays[4] = true;
-			scheduledDays[5] = true;
-			scheduledDays[6] = false;
-
-		scheduleMonthly = new JPanel();
+	public void initializeMonthlySchedule(Boolean[] schDays) {
+		scheduleMonthly.removeAll();
+		scheduleMonthly.revalidate();
+		scheduleMonthly.repaint();
 			scheduleMonthly.setLayout(new MigLayout("wrap 7", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
 			scheduleMonthly.setBackground(Color.WHITE);
 			scheduleMonthly.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -780,18 +724,17 @@ public class DoctorView {
 
 		for (JLabel d : sunToSatMonth) {
 			scheduleMonthly.add(d);
-			d.setEnabled(scheduledDays[sunToSatMonth.indexOf(d)]);
+			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
 		}
 
 		for (JLabel day : monthdays) {
 			scheduleMonthly.add(day);
-			int index = monthdays.indexOf(day) % 7;
-			System.out.println(index);
-			day.setEnabled(scheduledDays[monthdays.indexOf(day) % 7]);
+			day.setEnabled(schDays[monthdays.indexOf(day) % 7]);
 		}
 
 
 		scheduleMonthly.setVisible(false);
+		scheduleMonthly.setPreferredSize(new Dimension(2000,1000));
 
 		//////////////////////////////////////////////////////////////
 
@@ -982,8 +925,8 @@ public class DoctorView {
 
 	public void setWeekDateLabels(LocalDate ld) {
 		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		for (JLabel lbl : weekDayOfWeek) {
-			lbl.setText(tempTime.plusDays(weekDayOfWeek.indexOf(lbl)).toString());
+		for (JLabel lbl : weekYYYYMMDD) {
+			lbl.setText(tempTime.plusDays(weekYYYYMMDD.indexOf(lbl)).toString());
 		}
 	}
 
@@ -1522,6 +1465,14 @@ public class DoctorView {
 		this.currentTreatment = currentTreatment;
 	}
 
+
+	public JButton getButtonOwn() {
+		return btnOwn;
+	}
+
+	public void setButtonOwn(JButton o) {
+		this.btnOwn = o;
+	}
 	
 
 }

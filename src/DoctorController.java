@@ -24,9 +24,24 @@ public class DoctorController {
 	// initialize the elements that the GUI sees from the database
 	// as soon as the view first opens for the user
 	public void initView() {
+		Boolean[] scheduledDays = new Boolean[7];
+			scheduledDays[0] = false;
+			scheduledDays[1] = true;
+			scheduledDays[2] = true;
+			scheduledDays[3] = true;
+			scheduledDays[4] = true;
+			scheduledDays[5] = true;
+			scheduledDays[6] = false;
+
+		view.initializeWeeklySchedule(scheduledDays);
+		view.initializeMonthlySchedule(scheduledDays);
+
+
 		// set the Labels for view
 		view.getDeptLabel().setText(model.getDepartment() + ": ");
 		view.getNameLabel().setText(model.getName() + ", M.D.");
+		view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
+		view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
 
 		//set the nurse name dropdown list for view
 		for (String n : model.getAssignedNurseUsernames()) {
@@ -47,6 +62,43 @@ public class DoctorController {
 	// initialize 'only' the listeners the GUI handles 'that
 	// need interaction with the model'
 	public void initListeners() {
+
+		view.getNurseComboBox().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (view.getNurseComboBox().getSelectedIndex() != -1) {
+					Boolean[] scheduledDays = new Boolean[7];
+					scheduledDays[0] = true;
+					scheduledDays[1] = true;
+					scheduledDays[2] = true;
+					scheduledDays[3] = false;
+					scheduledDays[4] = false;
+					scheduledDays[5] = true;
+					scheduledDays[6] = true;
+					view.initializeWeeklySchedule(scheduledDays);
+					view.initializeMonthlySchedule(scheduledDays);
+					view.getScheduleNameLabelWeek().setText(view.getNurseComboBox().getSelectedItem() + " Weekly Schedule");
+					view.getScheduleNameLabelMonth().setText(view.getNurseComboBox().getSelectedItem() + " Monthly Schedule");
+				}
+			}
+		});
+
+		view.getButtonOwn().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
+				view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
+				Boolean[] scheduledDays = new Boolean[7];
+				scheduledDays[0] = false;
+				scheduledDays[1] = true;
+				scheduledDays[2] = true;
+				scheduledDays[3] = true;
+				scheduledDays[4] = true;
+				scheduledDays[5] = true;
+				scheduledDays[6] = false;
+	
+				view.initializeWeeklySchedule(scheduledDays);
+				view.initializeMonthlySchedule(scheduledDays);
+				}
+		});
 		
 		//listen for mouse clicks on patients names
 		view.getListPatients().addMouseListener(new MouseAdapter() {
@@ -57,7 +109,6 @@ public class DoctorController {
 		});
 		
 		//listen for treatment button clicked
-		view.getBtnAddTreatmentNotes().addActionListener(e -> saveNotes() );
 		
 
 
@@ -68,10 +119,8 @@ public class DoctorController {
 				// Update view
 				String updateTreatment = view.getPastTreatmentBox().getText() + "\n" + view.getCurrentTreatmentBox().getText() + "\n\t- " + model.getName() + "\n";
 				view.getPastTreatmentBox().setText(updateTreatment);
-				// TODO: Update the record in patient object
 
-				// TODO: Make sure that the updated record will show up when the patient is selected again
-
+				saveNotes();
 			}
 		});
 	}

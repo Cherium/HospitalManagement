@@ -3,6 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 23 MARCH 17:57 Jenny
+* Changed layout of weekly and monthly schedule to MigLayout. Implemented a dummy scheduled days in doctor and set up the weekly and monthly schedule to reflect scheduled days. 
+* Now, when choosing a nurse from the drop down list, the schedule's title will change to show that it is that nurse's schedule. Switching to doctor's schedule will show the doctor's schedule. (Schedules are currently hard coded and only contains the days of the week that a doctor/nurse is working, does NOT contain appointment information).
+* Now, the weekly and monthly schedule under MigLayout does not shrink when components are hidden. The button panel is forcibly docked south of the weekly and monthly schedule by setting the preferred sizes of the schedules to be large (2000x1000). Once the view switches between weekly/monthly, the component hides itself but the size it takes up remains. 
+
 ## 23 MARCH 08:39 Jenny
 * Changed the display of patients to their names instead of usernames. 
 
