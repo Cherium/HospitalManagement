@@ -21,7 +21,6 @@ public class CreateNewDoctorModel {
 	
 	
 	
-	
 	public CreateNewDoctorModel()
 	{
 		//empty constructor
@@ -98,7 +97,7 @@ public class CreateNewDoctorModel {
 			}
 		}
 		//Create a new doctor with all information collected and store in database
-		Main.dbase.put(username, new DoctorModel(username,pwd, name,  department, temp.toArray(new String[0]) ) );
+		Main.dbase.put(username, new DoctorModel(username,pwd, name,  department, temp.toArray(new String[0]), new String[0] ) );
 		return "Account successfully created!";
 	}
 	

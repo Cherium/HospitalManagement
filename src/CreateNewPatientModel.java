@@ -79,7 +79,7 @@ public class CreateNewPatientModel extends UserSuperClass {
 		//store in database if all checks pass
 		Main.dbase.put(username
 				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0
-						, dob, bloodType, sex));
+						, dob, bloodType, sex, ""));
 		return "Account successfully created!";
 		
 	}

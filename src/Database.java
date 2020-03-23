@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -44,7 +45,7 @@ public class Database {
 			 * https://stackoverflow.com/questions/1464291/how-to-really-read-text-file-from-classpath-in-java
 			 * https://stackoverflow.com/questions/21023065/open-file-that-is-in-the-resource-folder-inside-jar?noredirect=1&lq=1
 			 * https://stackoverflow.com/questions/24521830/how-to-convert-an-inputstream-to-a-scanner-java*/
-			InputStream stream = getClass().getClassLoader().getResourceAsStream("dbase.txt");
+			InputStream stream = getClass().getClassLoader().getResourceAsStream(filePath);
 			
 			
 						Scanner sc = new Scanner(stream);
@@ -72,7 +73,7 @@ public class Database {
 										String importDob								= split[11];
 										String importBlood								=split[12];
 										String importSex								=split[13];
-										
+										String[] importAssigPat							=split[14].split(",");
 	
 										
 								//import fields into internal database
@@ -81,10 +82,9 @@ public class Database {
 										//if the data to import pertains to a doctor
 										if(importRole.compareTo("doctor") == 0)
 										{
-											System.out.println(importAssignedNurseUsernames[0]);
 											//create a temporary doctor object using database information
 											DoctorModel temp = new DoctorModel(importUsername, importPassword, importName
-													, importDepartment, importAssignedNurseUsernames);
+													, importDepartment, importAssignedNurseUsernames, importAssigPat);
 											
 											//add that doctor to the internal database
 											users.put(importUsername, temp);
@@ -99,12 +99,25 @@ public class Database {
 										}
 										
 										else if(importRole.compareTo("patient")== 0)
-										{ System.out.println(importAmountDue);
-											PatientModel temp = new PatientModel(importUsername, importPassword, importName
-													, importAddress, importPhoneNumber, importEmail, importAmountDue
-													, importDob, importBlood, importSex);
+										{
+											//get Patient record
+											try {
+												//https://stackoverflow.com/questions/3891375/how-to-read-a-text-file-resource-into-java-unit-test?noredirect=1&lq=1
+												String record = new String(getClass().getClassLoader()
+														.getResourceAsStream("dbase/"+importUsername+".txt").readAllBytes());
+												
+												//create a patient internally
+												PatientModel temp = new PatientModel(importUsername, importPassword, importName
+														, importAddress, importPhoneNumber, importEmail, importAmountDue
+														, importDob, importBlood, importSex, record);
+												
+												users.put(importUsername, temp);
+											} catch (IOException e) {
+												System.out.println("Could not open file");
+												e.printStackTrace();
+											}
 											
-											users.put(importUsername, temp);
+											
 										}
 										
 										else if(importRole.compareTo("admin")== 0)

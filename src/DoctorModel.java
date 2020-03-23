@@ -16,7 +16,7 @@ public class DoctorModel extends UserSuperClass {
 
 	
 	//constructor
-	public DoctorModel(String username, char[]password, String name, String department, String[] nurses) {
+	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats) {
 		
 			super(name, username, password);
 			this.department = department;
@@ -28,7 +28,21 @@ public class DoctorModel extends UserSuperClass {
 				this.assignedNurseUsernames.add(i);
 			}
 			
+			//add the doctors scheduled patients
+			for(String i: assigPats)
+			{
+				this.scheduledPatientsUsernames.add(i);
+			}
+			
 	}
+	
+	public void addPatient(String p) {
+		// ArrayList<PatientModel> ps = new ArrayList<PatientModel>(getScheduledPatients());
+		// ps.add(p);
+		// setScheduledPatients(ps);
+		this.scheduledPatientsUsernames.add(p);
+	}
+	
 	
 	
 	
@@ -73,13 +87,6 @@ public class DoctorModel extends UserSuperClass {
 		this.scheduledPatientsUsernames = new ArrayList<String>(pats);
 	}
 
-
-	public void addPatient(String p) {
-		// ArrayList<PatientModel> ps = new ArrayList<PatientModel>(getScheduledPatients());
-		// ps.add(p);
-		// setScheduledPatients(ps);
-		this.scheduledPatientsUsernames.add(p);
-	}
 
 //testing class; will later be export class for database
 public String toString()

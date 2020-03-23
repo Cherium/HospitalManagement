@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -94,6 +95,9 @@ public class DoctorView {
 	Container container;
 	
 	private LocalDate now = LocalDate.now();
+	
+	private JScrollPane scroll;
+	private JList listPatients;
 
 /*
 	default frame (getContentFrame()): BorderLayout
@@ -131,7 +135,8 @@ public class DoctorView {
 		//create frame container
 		//sets frame containers attributes
 		frame = new JFrame(title);
-			//frame.setSize(400,200);
+			frame.setSize(400,200);
+			frame.setLocationRelativeTo(null);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
@@ -140,7 +145,11 @@ public class DoctorView {
 	}
 
 	
-	
+	public void initGUI()
+	{
+		JPanel mainPane = new JPanel(new MigLayout() );
+		
+	}
 	
 
 	/**initialize the panels and components that will go inside the frame*/
@@ -885,45 +894,15 @@ public class DoctorView {
 		listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
 		listPatientsPanel.setBackground(Color.WHITE);
-		JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setLayout(new ScrollPaneLayout());
-		// Actual patient information
-
-		// for (JPanel panel : getPatientListPanels()) {
-		// 	listPatientsPanel.add(panel);
-		// }
-
-		// Dummy "data"
-		for (int i = 0; i < 30; i++) {
-			JPanel aPatient = new JPanel();
-			aPatient.setPreferredSize(new Dimension(150, 0));
-			aPatient.setBackground(Color.LIGHT_GRAY);
-			JLabel patLabel = new JLabel("<html>Patient " + (i+1) + "<br>Age " + (int)(0+Math.random()*500));
-			aPatient.add(patLabel);
-			aPatient.getAccessibleContext().setAccessibleName(patLabel.getText());
-			listPatientsPanel.add(aPatient);
-			// To test clicking, DUMMY COMPONENTS
-			aPatient.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent a) {
-					// Clear all components
-					for (Component c : listPatientsPanel.getComponents()) {
-						c.setBackground(Color.LIGHT_GRAY);
-					}
-					patientInformation.setText(aPatient.getAccessibleContext().getAccessibleName());
-					if (aPatient.getBackground().equals(Color.RED)) {
-						aPatient.setBackground(Color.LIGHT_GRAY);
-					} else {
-						aPatient.setBackground(Color.RED);
-					}
-				}
-			});
-		}
+//		//JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		scroll = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		scroll.setLayout(new ScrollPaneLayout());
+//		scroll.setPreferredSize(new DimensionUIResource(200, 0));
+//		scroll.getVerticalScrollBar().setUnitIncrement(10);
 		
-
+		
+		
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		scroll.setPreferredSize(new DimensionUIResource(200, 0));
-		scroll.getVerticalScrollBar().setUnitIncrement(10);
 		listPatientsPanel.revalidate();
 		listPatientsPanel.repaint();
 
@@ -954,11 +933,112 @@ public class DoctorView {
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
-		patientPanel.add(scroll, BorderLayout.WEST);
+//		patientPanel.add(scroll, BorderLayout.WEST);
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
 	}
+	
+	
+	
+	
+	//add list of patients (immutable) to 'Patient View' screen
+	public void setPatientList(String[] patients)
+	{
+		
+		listPatients = new JList(patients);
 
+		scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setLayout(new ScrollPaneLayout());
+		scroll.setPreferredSize(new DimensionUIResource(200, 0));
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		
+		patientPanel.add(scroll, BorderLayout.WEST);
+	}
+	
+	
+	
+	
+	
+	
+	public void setPatientListPanels(String[] patList) {
+		for (String p : patList) {
+			JPanel aPat = new JPanel();
+			aPat.setLayout(new BoxLayout(aPat, BoxLayout.Y_AXIS));
+			aPat.add(new JLabel(p));
+			aPat.add(new JLabel("I am an age label"));
+			aPat.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+			patientListPanels.add(aPat);
+		}
+	}
+
+
+	public void setMonthDateLabels(LocalDate ld) {
+		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		for (JLabel lbl : monthdays) {
+			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
+		}
+		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
+	}
+
+	public void setWeekDateLabels(LocalDate ld) {
+		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		for (JLabel lbl : weekDayOfWeek) {
+			lbl.setText(tempTime.plusDays(weekDayOfWeek.indexOf(lbl)).toString());
+		}
+	}
+
+	public void addPatient(String name) {
+		// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
+		JPanel pat = new JPanel();
+		JLabel patLbl = new JLabel(name);
+
+		// Let name be the detailed patient information
+		pat.getAccessibleContext().setAccessibleName(name);
+
+		// And let description be the detailed treatment history
+		// pat.getAccessibleContext().setAccessibleDescription(treathis);
+
+		pat.add(patLbl);
+		pat.setBackground(Color.LIGHT_GRAY);
+		patientListPanels.add(pat);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**Getter and Setter Methods*/
 
 	public JFrame getFrame() {
@@ -1412,49 +1492,35 @@ public class DoctorView {
 		return scheduleNameLabelMonth;
 	}
 
-	public void setPatientListPanels(String[] patList) {
-		for (String p : patList) {
-			JPanel aPat = new JPanel();
-			aPat.setLayout(new BoxLayout(aPat, BoxLayout.Y_AXIS));
-			aPat.add(new JLabel(p));
-			aPat.add(new JLabel("I am an age label"));
-			aPat.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-			patientListPanels.add(aPat);
-		}
+
+	public JList getListPatients() {
+		return listPatients;
 	}
 
 
-	public void setMonthDateLabels(LocalDate ld) {
-		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		for (JLabel lbl : monthdays) {
-			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
-		}
-		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
+	public void setListPatients(JList listPatients) {
+		this.listPatients = listPatients;
 	}
 
-	public void setWeekDateLabels(LocalDate ld) {
-		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		for (JLabel lbl : weekYYYYMMDD) {
-			lbl.setText(tempTime.plusDays(weekYYYYMMDD.indexOf(lbl)).toString());
-		}
+
+	public JButton getBtnAddTreatmentNotes() {
+		return btnAddTreatmentNotes;
 	}
 
-	// public void addPatient(String name) {
-	// 	// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
-	// 	JPanel pat = new JPanel();
-	// 	JLabel patLbl = new JLabel(name);
 
-	// 	// Let name be the detailed patient information
-	// 	pat.getAccessibleContext().setAccessibleName(name);
+	public void setBtnAddTreatmentNotes(JButton btnAddTreatmentNotes) {
+		this.btnAddTreatmentNotes = btnAddTreatmentNotes;
+	}
 
-	// 	// And let description be the detailed treatment history
-	// 	// pat.getAccessibleContext().setAccessibleDescription(treathis);
 
-	// 	pat.add(patLbl);
-	// 	pat.setBackground(Color.LIGHT_GRAY);
-	// 	patientListPanels.add(pat);
-	// }
-	
+	public JTextArea getCurrentTreatment() {
+		return currentTreatment;
+	}
+
+
+	public void setCurrentTreatment(JTextArea currentTreatment) {
+		this.currentTreatment = currentTreatment;
+	}
 
 	
 
