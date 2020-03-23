@@ -920,6 +920,86 @@ public class DoctorView {
 
 	}
 
+	
+	public void setPatientListPanels(String[] patList) {
+		for (String p : patList) {
+			JPanel aPat = new JPanel();
+			aPat.setLayout(new BoxLayout(aPat, BoxLayout.Y_AXIS));
+			aPat.add(new JLabel(p));
+			aPat.add(new JLabel("I am an age label"));
+			aPat.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+			patientListPanels.add(aPat);
+		}
+	}
+
+
+	public void setMonthDateLabels(LocalDate ld) {
+		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		for (JLabel lbl : monthdays) {
+			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
+		}
+		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
+	}
+
+	public void setWeekDateLabels(LocalDate ld) {
+		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		for (JLabel lbl : weekDayOfWeek) {
+			lbl.setText(tempTime.plusDays(weekDayOfWeek.indexOf(lbl)).toString());
+		}
+	}
+
+	public void addPatient(String name) {
+		// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
+		JPanel pat = new JPanel();
+		JLabel patLbl = new JLabel(name);
+
+		// Let name be the detailed patient information
+		pat.getAccessibleContext().setAccessibleName(name);
+
+		// And let description be the detailed treatment history
+		// pat.getAccessibleContext().setAccessibleDescription(treathis);
+
+		pat.add(patLbl);
+		pat.setBackground(Color.LIGHT_GRAY);
+		patientListPanels.add(pat);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**Getter and Setter Methods*/
 
 	public JFrame getFrame() {
@@ -1372,50 +1452,6 @@ public class DoctorView {
 	public JLabel getScheduleNameLabelMonth() {
 		return scheduleNameLabelMonth;
 	}
-
-	public void setPatientListPanels(String[] patList) {
-		for (String p : patList) {
-			JPanel aPat = new JPanel();
-			aPat.setLayout(new BoxLayout(aPat, BoxLayout.Y_AXIS));
-			aPat.add(new JLabel(p));
-			aPat.add(new JLabel("I am an age label"));
-			aPat.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-			patientListPanels.add(aPat);
-		}
-	}
-
-
-	public void setMonthDateLabels(LocalDate ld) {
-		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		for (JLabel lbl : monthdays) {
-			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
-		}
-		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
-	}
-
-	public void setWeekDateLabels(LocalDate ld) {
-		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		for (JLabel lbl : weekDayOfWeek) {
-			lbl.setText(tempTime.plusDays(weekDayOfWeek.indexOf(lbl)).toString());
-		}
-	}
-
-	public void addPatient(String name) {
-		// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
-		JPanel pat = new JPanel();
-		JLabel patLbl = new JLabel(name);
-
-		// Let name be the detailed patient information
-		pat.getAccessibleContext().setAccessibleName(name);
-
-		// And let description be the detailed treatment history
-		// pat.getAccessibleContext().setAccessibleDescription(treathis);
-
-		pat.add(patLbl);
-		pat.setBackground(Color.LIGHT_GRAY);
-		patientListPanels.add(pat);
-	}
-	
 
 	
 
