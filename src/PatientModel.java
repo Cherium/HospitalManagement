@@ -19,15 +19,15 @@ public class PatientModel extends UserSuperClass {
 	private String email;
 	private char[] password2;
 	private float amountDue;
-	private String record;
 	private LocalDate birthday;
 	private String bloodtype;
 	private String sex;
+	private String recordNotes;
 	
 
 	//constructor
 	public PatientModel(String username, char[] password, String name
-			, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2)
+			, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2, String record2)
 	{
 		
 		super(name,username,password);
@@ -41,8 +41,7 @@ public class PatientModel extends UserSuperClass {
 		this.birthday = dateStringToLocalDate(dob);
 		this.bloodtype = bloodType;
 		this.sex = sex2;
-		// this.bloodtype = btype;
-		// this.sex = sex;
+		this.recordNotes = record2;
 	}
 	
 
@@ -193,14 +192,6 @@ public class PatientModel extends UserSuperClass {
 		this.birthday = dateStringToLocalDate(date);
 	}
 
-	public void setRecord(String record) {
-		this.record = record;
-	}
-	
-	public String getRecord() {
-		return record;
-	}
-
 	public void setBirthday(LocalDate db) {
 		this.birthday = db;
 	}
@@ -223,6 +214,26 @@ public class PatientModel extends UserSuperClass {
 
 	public String getBlood() {
 		return bloodtype;
+	}
+
+
+
+
+
+
+
+	public String getRecordNotes() {
+		return recordNotes;
+	}
+
+
+
+
+
+
+
+	public void setRecordNotes(String recordNotes) {
+		this.recordNotes = recordNotes;
 	}
 
 

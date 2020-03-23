@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -99,11 +100,24 @@ public class Database {
 										
 										else if(importRole.compareTo("patient")== 0)
 										{
-											PatientModel temp = new PatientModel(importUsername, importPassword, importName
-													, importAddress, importPhoneNumber, importEmail, importAmountDue
-													, importDob, importBlood, importSex);
+											//get Patient record
+											try {
+												//https://stackoverflow.com/questions/3891375/how-to-read-a-text-file-resource-into-java-unit-test?noredirect=1&lq=1
+												String record = new String(getClass().getClassLoader()
+														.getResourceAsStream("dbase/"+importUsername+".txt").readAllBytes());
+												
+												//create a patient internally
+												PatientModel temp = new PatientModel(importUsername, importPassword, importName
+														, importAddress, importPhoneNumber, importEmail, importAmountDue
+														, importDob, importBlood, importSex, record);
+												
+												users.put(importUsername, temp);
+											} catch (IOException e) {
+												System.out.println("Could not open file");
+												e.printStackTrace();
+											}
 											
-											users.put(importUsername, temp);
+											
 										}
 										
 										else if(importRole.compareTo("admin")== 0)

@@ -3,6 +3,26 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+##23 mar 06:30
+** The following is done in a new branch masterBranch; fully functioning code**
+
+**Doctor**
+* patient information is now read in from the database and updated on GUI
+* 'treatment' button updates internal database
+
+**Datbase**
+* made a way to read in patient files from external file (later need to save to here on sign out or save)
+
+## 23 mar 05:15 Sajid
+** The following is done in a new branch masterBranch; fully functioning code**
+
+**Doctor**
+* View
+    *  method setUpPatientView takes in list of patients from controller, and sets up a JList, and adds the JList to the scrollPane
+        * the scrollPane no longer has JPanels or JLabels, it just has the JList above.
+* Controller
+    * new Mouse Listener to listen to clicks in JList
+    * new method setUpPatientView gets database information to set up the textbox (and later the Patient record box)    
 
 ## 23 mar 00:40 Sajid
 **DoctorModel**

@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -94,6 +95,9 @@ public class DoctorView {
 	Container container;
 	
 	private LocalDate now = LocalDate.now();
+	
+	private JScrollPane scroll;
+	private JList listPatients;
 
 /*
 	default frame (getContentFrame()): BorderLayout
@@ -131,7 +135,8 @@ public class DoctorView {
 		//create frame container
 		//sets frame containers attributes
 		frame = new JFrame(title);
-			//frame.setSize(400,200);
+			frame.setSize(400,200);
+			frame.setLocationRelativeTo(null);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
@@ -140,7 +145,11 @@ public class DoctorView {
 	}
 
 	
-	
+	public void initGUI()
+	{
+		JPanel mainPane = new JPanel(new MigLayout() );
+		
+	}
 	
 
 	/**initialize the panels and components that will go inside the frame*/
@@ -846,18 +855,15 @@ public class DoctorView {
 		listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
 		listPatientsPanel.setBackground(Color.WHITE);
-		JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setLayout(new ScrollPaneLayout());
-		// Actual patient information
-
-		// for (JPanel panel : getPatientListPanels()) {
-		// 	listPatientsPanel.add(panel);
-		// }
-	
-
+//		//JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		scroll = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		scroll.setLayout(new ScrollPaneLayout());
+//		scroll.setPreferredSize(new DimensionUIResource(200, 0));
+//		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		
+		
+		
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		scroll.setPreferredSize(new DimensionUIResource(200, 0));
-		scroll.getVerticalScrollBar().setUnitIncrement(10);
 		listPatientsPanel.revalidate();
 		listPatientsPanel.repaint();
 
@@ -888,47 +894,32 @@ public class DoctorView {
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
-		patientPanel.add(scroll, BorderLayout.WEST);
+//		patientPanel.add(scroll, BorderLayout.WEST);
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
 	}
-	//set entries in patient scroll pane and associted patient textarea box
-	public void setEntryInScrollPane(String name, int age, String sex, String bloodType
-			, String addr, String phone, String email)
+	
+	
+	
+	
+	//add list of patients (immutable) to 'Patient View' screen
+	public void setPatientList(String[] patients)
 	{
-		JPanel aPatient = new JPanel();
-				aPatient.setPreferredSize(new Dimension(150, 0));
-				aPatient.setBackground(Color.LIGHT_GRAY);
-		JLabel patLabel = new JLabel("<html>Patient " + name + "<br>Age " + age);
-				aPatient.add(patLabel);
-				aPatient.getAccessibleContext().setAccessibleName(patLabel.getText());
-			
-				// To test clicking, DUMMY COMPONENTS
-				aPatient.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent a) {
-						// Clear all components
-						for (Component c : listPatientsPanel.getComponents()) {
-							c.setBackground(Color.LIGHT_GRAY);
-						}
-						patientInformation.setText(
-								"Name:\t" + name +
-								"\nAge:\t" + age +
-								"\nSex:\t" + sex +
-								"\nBlood Type:\t" + bloodType +
-								"\nAddress:\t" + addr +
-								"\nPhone:\t" + phone +
-								"\nEmail:\t" + email + "\n"
-								);
-						if (aPatient.getBackground().equals(Color.RED)) {
-							aPatient.setBackground(Color.LIGHT_GRAY);
-						} else {
-							aPatient.setBackground(Color.RED);
-						}
-					}
-				});
-		listPatientsPanel.add(aPatient);
+		
+		listPatients = new JList(patients);
+
+		scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setLayout(new ScrollPaneLayout());
+		scroll.setPreferredSize(new DimensionUIResource(200, 0));
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		
+		patientPanel.add(scroll, BorderLayout.WEST);
 	}
+	
+	
+	
+	
+	
 	
 	public void setPatientListPanels(String[] patList) {
 		for (String p : patList) {
@@ -1460,6 +1451,36 @@ public class DoctorView {
 
 	public JLabel getScheduleNameLabelMonth() {
 		return scheduleNameLabelMonth;
+	}
+
+
+	public JList getListPatients() {
+		return listPatients;
+	}
+
+
+	public void setListPatients(JList listPatients) {
+		this.listPatients = listPatients;
+	}
+
+
+	public JButton getBtnAddTreatmentNotes() {
+		return btnAddTreatmentNotes;
+	}
+
+
+	public void setBtnAddTreatmentNotes(JButton btnAddTreatmentNotes) {
+		this.btnAddTreatmentNotes = btnAddTreatmentNotes;
+	}
+
+
+	public JTextArea getCurrentTreatment() {
+		return currentTreatment;
+	}
+
+
+	public void setCurrentTreatment(JTextArea currentTreatment) {
+		this.currentTreatment = currentTreatment;
 	}
 
 	
