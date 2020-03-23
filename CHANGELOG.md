@@ -3,6 +3,25 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+
+## 23 mar 00:40 Sajid
+**DoctorModel**
+* changed constructor to import assignedPatient list from dbase. Updated in PatientModel and Database accordingly
+
+**DoctorController**
+* added a method to take information from the database and set it in the panels that show up on the 'View Patient' GUI
+    * This method runs in initView()
+
+**DoctorView**
+* moved 'dummy date' into its own function that is then used in the contrller as described above.
+
+**Database**
+* added fields for doctors patient list
+
+**Main**
+* changed dbase.txt path to relative path, so that we can organize our 'src' folder better.
+
+
 ### 22 MARCH 18:33 Jenny
 **DoctorModel**
 * Changed the array of scheduled patients to store Strings of patient usernames instead, to maintain consistency with the array of assigned nurses being Strings.

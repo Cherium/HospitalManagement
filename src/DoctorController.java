@@ -39,12 +39,14 @@ public class DoctorController {
 			view.addPatient(model.getObjectsName(pU));
 		}
 
+		setViewPatientTab();
 
 	}
 
 	// initialize 'only' the listeners the GUI handles 'that
 	// need interaction with the model'
 	public void initListeners() {
+		
 		for (JPanel p : view.getPatientListPanels()) {
 			p.addMouseListener(new MouseAdapter() {
 				@Override
@@ -85,6 +87,21 @@ public class DoctorController {
 
 			}
 		});
+	}
+	
+	
+	
+	public void setViewPatientTab()
+	{
+		for (int i = 0; i < model.getScheduledPatientsUsernames().size(); i++) 
+		{
+			//for patient object 'i' in list of doctors patients
+			PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(i));
+			
+			view.setEntryInScrollPane(pat.getName(), pat.getAge(), pat.getSex(), pat.getBlood(), pat.getAddress(), pat.getPhoneNumber(), pat.getEmail());
+			
+			
+		}
 	}
 
 	

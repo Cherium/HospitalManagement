@@ -853,34 +853,7 @@ public class DoctorView {
 		// for (JPanel panel : getPatientListPanels()) {
 		// 	listPatientsPanel.add(panel);
 		// }
-
-		// Dummy "data"
-		for (int i = 0; i < 30; i++) {
-			JPanel aPatient = new JPanel();
-			aPatient.setPreferredSize(new Dimension(150, 0));
-			aPatient.setBackground(Color.LIGHT_GRAY);
-			JLabel patLabel = new JLabel("<html>Patient " + (i+1) + "<br>Age " + (int)(0+Math.random()*500));
-			aPatient.add(patLabel);
-			aPatient.getAccessibleContext().setAccessibleName(patLabel.getText());
-			listPatientsPanel.add(aPatient);
-			// To test clicking, DUMMY COMPONENTS
-			aPatient.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent a) {
-					// Clear all components
-					for (Component c : listPatientsPanel.getComponents()) {
-						c.setBackground(Color.LIGHT_GRAY);
-					}
-					patientInformation.setText(aPatient.getAccessibleContext().getAccessibleName());
-					if (aPatient.getBackground().equals(Color.RED)) {
-						aPatient.setBackground(Color.LIGHT_GRAY);
-					} else {
-						aPatient.setBackground(Color.RED);
-					}
-				}
-			});
-		}
-		
+	
 
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		scroll.setPreferredSize(new DimensionUIResource(200, 0));
@@ -919,7 +892,43 @@ public class DoctorView {
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
 	}
-
+	//set entries in patient scroll pane and associted patient textarea box
+	public void setEntryInScrollPane(String name, int age, String sex, String bloodType
+			, String addr, String phone, String email)
+	{
+		JPanel aPatient = new JPanel();
+				aPatient.setPreferredSize(new Dimension(150, 0));
+				aPatient.setBackground(Color.LIGHT_GRAY);
+		JLabel patLabel = new JLabel("<html>Patient " + name + "<br>Age " + age);
+				aPatient.add(patLabel);
+				aPatient.getAccessibleContext().setAccessibleName(patLabel.getText());
+			
+				// To test clicking, DUMMY COMPONENTS
+				aPatient.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent a) {
+						// Clear all components
+						for (Component c : listPatientsPanel.getComponents()) {
+							c.setBackground(Color.LIGHT_GRAY);
+						}
+						patientInformation.setText(
+								"Name:\t" + name +
+								"\nAge:\t" + age +
+								"\nSex:\t" + sex +
+								"\nBlood Type:\t" + bloodType +
+								"\nAddress:\t" + addr +
+								"\nPhone:\t" + phone +
+								"\nEmail:\t" + email + "\n"
+								);
+						if (aPatient.getBackground().equals(Color.RED)) {
+							aPatient.setBackground(Color.LIGHT_GRAY);
+						} else {
+							aPatient.setBackground(Color.RED);
+						}
+					}
+				});
+		listPatientsPanel.add(aPatient);
+	}
 	
 	public void setPatientListPanels(String[] patList) {
 		for (String p : patList) {
