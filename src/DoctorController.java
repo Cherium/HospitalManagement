@@ -35,7 +35,12 @@ public class DoctorController {
 		view.getNurseComboBox().setSelectedIndex(-1);	//set default choice to blank
 		
 		//populate list of patients
-		view.setPatientList(model.getScheduledPatientsUsernames().toArray(new String[0]) );
+		String[] patients = new String[model.getScheduledPatientsUsernames().size()];
+		for (String string : model.getScheduledPatientsUsernames()) {
+			int index = model.getScheduledPatientsUsernames().indexOf(string);
+			patients[index] = Main.dbase.get(string).getName();
+		}
+		view.setPatientList(patients);
 
 	}
 
@@ -54,28 +59,6 @@ public class DoctorController {
 		//listen for treatment button clicked
 		view.getBtnAddTreatmentNotes().addActionListener(e -> saveNotes() );
 		
-//		for (JPanel p : view.getPatientListPanels()) {
-//			p.addMouseListener(new MouseAdapter() {
-//				@Override
-//				public void mousePressed(MouseEvent a) {
-//					// Populate patient information
-//					view.getPatientInformation().setText(p.getAccessibleContext().getAccessibleName());
-//
-//					// Populate the past treatments of the patient
-//					view.getPastTreatmentBox().setText(p.getAccessibleContext().getAccessibleDescription());
-//
-//					for (JPanel c : view.getPatientListPanels()) {
-//						c.setBackground(Color.WHITE);
-//					}
-//					
-//					if (p.getBackground().equals(Color.RED)) {
-//						p.setBackground(Color.WHITE);
-//					} else {
-//						p.setBackground(Color.RED);
-//					}
-//				}
-//			});
-//		}
 
 
 		view.getButtonTreatmentNotes().addActionListener(new ActionListener() {
