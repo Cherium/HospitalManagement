@@ -146,7 +146,7 @@ public class PatientView extends JFrame{
 					blood.addItem("A+"); blood.addItem("A-");
 					blood.addItem("B+"); blood.addItem("B-");
 					blood.addItem("AB+"); blood.addItem("AB-");
-					blood.addItem("O+"); blood.addItem("O+");
+					blood.addItem("O+"); blood.addItem("O-");
 
 			// JPanel, for having the combo boxes in one line
 			JPanel bdayP = new JPanel();

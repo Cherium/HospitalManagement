@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -57,7 +58,10 @@ public class LoginView {
 	{
 		//sets frame containers attributes
 		frame = new JFrame(title);
-			frame.setSize(460,170);
+			frame.setPreferredSize(new Dimension(460, 200));
+			frame.setMinimumSize(new Dimension(460, 200));
+			frame.setMaximumSize(new Dimension(460, 200));
+			//frame.setSize(460,200);
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
 		
@@ -73,7 +77,7 @@ public class LoginView {
 	{
 		
 		//Main panel background
-		JPanel contentPanel = new JPanel(new MigLayout(""));		//initialize jpanel and set its layout
+		JPanel contentPanel = new JPanel(new MigLayout("","[center]", "[center]"));		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(10, 10, 5, 5));	//set insets for the panel		
 			contentPanel.setBackground(new Color(179, 173, 191));
 			frame.add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
@@ -117,12 +121,10 @@ public class LoginView {
 			btnNewPatient = new JButton("New Patient");
 				btnNewPatient.setBackground(Color.DARK_GRAY);
 				btnNewPatient.setForeground(Color.WHITE);
-				btnNewPatient.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
 	
 			btnExit = new JButton("Exit");
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);
-				btnExit.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
 				btnExit.addActionListener(e -> frame.setVisible(false));
 
 			deptPanel.add(btnExit, " sg a");
