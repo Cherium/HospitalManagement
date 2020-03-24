@@ -150,9 +150,13 @@ public class DoctorView {
 			frame.setLocationRelativeTo(null);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+			frame.setMinimumSize(new Dimension(1000,700));
+			frame.setPreferredSize(new Dimension(1000, 700));
+			frame.setLocation(10, 10);
+
 		initializeVariables();
 		initializeGUI();
+
 	}
 
 	
