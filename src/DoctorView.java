@@ -77,6 +77,7 @@ public class DoctorView {
 	private JButton btnSaveChanges;
 	private JButton btnOwnSchedule;
 	private JButton btnOwn;
+	private JButton btnToggle;
 	
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
@@ -93,7 +94,6 @@ public class DoctorView {
 	private ArrayList<JLabel> weekYYYYMMDD = new ArrayList<JLabel>(7); // Labels of the format: Sunday, Monday, etc.
 	private ArrayList<JLabel> sunToSatMonth = new ArrayList<JLabel>(7); // Labels of the format: Sunday, Monday, etc.
 	private ArrayList<JLabel> sunToSatWeek = new ArrayList<JLabel>(7); // Labels of the format: YYYY-MM-DD
-	private ArrayList<JPanel> panelsOfWeekMonth = new ArrayList<JPanel>(7);
 	private ArrayList<JLabel> monthdays = new ArrayList<JLabel>(35);
 	private ArrayList<JPanel> patientListPanels = new ArrayList<JPanel>(0);
 	
@@ -166,7 +166,7 @@ public class DoctorView {
 	/**initialize the panels and components that will go inside the frame*/
 	public void initializeGUI() 
 	{
-		
+		setNow(LocalDate.now());
 		// Create title container(JLabel) and set it as top of page in the frame
 		titleContainer = new JPanel();
 			titleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -261,9 +261,8 @@ public class DoctorView {
 			
 			
 		// Create a panel for the schedule itself
-		TemporalField fieldISO = WeekFields.of(Locale.CANADA).dayOfWeek();
 		for (int i = 1; i < 8; i++) {
-			JLabel lblTemp = new JLabel(now.with(fieldISO, i).toString());
+			JLabel lblTemp = new JLabel(now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), i).toString());
 			lblTemp.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			weekYYYYMMDD.add(lblTemp);
 		}
@@ -271,12 +270,10 @@ public class DoctorView {
 		scheduleMonthly = new JPanel();
 		scheduleWeekly = new JPanel();
 
-		// initializeWeeklySchedule();
 		scheduleContainer.add(scheduleWeekly, "align 50% 50%");
-		// initializeMonthlySchedule();
 		scheduleContainer.add(scheduleMonthly, "align 50% 50%");
 
-		initializeButtonsSchedule(fieldISO);
+		initializeButtonsSchedule(WeekFields.of(Locale.CANADA).dayOfWeek());
 		scheduleContainer.add(btnPaneSchedule, "south");
 
 			
@@ -473,7 +470,7 @@ public class DoctorView {
 
 		// Button that changes schedule between weekly and monthly views
 		// Currently only weekly view is setup
-		JButton btnToggle = new JButton("Monthly view");
+		btnToggle = new JButton("Monthly view");
 			btnPaneSchedule.add(btnToggle);
 		btnToggle.addMouseListener(new MouseAdapter() {
 			@Override
@@ -545,11 +542,15 @@ public class DoctorView {
 						btnBack.setEnabled(true);
 					now = future;
 					if (btnToggle.getText().equals("Monthly view")) {
-						// String schTitle = getScheduleNameLabelWeek().getText();
-						// initializeWeeklySchedule();
-						// getScheduleNameLabelWeek().setText(schTitle);
+						String schTitle = getScheduleNameLabelWeek().getText();
+						initializeWeeklySchedule();
+						getScheduleNameLabelWeek().setText(schTitle);
 					} else {
-						// initializeMonthlySchedule();
+						String schTitle = getScheduleNameLabelWeek().getText();
+						initializeMonthlySchedule();
+						scheduleMonthly.setVisible(true);
+						scheduleWeekly.setVisible(false);
+						getScheduleNameLabelMonth().setText(schTitle);
 					}
 				}
 			});
@@ -595,22 +596,14 @@ public class DoctorView {
 		JLabel lblDay = new JLabel("Sunday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPanel7 = new JPanel();
-		dayPanel7.setLayout(new BoxLayout(dayPanel7, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Sunday");
-		dayPanel7.add(lblDay);
-		panelsOfWeekMonth.add(dayPanel7);
 		lblDay = new JLabel("Sunday");
 		sunToSatMonth.add(lblDay);
 
 		lblDay = new JLabel("Monday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPanel1 = new JPanel();
-		dayPanel1.setLayout(new BoxLayout(dayPanel1, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Monday");
-		dayPanel1.add(lblDay);
-		panelsOfWeekMonth.add(dayPanel1);
 		lblDay = new JLabel("Monday");
 		sunToSatMonth.add(lblDay);
 
@@ -618,22 +611,14 @@ public class DoctorView {
 		lblDay = new JLabel("Tuesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPanel2 = new JPanel();
-		dayPanel2.setLayout(new BoxLayout(dayPanel2, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Tuesday");
-		dayPanel2.add(lblDay);
-		panelsOfWeekMonth.add(dayPanel2);
 		lblDay = new JLabel("Tuesday");
 		sunToSatMonth.add(lblDay);
 
 		lblDay = new JLabel("Wednesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPane3 = new JPanel();
-		dayPane3.setLayout(new BoxLayout(dayPane3, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Wednesday");
-		dayPane3.add(lblDay);
-		panelsOfWeekMonth.add(dayPane3);
 		lblDay = new JLabel("Wednesday");
 		sunToSatMonth.add(lblDay);
 
@@ -641,11 +626,7 @@ public class DoctorView {
 		lblDay = new JLabel("Thursday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPanel4 = new JPanel();
-		dayPanel4.setLayout(new BoxLayout(dayPanel4, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Thursday");
-		dayPanel4.add(lblDay);
-		panelsOfWeekMonth.add(dayPanel4);
 		lblDay = new JLabel("Thursday");
 		sunToSatMonth.add(lblDay);
 
@@ -653,22 +634,14 @@ public class DoctorView {
 		lblDay = new JLabel("Friday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPanel5 = new JPanel();
-		dayPanel5.setLayout(new BoxLayout(dayPanel5, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Friday");
-		dayPanel5.add(lblDay);
-		panelsOfWeekMonth.add(dayPanel5);
 		lblDay = new JLabel("Friday");
 		sunToSatMonth.add(lblDay);
 
 		lblDay = new JLabel("Saturday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
-		JPanel dayPanel6 = new JPanel();
-		dayPanel6.setLayout(new BoxLayout(dayPanel6, BoxLayout.Y_AXIS));
 		lblDay = new JLabel("Saturday");
-		dayPanel6.add(lblDay);
-		panelsOfWeekMonth.add(dayPanel6);
 		lblDay = new JLabel("Saturday");
 		sunToSatMonth.add(lblDay);
 
@@ -704,7 +677,7 @@ public class DoctorView {
 			scheduleWeekly.add(scheduleNameLabelWeek, "span");
 			scheduleWeekly.add(Box.createHorizontalGlue());
 		
-		setWeekDateLabels(LocalDate.now());
+		setWeekDateLabels(getNow());
 		for (JLabel wd : weekYYYYMMDD) {
 			scheduleWeekly.add(wd);
 			wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
@@ -722,6 +695,8 @@ public class DoctorView {
 				if (listApsWeek[i][j] != null) {
 					templbl.setText("<html>Not null!<br>"+listApsWeek[i][j]);
 					templbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					templbl.setOpaque(true);
+					templbl.setBackground(Color.ORANGE);
 				}
 				scheduleWeekly.add(templbl);
 				templbl.setEnabled(schDays[j]);
@@ -752,6 +727,8 @@ public class DoctorView {
 		scheduleMonthly.add(scheduleNameLabelMonth, "span");
 		displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
 		scheduleMonthly.add(displayMonth, "span");
+
+		setMonthDateLabels(getNow());
 
 		for (JLabel d : sunToSatMonth) {
 			scheduleMonthly.add(d);
@@ -1200,20 +1177,6 @@ public class DoctorView {
 
 
 
-	public ArrayList<JPanel> getPanelsOfWeekMonth() {
-		return panelsOfWeekMonth;
-	}
-
-
-
-
-
-
-	public void setPanelsOfWeekMonth(ArrayList<JPanel> panelsOfWeekMonth) {
-		this.panelsOfWeekMonth = panelsOfWeekMonth;
-	}
-
-
 
 
 
@@ -1413,5 +1376,12 @@ public class DoctorView {
 		this.name = name;
 	}
 
+	public JButton getBtnToggle() {
+		return btnToggle;
+	}
+
+	public void setBtnToggle(JButton bt) {
+		this.btnToggle = bt;
+	}
 
 }

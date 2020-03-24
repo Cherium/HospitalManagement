@@ -101,6 +101,13 @@ public class DoctorController {
 					view.setAppointments(new LocalDateTime[0]);
 					view.initializeWeeklySchedule();
 					view.initializeMonthlySchedule();
+					if (view.getBtnToggle().getText().equals("Monthly view")) {
+						view.getScheduleMonthly().setVisible(false);
+						view.getScheduleWeekly().setVisible(true);
+					} else {
+						view.getScheduleMonthly().setVisible(true);
+						view.getScheduleWeekly().setVisible(false);
+					}
 					view.getScheduleNameLabelWeek().setText(view.getNurseComboBox().getSelectedItem() + " Weekly Schedule");
 					view.getScheduleNameLabelMonth().setText(view.getNurseComboBox().getSelectedItem() + " Monthly Schedule");
 				}
@@ -123,7 +130,15 @@ public class DoctorController {
 				view.setScheduledDays(scheduledDays);
 				view.setAppointments(new LocalDateTime[0]);
 				view.initializeWeeklySchedule();
-				view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
+				view.initializeMonthlySchedule();
+				if (view.getBtnToggle().getText().equals("Monthly view")) {
+					view.getScheduleMonthly().setVisible(false);
+					view.getScheduleWeekly().setVisible(true);
+				} else {
+					view.getScheduleMonthly().setVisible(true);
+					view.getScheduleWeekly().setVisible(false);
+				}
+			view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
 				view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
 				
 			}
