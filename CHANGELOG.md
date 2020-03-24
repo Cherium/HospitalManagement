@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 23 MARCH 21:43 Jenny
+* Got the doctor view to display the current week's appointments from a list of hardcoded appointments. Currently has an error where either changing between weeks updates the highlighted appointments and the dates fail to update or changing between weeks does not update the appointments and the dates update. 
+
 ## 23 MARCH 21:01 Jenny
 * Fixed issue with toggling between weekly and monthly view by setting the hidden value of MigLayout. 
 * Resulting layout isn't centered, but that is on a lower priority.

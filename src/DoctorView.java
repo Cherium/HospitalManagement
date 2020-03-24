@@ -104,6 +104,8 @@ public class DoctorView {
 	private LocalDate now = LocalDate.now();
 
 	private LocalDateTime[] appointments;
+	private Boolean[] schDays;
+	private String name;
 	
 	private JScrollPane scroll;
 	private JList listPatients;
@@ -504,6 +506,10 @@ public class DoctorView {
 						btnBack.setEnabled(false);
 						now = LocalDate.now();
 					}
+					String schTitle = getScheduleNameLabelWeek().getText();
+					initializeWeeklySchedule();
+					getScheduleNameLabelWeek().setText(schTitle);
+
 				} else {
 					past = now.minusMonths(1).withDayOfMonth(1);
 					tempTime = past.withDayOfMonth(1).with(fieldISO, 1);
@@ -513,6 +519,8 @@ public class DoctorView {
 						btnBack.setEnabled(false);
 						now = LocalDate.now();
 					}
+					// initializeMonthlySchedule();
+
 				}
 			}
 		});
@@ -536,6 +544,13 @@ public class DoctorView {
 					if (!btnBack.isEnabled())
 						btnBack.setEnabled(true);
 					now = future;
+					if (btnToggle.getText().equals("Monthly view")) {
+						// String schTitle = getScheduleNameLabelWeek().getText();
+						// initializeWeeklySchedule();
+						// getScheduleNameLabelWeek().setText(schTitle);
+					} else {
+						// initializeMonthlySchedule();
+					}
 				}
 			});
 			
@@ -668,16 +683,15 @@ public class DoctorView {
 	
 	
 
-	public void initializeWeeklySchedule(Boolean[] schDays, LocalDateTime[] appointments) {
-		String[][] listApsWeek = new String[0][0];
-		LocalDate startRange = now;
-		LocalDate endRange = now.plusWeeks(1);
+	public void initializeWeeklySchedule() {
+		String[][] listApsWeek = new String[12][7];
+		LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		LocalDate endRange = startRange.plusDays(6);
 		for (LocalDateTime ldt : appointments) {
 			if ((ldt.toLocalDate().compareTo(startRange) >= 0) && (ldt.toLocalDate().compareTo(endRange) <= 0)) {
-
+				listApsWeek[ldt.getHour()-8][ldt.getDayOfWeek().getValue()%7] = "Appointment!";
 			}
 		}
-
 
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
@@ -686,7 +700,7 @@ public class DoctorView {
 			scheduleWeekly.setBackground(Color.WHITE);
 			scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		scheduleNameLabelWeek = new JLabel("I am a label: <Name>'s Weekly Schedule'");
+		scheduleNameLabelWeek = new JLabel(getName() + "'s Schedule: Weekly");
 			scheduleWeekly.add(scheduleNameLabelWeek, "span");
 			scheduleWeekly.add(Box.createHorizontalGlue());
 		
@@ -701,10 +715,14 @@ public class DoctorView {
 			lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
 		}
 
-		for (int i = 8; i < 20; i++) {
-			scheduleWeekly.add(new JLabel(i+":00"));
+		for (int i = 0; i < 12; i++) {
+			scheduleWeekly.add(new JLabel((i+8)+":00"));
 			for (int j = 0; j < 7; j++) {
-				JLabel templbl = new JLabel("<html>"+sunToSatWeek.get(j).getText()+"<br>Time:"+i+":00");
+				JLabel templbl = new JLabel("<html>"+sunToSatWeek.get(j).getText()+"<br>Time:"+(i+8)+":00");
+				if (listApsWeek[i][j] != null) {
+					templbl.setText("<html>Not null!<br>"+listApsWeek[i][j]);
+					templbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				}
 				scheduleWeekly.add(templbl);
 				templbl.setEnabled(schDays[j]);
 
@@ -720,7 +738,7 @@ public class DoctorView {
 	 * Set up the monthly view of the schedule, given a schedule (currently only for scheduled days)
 	 * @param schDays
 	 */
-	public void initializeMonthlySchedule(Boolean[] schDays) {
+	public void initializeMonthlySchedule() {
 		scheduleMonthly.removeAll();
 		scheduleMonthly.revalidate();
 		scheduleMonthly.repaint();
@@ -730,7 +748,7 @@ public class DoctorView {
 			scheduleMonthly.setBorder(new LineBorder(Color.RED));
 		
 		
-		scheduleNameLabelMonth = new JLabel("I am <Name>'s schedule: Monthly");
+		scheduleNameLabelMonth = new JLabel(getName() + "'s schedule: Monthly");
 		scheduleMonthly.add(scheduleNameLabelMonth, "span");
 		displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
 		scheduleMonthly.add(displayMonth, "span");
@@ -1379,5 +1397,21 @@ public class DoctorView {
 		this.appointments = appointments;
 	}
 	
+	public Boolean[] getScheduledDays() {
+		return schDays;
+	}
+
+	public void setScheduledDays(Boolean[] b) {
+		this.schDays = b;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 }

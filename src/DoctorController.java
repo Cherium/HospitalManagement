@@ -40,12 +40,16 @@ public class DoctorController {
 			appointments[1] = LocalDateTime.parse("2020-03-25T15:00:00"); 
 			appointments[2] = LocalDateTime.parse("2020-03-25T17:00:00"); 
 			appointments[3] = LocalDateTime.parse("2020-03-27T09:00:00"); 
-			appointments[4] = LocalDateTime.parse("2020-03-27T12:00:00"); 
-			appointments[5] = LocalDateTime.parse("2020-03-28T14:00:00"); 
+			appointments[4] = LocalDateTime.parse("2020-03-28T12:00:00"); 
+			appointments[5] = LocalDateTime.parse("2020-03-29T14:00:00"); 
 			appointments[6] = LocalDateTime.parse("2020-04-01T16:00:00");
+		
+		view.setScheduledDays(scheduledDays);
+		view.setAppointments(appointments);
+		
 
-		view.initializeWeeklySchedule(scheduledDays, appointments);
-		view.initializeMonthlySchedule(scheduledDays);
+		view.initializeWeeklySchedule();
+		view.initializeMonthlySchedule();
 
 
 		// set the Labels for view
@@ -93,8 +97,10 @@ public class DoctorController {
 					scheduledDays[4] = false;
 					scheduledDays[5] = true;
 					scheduledDays[6] = true;
-					view.initializeWeeklySchedule(scheduledDays, appointments);
-					view.initializeMonthlySchedule(scheduledDays);
+					view.setScheduledDays(scheduledDays);
+					view.setAppointments(new LocalDateTime[0]);
+					view.initializeWeeklySchedule();
+					view.initializeMonthlySchedule();
 					view.getScheduleNameLabelWeek().setText(view.getNurseComboBox().getSelectedItem() + " Weekly Schedule");
 					view.getScheduleNameLabelMonth().setText(view.getNurseComboBox().getSelectedItem() + " Monthly Schedule");
 				}
@@ -113,10 +119,14 @@ public class DoctorController {
 				scheduledDays[4] = true;
 				scheduledDays[5] = true;
 				scheduledDays[6] = false;
-	
-				view.initializeWeeklySchedule(scheduledDays, appointments);
-				view.initializeMonthlySchedule(scheduledDays);
-				}
+
+				view.setScheduledDays(scheduledDays);
+				view.setAppointments(new LocalDateTime[0]);
+				view.initializeWeeklySchedule();
+				view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
+				view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
+				
+			}
 		});
 		
 		//listen for mouse clicks on patients names
