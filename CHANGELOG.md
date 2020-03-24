@@ -3,6 +3,13 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+
+## 23 mar 23:55 Sajid
+* swapped newMaster content with master, and deleted neMaster branch
+* updated readme
+* included project JAR file `run.jar`
+* formalized databse entries
+
 ## 23 MARCH 08:39 Jenny
 * Changed the display of patients to their names instead of usernames. 
 
