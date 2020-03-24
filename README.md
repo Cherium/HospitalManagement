@@ -1,42 +1,42 @@
-# Scheduling System
+# Hospital Management System
 
-This project is a work-in-progress scheduling management system targeted at hospitals. Doctors and nurses can use the system to view their schedule and manage appointment with patients. Patients can use the system to view available doctors and manage their upcoming appointments and lab tests.
+This project is a work-in-progress management system targeted at hospitals. It allows for various individuals to view and update central database information depending on the role of the respective user. Various functionality exists for the following roles: Doctor, Patient, Nurse, Administrator, Receptionist, and Hospital Authority.
 
-## Functionality
-
-In its current iteration, the program can run various GUI windows for most of the roles required. The login page allows for account credential verifcation and new patient account creation.
-
-The Doctor portal page allows for viewing various GUI elements as well as a functioning combobox that displays the assigned nurses of the doctor to the user. A signout button is functional for going back
-to the login screen.
-
-The Admin portal allows for the creation of new doctors, including setting up all their required attributes. It also allows allows for the creation of patients, as well as the deletion of any user based on their
-username.
-
-The remaining portals load but have limited functionality.
-
-## Getting Started
+## Usage:
 
 The following instructions will get you a functional copy of the software running on your local machine. 
 
 ### Prerequisites
 
-Here are the things you need to install on your local machine before downloading the source code. 
+* Java JDK version 11 or higher.
+* The latest version of Eclipse.
+* The most recent version of Windows Builder (and all corresponding items in the release) should be downloaded in Eclipse prior to launching the program.
 
-```
-The latest version of Eclipse (any version from 2019 works).
-```
+#### Option #1
+1. Download the file `run.jar` from the master branch.
+2. Open a terminal where the `.jar` file is located, and execute the following command: `java -jar run.jar`
 
-The most recent version of Windows Builder (and all corresponding items in the release) should be downloaded in Eclipse prior to launching the program.
+#### Option #2
+1. Download everything from the master branch into a folder
+2. Open Eclipse and import that folder as a java project
+3. Right click the project name -> Build Path -> configure build path
+4. Click the Libraries tab ->  click class path section -> Add JAR
+5. Navigate to the lib folder within your project, and select the only file in there
+6. Apply and close the dialog box
+7. Right click the project -> refresh
+8. Click Run in Eclipse and the GUI should load.
 
-```
-JRE 1.8.0 (or a more recent version)
-```
+## Functionality
 
-### Installing
+In its current iteration, the program can run various GUI windows for most of the roles required. The login page allows for account credential verifcation and new patient account creation, that all checks against an existing, imported, database.
 
-To get the software up and running, first download all files on this branch into your Eclipse project folder(effectively overwriting existing files and folders)
+The Doctor portal page allows for viewing various GUI elements as well as a functioning combobox that displays the assigned nurses of the doctor to the user. The Doctor can view the list of patients assigned to them, including detailed patient history, which is imported from an existing database. The Doctor can also append notes to a patients file and save those changes, which then sync with the database.
 
-Then, run `main.java` from Eclipse. 
+The Admin portal allows for the creation of new doctors, including setting up all their required attributes. It also allows allows for the creation of patients, as well as the deletion of any user based on their username. The admin portal can also create new departments for the hospital. All changes are integrated with the database.
+
+The patient portal allows the user to view their personal information. It also allows them to edit their information. The patient can change their passwords as well. This change is synced with the database and takes effect immediately.
+
+The remaining portals have assigned portals, however the portals only display name information for that set user.
 
 ## Built With
 

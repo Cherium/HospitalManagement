@@ -3,6 +3,7 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -181,7 +182,7 @@ public class DoctorController {
 	}
 	
 	
-	
+	//set up patients in the center panels of 'View Patient'
 	public void setUpPatientView() {
 		
 		//Index selected in GUI == index of patient in model 'scheduledPatientUsername' array
