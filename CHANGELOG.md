@@ -3,6 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 24 MARCH 17:02 Jenny
+**DoctorView**
+* Implemented a view of sheduled appointments for monthly schedule in DoctorView.
+
+
 ## 24 MARCH 14:41 Jenny
 * Fixed screen error where minimizing DoctorView results in a very small window. Minimization size has been set to 1000x700. 
 

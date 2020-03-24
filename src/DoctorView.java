@@ -106,6 +106,7 @@ public class DoctorView {
 	private LocalDateTime[] appointments;
 	private Boolean[] schDays;
 	private String name;
+	private String[] aptsInMonth;
 	
 	private JScrollPane scroll;
 	private JList listPatients;
@@ -704,6 +705,9 @@ public class DoctorView {
 				}
 				scheduleWeekly.add(templbl);
 				templbl.setEnabled(schDays[j]);
+				if (!templbl.isEnabled()) {
+					templbl.setOpaque(false);
+				}
 
 			}
 		}
@@ -739,9 +743,21 @@ public class DoctorView {
 			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
 		}
 
-		for (JLabel day : monthdays) {
-			scheduleMonthly.add(day);
-			day.setEnabled(schDays[monthdays.indexOf(day) % 7]);
+		// LinkedHashMap/ArrayList iterate over numbers
+		aptsInMonth = new String[0];
+
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 7; j++) {
+				scheduleMonthly.add(monthdays.get(i*7+j));
+				monthdays.get(i*7+j).setEnabled(schDays[j]);
+			}
+			for (int j = 0; j < 7; j++) {
+				JList<String> oneDayList = new JList<String>(aptsInMonth);
+				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				scroll.setPreferredSize(new Dimension(100, 50));
+				scheduleMonthly.add(scroll);
+				scroll.setEnabled(schDays[j]);
+			}
 		}
 
 
@@ -779,20 +795,20 @@ public class DoctorView {
 		pastTreatments.setEnabled(false);
 		JScrollPane sp1 = new JScrollPane(pastTreatments);
 		selectedPatient.add(sp1, "span 1 10, height 300");
-		// selectedPatient.add(pastTreatments);
+
 		currentTreatment = new JTextArea(0, 200);
 		currentTreatment.setText("I am a box for a doctor to enter treatment notes in");
 		currentTreatment.setLineWrap(true);
-		// currentTreatment.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, Color.BLACK, Color.DARK_GRAY));
 
+		
 		JScrollPane sp2 = new JScrollPane(currentTreatment);
 		selectedPatient.add(sp2, "span 1 10, height 175");
 		
-		// selectedPatient.add(currentTreatment, "span 1 10, height 150");
+
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
-//		patientPanel.add(scroll, BorderLayout.WEST);
+
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
 	}
