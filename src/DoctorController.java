@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -32,8 +34,17 @@ public class DoctorController {
 			scheduledDays[4] = true;
 			scheduledDays[5] = true;
 			scheduledDays[6] = false;
+		
+		LocalDateTime[] appointments = new LocalDateTime[7];
+			appointments[0] = LocalDateTime.parse("2020-03-25T12:00:00"); 
+			appointments[1] = LocalDateTime.parse("2020-03-25T15:00:00"); 
+			appointments[2] = LocalDateTime.parse("2020-03-25T17:00:00"); 
+			appointments[3] = LocalDateTime.parse("2020-03-27T09:00:00"); 
+			appointments[4] = LocalDateTime.parse("2020-03-27T12:00:00"); 
+			appointments[5] = LocalDateTime.parse("2020-03-28T14:00:00"); 
+			appointments[6] = LocalDateTime.parse("2020-04-01T16:00:00");
 
-		view.initializeWeeklySchedule(scheduledDays);
+		view.initializeWeeklySchedule(scheduledDays, appointments);
 		view.initializeMonthlySchedule(scheduledDays);
 
 
@@ -62,6 +73,14 @@ public class DoctorController {
 	// initialize 'only' the listeners the GUI handles 'that
 	// need interaction with the model'
 	public void initListeners() {
+		LocalDateTime[] appointments = new LocalDateTime[7];
+			appointments[0] = LocalDateTime.parse("2020-03-25T12:00:00"); 
+			appointments[1] = LocalDateTime.parse("2020-03-25T15:00:00"); 
+			appointments[2] = LocalDateTime.parse("2020-03-25T17:00:00"); 
+			appointments[3] = LocalDateTime.parse("2020-03-27T09:00:00"); 
+			appointments[4] = LocalDateTime.parse("2020-03-27T12:00:00"); 
+			appointments[5] = LocalDateTime.parse("2020-03-28T14:00:00"); 
+			appointments[6] = LocalDateTime.parse("2020-04-01T16:00:00");
 
 		view.getNurseComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -74,7 +93,7 @@ public class DoctorController {
 					scheduledDays[4] = false;
 					scheduledDays[5] = true;
 					scheduledDays[6] = true;
-					view.initializeWeeklySchedule(scheduledDays);
+					view.initializeWeeklySchedule(scheduledDays, appointments);
 					view.initializeMonthlySchedule(scheduledDays);
 					view.getScheduleNameLabelWeek().setText(view.getNurseComboBox().getSelectedItem() + " Weekly Schedule");
 					view.getScheduleNameLabelMonth().setText(view.getNurseComboBox().getSelectedItem() + " Monthly Schedule");
@@ -95,7 +114,7 @@ public class DoctorController {
 				scheduledDays[5] = true;
 				scheduledDays[6] = false;
 	
-				view.initializeWeeklySchedule(scheduledDays);
+				view.initializeWeeklySchedule(scheduledDays, appointments);
 				view.initializeMonthlySchedule(scheduledDays);
 				}
 		});

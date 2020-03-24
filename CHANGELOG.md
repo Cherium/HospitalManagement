@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID
 
+## 23 MARCH 21:01 Jenny
+* Fixed issue with toggling between weekly and monthly view by setting the hidden value of MigLayout. 
+* Resulting layout isn't centered, but that is on a lower priority.
+
 ## 23 MARCH 17:57 Jenny
 * Changed layout of weekly and monthly schedule to MigLayout. Implemented a dummy scheduled days in doctor and set up the weekly and monthly schedule to reflect scheduled days.
 * Moved every major panel initialization to functions in DoctorView. 

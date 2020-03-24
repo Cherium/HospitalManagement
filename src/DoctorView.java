@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -101,6 +102,8 @@ public class DoctorView {
 	Container container;
 	
 	private LocalDate now = LocalDate.now();
+
+	private LocalDateTime[] appointments;
 	
 	private JScrollPane scroll;
 	private JList listPatients;
@@ -227,9 +230,7 @@ public class DoctorView {
 		// button panel associated with it (on the buttom)
 		scheduleContainer = new JPanel();
 			scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
-			// scheduleContainer.setAlignmentY(Component.TOP_ALIGNMENT);
-			// scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
-			scheduleContainer.setLayout(new MigLayout());
+			scheduleContainer.setLayout(new MigLayout("hidemode 1"));
 			contentPane.add(scheduleContainer);
 		
 		
@@ -269,9 +270,9 @@ public class DoctorView {
 		scheduleWeekly = new JPanel();
 
 		// initializeWeeklySchedule();
-		scheduleContainer.add(scheduleWeekly);
+		scheduleContainer.add(scheduleWeekly, "align 50% 50%");
 		// initializeMonthlySchedule();
-		scheduleContainer.add(scheduleMonthly);
+		scheduleContainer.add(scheduleMonthly, "align 50% 50%");
 
 		initializeButtonsSchedule(fieldISO);
 		scheduleContainer.add(btnPaneSchedule, "south");
@@ -667,7 +668,17 @@ public class DoctorView {
 	
 	
 
-	public void initializeWeeklySchedule(Boolean[] schDays) {
+	public void initializeWeeklySchedule(Boolean[] schDays, LocalDateTime[] appointments) {
+		String[][] listApsWeek = new String[0][0];
+		LocalDate startRange = now;
+		LocalDate endRange = now.plusWeeks(1);
+		for (LocalDateTime ldt : appointments) {
+			if ((ldt.toLocalDate().compareTo(startRange) >= 0) && (ldt.toLocalDate().compareTo(endRange) <= 0)) {
+
+			}
+		}
+
+
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
 		scheduleWeekly.repaint();
@@ -677,7 +688,6 @@ public class DoctorView {
 		
 		scheduleNameLabelWeek = new JLabel("I am a label: <Name>'s Weekly Schedule'");
 			scheduleWeekly.add(scheduleNameLabelWeek, "span");
-			// scheduleWeekly.add(Box.createHorizontalStrut(50));
 			scheduleWeekly.add(Box.createHorizontalGlue());
 		
 		setWeekDateLabels(LocalDate.now());
@@ -706,7 +716,10 @@ public class DoctorView {
 	}
 	
 	
-	
+	/**
+	 * Set up the monthly view of the schedule, given a schedule (currently only for scheduled days)
+	 * @param schDays
+	 */
 	public void initializeMonthlySchedule(Boolean[] schDays) {
 		scheduleMonthly.removeAll();
 		scheduleMonthly.revalidate();
@@ -736,113 +749,17 @@ public class DoctorView {
 		scheduleMonthly.setVisible(false);
 		scheduleMonthly.setPreferredSize(new Dimension(2000,1000));
 
-		//////////////////////////////////////////////////////////////
-
-		// scheduleMonthly = new JPanel();
-		// 	scheduleMonthly.setBackground(Color.WHITE);
-		// 	// scheduleMonthly.setBorder(new LineBorder(Color.RED)); // highlights borders for visual gauging
-		// 	scheduleMonthly.setLayout(new BoxLayout(scheduleMonthly, BoxLayout.Y_AXIS));
-		
-		// JPanel monthPanel = new JPanel();
-		// 	monthPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		// 	monthPanel.setBackground(new Color(203, 217, 249)); 
-
-		// displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
-		// 	displayMonth.setFont(new Font("Tahoma", Font.BOLD, 18));
-
-		// JPanel monthLabelPanel = new JPanel();
-		// 	monthLabelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		// 	monthLabelPanel.add(displayMonth);
-		// 	monthLabelPanel.setMaximumSize(displayMonth.getPreferredSize()); // uncommenting this makes the label very small
-		// 	monthLabelPanel.setBackground(new Color(158, 182, 238));
-
-		// scheduleMonthly.add(monthLabelPanel);
-		// scheduleMonthly.add(monthPanel);
-
-		// for (int j = 0; j < 7; j++) {
-		// 	monthPanel.add(panelsOfWeekMonth.get(j));
-		// }
-
-
-		// for (int i = 0; i < 35; i++) {
-		// 	// Overall panel for one day
-		// 	JPanel day = new JPanel();
-		// 		day.setBackground(Color.WHITE);
-		// 		day.setForeground(Color.WHITE);
-		// 		day.setLayout(new BoxLayout(day, BoxLayout.Y_AXIS));
-		// 	JPanel monthDate = new JPanel();
-		// 		// monthDate.setAlignmentX(FlowLayout.RIGHT);
-		// 		monthDate.add(monthdays.get(i));
-		// 		day.add(monthDate);
-		// 	JPanel appointments = new JPanel();
-		// 		appointments.setLayout(new BoxLayout(appointments, BoxLayout.Y_AXIS));
-		// 	JScrollPane scrollAppoint = new JScrollPane(appointments);
-		// 		scrollAppoint.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		// 		scrollAppoint.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		// 		day.add(scrollAppoint);
-		// 		monthDate.setBackground(new Color(59, 198, 198));
-		// 		scrollAppoint.setBackground(new Color(147, 234, 234));
-				
-		// 	day.addMouseListener(new MouseAdapter() {
-		// 		@Override
-		// 		public void mousePressed(final MouseEvent arg0) {
-		// 			if (monthDate.getBackground().equals(new Color(59, 198, 198))){
-		// 				monthDate.setBackground(new Color(255, 157, 76));
-		// 				scrollAppoint.setBackground(new Color(255, 203, 160));
-		// 			} else {
-		// 				monthDate.setBackground(new Color(59, 198, 198));
-		// 				scrollAppoint.setBackground(new Color(147, 234, 234));
-		// 			}
-		// 		}
-		// 	});
-
-
-		// 	// LocalDate meh = startDate.plusDays(i);
-		// 	// System.out.println(meh);
-		// 	switch (i%7) {
-		// 		case 0:
-		// 			panelsOfWeekMonth.get(0).add(day);
-		// 			break;
-		// 		case 1:
-		// 			panelsOfWeekMonth.get(1).add(day);
-		// 			break;
-		// 		case 2:
-		// 			panelsOfWeekMonth.get(2).add(day);
-		// 			break;
-		// 		case 3:
-		// 			panelsOfWeekMonth.get(3).add(day);
-
-		// 			break;
-		// 		case 4:
-		// 			panelsOfWeekMonth.get(4).add(day);
-
-		// 			break;
-		// 		case 5:
-		// 			panelsOfWeekMonth.get(5).add(day);
-
-		// 			break;
-		// 		case 6:
-		// 			panelsOfWeekMonth.get(6).add(day);
-
-		// 			break;
-		// 	}
-		// }
-
-		// scheduleMonthly.setVisible(false);
 
 	}
 
-	
+	/**
+	 * Set up the patients view in doctor
+	 */
 	public void initializePatients() {
 		listPatientsPanel = new JPanel();
 		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
 		listPatientsPanel.setBackground(Color.WHITE);
-//		//JScrollPane scroll = new JScrollPane(listPatientsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//		scroll = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-//		scroll.setLayout(new ScrollPaneLayout());
-//		scroll.setPreferredSize(new DimensionUIResource(200, 0));
-//		scroll.getVerticalScrollBar().setUnitIncrement(10);
-		
+	
 		
 		
 		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -900,21 +817,12 @@ public class DoctorView {
 	
 	
 	
-	
-	
-	
-	public void setPatientListPanels(String[] patList) {
-		for (String p : patList) {
-			JPanel aPat = new JPanel();
-			aPat.setLayout(new BoxLayout(aPat, BoxLayout.Y_AXIS));
-			aPat.add(new JLabel(p));
-			aPat.add(new JLabel("I am an age label"));
-			aPat.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-			patientListPanels.add(aPat);
-		}
-	}
 
 
+	/**
+	 * Function sets up the specific day of the month labels for monthly layout
+	 * @param ld
+	 */
 	public void setMonthDateLabels(LocalDate ld) {
 		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		for (JLabel lbl : monthdays) {
@@ -923,6 +831,10 @@ public class DoctorView {
 		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
 	}
 
+	/**
+	 * Function sets up the specific date of the year labels for weekly layout
+	 * @param ld
+	 */
 	public void setWeekDateLabels(LocalDate ld) {
 		LocalDate tempTime = ld.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		for (JLabel lbl : weekYYYYMMDD) {
@@ -930,21 +842,6 @@ public class DoctorView {
 		}
 	}
 
-	public void addPatient(String name) {
-		// TODO: Implement for 4 parameters: name, age, patient information, detailed treatment history
-		JPanel pat = new JPanel();
-		JLabel patLbl = new JLabel(name);
-
-		// Let name be the detailed patient information
-		pat.getAccessibleContext().setAccessibleName(name);
-
-		// And let description be the detailed treatment history
-		// pat.getAccessibleContext().setAccessibleDescription(treathis);
-
-		pat.add(patLbl);
-		pat.setBackground(Color.LIGHT_GRAY);
-		patientListPanels.add(pat);
-	}
 	
 	
 	
@@ -1472,6 +1369,14 @@ public class DoctorView {
 
 	public void setButtonOwn(JButton o) {
 		this.btnOwn = o;
+	}
+
+	public LocalDateTime[] getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(LocalDateTime[] appointments) {
+		this.appointments = appointments;
 	}
 	
 
