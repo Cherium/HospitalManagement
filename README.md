@@ -19,9 +19,9 @@ The following instructions will get you a functional copy of the software runnin
 #### Option #2
 1. Download everything from the master branch into a folder
 2. Open Eclipse and import that folder as a java project
-3. Right click the project name -> Buld Path -> configure build path
+3. Right click the project name -> Build Path -> configure build path
 4. Click the Libraries tab ->  click class path section -> Add JAR
-5. Navigate to the lib folder within you project, and select the only file in there
+5. Navigate to the lib folder within your project, and select the only file in there
 6. Apply and close the dialog box
 7. Right click the project -> refresh
 8. Click Run in Eclipse and the GUI should load.
