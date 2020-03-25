@@ -41,7 +41,7 @@ public class Schedule {
         }
         bob.append("#");
         for (Entry<String, String> pair : getAppointments().entrySet()) {
-            bob.append(pair.getKey()+","+pair.getValue());
+            bob.append(pair.getKey()+","+pair.getValue()+"&");
         }
         bob.append("#");
         for (LocalDate lDate : getTimeOff()) {
