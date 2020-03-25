@@ -34,11 +34,14 @@ public class Schedule {
         StringBuilder bob = new StringBuilder();
 
         for (Boolean b : getScheduledDays()) {
-            bob.append(b);
+            if (b)
+                bob.append(1);
+            else
+                bob.append(0);
         }
         bob.append("#");
         for (Entry<String, String> pair : getAppointments().entrySet()) {
-            bob.append(pair.getKey()+","+pair.getValue());
+            bob.append(pair.getKey()+","+pair.getValue()+"&");
         }
         bob.append("#");
         for (LocalDate lDate : getTimeOff()) {
