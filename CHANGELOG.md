@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 24 MARCH 21:18 Jenny
+* Structured what information a Schedule should contain and also a toString() function that indicates how it'll be stored in a database.
+
 ## 24 MARCH 20:06 Jenny
 **DoctorView**
 * Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
