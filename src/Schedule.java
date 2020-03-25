@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Schedule {
     private Boolean[] scheduledDays;
 
-    private HashMap<String, String> appointments;
+    private LinkedHashMap<String, String> appointments;
 
     private ArrayList<LocalDate> timeOff;
 
@@ -33,7 +33,7 @@ public class Schedule {
         this.timeOff = new ArrayList<LocalDate>(0);
     }
 
-    public Schedule(Boolean[] daysWorked, HashMap<String, String> appointments, ArrayList<LocalDate> timeOff) {
+    public Schedule(Boolean[] daysWorked, LinkedHashMap<String, String> appointments, ArrayList<LocalDate> timeOff) {
         this.scheduledDays = daysWorked;
         this.appointments = appointments;
         this.timeOff = timeOff;
@@ -61,27 +61,34 @@ public class Schedule {
     }
 
     private void initAppointments() {
-        this.appointments = new HashMap<String, String>(20);
+        this.appointments = new LinkedHashMap<String, String>(20);
         LocalDateTime today = LocalDateTime.now();
-        for (int i = 0; i < 10; i++) {
-            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0);
+        for (int i = 0; i < 30; i++) {
+            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
             getAppointments().put(day.toString(), "patient");
         }
-        for (int i = 0; i < 10; i++) {
-            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0);
+        for (int i = 0; i < 30; i++) {
+            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
             getAppointments().put(day.toString(), "patient2");
         }
     }
 
     private void initScheduledDays() {
         this.scheduledDays = new Boolean[7];
-        this.scheduledDays[0] = false;
-        this.scheduledDays[1] = true;
-        this.scheduledDays[2] = true;
-        this.scheduledDays[3] = true;
-        this.scheduledDays[4] = true;
-        this.scheduledDays[5] = true;
-        this.scheduledDays[6] = false;
+        for (int i = 0; i < 7; i++) {
+            if (ThreadLocalRandom.current().nextInt(0,1+1) == 1) {
+                this.scheduledDays[i] = true;
+            } else {
+                this.scheduledDays[i] = false;
+            }
+        }
+        // this.scheduledDays[0] = false;
+        // this.scheduledDays[1] = true;
+        // this.scheduledDays[2] = true;
+        // this.scheduledDays[3] = true;
+        // this.scheduledDays[4] = true;
+        // this.scheduledDays[5] = true;
+        // this.scheduledDays[6] = false;
     }
 
     // Getters and setters
@@ -96,11 +103,11 @@ public class Schedule {
     }
 
     // Appointments are of the form <LocalDateTime.toString(), username>
-    public void setAppointments(HashMap<String,String> ap) {
+    public void setAppointments(LinkedHashMap<String,String> ap) {
         this.appointments = ap;
     }
 
-    public HashMap<String, String> getAppointments() {
+    public LinkedHashMap<String, String> getAppointments() {
         return appointments;
     }
 
@@ -116,11 +123,12 @@ public class Schedule {
     public static void main(String[] args) {
         Schedule s = new Schedule();
         System.out.println(s.toString());
-        LocalDate now = LocalDate.now();
-        LocalDate future = now.plusMonths(2);
-        now = future;
-        System.out.println(now.toString());
-        System.out.println(LocalDate.now());
+        for (Boolean string : s.getScheduledDays()) {
+            System.out.println(string);
+        }
+        LocalDate ld = LocalDateTime.parse("2020-03-25T12:00:00").toLocalDate();
+        System.out.println(ld.toString());
+        System.out.println(LocalDateTime.parse("2020-03-25T12:00:00").toString());
     }
 
 }

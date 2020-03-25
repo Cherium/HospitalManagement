@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 25 MARCH 18:58 Jenny
+* Refined randomized appointment data in Schedule. Also changed input in DoctorView to take in the format of Schedule.
+
 ## 25 MARCH 12:56 Jenny
 * Added dummy data in Schedule default constructor.
 
