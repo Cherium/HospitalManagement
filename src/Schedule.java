@@ -34,7 +34,10 @@ public class Schedule {
         StringBuilder bob = new StringBuilder();
 
         for (Boolean b : getScheduledDays()) {
-            bob.append(b);
+            if (b)
+                bob.append(1);
+            else
+                bob.append(0);
         }
         bob.append("#");
         for (Entry<String, String> pair : getAppointments().entrySet()) {
