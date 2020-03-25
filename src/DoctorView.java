@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BorderFactory;
@@ -743,20 +746,21 @@ public class DoctorView {
 			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
 		}
 
-		// LinkedHashMap/ArrayList iterate over numbers
-		aptsInMonth = new String[0];
+		LinkedHashMap<Integer, List<String>> y = collectSortDates(new ArrayList<>(Arrays.asList(appointments)));
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
 				scheduleMonthly.add(monthdays.get(i*7+j));
 				monthdays.get(i*7+j).setEnabled(schDays[j]);
 			}
-			for (int j = 0; j < 7; j++) {
-				JList<String> oneDayList = new JList<String>(aptsInMonth);
+			for (int js = 0; js < 7; js++) {
+				List<String> list = y.get(i*7+js);
+				String[] arrayAp = list.toArray(new String[0]);
+				JList<String> oneDayList = new JList<String>(arrayAp);
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
-				scroll.setEnabled(schDays[j]);
+				oneDayList.setEnabled(schDays[js]);
 			}
 		}
 
@@ -857,10 +861,43 @@ public class DoctorView {
 		}
 	}
 
-	
-	
-	
-	
+	public  LinkedHashMap<Integer, List<String> > collectSortDates(ArrayList<LocalDateTime> ldt){
+        LocalDate startTime = getNow().withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+        LocalDate endTime = startTime.plusDays(34);
+      
+
+        LinkedHashMap<Integer, List<String> > apts = new LinkedHashMap<Integer,List<String> >(35);
+        List<LocalDateTime> fileredDates = new ArrayList<LocalDateTime>();
+        for(LocalDateTime x : ldt){
+            if(x.toLocalDate().isEqual(startTime)|| x.toLocalDate().isAfter(startTime) || x.toLocalDate().isBefore(endTime) || x.toLocalDate().isEqual(endTime) ){
+                fileredDates.add(x);
+            }
+            
+        }
+
+        int key = 0;
+        while(key<35){
+
+            List<String> dateAvailable = new ArrayList<String>();
+
+            for(LocalDateTime date: fileredDates){
+                if((key<= 30 &&date.getDayOfMonth()== key+1 && date.getMonthValue()==LocalDateTime.now().getMonthValue())){
+                    dateAvailable.add(date.toString());
+                }
+                else if(key>30 && key +1 != date.getDayOfMonth() &&  date.getMonthValue()!=LocalDateTime.now().getMonthValue() && key == 30 + date.getDayOfMonth()  ){
+                    dateAvailable.add(date.toString());
+                }
+            }
+            apts.put(key,dateAvailable);
+            key++;
+
+
+        }
+
+        return apts;
+        
+        
+    }	
 	
 	
 	

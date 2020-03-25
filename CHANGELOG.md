@@ -3,6 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 24 MARCH 20:06 Jenny
+**DoctorView**
+* Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
+* Current bug: switching between months does not update the appointments shown.
+
 ## 24 MARCH 17:02 Jenny
 **DoctorView**
 * Implemented a view of sheduled appointments for monthly schedule in DoctorView.
@@ -13,6 +18,12 @@ Example: 10 mar 21:13 SAJID\
 
 ## 24 MARCH 13:07 Jenny
 * Fixed error where changing times in doctor view does not update the appointments. 
+
+## 23 mar 23:55 Sajid
+* swapped newMaster content with master, and deleted neMaster branch
+* updated readme
+* included project JAR file `run.jar`
+* formalized databse entries
 
 ## 23 MARCH 21:43 Jenny
 * Got the doctor view to display the current week's appointments from a list of hardcoded appointments. Currently has an error where either changing between weeks updates the highlighted appointments and the dates fail to update or changing between weeks does not update the appointments and the dates update. 
@@ -27,12 +38,6 @@ Example: 10 mar 21:13 SAJID\
 * Now, when choosing a nurse from the drop down list, the schedule's title will change to show that it is that nurse's schedule. Switching to doctor's schedule will show the doctor's schedule. (Schedules are currently hard coded and only contains the days of the week that a doctor/nurse is working, does NOT contain appointment information).
 * Now, the weekly and monthly schedule under MigLayout does not shrink when components are hidden. The button panel is forcibly docked south of the weekly and monthly schedule by setting the preferred sizes of the schedules to be large (2000x1000). Once the view switches between weekly/monthly, the component hides itself but the size it takes up remains. 
 
-
-## 23 mar 23:55 Sajid
-* swapped newMaster content with master, and deleted neMaster branch
-* updated readme
-* included project JAR file `run.jar`
-* formalized databse entries
 
 ## 23 MARCH 08:39 Jenny
 * Changed the display of patients to their names instead of usernames. 
