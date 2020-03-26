@@ -85,13 +85,15 @@ public class ReceptionistView extends JFrame {
 		*/
 
 
-
-			
+		//Bunch of labels
+		welcomeLabel = new JLabel();
+			welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		btnReturn = new JButton("Sign Out");
 			btnReturn.addActionListener(e -> setVisible(false) );
 		
-		welcomeLabel = new JLabel();
-			welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
+
+
+
 		
 	
 
@@ -166,7 +168,7 @@ public class ReceptionistView extends JFrame {
 
 
 
-
+/*
 		//https://www.techiedelight.com/print-all-keys-and-values-map-java/
 		HashMap<String, UserSuperClass> users = Main.dbaseClass.getUsers();
 		Iterator<String> itr = users.keySet().iterator();
@@ -193,7 +195,7 @@ public class ReceptionistView extends JFrame {
 			scroll.getVerticalScrollBar().setUnitIncrement(10);
 	
 			patientPanel.add(scroll, BorderLayout.WEST);
-			
+			*/
 			///
 		
 
@@ -251,6 +253,9 @@ public class ReceptionistView extends JFrame {
 	{
 		
 		listPatients = new JList(patients);
+
+
+		System.out.println("Hi there!! "+patients.length);
 
 		scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setLayout(new ScrollPaneLayout());

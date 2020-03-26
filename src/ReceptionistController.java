@@ -1,6 +1,9 @@
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class ReceptionistController {
 
@@ -35,11 +38,44 @@ public class ReceptionistController {
 				model.setScheduledPatientsUsernames(a);
 				//*/
 
-		String[] patients = new String[model.getScheduledPatientsUsernames().size()];
+				
+
+
+				//https://www.techiedelight.com/print-all-keys-and-values-map-java/
+		HashMap<String, UserSuperClass> users = Main.dbaseClass.getUsers();
+		Iterator<String> itr = users.keySet().iterator();
+		ArrayList<String> newPatient = new ArrayList<String>();
+
+		while(itr.hasNext()){
+
+			String a = itr.next();
+			String b = Main.dbase.get(a).getRole();
+			if(b.compareTo("patient") == 0){
+				System.out.println(">"+Main.dbase.get(a).getName());
+				System.out.println("## "+b+" ##");
+				newPatient.add(Main.dbase.get(a).getName());
+			}
+
+			
+		}
+		Object[] temp = newPatient.toArray();
+		
+		System.out.println("Anyone? "+temp.length);
+
+		String[] patients = new String[newPatient.size()];
+
+		for (int i = 0; i < temp.length; i++){
+			patients[i] = newPatient.get(i);
+		}
+
+
+		/*
 		for (String string : model.getScheduledPatientsUsernames()) {
 			int index = model.getScheduledPatientsUsernames().indexOf(string);
-			patients[index] = Main.dbase.get(string).getName();///Issue is here?
-		}
+			String a = Main.dbase.get(string).getName();
+			System.out.println(a);
+			patients[index] = a;///Issue is here?
+		}*/
 		view.setPatientList(patients);
 		
 		///
@@ -56,6 +92,8 @@ public class ReceptionistController {
 
 
 			
+
+		try{
 				//listen for mouse clicks on patients names
 				view.getListPatients().addMouseListener(new MouseAdapter() {
 					
@@ -67,7 +105,10 @@ public class ReceptionistController {
 						 System.out.println("Ala");
 					}
 				});//*/
-
+			}
+			catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("Out of bounds error.");
+			}
 
 
 
