@@ -30,20 +30,16 @@ public class DoctorController {
 	// as soon as the view first opens for the user
 	public void initView() {
 		// Dummy schedule, randomized scheduled days and appointments, no time off
+		// IMPORTANT!!!
+		// ADDING A NEW SCHEDULE TO THIS DOCTOR!!!
 		model.setSchedule(new Schedule());
 		LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
 
-		// LocalDateTime[] appointments = new LocalDateTime[7];
-		// appointments[0] = LocalDateTime.parse("2020-03-25T12:00:00");
-		// appointments[1] = LocalDateTime.parse("2020-03-25T15:00:00");
-		// appointments[2] = LocalDateTime.parse("2020-03-25T17:00:00");
-		// appointments[3] = LocalDateTime.parse("2020-03-27T09:00:00");
-		// appointments[4] = LocalDateTime.parse("2020-03-28T12:00:00");
-		// appointments[5] = LocalDateTime.parse("2020-03-29T14:00:00");
-		// appointments[6] = LocalDateTime.parse("2020-04-01T16:00:00");
-
 		view.setScheduledDays(model.getSchedule().getScheduledDays());
 		view.setAppointments(modAppointments);
+		for (Entry<String, String> entry : model.getSchedule().getAppointments().entrySet()) {
+			System.out.println(entry.getKey()+" : "+entry.getValue());
+		}
 
 		view.initializeWeeklySchedule();
 		view.initializeMonthlySchedule();
@@ -73,28 +69,23 @@ public class DoctorController {
 	// initialize 'only' the listeners the GUI handles 'that
 	// need interaction with the model'
 	public void initListeners() {
-		// LocalDateTime[] appointments = new LocalDateTime[7];
-		// appointments[0] = LocalDateTime.parse("2020-03-25T12:00:00");
-		// appointments[1] = LocalDateTime.parse("2020-03-25T15:00:00");
-		// appointments[2] = LocalDateTime.parse("2020-03-25T17:00:00");
-		// appointments[3] = LocalDateTime.parse("2020-03-27T09:00:00");
-		// appointments[4] = LocalDateTime.parse("2020-03-27T12:00:00");
-		// appointments[5] = LocalDateTime.parse("2020-03-28T14:00:00");
-		// appointments[6] = LocalDateTime.parse("2020-04-01T16:00:00");
-
 		view.getNurseComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (view.getNurseComboBox().getSelectedIndex() != -1) {
-					Boolean[] scheduledDays = new Boolean[7];
-					scheduledDays[0] = true;
-					scheduledDays[1] = true;
-					scheduledDays[2] = true;
-					scheduledDays[3] = false;
-					scheduledDays[4] = false;
-					scheduledDays[5] = true;
-					scheduledDays[6] = true;
-					view.setScheduledDays(scheduledDays);
-					view.setAppointments(new LinkedHashMap<String, String>(0));
+
+					// IMPORTANT!!!
+					// ADDING A NEW SCHEDULE TO A NURSE IN DATABASE IF NO SCHEDULE IS DETECTED!!!
+
+					int index = view.getNurseComboBox().getSelectedIndex();
+					NurseModel nmd = (NurseModel) Main.dbase.get(model.getAssignedNurseUsernames().get(index));
+
+					if (nmd.getSchedule() == null) {
+						nmd.setSchedule(new Schedule());
+						nmd.getSchedule().setAppointments(new LinkedHashMap<String, String>(0));
+					}
+
+					view.setScheduledDays(nmd.getSchedule().getScheduledDays());
+					view.setAppointments(nmd.getSchedule().getAppointments());
 					view.initializeWeeklySchedule();
 					view.initializeMonthlySchedule();
 					if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -116,17 +107,11 @@ public class DoctorController {
 			public void actionPerformed(ActionEvent arg0) {
 				view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
 				view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
-				Boolean[] scheduledDays = new Boolean[7];
-				scheduledDays[0] = false;
-				scheduledDays[1] = true;
-				scheduledDays[2] = true;
-				scheduledDays[3] = true;
-				scheduledDays[4] = true;
-				scheduledDays[5] = true;
-				scheduledDays[6] = false;
 
-				view.setScheduledDays(scheduledDays);
-				view.setAppointments(new LinkedHashMap<String, String>(0));
+				view.setScheduledDays(model.getSchedule().getScheduledDays());
+				LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
+				view.setAppointments(modAppointments);
+		
 				view.initializeWeeklySchedule();
 				view.initializeMonthlySchedule();
 				if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -195,6 +180,7 @@ public class DoctorController {
 
 	}
 
+	// Modify the list of <LocalDateTime, username> from a doctor's schedule into <LocalDateTime, name>
 	public LinkedHashMap<String, String> setUpAppointments(LinkedHashMap<String, String> apts) {
 		LinkedHashMap<String, String> modifiedApts = new LinkedHashMap<String, String>();
 

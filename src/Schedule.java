@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -121,14 +122,12 @@ public class Schedule {
     }
 
     public static void main(String[] args) {
-        Schedule s = new Schedule();
-        System.out.println(s.toString());
-        for (Boolean string : s.getScheduledDays()) {
-            System.out.println(string);
-        }
-        LocalDate ld = LocalDateTime.parse("2020-03-25T12:00:00").toLocalDate();
-        System.out.println(ld.toString());
-        System.out.println(LocalDateTime.parse("2020-03-25T12:00:00").toString());
+        LocalDate one = LocalDate.now();
+        LocalDate two = one.plusDays(15);
+        System.out.println((int) ChronoUnit.DAYS.between(one, two));
+        System.out.println(one.toString());
+        System.out.println(two.toString());
+
     }
 
 }

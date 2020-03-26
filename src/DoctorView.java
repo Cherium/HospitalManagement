@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -334,7 +335,6 @@ public class DoctorView {
 				scheduleContainer.setVisible(false);
 				patientPanel.setVisible(true);
 				btnOwn.setEnabled(true);
-				System.out.println("Viewing patients");
 			}
 		});
 
@@ -466,8 +466,7 @@ public class DoctorView {
 				} else {
 					String schTitle = getScheduleNameLabelWeek().getText();
 					initializeMonthlySchedule();
-					scheduleMonthly.setVisible(true);
-					scheduleWeekly.setVisible(false);
+					isWeekly(false);
 					getScheduleNameLabelMonth().setText(schTitle);
 				}
 			}
@@ -503,6 +502,7 @@ public class DoctorView {
 		btnPaneSchedule.setBorder(BorderFactory.createEtchedBorder());
 	}
 
+	// Set up the date labels
 	public void initializeVariables() {
 		JLabel lblDay = new JLabel("Sunday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -561,6 +561,7 @@ public class DoctorView {
 
 	}
 
+	// Set up weekly schedule view
 	public void initializeWeeklySchedule() {
 		String[][] listApsWeek = new String[24][7];
 		LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
@@ -570,15 +571,8 @@ public class DoctorView {
 			if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0)) {
 				listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
 			}
-			System.out.println(time.getHour()+" : "+(time.getDayOfWeek().getValue()%7));
 
 		}
-
-		for (Entry<String, String> entry : getAppointments().entrySet()) {
-			System.out.println(entry.getKey()+" : "+entry.getValue());
-
-		}
-
 
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
@@ -626,10 +620,7 @@ public class DoctorView {
 	}
 	
 	
-	/**
-	 * Set up the monthly view of the schedule, given a schedule (currently only for scheduled days)
-	 * @param schDays
-	 */
+	// Set up monthly view of schedule
 	public void initializeMonthlySchedule() {
 		scheduleMonthly.removeAll();
 		scheduleMonthly.revalidate();
@@ -652,7 +643,8 @@ public class DoctorView {
 			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
 		}
 
-		// LinkedHashMap<Integer, List<String>> y = collectSortDates(new ArrayList<>(Arrays.asList(appointments)));
+
+		ArrayList<String[]> apts = filterAppointmentsMonth();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
@@ -660,9 +652,7 @@ public class DoctorView {
 				monthdays.get(i*7+j).setEnabled(schDays[j]);
 			}
 			for (int js = 0; js < 7; js++) {
-				// List<String> list = y.get(i*7+js);
-				// String[] arrayAp = list.toArray(new String[0]);
-				JList<String> oneDayList = new JList<String>(new String[0]);
+				JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
@@ -767,44 +757,44 @@ public class DoctorView {
 		}
 	}
 
-	public  LinkedHashMap<Integer, List<String> > collectSortDates(ArrayList<LocalDateTime> ldt){
-        LocalDate startTime = getNow().withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-        LocalDate endTime = startTime.plusDays(34);
-      
+	// Filters out a list of appointments starting from the first day (of the first week) of the current month
+	// Returns a list of appointments (as a list of list of names of patients) for a period of 35 days
+	public ArrayList<String[]> filterAppointmentsMonth() {
+		ArrayList<ArrayList<String>> interFilter = new ArrayList<ArrayList<String>>(0);
+		for (int i = 0; i < 35; i++) {
+			interFilter.add(new ArrayList<String>());
+		}
+		LocalDate startRange = getNow().withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		LocalDate endRange = startRange.plusDays(34);
 
-        LinkedHashMap<Integer, List<String> > apts = new LinkedHashMap<Integer,List<String> >(35);
-        List<LocalDateTime> fileredDates = new ArrayList<LocalDateTime>();
-        for(LocalDateTime x : ldt){
-            if(x.toLocalDate().isEqual(startTime)|| x.toLocalDate().isAfter(startTime) || x.toLocalDate().isBefore(endTime) || x.toLocalDate().isEqual(endTime) ){
-                fileredDates.add(x);
-            }
-            
-        }
+		for (Entry<String, String> entry : getAppointments().entrySet()) {
+			LocalDate time = LocalDateTime.parse(entry.getKey()).toLocalDate();
+			if ((time.compareTo(startRange) >= 0) && (time.compareTo(endRange) <= 0)) {
+				int index = (int) ChronoUnit.DAYS.between(startRange, time);
+				interFilter.get(index).add(entry.getValue());
+			}
 
-        int key = 0;
-        while(key<35){
+		}
 
-            List<String> dateAvailable = new ArrayList<String>();
+		ArrayList<String[]> filtered = new ArrayList<String[]>(0);
+		for (ArrayList<String> x : interFilter) {
+			filtered.add(x.toArray(new String[0]));
+		}
 
-            for(LocalDateTime date: fileredDates){
-                if((key<= 30 &&date.getDayOfMonth()== key+1 && date.getMonthValue()==LocalDateTime.now().getMonthValue())){
-                    dateAvailable.add(date.toString());
-                }
-                else if(key>30 && key +1 != date.getDayOfMonth() &&  date.getMonthValue()!=LocalDateTime.now().getMonthValue() && key == 30 + date.getDayOfMonth()  ){
-                    dateAvailable.add(date.toString());
-                }
-            }
-            apts.put(key,dateAvailable);
-            key++;
+		return filtered;
+	}
 
+	// Sets the weekly/monthly schedule view
+	public void isWeekly(Boolean b) {
+		if (b) {
+			scheduleMonthly.setVisible(false);
+			scheduleWeekly.setVisible(true);
+		} else {
+			scheduleMonthly.setVisible(true);
+			scheduleWeekly.setVisible(false);
+		}
+	}
 
-        }
-
-        return apts;
-        
-        
-    }	
-	
 	
 	
 	

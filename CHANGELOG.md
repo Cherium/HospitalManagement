@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 25 MARCH 21:05 Jenny
+* Toggling between months in DoctorView will now update the appointments shown. There is a bug where moving between months does not refresh the appointments or just removes them.
+
 ## 25 MARCH 18:58 Jenny
 * Refined randomized appointment data in Schedule. Also changed input in DoctorView to take in the format of Schedule.
 
