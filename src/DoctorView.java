@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -46,33 +48,34 @@ import javax.swing.plaf.BorderUIResource.BevelBorderUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
-
-
-
-
-/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
- * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
- * does not interact with the controller)
+/**
+ * Creates all the components that are needed to view the GUI for this role.
+ * Contains nothing from the controller or view class. Does NOT interact with
+ * the associated model class. The controller interacts with this view class,
+ * but not the other way around (the view class does not interact with the
+ * controller)
  * 
- * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
- * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+ * Contains listeners that DO NOT need interaction with the model (ex. a back
+ * button listener that closes the view does not need interaction with the
+ * model.) Remaining button/field listeners that DO need to interact withe the
+ * model are initialized in the controller class.
+ */
 public class DoctorView {
-	
+
 	private JFrame frame;
-	
+
 	private JPanel panel;
 	private JPanel scheduleWeekly;
 	private JPanel scheduleMonthly;
 	private JPanel titleContainer;
 	private JPanel backPanel;
 	private JPanel patientPanel;
-	//private JPanel dayPanel;
+	// private JPanel dayPanel;
 	private JPanel listPatientsPanel;
 	private JPanel btnPaneSchedule;
 	private JPanel buttonContainer;
 	private JPanel scheduleContainer;
-	
+
 	private JButton btnSignOut;
 	private JButton btnViewPatient;
 	private JButton btnMakeChanges;
@@ -81,7 +84,7 @@ public class DoctorView {
 	private JButton btnOwnSchedule;
 	private JButton btnOwn;
 	private JButton btnToggle;
-	
+
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
 	private JLabel displayMonth;
@@ -92,182 +95,135 @@ public class DoctorView {
 	private JTextArea patientInformation = new JTextArea(7, 90);
 	private JTextArea pastTreatments;
 	private JTextArea currentTreatment;
-	
-	
+
 	private ArrayList<JLabel> weekYYYYMMDD = new ArrayList<JLabel>(7); // Labels of the format: Sunday, Monday, etc.
 	private ArrayList<JLabel> sunToSatMonth = new ArrayList<JLabel>(7); // Labels of the format: Sunday, Monday, etc.
 	private ArrayList<JLabel> sunToSatWeek = new ArrayList<JLabel>(7); // Labels of the format: YYYY-MM-DD
 	private ArrayList<JLabel> monthdays = new ArrayList<JLabel>(35);
 	private ArrayList<JPanel> patientListPanels = new ArrayList<JPanel>(0);
-	
+
 	JComboBox<String> nurseComboBox;
-	
+
 	Container container;
-	
+
 	private LocalDate now = LocalDate.now();
 
-	private LocalDateTime[] appointments;
+	private LinkedHashMap<String, String> appointments;
 	private Boolean[] schDays;
 	private String name;
 	private String[] aptsInMonth;
-	
+
 	private JScrollPane scroll;
 	private JList listPatients;
 
-		/*
-			default frame (getContentFrame()): BorderLayout
-			#################################################################
-			# Sign out						 								# title frame: BoxLayout.Y-Axis
-			# Department: Name												# BorderLayout.North
-			#---------------------------------------------------------------#
-			# 				Schedule						|	Patients	# content frame: BoxLayout.X-Axis
-			# 												|	 Nurses		# BorderLayout.CENTER
-			#												| Own schedule	#
-			#												|				#
-			#												|				#
-			#												|				#
-			#												|				#
-			#-----------------------------------------------|				#
-			#			manipulate schedule					|				#
-			#################################################################
-		*/	
+	/*
+	 * default frame (getContentFrame()): BorderLayout
+	 * ################################################################# # Sign out
+	 * # title frame: BoxLayout.Y-Axis # Department: Name # BorderLayout.North
+	 * #---------------------------------------------------------------# # Schedule
+	 * | Patients # content frame: BoxLayout.X-Axis # | Nurses # BorderLayout.CENTER
+	 * # | Own schedule # # | # # | # # | # # | #
+	 * #-----------------------------------------------| # # manipulate schedule | #
+	 * #################################################################
+	 */
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Constructor
-	public DoctorView(String title)
-	{
-		//create frame container
-		//sets frame containers attributes
+	// Constructor
+	public DoctorView(String title) {
+		// create frame container
+		// sets frame containers attributes
 		frame = new JFrame(title);
-			frame.setSize(400,200);
-			frame.setLocationRelativeTo(null);
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			frame.setMinimumSize(new Dimension(1000,700));
-			frame.setPreferredSize(new Dimension(1000, 700));
-			frame.setLocation(10, 10);
+		frame.setSize(400, 200);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setMinimumSize(new Dimension(1000, 700));
+		frame.setPreferredSize(new Dimension(1000, 700));
+		frame.setLocation(10, 10);
 
 		initializeVariables();
 		initializeGUI();
 
 	}
 
-	
-	public void initGUI()
-	{
-		JPanel mainPane = new JPanel(new MigLayout() );
-		
-	}
-	
+	public void initGUI() {
+		JPanel mainPane = new JPanel(new MigLayout());
 
-	/**initialize the panels and components that will go inside the frame*/
-	public void initializeGUI() 
-	{
+	}
+
+	/** initialize the panels and components that will go inside the frame */
+	public void initializeGUI() {
 		setNow(LocalDate.now());
 		// Create title container(JLabel) and set it as top of page in the frame
 		titleContainer = new JPanel();
-			titleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
-			titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
-			frame.getContentPane().add(titleContainer, BorderLayout.NORTH);		//Add the JPanel to the frame
-			
+		titleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
+		titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
+		frame.getContentPane().add(titleContainer, BorderLayout.NORTH); // Add the JPanel to the frame
+
 		/*
-			#################################################
-			#	Back										#
-			#	Department: Name, M.D.						#
-			#												#
-			#################################################
-		*/
+		 * ################################################# # Back # # Department:
+		 * Name, M.D. # # # #################################################
+		 */
 
 		// Create a panel for the sign out button
 		backPanel = new JPanel();
-			FlowLayout flowLayout = (FlowLayout) backPanel.getLayout();
-			flowLayout.setAlignment(FlowLayout.LEFT);
-			titleContainer.add(backPanel);										//add the JPanel to the existing JPanel
-		
+		FlowLayout flowLayout = (FlowLayout) backPanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		titleContainer.add(backPanel); // add the JPanel to the existing JPanel
+
 		// Sign out button, returns to login screen when clicked
 		btnSignOut = new JButton("Sign out");
-			backPanel.add(btnSignOut);
-			btnSignOut.addActionListener(e -> frame.setVisible(false) );
-			
-			
-			
+		backPanel.add(btnSignOut);
+		btnSignOut.addActionListener(e -> frame.setVisible(false));
 
 		// Name panel, displays department and name of the doctor
 		JPanel namePane = new JPanel();
-			FlowLayout flowLayout_1 = (FlowLayout) namePane.getLayout();
-			flowLayout_1.setAlignment(FlowLayout.LEFT);
-			titleContainer.add(namePane);
+		FlowLayout flowLayout_1 = (FlowLayout) namePane.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		titleContainer.add(namePane);
 
 		deptLabel = new JLabel();
-			deptLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
-			namePane.add(deptLabel);
+		deptLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		namePane.add(deptLabel);
 
 		nameLabel = new JLabel();
-			nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
-			namePane.add(nameLabel);
-			
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		namePane.add(nameLabel);
+
 		/*
-			#####################################
-			#			Schedule				#
-			#									#
-			#									#
-			#									#
-			#									#
-			#									#
-			#-----------------------------------#
-			#		buttons for schedule		#
-			#									#
-			#####################################
-		*/
-	
+		 * ##################################### # Schedule # # # # # # # # # # #
+		 * #-----------------------------------# # buttons for schedule # # #
+		 * #####################################
+		 */
+
 		// Create a content pane centered at the middle of the page
 		JPanel contentPane = new JPanel();
-			frame.getContentPane().add(contentPane, BorderLayout.CENTER);
-			contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+		frame.getContentPane().add(contentPane, BorderLayout.CENTER);
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
 		// Create a container for the schedule, for the schedule itself and for the
 		// button panel associated with it (on the buttom)
 		scheduleContainer = new JPanel();
-			scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
-			scheduleContainer.setLayout(new MigLayout("hidemode 1"));
-			contentPane.add(scheduleContainer);
-		
-		
+		scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scheduleContainer.setLayout(new MigLayout("hidemode 1"));
+		contentPane.add(scheduleContainer);
+
 		patientPanel = new JPanel();
-			patientPanel.setBorder(new LineBorder(Color.CYAN));
-			patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-			// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			patientPanel.setLayout(new BorderLayout());
-			patientPanel.setBackground(Color.WHITE);
-			patientPanel.setVisible(false);
-			contentPane.add(patientPanel);
+		patientPanel.setBorder(new LineBorder(Color.CYAN));
+		patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+		// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		patientPanel.setLayout(new BorderLayout());
+		patientPanel.setBackground(Color.WHITE);
+		patientPanel.setVisible(false);
+		contentPane.add(patientPanel);
 
 		initializePatients();
-			
-		
+
 		/*
-			#################################
-			# 			Schedule			#
-			#_______________________________#
-			# 	|	|	|	|	|	|	|	#
-			# 	|	|	|	|	|	|	|	#
-			# 	|	|	|	|	|	|	|	#
-			# 	|	|	|	|	|	|	|	#
-			#-------------------------------#
-		*/			
-			
-			
+		 * ################################# # Schedule #
+		 * #_______________________________# # | | | | | | | # # | | | | | | | # # | | |
+		 * | | | | # # | | | | | | | # #-------------------------------#
+		 */
+
 		// Create a panel for the schedule itself
 		for (int i = 1; i < 8; i++) {
 			JLabel lblTemp = new JLabel(now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), i).toString());
@@ -284,322 +240,256 @@ public class DoctorView {
 		initializeButtonsSchedule(WeekFields.of(Locale.CANADA).dayOfWeek());
 		scheduleContainer.add(btnPaneSchedule, "south");
 
-			
-			
 		initializeButtonsRight();
 		frame.getContentPane().add(buttonContainer, BorderLayout.EAST);
 		frame.setVisible(true);
 
 	}
 
-////////////////////////////////////////////////////
-		
-		
-		
-		
-		
-		
+	////////////////////////////////////////////////////
+
 	/** Getter and Setter Methods */
-		
-		
-		
-		
-		
-		
-	public void setVisibility(Boolean a)
-	{
+
+	public void setVisibility(Boolean a) {
 		frame.setVisible(a);
 	}
-		
-		
-		
-		
-	//show a dialog message if credentials do not validate
-	public void loginError(String message) 
-	{
-				JFrame frame = new JFrame();
-				frame.setSize(200,100);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				JOptionPane.showMessageDialog(frame, message);
+
+	// show a dialog message if credentials do not validate
+	public void loginError(String message) {
+		JFrame frame = new JFrame();
+		frame.setSize(200, 100);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JOptionPane.showMessageDialog(frame, message);
 	}
 
 	public void initializeButtonsRight() {
 		/*
-				|############
-				| Things 	#
-				| Doctor 	#
-				| Can do 	#
-				|		 	#
-				|		 	#
-				|		 	#
-				|		 	#
-				|		 	#
-				|		 	#
-				|		 	#
-				|############
-		*/
-		
+		 * |############ | Things # | Doctor # | Can do # | # | # | # | # | # | # | #
+		 * |############
+		 */
+
 		buttonContainer = new JPanel();
-			buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
-			GridBagLayout gbl_buttonContainer = new GridBagLayout();
-				gbl_buttonContainer.columnWidths = new int[]{0, 0};
-				gbl_buttonContainer.rowHeights = new int[]{35, 0, 0, 35, 0, 0, 0};
-				gbl_buttonContainer.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-				gbl_buttonContainer.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-			buttonContainer.setLayout(gbl_buttonContainer);
-			buttonContainer.setMaximumSize(new Dimension(200, 1000));
-			buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
-			
-			buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
-			
-			
-			
-			// Button that views all patients currenly scheduled under this doctor
-			// Does nothing
-			JButton btnPatients = new JButton("View patients");
-				GridBagConstraints gbc_btnPatients = new GridBagConstraints();
-					gbc_btnPatients.insets = new Insets(0, 5, 5, 5);
-					gbc_btnPatients.gridx = 0;
-					gbc_btnPatients.gridy = 0;
-				buttonContainer.add(btnPatients, gbc_btnPatients);
-					
-		
-				
-				
-				
-			// Combobox that shows a given nurses schedule when selected
-			// Currently does nothing
-			// Comboboxes are messed up under box layout, which is why this is in grid bag
-			nurseComboBox = new JComboBox<String>();
-		
-			// Label for the above combo box
-			JLabel lblNurses = new JLabel("Assigned nurses:");
-				lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
-				GridBagConstraints gbc_lblNurses = new GridBagConstraints();
-					gbc_lblNurses.insets = new Insets(5, 5, 5, 5);
-					gbc_lblNurses.gridx = 0;
-					gbc_lblNurses.gridy = 1;
-				buttonContainer.add(lblNurses, gbc_lblNurses);
-		
-				// Setting up default for the combobox
-				nurseComboBox.setBackground(Color.WHITE);
+		buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
+		GridBagLayout gbl_buttonContainer = new GridBagLayout();
+		gbl_buttonContainer.columnWidths = new int[] { 0, 0 };
+		gbl_buttonContainer.rowHeights = new int[] { 35, 0, 0, 35, 0, 0, 0 };
+		gbl_buttonContainer.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gbl_buttonContainer.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		buttonContainer.setLayout(gbl_buttonContainer);
+		buttonContainer.setMaximumSize(new Dimension(200, 1000));
+		buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
+
+		buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
+
+		// Button that views all patients currenly scheduled under this doctor
+		// Does nothing
+		JButton btnPatients = new JButton("View patients");
+		GridBagConstraints gbc_btnPatients = new GridBagConstraints();
+		gbc_btnPatients.insets = new Insets(0, 5, 5, 5);
+		gbc_btnPatients.gridx = 0;
+		gbc_btnPatients.gridy = 0;
+		buttonContainer.add(btnPatients, gbc_btnPatients);
+
+		// Combobox that shows a given nurses schedule when selected
+		// Currently does nothing
+		// Comboboxes are messed up under box layout, which is why this is in grid bag
+		nurseComboBox = new JComboBox<String>();
+
+		// Label for the above combo box
+		JLabel lblNurses = new JLabel("Assigned nurses:");
+		lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
+		GridBagConstraints gbc_lblNurses = new GridBagConstraints();
+		gbc_lblNurses.insets = new Insets(5, 5, 5, 5);
+		gbc_lblNurses.gridx = 0;
+		gbc_lblNurses.gridy = 1;
+		buttonContainer.add(lblNurses, gbc_lblNurses);
+
+		// Setting up default for the combobox
+		nurseComboBox.setBackground(Color.WHITE);
+		nurseComboBox.setSelectedIndex(-1);
+		GridBagConstraints gbc_nurseComboBox = new GridBagConstraints();
+		gbc_nurseComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_nurseComboBox.insets = new Insets(5, 5, 5, 5);
+		gbc_nurseComboBox.gridx = 0;
+		gbc_nurseComboBox.gridy = 2;
+		buttonContainer.add(nurseComboBox, gbc_nurseComboBox);
+
+		// Button that allows the doctor to view his own schedule
+		btnOwn = new JButton("View own schedule");
+		btnOwn.setEnabled(false);
+		btnOwn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				nurseComboBox.setSelectedIndex(-1);
-				GridBagConstraints gbc_nurseComboBox = new GridBagConstraints();
-					gbc_nurseComboBox.fill = GridBagConstraints.HORIZONTAL;
-					gbc_nurseComboBox.insets = new Insets(5, 5, 5, 5);
-					gbc_nurseComboBox.gridx = 0;
-					gbc_nurseComboBox.gridy = 2;
-				buttonContainer.add(nurseComboBox, gbc_nurseComboBox);
-	
-			
-				
-				
-				
-			// Button that allows the doctor to view his own schedule
-			btnOwn = new JButton("View own schedule");
-			btnOwn.setEnabled(false);
-			btnOwn.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					nurseComboBox.setSelectedIndex(-1);
-					btnOwn.setEnabled(false);
-					// contentPane.setVisible(true);
-					scheduleContainer.setVisible(true);
-					patientPanel.setVisible(false);
-				}
-			});
+				btnOwn.setEnabled(false);
+				// contentPane.setVisible(true);
+				scheduleContainer.setVisible(true);
+				patientPanel.setVisible(false);
+			}
+		});
 
-			btnPatients.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// contentPane.setVisible(false);
-					scheduleContainer.setVisible(false);
-					patientPanel.setVisible(true);
-					btnOwn.setEnabled(true);
-					System.out.println("Viewing patients");
-				}
-			});
+		btnPatients.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// contentPane.setVisible(false);
+				scheduleContainer.setVisible(false);
+				patientPanel.setVisible(true);
+				btnOwn.setEnabled(true);
+			}
+		});
 
-			// Action event on the nurse combo box, once a nurse is selected only then
-			// can the doctor have the option to returning to his own schedule
-			// Is set after the creation of the button
-			nurseComboBox.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					btnOwn.setEnabled(true);
-				}
-			});
+		// Action event on the nurse combo box, once a nurse is selected only then
+		// can the doctor have the option to returning to his own schedule
+		// Is set after the creation of the button
+		nurseComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnOwn.setEnabled(true);
+			}
+		});
 
-			GridBagConstraints gbc_btnOwn = new GridBagConstraints();
-				gbc_btnOwn.insets = new Insets(5, 5, 5, 5);
-				gbc_btnOwn.gridx = 0;
-				gbc_btnOwn.gridy = 3;
-				buttonContainer.add(btnOwn, gbc_btnOwn);
+		GridBagConstraints gbc_btnOwn = new GridBagConstraints();
+		gbc_btnOwn.insets = new Insets(5, 5, 5, 5);
+		gbc_btnOwn.gridx = 0;
+		gbc_btnOwn.gridy = 3;
+		buttonContainer.add(btnOwn, gbc_btnOwn);
 
-			JButton btnChange = new JButton("Make changes");
-			btnChange.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					btnSaveChanges.setVisible(true);
-					btnOwnSchedule.setVisible(true);
-				}
-			});
+		JButton btnChange = new JButton("Make changes");
+		btnChange.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveChanges.setVisible(true);
+				btnOwnSchedule.setVisible(true);
+			}
+		});
 
-			gbc_btnOwn.gridy = 4;
-			buttonContainer.add(btnChange, gbc_btnOwn);
-			buttonContainer.setPreferredSize(buttonContainer.getPreferredSize());
+		gbc_btnOwn.gridy = 4;
+		buttonContainer.add(btnChange, gbc_btnOwn);
+		buttonContainer.setPreferredSize(buttonContainer.getPreferredSize());
 	}
-
 
 	public void initializeButtonsSchedule(TemporalField fieldISO) {
 		/*
-			#-----------------------------------#
-			#		buttons for schedule		#
-			#									#
-			#####################################
-		*/		
-					
+		 * #-----------------------------------# # buttons for schedule # # #
+		 * #####################################
+		 */
+
 		// Create a panel for the buttons that manipulate the schedule
 		btnPaneSchedule = new JPanel();
-			btnPaneSchedule.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			
+		btnPaneSchedule.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		// Create a button that goes back one week/one month
 		// Currently only one week
 		// ActionListeners handle disabled buttons, mouse click does not
 		JButton btnBack = new JButton("<");
-			// Button starts out disabled as schedule starts out on current week
-			btnBack.setEnabled(false);
-			btnPaneSchedule.add(btnBack);
+		// Button starts out disabled as schedule starts out on current week
+		btnBack.setEnabled(false);
+		btnPaneSchedule.add(btnBack);
 
 		// Button that selects a day from a day picker
 		// Not implemented. May remove function altogether
 		JButton btnDaySelecter = new JButton("Select day");
-			btnPaneSchedule.add(btnDaySelecter);
+		btnPaneSchedule.add(btnDaySelecter);
 
 		// Button that changes schedule between weekly and monthly views
 		// Currently only weekly view is setup
 		btnToggle = new JButton("Monthly view");
-			btnPaneSchedule.add(btnToggle);
+		btnPaneSchedule.add(btnToggle);
 		btnToggle.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (btnToggle.getText().equals("Monthly view")){
+				if (btnToggle.getText().equals("Monthly view")) {
 					btnToggle.setText("Weekly view");
-					scheduleMonthly.setVisible(true);
-					scheduleWeekly.setVisible(false);
+					isWeekly(false);
 					setMonthDateLabels(getNow());
 				} else {
 					btnToggle.setText("Monthly view");
-					scheduleWeekly.setVisible(true);
-					scheduleMonthly.setVisible(false);
+					isWeekly(true);
 					setWeekDateLabels(getNow());
 				}
 			}
 		});
 
-
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LocalDate past, tempTime;
 				if (btnToggle.getText().equals("Monthly view")) {
-					past = now.minusWeeks(1);
-					tempTime = past.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-					setWeekDateLabels(past);
-					now = past;
-					if (tempTime.compareTo(LocalDate.now()) < 0) {
-						btnBack.setEnabled(false);
-						now = LocalDate.now();
-					}
+					setNow(now.minusWeeks(1));
+					setWeekDateLabels(getNow());
 					String schTitle = getScheduleNameLabelWeek().getText();
 					initializeWeeklySchedule();
 					getScheduleNameLabelWeek().setText(schTitle);
-
+					isWeekly(true);
 				} else {
-					past = now.minusMonths(1).withDayOfMonth(1);
-					tempTime = past.withDayOfMonth(1).with(fieldISO, 1);
-					setMonthDateLabels(past);
-					now = past;
-					if (tempTime.compareTo(LocalDate.now()) < 0) {
-						btnBack.setEnabled(false);
-						now = LocalDate.now();
-					}
-					// initializeMonthlySchedule();
-
+					setNow(now.minusMonths(1));
+					setMonthDateLabels(getNow());
+					String schTitle = getScheduleNameLabelMonth().getText();
+					initializeMonthlySchedule();
+					getScheduleNameLabelMonth().setText(schTitle);
+					isWeekly(false);
+				}
+				if (getNow().compareTo(LocalDate.now()) <= 0) {
+					setNow(LocalDate.now());
+					btnBack.setEnabled(false);
 				}
 			}
 		});
-			
-
-
 
 		JButton btnForward = new JButton(">");
-			btnPaneSchedule.add(btnForward);
-			btnForward.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					LocalDate future;
-					if (btnToggle.getText().equals("Monthly view")) {
-						future = now.plusWeeks(1);
-						setWeekDateLabels(future);
-					} else {
-						future = now.plusMonths(1);
-						setMonthDateLabels(future);
-					}
-					if (!btnBack.isEnabled())
-						btnBack.setEnabled(true);
-					now = future;
-					if (btnToggle.getText().equals("Monthly view")) {
-						String schTitle = getScheduleNameLabelWeek().getText();
-						initializeWeeklySchedule();
-						getScheduleNameLabelWeek().setText(schTitle);
-					} else {
-						String schTitle = getScheduleNameLabelWeek().getText();
-						initializeMonthlySchedule();
-						scheduleMonthly.setVisible(true);
-						scheduleWeekly.setVisible(false);
-						getScheduleNameLabelMonth().setText(schTitle);
-					}
+		btnPaneSchedule.add(btnForward);
+		btnForward.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (btnToggle.getText().equals("Monthly view")) {
+					setNow(now.plusWeeks(1));
+					setWeekDateLabels(getNow());
+					String schTitle = getScheduleNameLabelWeek().getText();
+					initializeWeeklySchedule();
+					getScheduleNameLabelWeek().setText(schTitle);
+					isWeekly(true);
+				} else {
+					setNow(now.plusMonths(1));
+					setMonthDateLabels(getNow());
+					String schTitle = getScheduleNameLabelMonth().getText();
+					initializeMonthlySchedule();
+					isWeekly(false);
+					getScheduleNameLabelMonth().setText(schTitle);
 				}
-			});
-			
-			
-			
-		btnSaveChanges = new JButton("Save changes");
-			btnPaneSchedule.add(btnSaveChanges);
+				if (!btnBack.isEnabled())
+					btnBack.setEnabled(true);
+			}
+		});
 
-			btnSaveChanges.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					btnSaveChanges.setVisible(false);
-				}
-			});
-			
-			
-			
-			
+		btnSaveChanges = new JButton("Save changes");
+		btnPaneSchedule.add(btnSaveChanges);
+
+		btnSaveChanges.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnSaveChanges.setVisible(false);
+			}
+		});
+
 		btnOwnSchedule = new JButton("View current schedule");
-			btnPaneSchedule.add(btnOwnSchedule);
-			
-			btnOwnSchedule.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					btnOwnSchedule.setVisible(false);
-					btnSaveChanges.setVisible(false);
-					patientPanel.setVisible(false);
-				}
-			});
+		btnPaneSchedule.add(btnOwnSchedule);
+
+		btnOwnSchedule.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnOwnSchedule.setVisible(false);
+				btnSaveChanges.setVisible(false);
+				patientPanel.setVisible(false);
+			}
+		});
 
 		btnPaneSchedule.setPreferredSize(new Dimension(500, 0));
 
 		btnSaveChanges.setVisible(false);
 		btnOwnSchedule.setVisible(false);
 
-
 		btnPaneSchedule.setBorder(BorderFactory.createEtchedBorder());
-	}	
+	}
 
-	
+	// Set up the date labels
 	public void initializeVariables() {
 		JLabel lblDay = new JLabel("Sunday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -615,7 +505,6 @@ public class DoctorView {
 		lblDay = new JLabel("Monday");
 		sunToSatMonth.add(lblDay);
 
-
 		lblDay = new JLabel("Tuesday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
@@ -630,14 +519,12 @@ public class DoctorView {
 		lblDay = new JLabel("Wednesday");
 		sunToSatMonth.add(lblDay);
 
-
 		lblDay = new JLabel("Thursday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
 		sunToSatWeek.add(lblDay);
 		lblDay = new JLabel("Thursday");
 		lblDay = new JLabel("Thursday");
 		sunToSatMonth.add(lblDay);
-
 
 		lblDay = new JLabel("Friday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -655,23 +542,23 @@ public class DoctorView {
 
 		LocalDate firstMonth = now.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		for (int i = 0; i < 35; i++) {
-			monthdays.add(new JLabel(firstMonth.plusDays(i).getDayOfMonth()+""));
-			monthdays.get(i).setFont(new Font ("Tahoma", Font.BOLD, 14));
+			monthdays.add(new JLabel(firstMonth.plusDays(i).getDayOfMonth() + ""));
+			monthdays.get(i).setFont(new Font("Tahoma", Font.BOLD, 14));
 		}
 
-
 	}
-	
-	
 
+	// Set up weekly schedule view
 	public void initializeWeeklySchedule() {
-		String[][] listApsWeek = new String[12][7];
+		String[][] listApsWeek = new String[24][7];
 		LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		LocalDate endRange = startRange.plusDays(6);
-		for (LocalDateTime ldt : appointments) {
-			if ((ldt.toLocalDate().compareTo(startRange) >= 0) && (ldt.toLocalDate().compareTo(endRange) <= 0)) {
-				listApsWeek[ldt.getHour()-8][ldt.getDayOfWeek().getValue()%7] = "Appointment!";
+		for (Entry<String, String> entry : getAppointments().entrySet()) {
+			LocalDateTime time = LocalDateTime.parse(entry.getKey());
+			if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0)) {
+				listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
 			}
+
 		}
 
 		scheduleWeekly.removeAll();
@@ -700,8 +587,8 @@ public class DoctorView {
 			scheduleWeekly.add(new JLabel((i+8)+":00"));
 			for (int j = 0; j < 7; j++) {
 				JLabel templbl = new JLabel("<html>"+sunToSatWeek.get(j).getText()+"<br>Time:"+(i+8)+":00");
-				if (listApsWeek[i][j] != null) {
-					templbl.setText("<html>Not null!<br>"+listApsWeek[i][j]);
+				if (listApsWeek[i+8][j] != null) {
+					templbl.setText("<html>Not null!<br>"+listApsWeek[i+8][j]);
 					templbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 					templbl.setOpaque(true);
 					templbl.setBackground(Color.ORANGE);
@@ -720,10 +607,7 @@ public class DoctorView {
 	}
 	
 	
-	/**
-	 * Set up the monthly view of the schedule, given a schedule (currently only for scheduled days)
-	 * @param schDays
-	 */
+	// Set up monthly view of schedule
 	public void initializeMonthlySchedule() {
 		scheduleMonthly.removeAll();
 		scheduleMonthly.revalidate();
@@ -746,7 +630,8 @@ public class DoctorView {
 			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
 		}
 
-		LinkedHashMap<Integer, List<String>> y = collectSortDates(new ArrayList<>(Arrays.asList(appointments)));
+
+		ArrayList<String[]> apts = filterAppointmentsMonth();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
@@ -754,9 +639,7 @@ public class DoctorView {
 				monthdays.get(i*7+j).setEnabled(schDays[j]);
 			}
 			for (int js = 0; js < 7; js++) {
-				List<String> list = y.get(i*7+js);
-				String[] arrayAp = list.toArray(new String[0]);
-				JList<String> oneDayList = new JList<String>(arrayAp);
+				JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
@@ -861,45 +744,48 @@ public class DoctorView {
 		}
 	}
 
-	public  LinkedHashMap<Integer, List<String> > collectSortDates(ArrayList<LocalDateTime> ldt){
-        LocalDate startTime = getNow().withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-        LocalDate endTime = startTime.plusDays(34);
-      
+	// Filters out a list of appointments starting from the first day (of the first week) of the current month
+	// Returns a list of appointments (as a list of list of names of patients) for a period of 35 days
+	public ArrayList<String[]> filterAppointmentsMonth() {
+		ArrayList<ArrayList<String>> interFilter = new ArrayList<ArrayList<String>>(0);
+		for (int i = 0; i < 35; i++) {
+			interFilter.add(new ArrayList<String>());
+		}
+		LocalDate startRange = getNow().withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		LocalDate endRange = startRange.plusDays(34);
 
-        LinkedHashMap<Integer, List<String> > apts = new LinkedHashMap<Integer,List<String> >(35);
-        List<LocalDateTime> fileredDates = new ArrayList<LocalDateTime>();
-        for(LocalDateTime x : ldt){
-            if(x.toLocalDate().isEqual(startTime)|| x.toLocalDate().isAfter(startTime) || x.toLocalDate().isBefore(endTime) || x.toLocalDate().isEqual(endTime) ){
-                fileredDates.add(x);
-            }
-            
-        }
+		for (Entry<String, String> entry : getAppointments().entrySet()) {
+			LocalDate time = LocalDateTime.parse(entry.getKey()).toLocalDate();
+			if ((time.compareTo(startRange) >= 0) && (time.compareTo(endRange) <= 0)) {
+				int index = (int) ChronoUnit.DAYS.between(startRange, time);
+				interFilter.get(index).add(entry.getValue());
+			}
 
-        int key = 0;
-        while(key<35){
+		}
 
-            List<String> dateAvailable = new ArrayList<String>();
+		ArrayList<String[]> filtered = new ArrayList<String[]>(0);
+		for (ArrayList<String> x : interFilter) {
+			filtered.add(x.toArray(new String[0]));
+		}
 
-            for(LocalDateTime date: fileredDates){
-                if((key<= 30 &&date.getDayOfMonth()== key+1 && date.getMonthValue()==LocalDateTime.now().getMonthValue())){
-                    dateAvailable.add(date.toString());
-                }
-                else if(key>30 && key +1 != date.getDayOfMonth() &&  date.getMonthValue()!=LocalDateTime.now().getMonthValue() && key == 30 + date.getDayOfMonth()  ){
-                    dateAvailable.add(date.toString());
-                }
-            }
-            apts.put(key,dateAvailable);
-            key++;
+		return filtered;
+	}
 
+	// Sets the weekly/monthly schedule view
+	public void isWeekly(Boolean b) {
+		if (b) {
+			scheduleMonthly.setVisible(false);
+			scheduleWeekly.setVisible(true);
+		} else {
+			scheduleMonthly.setVisible(true);
+			scheduleWeekly.setVisible(false);
+		}
+	}
 
-        }
-
-        return apts;
-        
-        
-    }	
-	
-	
+	public void setScheduleNameLabels(String name) {
+		getScheduleNameLabelMonth().setText(name + " Weekly Schedule");
+		getScheduleNameLabelWeek().setText(name + " Monthly Schedule");
+	}
 	
 	
 	
@@ -1409,11 +1295,11 @@ public class DoctorView {
 		this.btnOwn = o;
 	}
 
-	public LocalDateTime[] getAppointments() {
+	public LinkedHashMap<String, String> getAppointments() {
 		return appointments;
 	}
 
-	public void setAppointments(LocalDateTime[] appointments) {
+	public void setAppointments(LinkedHashMap<String, String> appointments) {
 		this.appointments = appointments;
 	}
 	

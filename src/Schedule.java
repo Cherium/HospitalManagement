@@ -1,7 +1,10 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @param scheduledDays list the days that someone (doctor/nurse for now) is
@@ -24,12 +27,20 @@ public class Schedule {
 
     private ArrayList<LocalDate> timeOff;
 
+    // Dummy schedule creater
+    public Schedule() {
+        initScheduledDays();
+        initAppointments();
+        this.timeOff = new ArrayList<LocalDate>(0);
+    }
+
     public Schedule(Boolean[] daysWorked, LinkedHashMap<String, String> appointments, ArrayList<LocalDate> timeOff) {
         this.scheduledDays = daysWorked;
         this.appointments = appointments;
         this.timeOff = timeOff;
     }
 
+    // A string that formats the current schedule into a line for database access/storage
     public String toString() {
         StringBuilder bob = new StringBuilder();
 
@@ -49,6 +60,32 @@ public class Schedule {
         }
 
         return bob.toString();
+    }
+
+    // Initialize 60 random appointments for 2 patients, within 30 days of the current date. 
+    private void initAppointments() {
+        this.appointments = new LinkedHashMap<String, String>(20);
+        LocalDateTime today = LocalDateTime.now();
+        for (int i = 0; i < 30; i++) {
+            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
+            getAppointments().put(day.toString(), "patient");
+        }
+        for (int i = 0; i < 30; i++) {
+            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
+            getAppointments().put(day.toString(), "patient2");
+        }
+    }
+
+    // Initialize a random schedule, may end up working 7 days or not working at all 
+    private void initScheduledDays() {
+        this.scheduledDays = new Boolean[7];
+        for (int i = 0; i < 7; i++) {
+            if (ThreadLocalRandom.current().nextInt(0,1+1) == 1) {
+                this.scheduledDays[i] = true;
+            } else {
+                this.scheduledDays[i] = false;
+            }
+        }
     }
 
     // Getters and setters
@@ -80,5 +117,13 @@ public class Schedule {
         return timeOff;
     }
 
+    public static void main(String[] args) {
+        LocalDate one = LocalDate.now();
+        LocalDate two = one.plusDays(15);
+        System.out.println((int) ChronoUnit.DAYS.between(one, two));
+        System.out.println(one.toString());
+        System.out.println(two.toString());
+
+    }
 
 }
