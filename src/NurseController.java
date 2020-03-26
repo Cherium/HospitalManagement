@@ -1,3 +1,8 @@
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import net.miginfocom.swing.MigLayout;
+
 
 /**Handles all interaction between the associated model class and the view class.*/
 public class NurseController {
@@ -31,12 +36,13 @@ public class NurseController {
 	//get information from model, and set labels, etc in view
 	public void initView()
 	{
-		view.getLabel().setText("Hello "+ model.getName() );						//retrieve name for displaying
-		
-		view.getLabel2().setText("The Doctor you are working with is: "+ 			//retrieve doc name for displaying
+		view.getWelcomeLabel().setText("Welcome, "+ model.getName() );		
+		view.getDrsPatient().setText("Dr. "+ 			
 					Main.dbase.get(
-							model.getAssignedDocUsername()).getName()
+							model.getAssignedDocUsername()).getName() +
+					", "+ model.getDocDept()
 					);
+		view.setLists(model.getDocPats());
 	}
 	
 	//initialize the listeners from the view class that need to interact with model
@@ -44,7 +50,32 @@ public class NurseController {
 	//	listeners that do not interact with the model should stay in the view class.
 	public void initListeners() 
 	{
+		view.getPatList().addMouseListener(new MouseAdapter() {
+			
+			public void mousePressed(MouseEvent a) {		
+				 setUpPatientView();
+				 
+			}
+		});
 		
+	}
+
+
+
+
+
+	public void setUpPatientView() {
+		int selectedIndex = view.getPatList().getSelectedIndex();
+		
+		PatientModel pat = (PatientModel) Main.dbase.get(model.getDocsPatientsUsernames()[selectedIndex]);
+		
+		view.getPatName().setText(pat.getName() );
+		view.getBirth().setText(pat.getBirthday().toString() );
+		view.getSex().setText(pat.getSex());
+		view.getBlood().setText(pat.getBlood());
+		view.getAddr().setText(pat.getAddress());
+		view.getPhone().setText(pat.getPhoneNumber());
+		view.getEmail().setText(pat.getEmail() );
 	}
 
 }

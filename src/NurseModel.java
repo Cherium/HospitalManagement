@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)*/
@@ -8,6 +10,8 @@ public class NurseModel extends UserSuperClass {
 	private String assignedDocUsername;
 
 	private Schedule schedule;
+	
+	private String[] docsPatientsUsernames;
 	
 	
 	
@@ -23,6 +27,23 @@ public class NurseModel extends UserSuperClass {
 		//any changes to this object are not reflected in the database, and must be done manually
 	}
 
+	
+	public String getDocDept()
+	{
+		return ((DoctorModel) Main.dbase.get(assignedDocUsername)).getDepartment();
+	}
+	
+	public String[] getDocPats()
+	{
+		docsPatientsUsernames = ((DoctorModel) Main.dbase.get(assignedDocUsername)).getScheduledPatientsUsernames().toArray(new String[0]);
+		ArrayList<String> temp = new ArrayList<>(5);
+		for(String i: docsPatientsUsernames)
+		{
+			temp.add(getObjectsName(i));
+		}
+		
+		return temp.toArray(new String[0]);
+	}
 	
 	
 	
@@ -54,6 +75,16 @@ public class NurseModel extends UserSuperClass {
 
 	public void setDepartment(String d) {
 		this.department = d;
+	}
+
+
+	public String[] getDocsPatientsUsernames() {
+		return docsPatientsUsernames;
+	}
+
+
+	public void setDocsPatientsUsernames(String[] docsPatientsUsernames) {
+		this.docsPatientsUsernames = docsPatientsUsernames;
 	}
 
 }
