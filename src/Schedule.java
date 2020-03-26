@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
@@ -74,6 +75,22 @@ public class Schedule {
             LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
             getAppointments().put(day.toString(), "patient2");
         }
+
+        HashMap<String, ArrayList<String>> printMe = new HashMap<String, ArrayList<String>>();
+
+        for (int i = 0; i < 30; i++) {
+            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(8, 18));
+            if (printMe.get("doctor") == null) {
+                printMe.put("doctor", new ArrayList<String>());
+            }
+            printMe.get("doctor").add(day.toString());
+        }
+
+        for (Entry<String, ArrayList<String>> coffee : printMe.entrySet()) {
+            for (String string : coffee.getValue()) {
+                System.out.print(coffee.getKey()+"\t"+string+"\t");
+            }
+        }
     }
 
     // Initialize a random schedule, may end up working 7 days or not working at all 
@@ -118,11 +135,14 @@ public class Schedule {
     }
 
     public static void main(String[] args) {
-        LocalDate one = LocalDate.now();
-        LocalDate two = one.plusDays(15);
-        System.out.println((int) ChronoUnit.DAYS.between(one, two));
-        System.out.println(one.toString());
-        System.out.println(two.toString());
+        LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+        
+        int[] days = {-1, -1, 8, 17, 8, 17, 9, 18, 8, 17, 8, 17, -1, -1};
+        for (int i : days) {
+            System.out.println(i);
+        }
+        LocalDateTime newT = LocalDateTime.parse("2020-4-15T12:00");
+
 
     }
 

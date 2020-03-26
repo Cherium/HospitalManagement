@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
@@ -11,7 +10,7 @@ public class DoctorModel extends UserSuperClass {
 	private String department;
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<String> scheduledPatientsUsernames = new ArrayList<String>(5);
-	private Schedule schedule;
+	// private Schedule schedule;
 	
 
 	
@@ -48,14 +47,14 @@ public class DoctorModel extends UserSuperClass {
 	
 
 /**Getters and Setters*/
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
-	}
+	// public void setSchedule(Schedule schedule) {
+	// 	this.schedule = schedule;
+	// }
 
 
-	public Schedule getSchedule() {
-		return schedule;
-	}
+	// public Schedule getSchedule() {
+	// 	return schedule;
+	// }
 
 	public String getDepartment() {
 		return department;

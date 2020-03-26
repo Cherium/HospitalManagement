@@ -551,15 +551,16 @@ public class DoctorView {
 	// Set up weekly schedule view
 	public void initializeWeeklySchedule() {
 		String[][] listApsWeek = new String[24][7];
-		LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		LocalDate endRange = startRange.plusDays(6);
-		for (Entry<String, String> entry : getAppointments().entrySet()) {
-			LocalDateTime time = LocalDateTime.parse(entry.getKey());
-			if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0)) {
-				listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
-			}
 
-		}
+		// LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		// LocalDate endRange = startRange.plusDays(6);
+		// for (Entry<String, String> entry : getAppointments().entrySet()) {
+		// 	LocalDateTime time = LocalDateTime.parse(entry.getKey());
+		// 	if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0)) {
+		// 		listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
+		// 	}
+
+		// }
 
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
@@ -575,12 +576,14 @@ public class DoctorView {
 		setWeekDateLabels(getNow());
 		for (JLabel wd : weekYYYYMMDD) {
 			scheduleWeekly.add(wd);
-			wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
+			// wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
+			wd.setEnabled(true);
 		}
 		scheduleWeekly.add(Box.createHorizontalGlue());
 		for (JLabel lbl : sunToSatWeek) {
 			scheduleWeekly.add(lbl);
-			lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
+			// lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
+			lbl.setEnabled(true);
 		}
 
 		for (int i = 0; i < 12; i++) {
@@ -594,7 +597,8 @@ public class DoctorView {
 					templbl.setBackground(Color.ORANGE);
 				}
 				scheduleWeekly.add(templbl);
-				templbl.setEnabled(schDays[j]);
+				// templbl.setEnabled(schDays[j]);
+				templbl.setEnabled(true);
 				if (!templbl.isEnabled()) {
 					templbl.setOpaque(false);
 				}
@@ -627,23 +631,27 @@ public class DoctorView {
 
 		for (JLabel d : sunToSatMonth) {
 			scheduleMonthly.add(d);
-			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
+			// d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
+			d.setEnabled(true);
 		}
 
 
-		ArrayList<String[]> apts = filterAppointmentsMonth();
+		// ArrayList<String[]> apts = filterAppointmentsMonth();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
 				scheduleMonthly.add(monthdays.get(i*7+j));
-				monthdays.get(i*7+j).setEnabled(schDays[j]);
+				// monthdays.get(i*7+j).setEnabled(schDays[j]);
+				monthdays.get(i*7+j).setEnabled(true);
 			}
 			for (int js = 0; js < 7; js++) {
-				JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
+				// JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
+				JList<String> oneDayList = new JList<String>(new String[0]);
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
-				oneDayList.setEnabled(schDays[js]);
+				// oneDayList.setEnabled(schDays[js]);
+				oneDayList.setEnabled(true);
 			}
 		}
 
@@ -783,8 +791,8 @@ public class DoctorView {
 	}
 
 	public void setScheduleNameLabels(String name) {
-		getScheduleNameLabelMonth().setText(name + " Weekly Schedule");
-		getScheduleNameLabelWeek().setText(name + " Monthly Schedule");
+		getScheduleNameLabelMonth().setText(name + " Monthly Schedule");
+		getScheduleNameLabelWeek().setText(name + " Weekly Schedule");
 	}
 	
 	
