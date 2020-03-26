@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 
 public class ReceptionistModel extends UserSuperClass {
 	
 	
 	
 	
+	private ArrayList<String> allPatients = new ArrayList<String>();
 	
 	
 	//constructor
@@ -15,8 +17,14 @@ public class ReceptionistModel extends UserSuperClass {
 	}
 
 	
-	
-	
+
+	public ArrayList<String> getScheduledPatientsUsernames() {
+		return allPatients;
+	}
+
+	public void setScheduledPatientsUsernames(ArrayList<String> patients) {
+		this.allPatients = new ArrayList<String>(patients);
+	}
 	
 
 }

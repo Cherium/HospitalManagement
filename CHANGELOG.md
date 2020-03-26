@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 25 March 18:55 Neil
+* Most of Reception View has been nicely set. Need to work on the second half and patient file loading. Non-functional edit on buttons performed for login
+
 ## 24 MARCH 21:53 Jenny
 * Clarified storage of scheduleDays in Schedule toString function.
 
@@ -11,7 +14,7 @@ Example: 10 mar 21:13 SAJID\
 
 ## 24 MARCH 20:06 Jenny
 **DoctorView**
-* Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
+* Integrated scheduled appointments into monthly schedule with the help of Mohammed.
 * Current bug: switching between months does not update the appointments shown.
 
 ## 24 MARCH 17:02 Jenny

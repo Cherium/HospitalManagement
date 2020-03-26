@@ -150,12 +150,11 @@ public class DoctorController {
 			
 			public void mousePressed(MouseEvent a) {		
 				 setUpPatientView();
+				 
 			}
 		});
 		
 		//listen for treatment button clicked
-		
-
 
 		view.getButtonTreatmentNotes().addActionListener(new ActionListener() {
 			@Override
