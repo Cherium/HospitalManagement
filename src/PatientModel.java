@@ -23,7 +23,6 @@ public class PatientModel extends UserSuperClass {
 	private String bloodtype;
 	private String sex;
 	private String recordNotes;
-	
 
 	//constructor
 	public PatientModel(String username, char[] password, String name
@@ -216,25 +215,34 @@ public class PatientModel extends UserSuperClass {
 		return bloodtype;
 	}
 
-
-
-
-
-
-
 	public String getRecordNotes() {
 		return recordNotes;
 	}
 
-
-
-
-
-
-
 	public void setRecordNotes(String recordNotes) {
 		this.recordNotes = recordNotes;
 	}
+	/* 
+	From the latest pull, we also need a toString method in PatientModel that takes all the instance variables 
+	in the PatientModel class(not as inputs, just uses them) EXCEPT for the last instance variable , 
+	and returns a single string, seperated by tabs, in the exact same format as the lines for 'patients' 
+	in the src/dbase/dbase.txt file.
+	*/
 
+	/*
+	private String address;
+	private String phoneNumber;
+	private String email;
+	private char[] password2;
+	private float amountDue;
+	private LocalDate birthday;
+	private String bloodtype;
+	private String sex;
+	*/
+
+	public String patientModelToString() {
+		String info = getAddress() + "\t" + getPhoneNumber() + "\t" + getEmail() + "\t" + getPassword2().toString() + "\t" + getAmountDue() + "\t" + getBirthday() + "\t" + getBlood() + "\t" + getSex();
+		return info;
+	}
 
 }
