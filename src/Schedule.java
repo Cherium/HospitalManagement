@@ -105,6 +105,30 @@ public class Schedule {
         }
     }
 
+    // Takes a list of patient usernames and a doctor username, returning all the appointments that the patients
+    // in the list have scheduled with the doctor
+    public HashMap<String, ArrayList<LocalDateTime>> updateHashMap(ArrayList<String> patU, String docU) {
+
+        HashMap<String, ArrayList<LocalDateTime>> hm = new HashMap<String, ArrayList<LocalDateTime>>();
+
+        for (String p : patU) {
+            // get all the appointments for the patient for a specific doctor, assuming that the appointment
+            // information in patient is stored as a HashMap, keys = doctor username, values = ArrayList<LocalDateTime>
+
+            // Assuming that the list of appointments is unique to PatientModel only
+
+            PatientModel pat = (PatientModel) Main.dbase.get(p);
+            ArrayList<LocalDateTime> apts = pat.getAppointments().get(docU);
+
+            // check that there are appointments between this patient and doctor, failsafe
+            if (apts != null)
+                hm.put(p, apts);
+
+        }
+
+        return hm;
+    }
+
     // Getters and setters
 
     // Scheduled days are of the form Boolean[7], corresponding to 7 days of a week
@@ -135,14 +159,15 @@ public class Schedule {
     }
 
     public static void main(String[] args) {
+        LocalDateTime[] dummy = new LocalDateTime[14];
         LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
-        
-        int[] days = {-1, -1, 8, 17, 8, 17, 9, 18, 8, 17, 8, 17, -1, -1};
-        for (int i : days) {
-            System.out.println(i);
+        for (int i = 0; i < 7; i++) {
+            dummy[i*2] = now.withHour(8);
+            dummy[i*2+1] = now.withHour(17);
         }
-        LocalDateTime newT = LocalDateTime.parse("2020-4-15T12:00");
-
+        for (LocalDateTime localDateTime : dummy) {
+            System.out.println(localDateTime);
+        }
 
     }
 
