@@ -3,6 +3,17 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 25 MARCH 21:44 Jenny
+Overview/Summary:
+**Schedule**
+* There is now a default constructor in Schedule that randomly generates scheduled days of a work week (that will remain constant throughout time, currently). The default constructor also generates 60 random appointments (24 hours randomly) within 1 month of the current date for the two patients on file (patient, patient2). 
+**DoctorView & DoctorController**
+* The aforementioned bug has been fixed. The doctor view will show the weekly schedule of either the doctor or one of the selected assigned nurses, only from 08:00 - 19:00 currently. The data within view stores 24 hours. The monthly view shows a list of scheduled patients for each day. Nurses have no appointments. Moving forward/backward a week/month will update the appointment view. 
+* In DoctorController, the list of appointments are altered by replacing the username with the corresponding name and passed onto DoctorView.
+* In DoctorView, the altered list of appointments is filtered into an array of size 35 (based on the LocalDate now, within DoctorView), and used to populate the monthly schedule.
+* Some duplicate code have been moved into functions for easier readability. Toggling between monthly/weekly view has been moved into a function. Setting the name labels on top of the monthly/weekly schedule has been moved to a function.
+* Some of the direct references to global variables within DoctorView have been changed to their relevant setters and getters instead, in an effort to decrease coupling. 
+
 ## 25 MARCH 21:05 Jenny
 * Toggling between months in DoctorView will now update the appointments shown. There is a bug where moving between months does not refresh the appointments or just removes them.
 

@@ -30,6 +30,7 @@ public class DoctorController {
 	// as soon as the view first opens for the user
 	public void initView() {
 		// Dummy schedule, randomized scheduled days and appointments, no time off
+
 		// IMPORTANT!!!
 		// ADDING A NEW SCHEDULE TO THIS DOCTOR!!!
 		model.setSchedule(new Schedule());
@@ -37,9 +38,6 @@ public class DoctorController {
 
 		view.setScheduledDays(model.getSchedule().getScheduledDays());
 		view.setAppointments(modAppointments);
-		for (Entry<String, String> entry : model.getSchedule().getAppointments().entrySet()) {
-			System.out.println(entry.getKey()+" : "+entry.getValue());
-		}
 
 		view.initializeWeeklySchedule();
 		view.initializeMonthlySchedule();
@@ -47,8 +45,7 @@ public class DoctorController {
 		// set the Labels for view
 		view.getDeptLabel().setText(model.getDepartment() + ": ");
 		view.getNameLabel().setText(model.getName() + ", M.D.");
-		view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
-		view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
+		view.setScheduleNameLabels(model.getName());
 
 		// set the nurse name dropdown list for view
 		for (String n : model.getAssignedNurseUsernames()) {
@@ -69,6 +66,8 @@ public class DoctorController {
 	// initialize 'only' the listeners the GUI handles 'that
 	// need interaction with the model'
 	public void initListeners() {
+
+		// Show the selected nurse's schedule
 		view.getNurseComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (view.getNurseComboBox().getSelectedIndex() != -1) {
@@ -78,7 +77,8 @@ public class DoctorController {
 
 					int index = view.getNurseComboBox().getSelectedIndex();
 					NurseModel nmd = (NurseModel) Main.dbase.get(model.getAssignedNurseUsernames().get(index));
-
+					
+					// If the nurse does not have a schedule
 					if (nmd.getSchedule() == null) {
 						nmd.setSchedule(new Schedule());
 						nmd.getSchedule().setAppointments(new LinkedHashMap<String, String>(0));
@@ -89,24 +89,18 @@ public class DoctorController {
 					view.initializeWeeklySchedule();
 					view.initializeMonthlySchedule();
 					if (view.getBtnToggle().getText().equals("Monthly view")) {
-						view.getScheduleMonthly().setVisible(false);
-						view.getScheduleWeekly().setVisible(true);
+						view.isWeekly(true);
 					} else {
-						view.getScheduleMonthly().setVisible(true);
-						view.getScheduleWeekly().setVisible(false);
+						view.isWeekly(false);
 					}
-					view.getScheduleNameLabelWeek()
-							.setText(view.getNurseComboBox().getSelectedItem() + " Weekly Schedule");
-					view.getScheduleNameLabelMonth()
-							.setText(view.getNurseComboBox().getSelectedItem() + " Monthly Schedule");
+					view.setScheduleNameLabels(view.getNurseComboBox().getSelectedItem().toString());
 				}
 			}
 		});
 
+		// Shown own schedule after viewing nurse's schedule
 		view.getButtonOwn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
-				view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
 
 				view.setScheduledDays(model.getSchedule().getScheduledDays());
 				LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
@@ -115,14 +109,11 @@ public class DoctorController {
 				view.initializeWeeklySchedule();
 				view.initializeMonthlySchedule();
 				if (view.getBtnToggle().getText().equals("Monthly view")) {
-					view.getScheduleMonthly().setVisible(false);
-					view.getScheduleWeekly().setVisible(true);
+					view.isWeekly(true);
 				} else {
-					view.getScheduleMonthly().setVisible(true);
-					view.getScheduleWeekly().setVisible(false);
+					view.isWeekly(false);
 				}
-				view.getScheduleNameLabelWeek().setText(model.getName() + " Weekly Schedule");
-				view.getScheduleNameLabelMonth().setText(model.getName() + " Monthly Schedule");
+				view.setScheduleNameLabels(model.getName());
 
 			}
 		});

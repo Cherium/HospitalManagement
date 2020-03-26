@@ -27,7 +27,7 @@ public class Schedule {
 
     private ArrayList<LocalDate> timeOff;
 
-    // Dummy schedule
+    // Dummy schedule creater
     public Schedule() {
         initScheduledDays();
         initAppointments();
@@ -40,6 +40,7 @@ public class Schedule {
         this.timeOff = timeOff;
     }
 
+    // A string that formats the current schedule into a line for database access/storage
     public String toString() {
         StringBuilder bob = new StringBuilder();
 
@@ -61,6 +62,7 @@ public class Schedule {
         return bob.toString();
     }
 
+    // Initialize 60 random appointments for 2 patients, within 30 days of the current date. 
     private void initAppointments() {
         this.appointments = new LinkedHashMap<String, String>(20);
         LocalDateTime today = LocalDateTime.now();
@@ -74,6 +76,7 @@ public class Schedule {
         }
     }
 
+    // Initialize a random schedule, may end up working 7 days or not working at all 
     private void initScheduledDays() {
         this.scheduledDays = new Boolean[7];
         for (int i = 0; i < 7; i++) {
@@ -83,13 +86,6 @@ public class Schedule {
                 this.scheduledDays[i] = false;
             }
         }
-        // this.scheduledDays[0] = false;
-        // this.scheduledDays[1] = true;
-        // this.scheduledDays[2] = true;
-        // this.scheduledDays[3] = true;
-        // this.scheduledDays[4] = true;
-        // this.scheduledDays[5] = true;
-        // this.scheduledDays[6] = false;
     }
 
     // Getters and setters

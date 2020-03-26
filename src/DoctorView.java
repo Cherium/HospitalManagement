@@ -399,13 +399,11 @@ public class DoctorView {
 			public void mouseClicked(MouseEvent e) {
 				if (btnToggle.getText().equals("Monthly view")) {
 					btnToggle.setText("Weekly view");
-					scheduleMonthly.setVisible(true);
-					scheduleWeekly.setVisible(false);
+					isWeekly(false);
 					setMonthDateLabels(getNow());
 				} else {
 					btnToggle.setText("Monthly view");
-					scheduleWeekly.setVisible(true);
-					scheduleMonthly.setVisible(false);
+					isWeekly(true);
 					setWeekDateLabels(getNow());
 				}
 			}
@@ -414,31 +412,24 @@ public class DoctorView {
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LocalDate past, tempTime;
 				if (btnToggle.getText().equals("Monthly view")) {
-					past = now.minusWeeks(1);
-					tempTime = past.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-					setWeekDateLabels(past);
-					now = past;
-					if (tempTime.compareTo(LocalDate.now()) < 0) {
-						btnBack.setEnabled(false);
-						now = LocalDate.now();
-					}
+					setNow(now.minusWeeks(1));
+					setWeekDateLabels(getNow());
 					String schTitle = getScheduleNameLabelWeek().getText();
 					initializeWeeklySchedule();
 					getScheduleNameLabelWeek().setText(schTitle);
-
+					isWeekly(true);
 				} else {
-					past = now.minusMonths(1).withDayOfMonth(1);
-					tempTime = past.withDayOfMonth(1).with(fieldISO, 1);
-					setMonthDateLabels(past);
-					now = past;
-					if (tempTime.compareTo(LocalDate.now()) < 0) {
-						btnBack.setEnabled(false);
-						now = LocalDate.now();
-					}
-					// initializeMonthlySchedule();
-
+					setNow(now.minusMonths(1));
+					setMonthDateLabels(getNow());
+					String schTitle = getScheduleNameLabelMonth().getText();
+					initializeMonthlySchedule();
+					getScheduleNameLabelMonth().setText(schTitle);
+					isWeekly(false);
+				}
+				if (getNow().compareTo(LocalDate.now()) <= 0) {
+					setNow(LocalDate.now());
+					btnBack.setEnabled(false);
 				}
 			}
 		});
@@ -448,27 +439,23 @@ public class DoctorView {
 		btnForward.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LocalDate future;
 				if (btnToggle.getText().equals("Monthly view")) {
-					future = now.plusWeeks(1);
-					setWeekDateLabels(future);
-				} else {
-					future = now.plusMonths(1);
-					setMonthDateLabels(future);
-				}
-				if (!btnBack.isEnabled())
-					btnBack.setEnabled(true);
-				now = future;
-				if (btnToggle.getText().equals("Monthly view")) {
+					setNow(now.plusWeeks(1));
+					setWeekDateLabels(getNow());
 					String schTitle = getScheduleNameLabelWeek().getText();
 					initializeWeeklySchedule();
 					getScheduleNameLabelWeek().setText(schTitle);
+					isWeekly(true);
 				} else {
-					String schTitle = getScheduleNameLabelWeek().getText();
+					setNow(now.plusMonths(1));
+					setMonthDateLabels(getNow());
+					String schTitle = getScheduleNameLabelMonth().getText();
 					initializeMonthlySchedule();
 					isWeekly(false);
 					getScheduleNameLabelMonth().setText(schTitle);
 				}
+				if (!btnBack.isEnabled())
+					btnBack.setEnabled(true);
 			}
 		});
 
@@ -795,7 +782,10 @@ public class DoctorView {
 		}
 	}
 
-	
+	public void setScheduleNameLabels(String name) {
+		getScheduleNameLabelMonth().setText(name + " Weekly Schedule");
+		getScheduleNameLabelWeek().setText(name + " Monthly Schedule");
+	}
 	
 	
 	
