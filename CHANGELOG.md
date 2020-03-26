@@ -1,10 +1,54 @@
 # Changelog
 __In descending date order first__ (most recent date and time first).  
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
-Example: 10 mar 21:13 SAJID
+Example: 10 mar 21:13 SAJID\
+
+## 24 MARCH 21:53 Jenny
+* Clarified storage of scheduleDays in Schedule toString function.
+
+## 24 MARCH 21:18 Jenny
+* Structured what information a Schedule should contain and also a toString() function that indicates how it'll be stored in a database.
+
+## 24 MARCH 20:06 Jenny
+**DoctorView**
+* Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
+* Current bug: switching between months does not update the appointments shown.
+
+## 24 MARCH 17:02 Jenny
+**DoctorView**
+* Implemented a view of sheduled appointments for monthly schedule in DoctorView.
+
+## 24 MARCH 15:14 Neil
+* Fixed the color issue for the Login screen for Mac users
+
+## 24 MARCH 14:41 Jenny
+* Fixed screen error where minimizing DoctorView results in a very small window. Minimization size has been set to 1000x700.
+
+## 24 MARCH 13:07 Jenny
+* Fixed error where changing times in doctor view does not update the appointments.
+
+## 23 mar 23:55 Sajid
+* swapped newMaster content with master, and deleted neMaster branch
+* updated readme
+* included project JAR file `run.jar`
+* formalized databse entries
+
+## 23 MARCH 21:43 Jenny
+* Got the doctor view to display the current week's appointments from a list of hardcoded appointments. Currently has an error where either changing between weeks updates the highlighted appointments and the dates fail to update or changing between weeks does not update the appointments and the dates update.
+
+## 23 MARCH 21:01 Jenny
+* Fixed issue with toggling between weekly and monthly view by setting the hidden value of MigLayout.
+* Resulting layout isn't centered, but that is on a lower priority.
+
+## 23 MARCH 17:57 Jenny
+* Changed layout of weekly and monthly schedule to MigLayout. Implemented a dummy scheduled days in doctor and set up the weekly and monthly schedule to reflect scheduled days.
+* Moved every major panel initialization to functions in DoctorView.
+* Now, when choosing a nurse from the drop down list, the schedule's title will change to show that it is that nurse's schedule. Switching to doctor's schedule will show the doctor's schedule. (Schedules are currently hard coded and only contains the days of the week that a doctor/nurse is working, does NOT contain appointment information).
+* Now, the weekly and monthly schedule under MigLayout does not shrink when components are hidden. The button panel is forcibly docked south of the weekly and monthly schedule by setting the preferred sizes of the schedules to be large (2000x1000). Once the view switches between weekly/monthly, the component hides itself but the size it takes up remains.
+
 
 ## 23 MARCH 08:39 Jenny
-* Changed the display of patients to their names instead of usernames. 
+* Changed the display of patients to their names instead of usernames.
 
 ## 23 mar 06:30
 ** The following is done in a new branch masterBranch; fully functioning code**
@@ -51,10 +95,10 @@ Example: 10 mar 21:13 SAJID
 **DoctorController + DoctorView**
 * The scrolling issue (couldn't get the list of patients panel in View Patients to scroll) has been fixed. The problem was that the component that JScrollPane was mounted on had a setPreferredSize method, which JScrollPane did not like. Move the method to JScrollPane instead.
 * Default scrolling was too slow, changed the vertical unit scrolling increment to 10.
-* Currently the patient panel still has dummy data. Clicking on a dummy data will cause the information in the data to be shown in the Patient Information box. 
-* The controller is set up to populate the patient list with actual, scheduled patients. Currently, it only displays patient names. 
+* Currently the patient panel still has dummy data. Clicking on a dummy data will cause the information in the data to be shown in the Patient Information box.
+* The controller is set up to populate the patient list with actual, scheduled patients. Currently, it only displays patient names.
 
-## 22 mar 07:30 
+## 22 mar 07:30
 **Login**
 * designed layout
 * added exit button and functionality
@@ -97,12 +141,12 @@ Example: 10 mar 21:13 SAJID
 * Implemented date of birth combo boxes, for year, month, and day. Selecting both month and year will populate the day combo box. There is also a getBirthday() function that returns the string of YYYY-MM-DD when called. During testing, sometimes returns YYYY-MM-null.
 * The birthday field is reflected in CreateNewPatientModel and CreateNewPatientController. However, it does not impact the creation of a new patient account (birthday isn't stored).
 **PatientView**
-* Implemented the same 3 combo boxes as above, with all the same functions. As of now, the date of birth on record isn't show as the default option (as there is currently no date of birth in the database). 
+* Implemented the same 3 combo boxes as above, with all the same functions. As of now, the date of birth on record isn't show as the default option (as there is currently no date of birth in the database).
 * The birthday field is currently commented out in PatientModel.
 
 
 ### 20 MARCH 21:19 Jenny
-* Fixed issue where in DoctorView, the interactive text area resizes to a single line when attached to a scrollpane. 
+* Fixed issue where in DoctorView, the interactive text area resizes to a single line when attached to a scrollpane.
 * In DoctorView, selections can be made (indicated by color changes, does not actually populate selected patient).
 * Still couldn't attach a scrollpanel to list of patients, may have to change to a list instead.
 
@@ -131,7 +175,7 @@ Example: 10 mar 21:13 SAJID
 * added a listener to handle the cancel button
 
 ## 19 MARCH 12:29 Jenny
-* Went back and redid patient information in doctor. Currently has dummy data. 
+* Went back and redid patient information in doctor. Currently has dummy data.
 
 ## 17 MARCH 9:40 Jenny
 ** ScheduleModel + DoctorModel + NurseModel**
@@ -166,10 +210,10 @@ Example: 10 mar 21:13 SAJID
 
 ### 15 MARCH 20:32 Jenny
 **DoctorModel & DoctorController & DoctorView**
-* Added a field of scheduled patients to doctor and implemented a view within doctor view. When logging in, a list of patients scheduled under the doctor will be loaded. 
+* Added a field of scheduled patients to doctor and implemented a view within doctor view. When logging in, a list of patients scheduled under the doctor will be loaded.
 
 **PatientModel**
-* Added a field for treatment record to patient. 
+* Added a field for treatment record to patient.
 
 
 ### 15 mar 00:30 Sajid
@@ -182,7 +226,7 @@ Example: 10 mar 21:13 SAJID
 
 ### 15 MARCH 8:53 Jenny
 **CreateNewDoctorView**
-* Fixed issue where selecting a ER department for doctor and switching to another department does not reenable add nurses button. 
+* Fixed issue where selecting a ER department for doctor and switching to another department does not reenable add nurses button.
 
 ### 10 mar 21:51 Sajid
 **Main**
@@ -190,7 +234,7 @@ Example: 10 mar 21:13 SAJID
     * Previously, Main.dbase.users was used to access the HashMap
 
 **DatabaseModel**
-* greatly simplified import code 
+* greatly simplified import code
 
 **UserModel**
 * added new method getObjectName
@@ -212,4 +256,3 @@ Example: 10 mar 21:13 SAJID
 
 **All Model classes**
 * changed order of constructor arguments to reflect format in external database
-

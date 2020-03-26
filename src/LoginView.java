@@ -1,9 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -57,7 +60,10 @@ public class LoginView {
 	{
 		//sets frame containers attributes
 		frame = new JFrame(title);
-			frame.setSize(460,170);
+			frame.setPreferredSize(new Dimension(460, 200));
+			frame.setMinimumSize(new Dimension(460, 200));
+			frame.setMaximumSize(new Dimension(460, 200));
+			//frame.setSize(460,200);
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
 		
@@ -73,7 +79,7 @@ public class LoginView {
 	{
 		
 		//Main panel background
-		JPanel contentPanel = new JPanel(new MigLayout(""));		//initialize jpanel and set its layout
+		JPanel contentPanel = new JPanel(new MigLayout("","[center]", "[center]"));		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(10, 10, 5, 5));	//set insets for the panel		
 			contentPanel.setBackground(new Color(179, 173, 191));
 			frame.add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
@@ -122,6 +128,25 @@ public class LoginView {
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);
 				btnExit.addActionListener(e -> frame.setVisible(false));
+				btnExit.addActionListener(e -> frame.dispose());
+				btnExit.addKeyListener(new KeyListener() {
+
+					public void keyTyped(KeyEvent e){
+					}
+			
+					public void keyPressed(KeyEvent e){
+						int keyCode = e.getKeyCode();
+						switch(keyCode) {
+							case KeyEvent.VK_ENTER:
+								frame.setVisible(false);
+								frame.dispose();
+								break;
+						}
+					}
+					public void keyReleased(KeyEvent e){
+					}
+			
+			});
 
 			deptPanel.add(btnExit, " sg a");
 			deptPanel.add(btnNewPatient, "sg a");

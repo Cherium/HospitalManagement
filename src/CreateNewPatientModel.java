@@ -1,24 +1,11 @@
 import java.util.Arrays;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.TimeZone;
-
-import jdk.internal.agent.resources.agent;
-
 
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)*/
 public class CreateNewPatientModel extends UserSuperClass {
-	private char[] charArray = {'a'}; 
-	private float num = 400;
-	private PatientModel a = new PatientModel("hi", charArray, "Man", "Jenny", "4038888888", "jack@gmail.com", num, "1990/10/10", "AB-", "Male", "record2");
-
+	
 	private String name;
 	private String username;
 	private char[] pwd;
@@ -90,19 +77,10 @@ public class CreateNewPatientModel extends UserSuperClass {
 		
 
 		//store in database if all checks pass
-		PatientModel hello = new PatientModel(username, pwd, name, address, phoneNumber, email, 0, dob, bloodType, sex, "");
-		//System.out.println(a.patientModelToString());
-		Main.dbase.put(username, hello);
-	
-		
+		Main.dbase.put(username
+				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0
+						, dob, bloodType, sex, ""));
 		return "Account successfully created!";
-		
-		//char[] charArray = {'a'}; 
-		//float num = 400;
-		//PatientModel a = new PatientModel("hi", charArray, "Man", "Jenny", "4038888888", "jack@gmail.com", num, "1990/10/10", "AB-", "Male", "record2");
-		//String username, char[] password, String name
-		//, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2, String record2)
-		// a.patientModelToString();
 		
 	}
 	

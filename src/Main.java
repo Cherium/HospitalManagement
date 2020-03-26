@@ -11,12 +11,17 @@ public class Main {
 	
 	public static Database dbaseClass = new Database("dbase/dbase.txt");
 	public static HashMap<String, UserSuperClass> dbase = dbaseClass.users;
+
+	
+	
+	
 	
 	public static void main(String[] args) {
 		
 		//initialize the MVC for the login screen
 		//the rest of the program proceeds from here
 		LoginController c = new LoginController(new LoginModel(), new LoginView("Login Screen") );
+
 	}
 
 }
