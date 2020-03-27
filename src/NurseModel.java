@@ -13,7 +13,36 @@ public class NurseModel extends UserSuperClass {
 	
 	private String[] docsPatientsUsernames;
 	
-	
+/*TODO Move these to Schedule when refctoring done
+     //1-takes in raw availability change request data and returns a properly formatted, and updated, availability array
+    public LocalDateTime[] updateSchedule(String[] rawData)
+    {
+    	LocalDateTime[] temp = new LocalDateTime[14];
+    	for(String i:  rawData)
+    	{
+    		//convert start date/end date for each of the 7 days
+    		LocalDateTime convert = LocalDateTime.parse("2001-01-01T"+ rawData[i]);
+    		temp[i] = convert;
+    	}
+		return temp;
+    	
+    }
+
+    //2-retrieves this users availability as a string array for use in view
+    //input: users availability array; output: strings in format HH:MM for use in view
+    public String[] updateSchedule(LocalDateTime[] currentAvailability)
+    {
+        String[] rawTimes = new String[14];
+        
+        for (int i = 0; i < currentAvailability.length; i++) 
+		{
+			rawTimes[i] = currentAvailability[i].getHour() + ":" + currentAvailability[i].getMinute();
+		}
+		
+		return rawTimes;
+    	
+    }
+ */
 	
 	//constructor
 	public NurseModel(String username, char[] password, String name

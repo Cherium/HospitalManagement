@@ -1,12 +1,17 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,7 +35,9 @@ import net.miginfocom.swing.MigLayout;
 public class NurseView extends JFrame{
 	
 	private JPanel contentPanel;
-	private JPanel infoPanel;private JPanel listPanel;
+	private JPanel infoPanel;
+	private JPanel listPanel;
+	private JPanel schedPanel;
 	
 	
 	private JLabel welcomeLabel;
@@ -61,10 +68,21 @@ public class NurseView extends JFrame{
 	JList patList;
 	JList schedList;
 	
-	private String sunS, sunE, monS, monE, tueS, tueE, wedS, wedE, thuS, thuE, friS, friE, satS, satE;
+	JScrollPane patListScroll;
+	JScrollPane schedListScroll;
 	
+	private JComboBox apptType;
+	private JComboBox<String> departmentDropDown;
+	private JComboBox chooseAppt;
+	private JComboBox labTime;
+	private JComboBox<String> year, month, day;
 	
+	private JComboBox<String>[] availTimes = new JComboBox[14];
 	
+	String[] times = {
+			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
+			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
+	};
 	
 
 	
@@ -123,10 +141,11 @@ public class NurseView extends JFrame{
 			
 			JLabel assigD = new JLabel("Assigned Doctor: ");
 			drsPatient = new JLabel();
+				drsPatient.setBackground(Color.white);
 			
 			listPanel.add(assigD, "split");
 			listPanel.add(drsPatient, "wrap 10");
-			listPanel.add(new JLabel("Select a Patient:"), "wrap");
+			listPanel.add(new JLabel("Doctor's Patients:"), "wrap");
 		
 		
 		
@@ -180,21 +199,47 @@ public class NurseView extends JFrame{
 		//inner panel
 		JPanel bookPanel = new JPanel(new MigLayout("") );
 			bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
-			
+			bookPanel.setPreferredSize(new Dimension(900, 50));
+			bookPanel.setMaximumSize(new Dimension(905, 125));
 			bookAptBtn = new JButton("Book Appointment");
 			
-			bookPanel.add(new JLabel("Type: ") );
-			bookPanel.add(new JLabel("comboBox"), "gapleft 20" );
-			bookPanel.add(new JLabel("Department: ") );
-			bookPanel.add(new JLabel("comboBox"), "gapleft 20" );
-			bookPanel.add(new JLabel("1st Ten Appts: "), "gapleft 40" );
-			bookPanel.add(new JLabel("comboBox"), "gapleft 20" );
-			bookPanel.add(bookAptBtn, "gapleft 20");
+			apptType = new JComboBox<String>();
+				apptType.addItem("Doctor Appointment");
+				apptType.addItem("Lab Test");
+				apptType.addActionListener(e -> disableLab() );
+				
+			departmentDropDown = new JComboBox<String>();
+			chooseAppt = new JComboBox<String>();
+			labTime = new JComboBox<String>(times);
+			year = initYearCombo();
+				year.addActionListener(e -> initDaysinBox());
+			month = initMonthCombo();
+				month.addActionListener(e -> initDaysinBox());
+			day = initDayCombo();
+			initDaysinBox();
+				
+			bookPanel.add(new JLabel("Type:"));
+			bookPanel.add(apptType);
+			
+			bookPanel.add(new JLabel("Department:"), "gapleft 50" );
+			bookPanel.add(departmentDropDown, "growx");
+			bookPanel.add(new JLabel("Select Appointment: "));
+			bookPanel.add(chooseAppt, "span, pushx, growx, wrap");
+			
+			bookPanel.add(new JLabel("Lab Date: "), "skip 2, align right");
+			bookPanel.add(year, "sg c, split");
+			bookPanel.add(month, "sg c, split");
+			bookPanel.add(day, "sg c");
+			bookPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
+			bookPanel.add(labTime, "sg c");
+			
+			bookPanel.add(bookAptBtn, "skip 2, align right");
+			
 			
 		
 		
 		//inner panel
-		JPanel schedPanel = new JPanel(new MigLayout("") );
+		schedPanel = new JPanel(new MigLayout("") );
 			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
 			schedPanel.setPreferredSize(new Dimension(325, 200));
 
@@ -202,17 +247,13 @@ public class NurseView extends JFrame{
 		
 		
 		//inner panel
-		sunS = sunE = monS = monE = tueS = tueE = wedS = wedE = thuS = thuE = friS = friE = satS = satE = "time";
-		JPanel availChangePanel = createAvailabilityChangePanel(sunS, sunE, monS, monE, tueS, tueE, wedS, wedE, thuS, thuE, friS, friE, satS, satE);
+		JPanel availChangePanel = createAvailabilityChangePanel();
 			reqAvailChangeBtn = new JButton("Send Request");
 			availChangePanel.add(reqAvailChangeBtn, "span, align right");
 		
 	
 			//add to inner panel
 			//schedPanel.add(schedList, "wrap 20");
-		
-		
-		
 		
 		
 		
@@ -237,94 +278,133 @@ public class NurseView extends JFrame{
 	}
 
 
+	public void disableLab() {
+		
+		if (apptType.getSelectedItem().equals("Lab Test")) {
+			departmentDropDown.setEnabled(false);
+			chooseAppt.setEnabled(false);
+			
+			year.setEnabled(true);
+			month.setEnabled(true);
+			day.setEnabled(true);
+			labTime.setEnabled(true);			
+		} else {
+			departmentDropDown.setEnabled(true);
+			chooseAppt.setEnabled(true);
+			
+			year.setEnabled(false);
+			month.setEnabled(false);
+			day.setEnabled(false);
+			labTime.setEnabled(false);	
+		}
+	}
+
 	//set the lists for initiView
-	public void setLists(String[] list)
+	public void setPatientList(String[] list)
 	{
 		patList = new JList(list);
-		listPanel.add(patList, "growx");
+		
+		//wrap lists in scrollpanes
+		patListScroll = new JScrollPane(patList
+				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		patListScroll.setPreferredSize(new Dimension(200, 200));
+		
+		listPanel.add(patListScroll, "sg d");
+	}
+	
+	public void setAvailList(String[] list)
+	{
+		schedList = new JList(list);
+		
+		//wrap lists in scrollpanes
+		schedListScroll = new JScrollPane(schedList
+				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		schedListScroll.setPreferredSize(new Dimension(400, 200));
+
+		schedPanel.add(schedListScroll, "sg d");
+		
 	}
 
 	//create scheduling panel, pass in names of JComboBox fields
-	public JPanel createAvailabilityChangePanel(String sunS, String sunE, String monS, String monE, String tueS, String tueE
-			,String wedS, String wedE, String thuS, String thuE, String friS, String friE, String satS, String satE)
+	public JPanel createAvailabilityChangePanel()
 	{
+		String[] days = {"Sunday", "", "Monday","","Tuesday","","Wednesday","","Thursday","","Friday","","Saturday"};
+
 		JPanel availChangePanel = new JPanel(new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]") );
 		availChangePanel.setPreferredSize(new Dimension(325, 200));
 		availChangePanel.setBorder(BorderFactory.createTitledBorder("Request Availability Change"));
 		
 		availChangePanel.add(new JLabel("Start"), "span 2");
 		availChangePanel.add(new JLabel("End"), " wrap");
-		availChangePanel.add(new JLabel("Sunday:"));
-
-		availChangePanel.add(new JLabel(sunS));
-
-		availChangePanel.add(new JLabel(sunE));
-		availChangePanel.add(new JLabel("Monday:"));
-
-		availChangePanel.add(new JLabel(monS));
-
-		availChangePanel.add(new JLabel(monE));
-		availChangePanel.add(new JLabel("Tuesday:"));
-
-		availChangePanel.add(new JLabel(tueS));
-
-		availChangePanel.add(new JLabel(tueE));
-		availChangePanel.add(new JLabel("Wednesday:"));
-
-		availChangePanel.add(new JLabel(wedS));
-
-		availChangePanel.add(new JLabel(wedE));
-		availChangePanel.add(new JLabel("Thursday:"));
-
-		availChangePanel.add(new JLabel(thuS));
-
-		availChangePanel.add(new JLabel(thuE));
-		availChangePanel.add(new JLabel("Friday:"));
-
-		availChangePanel.add(new JLabel(friS));
-
-		availChangePanel.add(new JLabel(friE));
-		availChangePanel.add(new JLabel("Saturday:"));
-
-		availChangePanel.add(new JLabel(satS));
-
-		availChangePanel.add(new JLabel(satE), "wrap 20");
+		
+		for (int i = 0; i < this.availTimes.length; i=i+2) 
+		{
+			availChangePanel.add(new JLabel(days[i]) );
+			availTimes[i] = new JComboBox(times);
+			availTimes[i+1] = new JComboBox(times);
+			availChangePanel.add(availTimes[i] );
+			availChangePanel.add(availTimes[i+1] );
+		}
 		
 		return availChangePanel;
+
+		
+	}
+
+	
+	//create box for year
+	public JComboBox<String> initYearCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 120; i++) {
+			temp.addItem((LocalDate.now().getYear()-i)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
 	}
 	
+	//create box for month
+	public JComboBox<String> initMonthCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 12; i++) {
+			temp.addItem((i+1)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
 	
+	//create box for day
+	public JComboBox<String> initDayCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
 	
-	
-	/**Getter and Setter Methods*/
-
-	public JPanel getContentPanel() {
-		return contentPanel;
+	//add days to day box
+	public void initDaysinBox()
+	{//
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
+		}
+		/**Getter and Setter Methods*/
 	}
 
-
-
-
-
-	public void setContentPanel(JPanel contentPanel) {
-		this.contentPanel = contentPanel;
-	}
-
-
-
-
-
-	public JPanel getInfoPanel() {
-		return infoPanel;
-	}
-
-
-
-
-
-	public void setInfoPanel(JPanel infoPanel) {
-		this.infoPanel = infoPanel;
-	}
 
 
 
@@ -338,9 +418,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public void setWelcomeLabel(JLabel welcomeLabel) {
 		this.welcomeLabel = welcomeLabel;
 	}
+
 
 
 
@@ -354,6 +436,7 @@ public class NurseView extends JFrame{
 
 
 
+
 	public void setUsernameLabel(JLabel usernameLabel) {
 		this.usernameLabel = usernameLabel;
 	}
@@ -362,38 +445,29 @@ public class NurseView extends JFrame{
 
 
 
-	public JLabel getAmountDue() {
-		return amountDue;
+
+	public JLabel getPatName() {
+		return patName;
 	}
 
 
 
 
 
-	public void setAmountDue(JLabel amountDue) {
-		this.amountDue = amountDue;
+
+	public void setPatName(JLabel patName) {
+		this.patName = patName;
 	}
 
 
 
 
-
-	public JLabel getAgeLabel() {
-		return ageLabel;
-	}
-
-
-
-
-
-	public void setAgeLabel(JLabel ageLabel) {
-		this.ageLabel = ageLabel;
-	}
 
 
 	public JLabel getAge() {
 		return age;
 	}
+
 
 
 
@@ -407,57 +481,11 @@ public class NurseView extends JFrame{
 
 
 
-	public JLabel getAddr() {
-		return addr;
-	}
-
-
-
-
-
-	public void setAddr(JLabel addr) {
-		this.addr = addr;
-	}
-
-
-
-
-
-	public JLabel getPhone() {
-		return phone;
-	}
-
-
-
-
-
-	public void setPhone(JLabel phone) {
-		this.phone = phone;
-	}
-
-
-
-
-
-	public JLabel getEmail() {
-		return email;
-	}
-
-
-
-
-
-	public void setEmail(JLabel email) {
-		this.email = email;
-	}
-
-
-
-
 
 	public JLabel getBirth() {
 		return birth;
 	}
+
 
 
 
@@ -471,9 +499,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JLabel getBlood() {
 		return blood;
 	}
+
 
 
 
@@ -487,9 +517,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JLabel getSex() {
 		return sex;
 	}
+
 
 
 
@@ -503,22 +535,47 @@ public class NurseView extends JFrame{
 
 
 
-	public JButton getBtnReturn() {
-		return btnReturn;
+
+	public JButton getReqAvailChangeBtn() {
+		return reqAvailChangeBtn;
 	}
 
 
 
 
 
-	public void setBtnReturn(JButton btnReturn) {
-		this.btnReturn = btnReturn;
+
+	public void setReqAvailChangeBtn(JButton reqAvailChangeBtn) {
+		this.reqAvailChangeBtn = reqAvailChangeBtn;
 	}
+
+
+
+
+
+
+	public JButton getBookAptBtn() {
+		return bookAptBtn;
+	}
+
+
+
+
+
+
+	public void setBookAptBtn(JButton bookAptBtn) {
+		this.bookAptBtn = bookAptBtn;
+	}
+
+
+
+
 
 
 	public JTextField getNameText() {
 		return nameText;
 	}
+
 
 
 
@@ -532,9 +589,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JTextField getAddrText() {
 		return addrText;
 	}
+
 
 
 
@@ -548,9 +607,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JTextField getPhText() {
 		return phText;
 	}
+
 
 
 
@@ -564,9 +625,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JTextField getEmailText() {
 		return emailText;
 	}
+
 
 
 
@@ -580,9 +643,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JTextField getAmountText() {
 		return amountText;
 	}
+
 
 
 
@@ -596,9 +661,11 @@ public class NurseView extends JFrame{
 
 
 
+
 	public JList getPatList() {
 		return patList;
 	}
+
 
 
 
@@ -613,11 +680,172 @@ public class NurseView extends JFrame{
 
 
 
+	public JList getSchedList() {
+		return schedList;
+	}
+
+
+
+
+
+
+	public void setSchedList(JList schedList) {
+		this.schedList = schedList;
+	}
+
+
+
+
+
+
+	public JComboBox getApptType() {
+		return apptType;
+	}
+
+
+
+
+
+
+	public void setApptType(JComboBox apptType) {
+		this.apptType = apptType;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getDepartmentDropDown() {
+		return departmentDropDown;
+	}
+
+
+
+
+
+
+	public void setDepartmentDropDown(JComboBox<String> departmentDropDown) {
+		this.departmentDropDown = departmentDropDown;
+	}
+
+
+
+
+
+
+	public JComboBox getChooseAppt() {
+		return chooseAppt;
+	}
+
+
+
+
+
+
+	public void setChooseAppt(JComboBox chooseAppt) {
+		this.chooseAppt = chooseAppt;
+	}
+
+
+
+
+
+
+	public JComboBox getLabTime() {
+		return labTime;
+	}
+
+
+
+
+
+
+	public void setLabTime(JComboBox labTime) {
+		this.labTime = labTime;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getYear() {
+		return year;
+	}
+
+
+
+
+
+
+	public void setYear(JComboBox<String> year) {
+		this.year = year;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getMonth() {
+		return month;
+	}
+
+
+
+
+
+
+	public void setMonth(JComboBox<String> month) {
+		this.month = month;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getDay() {
+		return day;
+	}
+
+
+
+
+
+
+	public void setDay(JComboBox<String> day) {
+		this.day = day;
+	}
+
+
+
+
+
+
+	public JComboBox<String>[] getAvailTimes() {
+		return availTimes;
+	}
+
+
+
+
+
+
+	public void setAvailTimes(JComboBox<String>[] availTimes) {
+		this.availTimes = availTimes;
+	}
+
+
+
+
 
 
 	public JLabel getDrsPatient() {
 		return drsPatient;
 	}
+
 
 
 
@@ -631,25 +859,61 @@ public class NurseView extends JFrame{
 
 
 
-	public JLabel getPatName() {
-		return patName;
+
+	public JLabel getAddr() {
+		return addr;
 	}
 
 
 
 
 
-	public void setPatName(JLabel patName) {
-		this.patName = patName;
+
+	public void setAddr(JLabel addr) {
+		this.addr = addr;
 	}
 
 
 
 
 
+
+	public JLabel getPhone() {
+		return phone;
+	}
+
+
+
+
+
+
+	public void setPhone(JLabel phone) {
+		this.phone = phone;
+	}
+
+
+
+
+
+
+	public JLabel getEmail() {
+		return email;
+	}
+
+
+
+
+
+
+	public void setEmail(JLabel email) {
+		this.email = email;
+	}
 	
 	
 	
+	
+
+
 	
 
 	

@@ -42,7 +42,8 @@ public class NurseController {
 							model.getAssignedDocUsername()).getName() +
 					", "+ model.getDocDept()
 					);
-		view.setLists(model.getDocPats());
+		view.setPatientList(model.getDocPats());
+		view.setAvailList(model.getDocPats() );	//TODO Change to availability
 	}
 	
 	//initialize the listeners from the view class that need to interact with model
@@ -66,7 +67,6 @@ public class NurseController {
 
 	public void setUpPatientView() {
 		int selectedIndex = view.getPatList().getSelectedIndex();
-		
 		PatientModel pat = (PatientModel) Main.dbase.get(model.getDocsPatientsUsernames()[selectedIndex]);
 		
 		view.getPatName().setText(pat.getName() );
