@@ -1,5 +1,3 @@
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,8 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class DoctorController {
 
@@ -62,6 +58,8 @@ public class DoctorController {
 
 	}
 
+	// Convert the HashMap of appointments to a LinkedHashMap with keys as appointment times
+	// This is the list of appointments for weekly and monthly view
 	private LinkedHashMap<String, String> convertAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
 
@@ -74,6 +72,9 @@ public class DoctorController {
 		return lhm;
 	}
 
+	// Get an array of size 7 that correspond to the days the doctor is scheduled to work
+	// Booleans in the form of {SUNDAY, MONDAY, ..., SATURDAY}
+	// This is for the monthly view
 	private Boolean[] convertToScheduledDays(LocalDateTime[] availability) {
 		Boolean[] days = new Boolean[7];
 		for (int i = 0; i < 7; i++) {
@@ -86,9 +87,14 @@ public class DoctorController {
 		return days;
 	}
 
+	// Get an array of size 14 that correspond to the start and end of a scheduled shift time
+	// of a day. 
+	// Int correspond to start and end times in the form of {SUNDAY_start, SUNDAY_end, ..., SATURDAY_end}
+	// This is for the weekly view
 	private int[] convertToShiftTime(LocalDateTime[] availability) {
 		int[] times = new int[14];
 		for (int i = 0; i < 7; i++) {
+			// If the two times are the same, this means that the doctor has the day off
 			if (availability[i*2].equals(availability[i*2+1])) {
 				times[i*2] = -1;
 				times[i*2+1] = -1;
@@ -110,20 +116,13 @@ public class DoctorController {
 			public void actionPerformed(ActionEvent arg0) {
 				if (view.getNurseComboBox().getSelectedIndex() != -1) {
 
-					// IMPORTANT!!!
-					// ADDING A NEW SCHEDULE TO A NURSE IN DATABASE IF NO SCHEDULE IS DETECTED!!!
-
 					int index = view.getNurseComboBox().getSelectedIndex();
 					NurseModel nmd = (NurseModel) Main.dbase.get(model.getAssignedNurseUsernames().get(index));
 					
-					// If the nurse does not have a schedule
-					// if (nmd.getSchedule() == null) {
-					// 	nmd.setSchedule(new Schedule());
-					// 	nmd.getSchedule().setAppointments(new LinkedHashMap<String, String>(0));
-					// }
-
-					// view.setScheduledDays(nmd.getSchedule().getScheduledDays());
-					// view.setAppointments(nmd.getSchedule().getAppointments());
+					// view.setShifts(convertToShiftTime(nmd.getAvailability()));
+					// view.setScheduledDays(convertToScheduledDays(nmd.getAvailability()));
+					view.setAppointments(convertAppointments(new HashMap<String, ArrayList<LocalDateTime>>()));
+								
 					view.initializeWeeklySchedule();
 					view.initializeMonthlySchedule();
 					if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -140,10 +139,10 @@ public class DoctorController {
 		view.getButtonOwn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				// view.setScheduledDays(model.getSchedule().getScheduledDays());
-				// LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
-				// view.setAppointments(modAppointments);
-		
+				view.setShifts(convertToShiftTime(model.getAvailability()));
+				view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
+				view.setAppointments(convertAppointments(model.getAppointments()));
+				
 				view.initializeWeeklySchedule();
 				view.initializeMonthlySchedule();
 				if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -213,16 +212,6 @@ public class DoctorController {
 
 	}
 
-	// Modify the list of <LocalDateTime, username> from a doctor's schedule into <LocalDateTime, name>
-	public LinkedHashMap<String, String> setUpAppointments(LinkedHashMap<String, String> apts) {
-		LinkedHashMap<String, String> modifiedApts = new LinkedHashMap<String, String>();
-
-		for (Entry<String, String> entry : apts.entrySet()) {
-			modifiedApts.put(entry.getKey(), Main.dbase.get(entry.getValue()).getName());
-		}
-
-		return modifiedApts;
-	}
 
 	
 

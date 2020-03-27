@@ -51,9 +51,6 @@ public class DoctorModel extends UserSuperClass {
 	
 	
 	public void addPatient(String p) {
-		// ArrayList<PatientModel> ps = new ArrayList<PatientModel>(getScheduledPatients());
-		// ps.add(p);
-		// setScheduledPatients(ps);
 		this.scheduledPatientsUsernames.add(p);
 	}
 
@@ -61,15 +58,6 @@ public class DoctorModel extends UserSuperClass {
 	
 
 /**Getters and Setters*/
-	// public void setSchedule(Schedule schedule) {
-	// 	this.schedule = schedule;
-	// }
-
-
-	// public Schedule getSchedule() {
-	// 	return schedule;
-	// }
-
 	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> xs) {
 		this.appointments = xs;
 	}
@@ -122,7 +110,6 @@ public class DoctorModel extends UserSuperClass {
 		bob.append("\n");
 		bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
 		bob.append("\n");
-		// bob.append("Schedule: " + \n\t + getSchedule().toString());
 		return bob.toString();
 	}
 

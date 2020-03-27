@@ -29,6 +29,8 @@ Example: 10 mar 21:13 SAJID\
 * The weekly calendar in DoctorView is now set up with the new appointment system. The appointments are initizlied in DoctorController, when the DoctorView is being loaded. The nurse buttons does not update as nurses have no availability as of now.
 # 14:15
 * The monthly calendar in DoctorView is now set up with appointment information from DoctorModel.
+# 17:25
+* Somewhat cleared up code from Schedule and Doctor MVC. Removed unneccessary functions and commented out functionalities. 
 
 ## 26 MARCH Jenny
 # 10:46 

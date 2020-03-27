@@ -118,13 +118,25 @@ public class DoctorView {
 	private JList listPatients;
 
 	/*
-	 * default frame (getContentFrame()): BorderLayout
-	 * ################################################################# # Sign out
-	 * # title frame: BoxLayout.Y-Axis # Department: Name # BorderLayout.North
-	 * #---------------------------------------------------------------# # Schedule
-	 * | Patients # content frame: BoxLayout.X-Axis # | Nurses # BorderLayout.CENTER
-	 * # | Own schedule # # | # # | # # | # # | #
-	 * #-----------------------------------------------| # # manipulate schedule | #
+	 * #################################################################
+	 * #  Sign out                                                     #
+	 * #                                                               #
+	 * #  <Department> : <Name>, M.D.                                  #
+	 * #################################################################
+	 * #              <Name> Weekly/Monthly               #  Patients  #
+	 * #                                                  #   Nurses   #
+	 * #              Calendar + Appointments             #  Schedule  #
+	 * #                                                  # UselessBtn #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * #                                                  #            #
+	 * # _________________________________________________#            #
+	 * #   | Back | UselessButton | SwitchView | Forward  #            #
 	 * #################################################################
 	 */
 
@@ -160,9 +172,12 @@ public class DoctorView {
 		titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
 		frame.getContentPane().add(titleContainer, BorderLayout.NORTH); // Add the JPanel to the frame
 
-		/*
-		 * ################################################# # Back # # Department:
-		 * Name, M.D. # # # #################################################
+		/**
+		 * #################################################################
+		 * #  Sign out                                                     #
+		 * #                                                               #
+		 * #  <Department> : <Name>, M.D.                                  #
+		 * #################################################################
 		 */
 
 		// Create a panel for the sign out button
@@ -190,12 +205,24 @@ public class DoctorView {
 		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		namePane.add(nameLabel);
 
-		/*
-		 * ##################################### # Schedule # # # # # # # # # # #
-		 * #-----------------------------------# # buttons for schedule # # #
-		 * #####################################
+		/**
+		 * #################################################################
+		 * #              <Name> Weekly/Monthly               #  Patients  #
+		 * #                                                  #   Nurses   #
+		 * #              Calendar + Appointments             #  Schedule  #
+		 * #                                                  # UselessBtn #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * #                                                  #            #
+		 * # _________________________________________________#            #
+		 * #   | Back | UselessButton | SwitchView | Forward  #            #
+		 * #################################################################
 		 */
-
 		// Create a content pane centered at the middle of the page
 		JPanel contentPane = new JPanel();
 		frame.getContentPane().add(contentPane, BorderLayout.CENTER);
@@ -208,6 +235,28 @@ public class DoctorView {
 		scheduleContainer.setLayout(new MigLayout("hidemode 1"));
 		contentPane.add(scheduleContainer);
 
+		// Create container for patient panel
+
+		/**
+		 * #################################################################
+		 * #  Sign out                                                     #
+		 * #                                                               #
+		 * #  <Department> : <Name>, M.D.                                  #
+		 * #################################################################
+		 * #  Patient1  #   Patient information                            #
+		 * #  Patient2  #                                                  #
+		 * #  PatientX  #                                                  #
+		 * #            #   Past treatment                                 #
+		 * #            #                                                  #
+		 * #            #                                                  #
+		 * #            #                                                  #
+		 * #            #   Add treatment notes                            #
+		 * #            #                                                  #
+		 * #            #                                                  #
+		 * #            #                                                  #
+		 * #            #   AddTreatmentButton                             #
+		 * #################################################################
+		 */
 		patientPanel = new JPanel();
 		patientPanel.setBorder(new LineBorder(Color.CYAN));
 		patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -219,13 +268,9 @@ public class DoctorView {
 
 		initializePatients();
 
-		/*
-		 * ################################# # Schedule #
-		 * #_______________________________# # | | | | | | | # # | | | | | | | # # | | |
-		 * | | | | # # | | | | | | | # #-------------------------------#
-		 */
 
 		// Create a panel for the schedule itself
+		// Initialize YYYYMMDD labels for weekly schedule
 		for (int i = 1; i < 8; i++) {
 			JLabel lblTemp = new JLabel(now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), i).toString());
 			lblTemp.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -238,9 +283,11 @@ public class DoctorView {
 		scheduleContainer.add(scheduleWeekly, "align 50% 50%");
 		scheduleContainer.add(scheduleMonthly, "align 50% 50%");
 
+		// Create buttons for manipulating the schedule
 		initializeButtonsSchedule(WeekFields.of(Locale.CANADA).dayOfWeek());
 		scheduleContainer.add(btnPaneSchedule, "south");
 
+		// Create the buttons on the right panel for viewing patients and nurses
 		initializeButtonsRight();
 		frame.getContentPane().add(buttonContainer, BorderLayout.EAST);
 		frame.setVisible(true);
@@ -264,10 +311,6 @@ public class DoctorView {
 	}
 
 	public void initializeButtonsRight() {
-		/*
-		 * |############ | Things # | Doctor # | Can do # | # | # | # | # | # | # | #
-		 * |############
-		 */
 
 		buttonContainer = new JPanel();
 		buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -283,7 +326,6 @@ public class DoctorView {
 		buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
 
 		// Button that views all patients currenly scheduled under this doctor
-		// Does nothing
 		JButton btnPatients = new JButton("View patients");
 		GridBagConstraints gbc_btnPatients = new GridBagConstraints();
 		gbc_btnPatients.insets = new Insets(0, 5, 5, 5);
@@ -400,12 +442,18 @@ public class DoctorView {
 			public void mouseClicked(MouseEvent e) {
 				if (btnToggle.getText().equals("Monthly view")) {
 					btnToggle.setText("Weekly view");
-					isWeekly(false);
 					setMonthDateLabels(getNow());
+					String schTitle = getScheduleNameLabelMonth().getText();
+					initializeMonthlySchedule();
+					getScheduleNameLabelMonth().setText(schTitle);
+					isWeekly(false);
 				} else {
 					btnToggle.setText("Monthly view");
-					isWeekly(true);
 					setWeekDateLabels(getNow());
+					String schTitle = getScheduleNameLabelWeek().getText();
+					initializeWeeklySchedule();
+					getScheduleNameLabelWeek().setText(schTitle);
+					isWeekly(true);
 				}
 			}
 		});
