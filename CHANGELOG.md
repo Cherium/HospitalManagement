@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 27 mar 08:19 Sajid
+* added dummy test values for 'labtest' appointment for a patient
+
 
 ## 27 mar 00:45 Sajid
 * PatientModel: line 67-99 is a function that takes the database imported list of a patients appointments, and creates a Hashmap of those values. Postcondition: PatientModel has a HashMap containing all of its appointments

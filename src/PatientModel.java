@@ -55,7 +55,11 @@ public class PatientModel extends UserSuperClass {
 		//testing prints
 		for(Map.Entry<String, ArrayList<LocalDateTime>> i: this.appointments.entrySet() )
 		{
-			//print
+			//print if not lab test
+			if(i.getKey().compareTo("labtest") == 0)
+			{continue;
+				
+			}
 			System.out.println("Doctor: " + i.getKey() + " Appt: " + i.getValue().get(3).toString() );
 		}
 	}
