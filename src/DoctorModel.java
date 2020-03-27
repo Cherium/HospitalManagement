@@ -1,5 +1,7 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 
 
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
@@ -11,12 +13,15 @@ public class DoctorModel extends UserSuperClass {
 	private String department;
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<String> scheduledPatientsUsernames = new ArrayList<String>(5);
-	private Schedule schedule;
-	
+	// private Schedule schedule;
+	private HashMap<String, ArrayList<LocalDateTime>> appointments;
 
 	
 	//constructor
-	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats) {
+	
+	// public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats, ArrayList<String> available) 
+	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats) 
+	{
 		
 			super(name, username, password);
 			this.department = department;
@@ -33,6 +38,7 @@ public class DoctorModel extends UserSuperClass {
 			{
 				this.scheduledPatientsUsernames.add(i);
 			}
+			// this.availability = arrayToLDTArray(available);
 			
 	}
 	
@@ -42,20 +48,30 @@ public class DoctorModel extends UserSuperClass {
 		// setScheduledPatients(ps);
 		this.scheduledPatientsUsernames.add(p);
 	}
-	
+
+
 	
 	
 	
 
 /**Getters and Setters*/
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
-	}
+	// public void setSchedule(Schedule schedule) {
+	// 	this.schedule = schedule;
+	// }
 
 
-	public Schedule getSchedule() {
-		return schedule;
+	// public Schedule getSchedule() {
+	// 	return schedule;
+	// }
+
+	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> xs) {
+		this.appointments = xs;
 	}
+
+	public HashMap<String, ArrayList<LocalDateTime>> getAppointments() {
+		return appointments;
+	}
+
 
 	public String getDepartment() {
 		return department;

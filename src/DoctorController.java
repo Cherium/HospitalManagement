@@ -33,11 +33,15 @@ public class DoctorController {
 
 		// IMPORTANT!!!
 		// ADDING A NEW SCHEDULE TO THIS DOCTOR!!!
-		model.setSchedule(new Schedule());
-		LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
 
-		view.setScheduledDays(model.getSchedule().getScheduledDays());
-		view.setAppointments(modAppointments);
+		// model.setSchedule(new Schedule());
+		// LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
+
+		// view.setScheduledDays(model.getSchedule().getScheduledDays());
+		// view.setAppointments(modAppointments);
+
+		// Get scheduled days from LocalDateTime[]
+		// int[] 
 
 		view.initializeWeeklySchedule();
 		view.initializeMonthlySchedule();
@@ -79,13 +83,13 @@ public class DoctorController {
 					NurseModel nmd = (NurseModel) Main.dbase.get(model.getAssignedNurseUsernames().get(index));
 					
 					// If the nurse does not have a schedule
-					if (nmd.getSchedule() == null) {
-						nmd.setSchedule(new Schedule());
-						nmd.getSchedule().setAppointments(new LinkedHashMap<String, String>(0));
-					}
+					// if (nmd.getSchedule() == null) {
+					// 	nmd.setSchedule(new Schedule());
+					// 	nmd.getSchedule().setAppointments(new LinkedHashMap<String, String>(0));
+					// }
 
-					view.setScheduledDays(nmd.getSchedule().getScheduledDays());
-					view.setAppointments(nmd.getSchedule().getAppointments());
+					// view.setScheduledDays(nmd.getSchedule().getScheduledDays());
+					// view.setAppointments(nmd.getSchedule().getAppointments());
 					view.initializeWeeklySchedule();
 					view.initializeMonthlySchedule();
 					if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -102,9 +106,9 @@ public class DoctorController {
 		view.getButtonOwn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				view.setScheduledDays(model.getSchedule().getScheduledDays());
-				LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
-				view.setAppointments(modAppointments);
+				// view.setScheduledDays(model.getSchedule().getScheduledDays());
+				// LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
+				// view.setAppointments(modAppointments);
 		
 				view.initializeWeeklySchedule();
 				view.initializeMonthlySchedule();

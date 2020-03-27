@@ -2,6 +2,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
@@ -74,6 +75,22 @@ public class Schedule {
             LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
             getAppointments().put(day.toString(), "patient2");
         }
+
+        HashMap<String, ArrayList<String>> printMe = new HashMap<String, ArrayList<String>>();
+
+        for (int i = 0; i < 30; i++) {
+            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(8, 18));
+            if (printMe.get("doctor") == null) {
+                printMe.put("doctor", new ArrayList<String>());
+            }
+            printMe.get("doctor").add(day.toString());
+        }
+
+        for (Entry<String, ArrayList<String>> coffee : printMe.entrySet()) {
+            for (String string : coffee.getValue()) {
+                System.out.print(coffee.getKey()+"\t"+string+"\t");
+            }
+        }
     }
 
     // Initialize a random schedule, may end up working 7 days or not working at all 
@@ -86,6 +103,30 @@ public class Schedule {
                 this.scheduledDays[i] = false;
             }
         }
+    }
+
+    // Takes a list of patient usernames and a doctor username, returning all the appointments that the patients
+    // in the list have scheduled with the doctor
+    public HashMap<String, ArrayList<LocalDateTime>> updateHashMap(ArrayList<String> patU, String docU) {
+
+        HashMap<String, ArrayList<LocalDateTime>> hm = new HashMap<String, ArrayList<LocalDateTime>>();
+
+        for (String p : patU) {
+            // get all the appointments for the patient for a specific doctor, assuming that the appointment
+            // information in patient is stored as a HashMap, keys = doctor username, values = ArrayList<LocalDateTime>
+
+            // Assuming that the list of appointments is unique to PatientModel only
+
+            PatientModel pat = (PatientModel) Main.dbase.get(p);
+            ArrayList<LocalDateTime> apts = pat.getAppointments().get(docU);
+
+            // check that there are appointments between this patient and doctor, failsafe
+            if (apts != null)
+                hm.put(p, apts);
+
+        }
+
+        return hm;
     }
 
     // Getters and setters
@@ -118,11 +159,15 @@ public class Schedule {
     }
 
     public static void main(String[] args) {
-        LocalDate one = LocalDate.now();
-        LocalDate two = one.plusDays(15);
-        System.out.println((int) ChronoUnit.DAYS.between(one, two));
-        System.out.println(one.toString());
-        System.out.println(two.toString());
+        LocalDateTime[] dummy = new LocalDateTime[14];
+        LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+        for (int i = 0; i < 7; i++) {
+            dummy[i*2] = now.withHour(8);
+            dummy[i*2+1] = now.withHour(17);
+        }
+        for (LocalDateTime localDateTime : dummy) {
+            System.out.println(localDateTime);
+        }
 
     }
 
