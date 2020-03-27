@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 27 MARCH Jenny
+* Removed availability field in DoctorModel. 
+
 ## 26 MARCH Jenny
 # 10:46 
 * Rehaul of Schedule and how appointments are stored/view with Sajid. Commenting out all information in Doctor MVC related to Schedule.

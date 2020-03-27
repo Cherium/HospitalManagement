@@ -14,11 +14,11 @@ public class DoctorModel extends UserSuperClass {
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<String> scheduledPatientsUsernames = new ArrayList<String>(5);
 	// private Schedule schedule;
-	private LocalDateTime[] availability;
 	private HashMap<String, ArrayList<LocalDateTime>> appointments;
 
 	
 	//constructor
+	
 	// public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats, ArrayList<String> available) 
 	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats) 
 	{
@@ -72,13 +72,6 @@ public class DoctorModel extends UserSuperClass {
 		return appointments;
 	}
 
-	public void setAvailability(LocalDateTime[] xs) {
-		this.availability = xs;
-	}
-
-	public LocalDateTime[] getAvailability() {
-		return availability;
-	}
 
 	public String getDepartment() {
 		return department;
