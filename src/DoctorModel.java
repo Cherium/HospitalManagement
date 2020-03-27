@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -38,7 +39,7 @@ public class DoctorModel extends UserSuperClass {
 			{
 				this.scheduledPatientsUsernames.add(i);
 			}
-			// this.availability = arrayToLDTArray(available);
+			this.availability = arrayToLDTArray(new ArrayList<String>(Arrays.asList(avail)));
 			
 	}
 	

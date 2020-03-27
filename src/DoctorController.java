@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
@@ -29,19 +30,11 @@ public class DoctorController {
 	// initialize the elements that the GUI sees from the database
 	// as soon as the view first opens for the user
 	public void initView() {
-		// Dummy schedule, randomized scheduled days and appointments, no time off
+		model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
 
-		// IMPORTANT!!!
-		// ADDING A NEW SCHEDULE TO THIS DOCTOR!!!
-
-		// model.setSchedule(new Schedule());
-		// LinkedHashMap<String, String> modAppointments = setUpAppointments(model.getSchedule().getAppointments());
-
-		// view.setScheduledDays(model.getSchedule().getScheduledDays());
-		// view.setAppointments(modAppointments);
-
-		// Get scheduled days from LocalDateTime[]
-		// int[] 
+		view.setShifts(convertToShiftTime(model.getAvailability()));
+		view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
+		view.setAppointments(convertAppointments(model.getAppointments()));
 
 		view.initializeWeeklySchedule();
 		view.initializeMonthlySchedule();
@@ -65,6 +58,45 @@ public class DoctorController {
 		}
 		view.setPatientList(patients);
 
+	}
+
+	private LinkedHashMap<String, String> convertAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+
+		for (String keyString : appointments.keySet()) {
+			for (LocalDateTime ldt : appointments.get(keyString)) {
+				lhm.put(ldt.toString(), Main.dbase.get(keyString).getName());
+			}
+		}
+
+		return lhm;
+	}
+
+	private Boolean[] convertToScheduledDays(LocalDateTime[] availability) {
+		Boolean[] days = new Boolean[7];
+		for (int i = 0; i < 7; i++) {
+			if (availability[i*2].equals(availability[i*2+1])) {
+				days[i] = false;
+			} else {
+				days[i] = true;
+			}
+		}
+		return days;
+	}
+
+	private int[] convertToShiftTime(LocalDateTime[] availability) {
+		int[] times = new int[14];
+		for (int i = 0; i < 7; i++) {
+			if (availability[i*2].equals(availability[i*2+1])) {
+				times[i*2] = -1;
+				times[i*2+1] = -1;
+			} else {
+				times[i*2] = availability[i*2].getHour();
+				times[i*2+1] = availability[i*2+1].getHour();
+			}
+		}
+
+		return times;
 	}
 
 	// initialize 'only' the listeners the GUI handles 'that

@@ -76,21 +76,6 @@ public class Schedule {
             getAppointments().put(day.toString(), "patient2");
         }
 
-        HashMap<String, ArrayList<String>> printMe = new HashMap<String, ArrayList<String>>();
-
-        for (int i = 0; i < 30; i++) {
-            LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(8, 18));
-            if (printMe.get("doctor") == null) {
-                printMe.put("doctor", new ArrayList<String>());
-            }
-            printMe.get("doctor").add(day.toString());
-        }
-
-        for (Entry<String, ArrayList<String>> coffee : printMe.entrySet()) {
-            for (String string : coffee.getValue()) {
-                System.out.print(coffee.getKey()+"\t"+string+"\t");
-            }
-        }
     }
 
     // Initialize a random schedule, may end up working 7 days or not working at all 
@@ -129,6 +114,32 @@ public class Schedule {
         return hm;
     }
 
+    //1-takes in raw availability change request data and returns a properly formatted, and updated, availability array
+    public LocalDateTime[] updateSchedule(String[] rawData)
+    {
+        LocalDateTime[] temp = new LocalDateTime[14];
+        for (int i = 0; i < rawData.length; i++) {
+            LocalDateTime convert = LocalDateTime.parse("2001-01-01T"+rawData[i]);
+            temp[i] = convert;
+        }
+        return temp;
+        
+    }
+
+    //2-retrieves this users availability as a string array for use in view
+    //input: users availability array; output: strings in format HH:MM for use in view
+    public String[] updateSchedule(LocalDateTime[] currentAvailability)
+    {
+        String[] rawTimes = new String[14];
+        
+        for (int i = 0; i < currentAvailability.length; i++) 
+        {
+            rawTimes[i] = currentAvailability[i].getHour() + ":" + currentAvailability[i].getMinute();
+        }
+        
+        return rawTimes;
+        
+    }
     // Getters and setters
 
     // Scheduled days are of the form Boolean[7], corresponding to 7 days of a week

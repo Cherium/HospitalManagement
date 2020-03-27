@@ -24,6 +24,9 @@ Example: 10 mar 21:13 SAJID\
 * Removed availability field in DoctorModel. 
 # 08:55
 * Added getters + setters for availability variable in UserSuperClass.
+# 13:58
+* Added updateSchedule(String[]): LocalDateTime[] and updateSchedule(LocalDateTime[]): String[] to Schedule. 
+* The weekly calendar in DoctorView is now set up with the new appointment system. The nurse buttons does not update as nurses have no availability as of now.
 
 ## 26 MARCH Jenny
 # 10:46 

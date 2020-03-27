@@ -110,6 +110,7 @@ public class DoctorView {
 
 	private LinkedHashMap<String, String> appointments;
 	private Boolean[] schDays;
+	private int[] shiftTimes;
 	private String name;
 	private String[] aptsInMonth;
 
@@ -550,17 +551,36 @@ public class DoctorView {
 
 	// Set up weekly schedule view
 	public void initializeWeeklySchedule() {
+		Boolean[][] ava = new Boolean[24][7];
+		// i is for the hour
+		for (int i = 0; i < 24; i++) {
+			// j is for the day and also used as the index for shiftTimes
+			for (int j = 0; j < 7; j++) {
+				if (shiftTimes[j*2] == shiftTimes[j*2+1]) {
+					ava[i][j] = false;
+				} else {
+					if ((i >= shiftTimes[j*2]) && (i <= shiftTimes[j*2+1])) {
+						ava[i][j] = true;
+					} else {
+						ava[i][j] = false;
+					}
+				}
+			}
+		}
+
 		String[][] listApsWeek = new String[24][7];
 
-		// LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
-		// LocalDate endRange = startRange.plusDays(6);
-		// for (Entry<String, String> entry : getAppointments().entrySet()) {
-		// 	LocalDateTime time = LocalDateTime.parse(entry.getKey());
-		// 	if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0)) {
-		// 		listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
-		// 	}
+		LocalDate startRange = now.with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
+		LocalDate endRange = startRange.plusDays(6);
+		for (Entry<String, String> entry : getAppointments().entrySet()) {
+			LocalDateTime time = LocalDateTime.parse(entry.getKey());
+			int day = time.getDayOfWeek().getValue() % 7;
+			int hour = time.getHour();
+			if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0) && (ava[hour][day] == true)) {
+				listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
+			}
 
-		// }
+		}
 
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
@@ -576,32 +596,33 @@ public class DoctorView {
 		setWeekDateLabels(getNow());
 		for (JLabel wd : weekYYYYMMDD) {
 			scheduleWeekly.add(wd);
-			// wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
+			wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
 			wd.setEnabled(true);
 		}
 		scheduleWeekly.add(Box.createHorizontalGlue());
 		for (JLabel lbl : sunToSatWeek) {
 			scheduleWeekly.add(lbl);
-			// lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
+			lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
 			lbl.setEnabled(true);
 		}
 
 		for (int i = 0; i < 12; i++) {
 			scheduleWeekly.add(new JLabel((i+8)+":00"));
 			for (int j = 0; j < 7; j++) {
-				JLabel templbl = new JLabel("<html>"+sunToSatWeek.get(j).getText()+"<br>Time:"+(i+8)+":00");
+				JLabel templbl = new JLabel("  ");
+				templbl.setBackground(Color.WHITE);
 				if (listApsWeek[i+8][j] != null) {
-					templbl.setText("<html>Not null!<br>"+listApsWeek[i+8][j]);
+					templbl.setText(listApsWeek[i+8][j]);
 					templbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					templbl.setOpaque(true);
 					templbl.setBackground(Color.ORANGE);
 				}
+				templbl.setOpaque(true);
 				scheduleWeekly.add(templbl);
-				// templbl.setEnabled(schDays[j]);
-				templbl.setEnabled(true);
-				if (!templbl.isEnabled()) {
-					templbl.setOpaque(false);
+				templbl.setEnabled(ava[i+8][j]);
+				if (!ava[i+8][j]) {
+					templbl.setBackground(Color.LIGHT_GRAY);
 				}
+				templbl.setPreferredSize(new Dimension(100, 35));
 
 			}
 		}
@@ -1317,6 +1338,14 @@ public class DoctorView {
 
 	public void setScheduledDays(Boolean[] b) {
 		this.schDays = b;
+	}
+
+	public int[] getShifts() {
+		return shiftTimes;
+	}
+
+	public void setShifts(int[] xs) {
+		this.shiftTimes = xs;
 	}
 
 	public String getName() {
