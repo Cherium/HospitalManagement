@@ -14,13 +14,13 @@ public class DoctorModel extends UserSuperClass {
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<String> scheduledPatientsUsernames = new ArrayList<String>(5);
 	// private Schedule schedule;
-	private HashMap<String, ArrayList<LocalDateTime>> appointments;
+	private HashMap<String, ArrayList<LocalDateTime>> appointments;	//patient appointments with this doctor
 
 	
 	//constructor
 	
 	// public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats, ArrayList<String> available) 
-	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats) 
+	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats, String[] avail) 
 	{
 		
 			super(name, username, password);

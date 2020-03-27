@@ -87,19 +87,19 @@ public class Database {
 
 											Scanner fc = new Scanner(wv);
 											
-											ArrayList<String> tempp = new ArrayList<>(5);
+											ArrayList<String> importAvail = new ArrayList<>(5);
 											while(fc.hasNextLine()) 
 											{
 												
 												String time = fc.nextLine();			//read in entire line
 												
-												tempp.add(time);
+												importAvail.add(time);
 											}
 											fc.close();
-											
+
 											//create a temporary doctor object using database information
 											DoctorModel temp = new DoctorModel(importUsername, importPassword, importName
-													, importDepartment, importAssignedNurseUsernames, importAssigPat);
+													, importDepartment, importAssignedNurseUsernames, importAssigPat, importAvail.toArray(new String[0]));
 											
 											//add that doctor to the internal database
 											users.put(importUsername, temp);
