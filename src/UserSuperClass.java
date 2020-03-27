@@ -119,6 +119,10 @@ public class UserSuperClass {
 			public void setPassword(char[] password) {
 						this.password = password;
 			}
+
+			public void setAvailability(LocalDateTime[] availability) {
+				this.availability = availability;
+			}
 		
 			public String getName() {
 						return name;
@@ -134,6 +138,10 @@ public class UserSuperClass {
 		
 			public char[] getPassword() {
 						return password;
+			}
+
+			public LocalDateTime[] getAvailability() {
+				return availability;
 			}
 		
 			public String toString() {

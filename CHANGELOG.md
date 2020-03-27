@@ -22,6 +22,8 @@ Example: 10 mar 21:13 SAJID\
 
 ## 27 MARCH Jenny
 * Removed availability field in DoctorModel. 
+# 08:55
+* Added getters + setters for availability variable in UserSuperClass.
 
 ## 26 MARCH Jenny
 # 10:46 
