@@ -48,9 +48,8 @@ public class NurseView extends JFrame{
 	private JLabel sex;
 
 	private JButton btnReturn;
-	private JButton reqShiftOffBtn;
 	private JButton reqAvailChangeBtn;
-	private JButton reqVacationBtn;
+	private JButton bookAptBtn;
 	
 	
 	private JTextField nameText;
@@ -67,7 +66,7 @@ public class NurseView extends JFrame{
 	
 	
 	
-	/*
+
 	
 	public static void main(String[] args)
 	{
@@ -75,11 +74,10 @@ public class NurseView extends JFrame{
 		new NurseController(new NurseModel("userName", a, "Nursey"
 				, "Nephrology", "doctor"), new NurseView("Hii"));
 	}
-	
-	
-	
-	*/
-	
+
+
+
+
 	
 	
 	//Constructor, takes in its title from Login Model class
@@ -138,7 +136,7 @@ public class NurseView extends JFrame{
 		//inner panel
 		infoPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
 			infoPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
-			infoPanel.setPreferredSize(new Dimension(325, 200));
+			infoPanel.setPreferredSize(new Dimension(450, 200));
 		
 			//Labels
 			
@@ -183,43 +181,35 @@ public class NurseView extends JFrame{
 		JPanel bookPanel = new JPanel(new MigLayout("") );
 			bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 			
+			bookAptBtn = new JButton("Book Appointment");
+			
+			bookPanel.add(new JLabel("Type: ") );
+			bookPanel.add(new JLabel("comboBox"), "gapleft 20" );
 			bookPanel.add(new JLabel("Department: ") );
 			bookPanel.add(new JLabel("comboBox"), "gapleft 20" );
 			bookPanel.add(new JLabel("1st Ten Appts: "), "gapleft 40" );
 			bookPanel.add(new JLabel("comboBox"), "gapleft 20" );
+			bookPanel.add(bookAptBtn, "gapleft 20");
+			
 		
 		
 		//inner panel
 		JPanel schedPanel = new JPanel(new MigLayout("") );
-			schedPanel.setBorder(BorderFactory.createTitledBorder("Scheduling"));
+			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
 			schedPanel.setPreferredSize(new Dimension(325, 200));
-			reqAvailChangeBtn = new JButton("Send Request"); // Availability Change
-			reqShiftOffBtn = new JButton("Request Shift Off");
-			reqVacationBtn = new JButton("Send Request");
+
 		
 		
 		
-		
-			//inner inner panel
-			sunS = sunE = monS = monE = tueS = tueE = wedS = wedE = thuS = thuE = friS = friE = satS = satE = "time";
-			JPanel availChangePanel = createAvailabilityChangePanel(sunS, sunE, monS, monE, tueS, tueE, wedS, wedE, thuS, thuE, friS, friE, satS, satE);
-				reqAvailChangeBtn = new JButton("Send Request");
-				availChangePanel.add(reqAvailChangeBtn, "span, align right");
+		//inner panel
+		sunS = sunE = monS = monE = tueS = tueE = wedS = wedE = thuS = thuE = friS = friE = satS = satE = "time";
+		JPanel availChangePanel = createAvailabilityChangePanel(sunS, sunE, monS, monE, tueS, tueE, wedS, wedE, thuS, thuE, friS, friE, satS, satE);
+			reqAvailChangeBtn = new JButton("Send Request");
+			availChangePanel.add(reqAvailChangeBtn, "span, align right");
 		
 	
 			//add to inner panel
-			schedPanel.add(new JLabel("Upcoming Shifts"), "wrap" );
 			//schedPanel.add(schedList, "wrap 20");
-			schedPanel.add(reqShiftOffBtn, /*"pushx, */"align right, wrap 10");	
-			
-			schedPanel.add(new JLabel("Request Vacation Days:"), "wrap");
-			schedPanel.add(new JLabel("From:"), "gapleft 5, split 4");
-			schedPanel.add(new JLabel("cal"), "gapleft 5");
-			schedPanel.add(new JLabel("To:"), "gapleft 5");
-			schedPanel.add(new JLabel("cal"), "gapleft 5, wrap");
-			schedPanel.add(reqVacationBtn, "align right, wrap");
-			
-			schedPanel.add(availChangePanel);
 		
 		
 		
@@ -238,8 +228,8 @@ public class NurseView extends JFrame{
 		contentPanel.add(listPanel, "sg b");
 		contentPanel.add(infoPanel, "sg b, wrap");
 		contentPanel.add(bookPanel, "span, growx");
-		contentPanel.add(schedPanel/*, "span"*/);
-		
+		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
+		contentPanel.add(availChangePanel, " sg b");
 		setVisible(true);
 		
 		
