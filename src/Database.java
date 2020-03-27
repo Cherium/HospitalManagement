@@ -83,18 +83,19 @@ public class Database {
 										if(importRole.compareTo("doctor") == 0)
 										{
 											//read in doctor availability
-											InputStream st = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Avail.txt");
-											sc = new Scanner(st);
+											InputStream wv = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Avail.txt");
+
+											Scanner fc = new Scanner(wv);
 											
 											ArrayList<String> tempp = new ArrayList<>(5);
-											while(sc.hasNextLine()) 
+											while(fc.hasNextLine()) 
 											{
 												
-												String time = sc.nextLine();			//read in entire line
+												String time = fc.nextLine();			//read in entire line
 												
 												tempp.add(time);
 											}
-											
+											fc.close();
 											
 											//create a temporary doctor object using database information
 											DoctorModel temp = new DoctorModel(importUsername, importPassword, importName
@@ -114,15 +115,15 @@ public class Database {
 										
 										else if(importRole.compareTo("patient")== 0)
 										{
-												//get Patient appt times
-												InputStream st = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Appt.txt");
-													sc = new Scanner(st);
+													//get Patient appt times
+													InputStream st = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Appt.txt");
+													Scanner fc = new Scanner(st);
 													
 													ArrayList<String> tempp = new ArrayList<>(5);
-													while(sc.hasNextLine()) 
+													while(fc.hasNextLine()) 
 													{
 														
-														String time = sc.nextLine();			//read in entire line
+														String time = fc.nextLine();			//read in entire line
 														String[] split2 = time.split("\t");		//regex split into arrow on tabs
 														
 														String docName = split2[0];
@@ -131,23 +132,26 @@ public class Database {
 														tempp.add(docName);
 														tempp.add(apptTime);
 													}
-												
-												//get Patient record notes
-												try {
-													//https://stackoverflow.com/questions/3891375/how-to-read-a-text-file-resource-into-java-unit-test?noredirect=1&lq=1
-													String record = new String(getClass().getClassLoader()
-															.getResourceAsStream("dbase/"+importUsername+".txt").readAllBytes());
+													fc.close();
 													
-													//create a patient internally
-													PatientModel temp = new PatientModel(importUsername, importPassword, importName
-															, importAddress, importPhoneNumber, importEmail, importAmountDue
-															, importDob, importBlood, importSex, record, tempp);
+													//get Patient record notes
+													try {
+														//https://stackoverflow.com/questions/3891375/how-to-read-a-text-file-resource-into-java-unit-test?noredirect=1&lq=1
+														String record = new String(getClass().getClassLoader()
+																.getResourceAsStream("dbase/"+importUsername+".txt").readAllBytes());
+														
+														//create a patient internally
+														PatientModel temp = new PatientModel(importUsername, importPassword, importName
+																, importAddress, importPhoneNumber, importEmail, importAmountDue
+																, importDob, importBlood, importSex, record, tempp);
+														
+														users.put(importUsername, temp);
+													} catch (IOException e) {
+														System.out.println("Could not open file");
+														e.printStackTrace();
+													}
 													
-													users.put(importUsername, temp);
-												} catch (IOException e) {
-													System.out.println("Could not open file");
-													e.printStackTrace();
-												}
+													
 												
 											
 										}
