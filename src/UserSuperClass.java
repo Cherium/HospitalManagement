@@ -5,6 +5,10 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.*;
 
@@ -14,7 +18,10 @@ public class UserSuperClass {
 			protected String role;
 			protected String username;
 			protected char[] password;
-
+			protected Schedule s = new Schedule();	//initialize s so now ALL model classes can use object 's' to get ease-of-use functions in Schedule class
+			protected LocalDateTime[] availability = new LocalDateTime[14];
+			
+			
 			public UserSuperClass()
 			{
 	
@@ -31,6 +38,22 @@ public class UserSuperClass {
 						this.username = username;
 						this.password = password.toCharArray();
 			}
+			
+			
+			//takes in a 1D array of availability(size 14), and converts it to a LDT (size 14)
+			public LocalDateTime[] arrayToLDTArray(ArrayList<String> availability)
+			{
+				LocalDateTime[] temp = new LocalDateTime[14];
+				
+				for(int i=0; i < availability.size(); i++)
+				{
+					temp[i] = LocalDateTime.parse(availability.get(i) );
+				}
+				
+				return temp;
+			}
+			
+			
 			
 			//returns the 'name' associated with an object in the database
 			public String getObjectsName(String username)

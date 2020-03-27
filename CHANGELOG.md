@@ -3,6 +3,18 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+
+## 27 mar 00:45 Sajid
+* PatientModel: line 67-99 is a function that takes the database imported list of a patients appointments, and creates a Hashmap of those values. Postcondition: PatientModel has a HashMap containing all of its appointments
+* CreateNewPatient: updated constructor
+    * Added getters and setters for this
+        * the doctor can now access this database to get appointment times to fill the doctors schedule
+* UserSuperClass: line 21, 22 added. `protected` so all subclasses can use it without getters
+* Database: line 76, 105-120; read in patient appt info
+* dbase folder --> added files for patient appointments, and doctor availability
+
+
+
 ## 25 MARCH 21:44 Jenny
 Overview/Summary:
 **Schedule**

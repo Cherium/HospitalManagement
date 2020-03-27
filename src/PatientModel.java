@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -24,10 +27,13 @@ public class PatientModel extends UserSuperClass {
 	private String sex;
 	private String recordNotes;
 	
+	//stores list of appointments
+	private HashMap<String, ArrayList<LocalDateTime>> appointments;
+	
 
 	//constructor
 	public PatientModel(String username, char[] password, String name
-			, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2, String record2)
+			, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2, String record2, ArrayList<String> appointments)
 	{
 		
 		super(name,username,password);
@@ -42,13 +48,55 @@ public class PatientModel extends UserSuperClass {
 		this.bloodtype = bloodType;
 		this.sex = sex2;
 		this.recordNotes = record2;
+		
+		//get list of appointments
+		this.appointments = listToAppointmentMap(appointments);
+		
+		//testing prints
+		for(Map.Entry<String, ArrayList<LocalDateTime>> i: this.appointments.entrySet() )
+		{
+			//print
+			System.out.println("Doctor: " + i.getKey() + " Appt: " + i.getValue().get(3).toString() );
+		}
 	}
 	
 
 
 
 
-
+	//returns a HashMap containing a doctor username on one side and a LIST of appointment start time on the other- patient use
+	public HashMap<String, ArrayList<LocalDateTime> > listToAppointmentMap(ArrayList<String> rawAppts)
+	{
+		HashMap<String, ArrayList<LocalDateTime>> temp = new HashMap<>(5);
+		
+		//go through the database import list
+		for(int i=0; i < rawAppts.size(); i=i+2)
+		{
+			String docname = rawAppts.get(i);
+			LocalDateTime apptTime = LocalDateTime.parse(rawAppts.get(i+1) );
+			
+			//if doc is in patients appointment hashmap
+			if(temp.containsKey(docname) )
+			{
+				//if appt time is not already in the list
+				if(!temp.get(docname).contains(apptTime))
+				{
+					//add this appt to the appt list for that doc
+					temp.get(docname).add(apptTime);
+				}					
+			}
+			else //doc is not in hashmap
+			{
+				//create a new hashmap entry
+				temp.put(docname, new ArrayList<LocalDateTime>(
+						List.of(apptTime)
+						
+						));
+			}
+		}
+		return temp;
+		
+	}
 
 	//convert a string of digits to a phone number
 	public String convertToPhoneNumber()
