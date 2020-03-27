@@ -285,4 +285,20 @@ public class PatientModel extends UserSuperClass {
 	}
 
 
+
+
+
+	public HashMap<String, ArrayList<LocalDateTime>> getAppointments() {
+		return appointments;
+	}
+
+
+
+
+
+	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
+		this.appointments = appointments;
+	}
+
+
 }
