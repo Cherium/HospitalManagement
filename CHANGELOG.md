@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 27 mar 08:30 Sajid
+* changed doctor constructors in DoctorModel and in CreateNeDoctorModel
+
 ## 27 mar 08:19 Sajid
 * added dummy test values for 'labtest' appointment for a patient
 
