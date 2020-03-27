@@ -26,7 +26,9 @@ Example: 10 mar 21:13 SAJID\
 * Added getters + setters for availability variable in UserSuperClass.
 # 13:58
 * Added updateSchedule(String[]): LocalDateTime[] and updateSchedule(LocalDateTime[]): String[] to Schedule. 
-* The weekly calendar in DoctorView is now set up with the new appointment system. The nurse buttons does not update as nurses have no availability as of now.
+* The weekly calendar in DoctorView is now set up with the new appointment system. The appointments are initizlied in DoctorController, when the DoctorView is being loaded. The nurse buttons does not update as nurses have no availability as of now.
+# 14:15
+* The monthly calendar in DoctorView is now set up with appointment information from DoctorModel.
 
 ## 26 MARCH Jenny
 # 10:46 

@@ -652,26 +652,24 @@ public class DoctorView {
 
 		for (JLabel d : sunToSatMonth) {
 			scheduleMonthly.add(d);
-			// d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
+			d.setEnabled(schDays[sunToSatMonth.indexOf(d)]);
 			d.setEnabled(true);
 		}
 
 
-		// ArrayList<String[]> apts = filterAppointmentsMonth();
+		ArrayList<String[]> apts = filterAppointmentsMonth();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
 				scheduleMonthly.add(monthdays.get(i*7+j));
-				// monthdays.get(i*7+j).setEnabled(schDays[j]);
-				monthdays.get(i*7+j).setEnabled(true);
+				monthdays.get(i*7+j).setEnabled(schDays[j]);
 			}
 			for (int js = 0; js < 7; js++) {
-				// JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
-				JList<String> oneDayList = new JList<String>(new String[0]);
+				JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
-				// oneDayList.setEnabled(schDays[js]);
+				oneDayList.setEnabled(schDays[js]);
 				oneDayList.setEnabled(true);
 			}
 		}

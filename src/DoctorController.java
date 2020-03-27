@@ -30,6 +30,8 @@ public class DoctorController {
 	// initialize the elements that the GUI sees from the database
 	// as soon as the view first opens for the user
 	public void initView() {
+		// Set up the appointments in DoctorModel
+		// Cannot do this in constructor as doctors are read from the database before patient
 		model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
 
 		view.setShifts(convertToShiftTime(model.getAvailability()));
