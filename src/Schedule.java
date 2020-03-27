@@ -21,71 +21,42 @@ import java.util.concurrent.ThreadLocalRandom;
  * @param timeOff       list the days that someone has requested time off.
  */
 
-public class Schedule {
-    private Boolean[] scheduledDays;
+	public class Schedule {
+	
+	    // constructor
+	    public Schedule() {
+	
+	    }
+    
+    
+    
+    
+  
+    
 
-    private LinkedHashMap<String, String> appointments;
-
-    private ArrayList<LocalDate> timeOff;
-
-    // Dummy schedule creater
-    public Schedule() {
-        initScheduledDays();
-        initAppointments();
-        this.timeOff = new ArrayList<LocalDate>(0);
-    }
-
-    public Schedule(Boolean[] daysWorked, LinkedHashMap<String, String> appointments, ArrayList<LocalDate> timeOff) {
-        this.scheduledDays = daysWorked;
-        this.appointments = appointments;
-        this.timeOff = timeOff;
-    }
-
-    // A string that formats the current schedule into a line for database access/storage
-    public String toString() {
-        StringBuilder bob = new StringBuilder();
-
-        for (Boolean b : getScheduledDays()) {
-            if (b)
-                bob.append(1);
-            else
-                bob.append(0);
-        }
-        bob.append("#");
-        for (Entry<String, String> pair : getAppointments().entrySet()) {
-            bob.append(pair.getKey()+","+pair.getValue()+"&");
-        }
-        bob.append("#");
-        for (LocalDate lDate : getTimeOff()) {
-            bob.append(lDate.toString()+",");
-        }
-
-        return bob.toString();
-    }
-
-    // Initialize 60 random appointments for 2 patients, within 30 days of the current date. 
+   // Initialize 60 random appointments for 2 patients, within 30 days of the current date. 
     private void initAppointments() {
-        this.appointments = new LinkedHashMap<String, String>(20);
+    	LinkedHashMap<String, String> appointments = new LinkedHashMap<String, String>(20);
         LocalDateTime today = LocalDateTime.now();
         for (int i = 0; i < 30; i++) {
             LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
-            getAppointments().put(day.toString(), "patient");
+            appointments.put(day.toString(), "patient");
         }
         for (int i = 0; i < 30; i++) {
             LocalDateTime day = today.plusDays(ThreadLocalRandom.current().nextInt(0, 30+1)).withMinute(0).withSecond(0).withNano(0).withHour(ThreadLocalRandom.current().nextInt(0, 24));
-            getAppointments().put(day.toString(), "patient2");
+            appointments.put(day.toString(), "patient2");
         }
 
     }
 
     // Initialize a random schedule, may end up working 7 days or not working at all 
     private void initScheduledDays() {
-        this.scheduledDays = new Boolean[7];
+        Boolean[] scheduledDays = new Boolean[7];
         for (int i = 0; i < 7; i++) {
             if (ThreadLocalRandom.current().nextInt(0,1+1) == 1) {
-                this.scheduledDays[i] = true;
+                scheduledDays[i] = true;
             } else {
-                this.scheduledDays[i] = false;
+                scheduledDays[i] = false;
             }
         }
     }
@@ -143,43 +114,43 @@ public class Schedule {
     // Getters and setters
 
     // Scheduled days are of the form Boolean[7], corresponding to 7 days of a week
-    public void setScheduledDays(Boolean[] newDays) {
-        this.scheduledDays = newDays;
-    }
+//    public void setScheduledDays(Boolean[] newDays) {
+//        this.scheduledDays = newDays;
+//    }
+//
+//    public Boolean[] getScheduledDays() {
+//        return scheduledDays;
+//    }
+//
+//    // Appointments are of the form <LocalDateTime.toString(), username>
+//    public void setAppointments(LinkedHashMap<String,String> ap) {
+//        this.appointments = ap;
+//    }
+//
+//    public LinkedHashMap<String, String> getAppointments() {
+//        return appointments;
+//    }
+//
+//    // Time off are stored as an ArrayList of LocalDates
+//    public void setTimeOff(ArrayList<LocalDate> tO) {
+//        this.timeOff = tO;
+//    }
+//
+//    public ArrayList<LocalDate> getTimeOff() {
+//        return timeOff;
+//    }
 
-    public Boolean[] getScheduledDays() {
-        return scheduledDays;
-    }
-
-    // Appointments are of the form <LocalDateTime.toString(), username>
-    public void setAppointments(LinkedHashMap<String,String> ap) {
-        this.appointments = ap;
-    }
-
-    public LinkedHashMap<String, String> getAppointments() {
-        return appointments;
-    }
-
-    // Time off are stored as an ArrayList of LocalDates
-    public void setTimeOff(ArrayList<LocalDate> tO) {
-        this.timeOff = tO;
-    }
-
-    public ArrayList<LocalDate> getTimeOff() {
-        return timeOff;
-    }
-
-    public static void main(String[] args) {
-        LocalDateTime[] dummy = new LocalDateTime[14];
-        LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
-        for (int i = 0; i < 7; i++) {
-            dummy[i*2] = now.withHour(8);
-            dummy[i*2+1] = now.withHour(17);
-        }
-        for (LocalDateTime localDateTime : dummy) {
-            System.out.println(localDateTime);
-        }
-
-    }
+//    public static void main(String[] args) {
+//        LocalDateTime[] dummy = new LocalDateTime[14];
+//        LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
+//        for (int i = 0; i < 7; i++) {
+//            dummy[i*2] = now.withHour(8);
+//            dummy[i*2+1] = now.withHour(17);
+//        }
+//        for (LocalDateTime localDateTime : dummy) {
+//            System.out.println(localDateTime);
+//        }
+//
+//    }
 
 }

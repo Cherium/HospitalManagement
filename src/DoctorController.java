@@ -180,6 +180,10 @@ public class DoctorController {
 		});
 	}
 
+	
+	
+	
+	
 	// append new notes to current notes
 	public void saveNotes() {
 		int selectedIndex = view.getListPatients().getSelectedIndex();

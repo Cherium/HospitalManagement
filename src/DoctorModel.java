@@ -39,9 +39,16 @@ public class DoctorModel extends UserSuperClass {
 			{
 				this.scheduledPatientsUsernames.add(i);
 			}
+			
 			this.availability = arrayToLDTArray(new ArrayList<String>(Arrays.asList(avail)));
 			
 	}
+	
+	
+	
+	
+	
+	
 	
 	public void addPatient(String p) {
 		// ArrayList<PatientModel> ps = new ArrayList<PatientModel>(getScheduledPatients());
@@ -50,8 +57,6 @@ public class DoctorModel extends UserSuperClass {
 		this.scheduledPatientsUsernames.add(p);
 	}
 
-
-	
 	
 	
 
@@ -105,21 +110,21 @@ public class DoctorModel extends UserSuperClass {
 	}
 
 
-//testing class; will later be export class for database
-public String toString()
-{
-	StringBuilder bob = new StringBuilder();
-	bob.append("Namee: ");
-	bob.append(getName());
-	bob.append("\n");
-	bob.append("Role: ");
-	bob.append(getRole());
-	bob.append("\n");
-	bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
-	bob.append("\n");
-	// bob.append("Schedule: " + \n\t + getSchedule().toString());
-	return bob.toString();
-}
+	//testing class; will later be export class for database
+	public String toString()
+	{
+		StringBuilder bob = new StringBuilder();
+		bob.append("Namee: ");
+		bob.append(getName());
+		bob.append("\n");
+		bob.append("Role: ");
+		bob.append(getRole());
+		bob.append("\n");
+		bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
+		bob.append("\n");
+		// bob.append("Schedule: " + \n\t + getSchedule().toString());
+		return bob.toString();
+	}
 
 
 
