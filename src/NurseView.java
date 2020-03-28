@@ -211,12 +211,16 @@ public class NurseView extends JFrame{
 			departmentDropDown = new JComboBox<String>();
 			chooseAppt = new JComboBox<String>();
 			labTime = new JComboBox<String>(times);
+				labTime.setEnabled(false);
 			year = initYearCombo();
+				year.setEnabled(false);
 				year.addActionListener(e -> initDaysinBox());
 			month = initMonthCombo();
+				month.setEnabled(false);
 				month.addActionListener(e -> initDaysinBox());
 			day = initDayCombo();
-			initDaysinBox();
+				day.setEnabled(false);
+				initDaysinBox();
 				
 			bookPanel.add(new JLabel("Type:"));
 			bookPanel.add(apptType);
