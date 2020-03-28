@@ -1,6 +1,8 @@
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.DefaultComboBoxModel;
+
 import net.miginfocom.swing.MigLayout;
 
 
@@ -43,7 +45,13 @@ public class NurseController {
 					", "+ model.getDocDept()
 					);
 		view.setPatientList(model.getDocPats());
-		view.setAvailList(model.getDocPats() );	//TODO Change to availability
+		view.getSchedList().setText("");
+		
+		//list of departments to set in combobox
+		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
+		
+		//list of 14 next shifts to print to text field
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 	}
 	
 	//initialize the listeners from the view class that need to interact with model

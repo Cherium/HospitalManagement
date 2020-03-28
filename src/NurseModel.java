@@ -1,4 +1,6 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
@@ -13,47 +15,22 @@ public class NurseModel extends UserSuperClass {
 	
 	private String[] docsPatientsUsernames;
 	
-/*TODO Move these to Schedule when refctoring done
-     //1-takes in raw availability change request data and returns a properly formatted, and updated, availability array
-    public LocalDateTime[] updateSchedule(String[] rawData)
-    {
-    	LocalDateTime[] temp = new LocalDateTime[14];
-    	for(String i:  rawData)
-    	{
-    		//convert start date/end date for each of the 7 days
-    		LocalDateTime convert = LocalDateTime.parse("2001-01-01T"+ rawData[i]);
-    		temp[i] = convert;
-    	}
-		return temp;
-    	
-    }
 
-    //2-retrieves this users availability as a string array for use in view
-    //input: users availability array; output: strings in format HH:MM for use in view
-    public String[] updateSchedule(LocalDateTime[] currentAvailability)
-    {
-        String[] rawTimes = new String[14];
-        
-        for (int i = 0; i < currentAvailability.length; i++) 
-		{
-			rawTimes[i] = currentAvailability[i].getHour() + ":" + currentAvailability[i].getMinute();
-		}
-		
-		return rawTimes;
-    	
-    }
- */
 	
 	//constructor
 	public NurseModel(String username, char[] password, String name
-			, String department, String assignedDocUsername){
+			, String department, String assignedDocUsername, String[] avail){
 		
 		super(name, username, password);
 		this.assignedDocUsername = assignedDocUsername;
 		this.department = department;
 		setRole("nurse");
-		//provide an ease-of-use doctor object for assigned doc of this Nurse, retrieved from the database
-		//any changes to this object are not reflected in the database, and must be done manually
+		
+		this.availability = arrayToLDTArray(avail);
+		
+		System.out.println(s.nextShiftsToString(availability));
+		
+		
 	}
 
 	

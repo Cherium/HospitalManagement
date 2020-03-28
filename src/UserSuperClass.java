@@ -41,19 +41,27 @@ public class UserSuperClass {
 			
 			
 			//takes in a 1D array of availability(size 14), and converts it to a LDT (size 14)
-			public LocalDateTime[] arrayToLDTArray(ArrayList<String> availability)
+			public LocalDateTime[] arrayToLDTArray(String[] availability)
 			{
 				LocalDateTime[] temp = new LocalDateTime[14];
 				
-				for(int i=0; i < availability.size(); i++)
+				for(int i=0; i < availability.length; i++)
 				{
-					temp[i] = LocalDateTime.parse(availability.get(i) );
+					temp[i] = LocalDateTime.parse(availability[i] );
 				}
 				
 				return temp;
 			}
 			
 			
+			//return the department list in a string[] format for use with combobox
+			public String[] getDeptList() {
+				
+				ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+				
+				
+				return temp.toArray(new String[0]);
+			}
 			
 			//returns the 'name' associated with an object in the database
 			public String getObjectsName(String username)
@@ -62,18 +70,6 @@ public class UserSuperClass {
 				return Main.dbase.get(username).name;
 			}
 			
-			//convert a Unix Time (seconds) string to a LocalDateTime object
-			public LocalDateTime secondsToDate(String numberOfSecondsString) {
-				
-				//convert string to long
-				long timestampSeconds = Integer.parseInt(numberOfSecondsString);
-				
-				//convert long to LocalDate
-				//https://stackoverflow.com/questions/44883432/long-timestamp-to-localdatetime
-				LocalDateTime temp = LocalDateTime.ofEpochSecond(timestampSeconds, 0, ZoneOffset.UTC);
-
-				return temp;
-			}
 			
 			//convert a date string(uuuu/M/d) to a Unix Time (seconds) string
 			//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html

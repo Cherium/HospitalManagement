@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
@@ -66,7 +67,7 @@ public class NurseView extends JFrame{
 	private JTextField amountText;
 	
 	JList patList;
-	JList schedList;
+	JTextArea schedList;
 	
 	JScrollPane patListScroll;
 	JScrollPane schedListScroll;
@@ -86,12 +87,13 @@ public class NurseView extends JFrame{
 	
 
 	
-	public static void main(String[] args)
-	{
-		char[] a = {'a'};
-		new NurseController(new NurseModel("userName", a, "Nursey"
-				, "Nephrology", "doctor"), new NurseView("Hii"));
-	}
+//	public static void main(String[] args)
+//	{
+//		char[] a = {'a'};
+//		String[] b = {};
+//		new NurseController(new NurseModel("userName", a, "Nursey"
+//				, "Nephrology", "doctor", b), new NurseView("Hii"));
+//	}
 
 
 
@@ -247,7 +249,14 @@ public class NurseView extends JFrame{
 			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
 			schedPanel.setPreferredSize(new Dimension(325, 200));
 
-		
+			schedList = new JTextArea();
+				schedList.setFont( new Font("monospaced", Font.PLAIN, 10) );	//https://stackoverflow.com/questions/40901128/how-would-i-fix-this-jtextarea-formatting-error
+			//wrap availability box in scrollpane
+			schedListScroll = new JScrollPane(schedList
+					, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			schedListScroll.setPreferredSize(new Dimension(400, 200));
+			
+			schedPanel.add(schedListScroll, "sg d");
 		
 		
 		//inner panel
@@ -316,18 +325,6 @@ public class NurseView extends JFrame{
 		listPanel.add(patListScroll, "sg d");
 	}
 	
-	public void setAvailList(String[] list)
-	{
-		schedList = new JList(list);
-		
-		//wrap lists in scrollpanes
-		schedListScroll = new JScrollPane(schedList
-				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		schedListScroll.setPreferredSize(new Dimension(400, 200));
-
-		schedPanel.add(schedListScroll, "sg d");
-		
-	}
 
 	//create scheduling panel, pass in names of JComboBox fields
 	public JPanel createAvailabilityChangePanel()
@@ -684,24 +681,6 @@ public class NurseView extends JFrame{
 
 
 
-	public JList getSchedList() {
-		return schedList;
-	}
-
-
-
-
-
-
-	public void setSchedList(JList schedList) {
-		this.schedList = schedList;
-	}
-
-
-
-
-
-
 	public JComboBox getApptType() {
 		return apptType;
 	}
@@ -911,6 +890,24 @@ public class NurseView extends JFrame{
 
 	public void setEmail(JLabel email) {
 		this.email = email;
+	}
+
+
+
+
+
+
+	public JTextArea getSchedList() {
+		return schedList;
+	}
+
+
+
+
+
+
+	public void setSchedList(JTextArea schedList) {
+		this.schedList = schedList;
 	}
 	
 	

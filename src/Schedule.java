@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,53 @@ import java.util.concurrent.ThreadLocalRandom;
 	
 	    }
     
+	    
+	    
+	//return a string of next shifts (from current date) to print in JTextArea
+	public String nextShiftsToString(LocalDateTime[] availability)
+	{
+		StringBuilder nextShifts = new StringBuilder();
+			nextShifts.append(String.format("%-20s%-20s%-20s\n", "Date","Start Time", "End Time"));
+			nextShifts.append("------------------------------------------------------------------\n");
+			
+		LocalDateTime now = LocalDateTime.now();
+		
+		/*
+		Get scheduled shifts for next 14 days from now P(including today).
+		Availability array stores 14 timings (start time and end time for every day of the week)
+		This function get the day 'now' and appends it to the times for the day of the week (index) in the availability array.
+		IF the start/end time are the same, then that means the person does not work that day.
+		 */
+		for(int i = 0; i < 14; i++)
+		{
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			int day = now.getDayOfMonth();
+			int startTime = availability[(i*2) % (availability.length)].getHour();			//get start time, wrap around at end of week
+			int endTime = availability[((i*2) + 1) % (availability.length)].getHour();		//get end time.
+			
+			now = now.plusDays(1);
+			
+			//if no shift scheduled that day
+			if(startTime == endTime)
+			{
+				continue;
+			}
+			else	//add this shift to print list
+			{
+				String date = String.format("%d-%d-%d", year,month,day);
+				String start = String.format("%d:00", startTime);
+				String end =String.format("%d:00", endTime);
+				String temp = String.format("%-20s%-20s%-20s\n", date,start,end);
+				nextShifts.append(temp);
+			}
+			
+		}
+		
+		
+		
+		return nextShifts.toString();
+	}
     
     // Takes a list of patient usernames and a doctor username, returning all the appointments that the patients
     // in the list have scheduled with the doctor

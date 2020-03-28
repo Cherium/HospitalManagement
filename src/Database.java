@@ -107,8 +107,25 @@ public class Database {
 										
 										else if(importRole.compareTo("nurse")== 0)
 										{
+											
+											//read in nurse availability
+											InputStream wv = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Avail.txt");
+
+											Scanner fc = new Scanner(wv);
+											
+											ArrayList<String> importAvail = new ArrayList<>(5);
+											while(fc.hasNextLine()) 
+											{
+												
+												String time = fc.nextLine();			//read in entire line
+												
+												importAvail.add(time);
+											}
+											fc.close();
+											
+											
 											NurseModel temp = new NurseModel(importUsername, importPassword, importName
-													, importDepartment, importAssignedDocUsername);
+													, importDepartment, importAssignedDocUsername, importAvail.toArray(new String[0]) );
 											
 											users.put(importUsername, temp);
 										}

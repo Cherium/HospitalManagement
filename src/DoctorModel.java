@@ -40,8 +40,7 @@ public class DoctorModel extends UserSuperClass {
 				this.scheduledPatientsUsernames.add(i);
 			}
 			
-			this.availability = arrayToLDTArray(new ArrayList<String>(Arrays.asList(avail)));
-			
+			this.availability = arrayToLDTArray(avail);
 	}
 	
 	

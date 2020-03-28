@@ -3,6 +3,19 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 28 mar 00:45 Sajid
+
+* Database: added code to allow importing nurse availability; added txt files to represent nurse availability
+* Nurse MVC: 
+    * availability now populates from database
+    * model constructor updated
+    * buttons now active/inactive based on user choice
+* Schedule:
+    * nextShiftsToString(..) function created to:
+        * consider the days worked of the current user and
+        * return a list of strings showing the date worked + start time + end time for 14 days from current date
+    * changed arrayToLDTArray to take in String[] instead of ArrayList
+* Doctor Model: changed constructor definition as per the previous point
 
 ## 27 mar 08:30 Sajid
 * changed doctor constructors in DoctorModel and in CreateNeDoctorModel
