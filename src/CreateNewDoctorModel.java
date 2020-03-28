@@ -131,10 +131,6 @@ public class CreateNewDoctorModel {
 	public String[] getDeptList() {
 		
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
-		if(temp.get(0).compareTo("") != 0)
-		{
-			temp.add(0, "");
-		}
 		
 		
 		return temp.toArray(new String[0]);

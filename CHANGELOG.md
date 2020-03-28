@@ -3,6 +3,7 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+
 ## 27 mar 08:30 Sajid
 * changed doctor constructors in DoctorModel and in CreateNeDoctorModel
 
@@ -31,6 +32,16 @@ Example: 10 mar 21:13 SAJID\
 * The monthly calendar in DoctorView is now set up with appointment information from DoctorModel.
 # 17:25
 * Somewhat cleared up code from Schedule and Doctor MVC. Removed unneccessary functions and commented out functionalities. 
+
+##26 mar 13:16 Sajid
+**In branch nurse**
+* all buttons, boxes, and other fields added. Patient names populate labels.
+* need to populate availability box, and also set nurse availability.
+
+## 26 mar 05:01 Sajid
+**In Branch nurse**
+* Added nurse functionality from scratch
+    * panels for assigned docs patients, patient info, book appt, see schedule, request time off, change availability
 
 ## 26 MARCH Jenny
 # 10:46 
