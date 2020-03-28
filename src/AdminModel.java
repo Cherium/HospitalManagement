@@ -60,6 +60,35 @@ public class AdminModel extends UserSuperClass {
 		
 	}
 
+	public void editAccount(String selectedItem) {
+		
+		if(selectedItem.compareTo("Patient") == 0)
+		{
+			new CreateNewPatientController(new CreateNewPatientModel(), new CreateNewPatientView("Create a New Patient"));
+		}
+		else if(selectedItem.compareTo("Doctor") == 0)
+		{
+			new CreateNewDoctorController(new CreateNewDoctorModel(), new CreateNewDoctorView("Create a New Doctor"));
+		}
+		else if(selectedItem.compareTo("Nurse") == 0)
+		{
+			//TODO
+		}
+		else if(selectedItem.compareTo("Admin") == 0)
+		{
+			//TODO
+		}
+		else if(selectedItem.compareTo("Hospital Authority") == 0)
+		{
+			//TODO
+		}
+		else if(selectedItem.compareTo("Receptionist") == 0)
+		{
+			//TODO
+		}
+		
+	}
+
 	
 
 

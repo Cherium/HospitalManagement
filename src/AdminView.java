@@ -27,7 +27,8 @@ public class AdminView extends JFrame {
 	private JButton btnReturn;
     ////Added for Account creaiton and deletion
     private JButton crtAccount;
-    private JButton delAccount;
+	private JButton delAccount;
+	private JButton editAccount;
     private JButton crtDepartment;
     private JButton delDepartment;
     
@@ -98,13 +99,14 @@ public class AdminView extends JFrame {
 	//Buttons			
 				crtAccount = new JButton("Create Account");
 				delAccount = new JButton("Delete Account");
+				editAccount = new JButton("Edit Account");
 				
 	//Add components to inner panel		
 				accountPanel.add(chooseRole, "right");
 				accountPanel.add(rolesDropDown, "wrap");
 				accountPanel.add(crtAccount);
 				accountPanel.add(delAccount);
-				
+				accountPanel.add(editAccount);
 				
 				
 				
@@ -189,6 +191,18 @@ public class AdminView extends JFrame {
 
 	public void setDltAccount(JButton dltAccount) {
 		this.delAccount = dltAccount;
+	}
+
+
+
+	public JButton getEditAccount() {
+		return editAccount;
+	}
+
+
+
+	public void setEditAccount(JButton editAccount) {
+		this.editAccount = editAccount;
 	}
 
 
