@@ -11,10 +11,12 @@ public class AdminModel extends UserSuperClass {
 	
 	
 	//constructor
-	public AdminModel(String username, char[] password, String name) {
+	public AdminModel(String username, char[] password, String name, String[] avail) {
 
 		super(name, username, password);
 		setRole("admin");
+		
+		this.availability = arrayToLDTArray(avail);
 	}
 
 

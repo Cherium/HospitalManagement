@@ -3,8 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
-## 28 mar 00:45 Sajid
+## 28 mar 15:05 Sajid
+* Database: remaining information for existing users now all imports. I believe this is all the importing fields we need to deal with.
+* Receptionist, Authority Models: constructor changed to import availability
 
+## 28 mar 00:45 Sajid
 * Database: added code to allow importing nurse availability; added txt files to represent nurse availability
 * Nurse MVC: 
     * availability now populates from database

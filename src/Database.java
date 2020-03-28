@@ -175,21 +175,70 @@ public class Database {
 										
 										else if(importRole.compareTo("admin")== 0)
 										{
-											AdminModel temp = new AdminModel(importUsername, importPassword, importName);
+											//read in admin availability
+											InputStream wv = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Avail.txt");
+
+											Scanner fc = new Scanner(wv);
+											
+											ArrayList<String> importAvail = new ArrayList<>(5);
+											while(fc.hasNextLine()) 
+											{
+												
+												String time = fc.nextLine();			//read in entire line
+												
+												importAvail.add(time);
+											}
+											fc.close();
+											
+											
+											
+											AdminModel temp = new AdminModel(importUsername, importPassword, importName, importAvail.toArray(new String[0]));
 											
 											users.put(importUsername, temp);
 										}
 										
 										else if(importRole.compareTo("authority")== 0)
 										{
-											AuthorityModel temp = new AuthorityModel(importUsername, importPassword, importName);
+											
+											//read in authority availability
+											InputStream wv = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Avail.txt");
+
+											Scanner fc = new Scanner(wv);
+											
+											ArrayList<String> importAvail = new ArrayList<>(5);
+											while(fc.hasNextLine()) 
+											{
+												
+												String time = fc.nextLine();			//read in entire line
+												
+												importAvail.add(time);
+											}
+											fc.close();
+											
+											AuthorityModel temp = new AuthorityModel(importUsername, importPassword, importName, importAvail.toArray(new String[0]));
 											
 											users.put(importUsername, temp);
 										}
 										
 										else if(importRole.compareTo("receptionist")== 0)
 										{
-											ReceptionistModel temp = new ReceptionistModel(importUsername, importPassword, importName);
+											
+											//read in receptionist availability
+											InputStream wv = getClass().getClassLoader().getResourceAsStream("dbase/"+importUsername+"Avail.txt");
+
+											Scanner fc = new Scanner(wv);
+											
+											ArrayList<String> importAvail = new ArrayList<>(5);
+											while(fc.hasNextLine()) 
+											{
+												
+												String time = fc.nextLine();			//read in entire line
+												
+												importAvail.add(time);
+											}
+											fc.close();
+											
+											ReceptionistModel temp = new ReceptionistModel(importUsername, importPassword, importName, importAvail.toArray(new String[0]));
 											
 											users.put(importUsername, temp);
 										}
