@@ -4,7 +4,6 @@ public class EditAccountController {
 	
 	private EditAccountModel model;
 	private EditAccountView view;
-
 	
 	//constructor
 	public EditAccountController(EditAccountModel model, EditAccountView view) {
@@ -50,7 +49,7 @@ public class EditAccountController {
 		}
 		else
 		{
-			view.showDialogToUser(returnMessage);
+			//view.showDialogToUser(returnMessage);
 			view.setVisible(false);
 		}
 	}

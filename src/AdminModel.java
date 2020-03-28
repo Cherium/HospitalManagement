@@ -64,11 +64,11 @@ public class AdminModel extends UserSuperClass {
 		
 		if(selectedItem.compareTo("Patient") == 0)
 		{
-			new CreateNewPatientController(new CreateNewPatientModel(), new CreateNewPatientView("Create a New Patient"));
+			new EditAccountController(new EditAccountModel(), new EditAccountView("Edit an Account"));
 		}
 		else if(selectedItem.compareTo("Doctor") == 0)
 		{
-			new CreateNewDoctorController(new CreateNewDoctorModel(), new CreateNewDoctorView("Create a New Doctor"));
+			//TODO
 		}
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{

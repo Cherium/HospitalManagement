@@ -6,7 +6,8 @@
 public class EditAccountModel {
 	
 	private String username;
-	
+	private UserSuperClass user;
+
 	
 	
 	public String editAccount()
@@ -17,9 +18,11 @@ public class EditAccountModel {
 			return "That Account does not exist!";
 		}
 		else { 
-        //otherwise delete the account from the HashMap
-		Main.dbase.remove(username);
-		return "Account successfully deleted!";
+		//otherwise edit the account in the HashMap
+		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+		new PatientController( ((PatientModel) user) , new PatientView("Patient Portal") );
+
+		return "Account successfully edited!";
         }
 		
 	}
