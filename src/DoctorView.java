@@ -70,8 +70,6 @@ public class DoctorView {
 	private JPanel titleContainer;
 	private JPanel backPanel;
 	private JPanel patientPanel;
-	// private JPanel dayPanel;
-	private JPanel listPatientsPanel;
 	private JPanel btnPaneSchedule;
 	private JPanel buttonContainer;
 	private JPanel scheduleContainer;
@@ -257,17 +255,16 @@ public class DoctorView {
 		 * #            #   AddTreatmentButton                             #
 		 * #################################################################
 		 */
-		patientPanel = new JPanel();
-		patientPanel.setBorder(new LineBorder(Color.CYAN));
-		patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		patientPanel.setLayout(new BorderLayout());
-		patientPanel.setBackground(Color.WHITE);
-		patientPanel.setVisible(false);
-		contentPane.add(patientPanel);
+		// patientPanel = new JPanel();
+		// patientPanel.setBorder(new LineBorder(Color.CYAN));
+		// patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+		// // patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		// patientPanel.setLayout(new BorderLayout());
+		// patientPanel.setBackground(Color.WHITE);
+		// patientPanel.setVisible(false);
 
 		initializePatients();
-
+		contentPane.add(patientPanel);
 
 		// Create a panel for the schedule itself
 		// Initialize YYYYMMDD labels for weekly schedule
@@ -733,15 +730,19 @@ public class DoctorView {
 	 * Set up the patients view in doctor
 	 */
 	public void initializePatients() {
-		listPatientsPanel = new JPanel();
-		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
-		listPatientsPanel.setBackground(Color.WHITE);
-	
-		
-		
-		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		listPatientsPanel.revalidate();
-		listPatientsPanel.repaint();
+		patientPanel = new JPanel();
+		patientPanel.setBorder(new LineBorder(Color.CYAN));
+		patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+		// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		patientPanel.setLayout(new BorderLayout());
+		patientPanel.setBackground(Color.WHITE);
+		patientPanel.setVisible(false);
+
+		JPanel topPanel = new JPanel();
+		topPanel.add(new JLabel("I am the top component"));
+		topPanel.setBorder(BorderFactory.createEtchedBorder());
+		patientPanel.add(topPanel, BorderLayout.NORTH);
+		topPanel.setVisible(false);
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
 		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
@@ -770,6 +771,27 @@ public class DoctorView {
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
+		JPanel availPanel = new JPanel();
+		availPanel.setBackground(Color.WHITE);
+		availPanel.setBorder(new LineBorder(Color.ORANGE));
+		JButton btnReturnToPatient = new JButton("Return");
+		btnReturnToPatient.addActionListener(e -> {
+			availPanel.setVisible(false);
+			selectedPatient.setVisible(true);
+			patientPanel.add(selectedPatient, BorderLayout.CENTER);
+			topPanel.setVisible(false);
+		});
+		availPanel.add(btnReturnToPatient);
+		availPanel.setVisible(false);
+
+		JButton btnTest = new JButton("Test Click");
+		btnTest.addActionListener(e -> {
+			availPanel.setVisible(true);
+			selectedPatient.setVisible(false);
+			patientPanel.add(availPanel, BorderLayout.CENTER);
+			topPanel.setVisible(true);
+		});
+		selectedPatient.add(btnTest);
 
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
@@ -1290,13 +1312,6 @@ public class DoctorView {
 		this.patientInformation = pi;
 	}
 
-	public JPanel getListPatientsPanels() {
-		return listPatientsPanel;
-	}
-
-	public void setListPatientsPanel(JPanel p) {
-		this.listPatientsPanel = p;
-	}
 
 	public JButton getButtonTreatmentNotes() {
 		return btnAddTreatmentNotes;

@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 28 MARCH 21:19 Jenny
+* DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views. 
+
 ## 28 mar 00:45 Sajid
 
 * Database: added code to allow importing nurse availability; added txt files to represent nurse availability
