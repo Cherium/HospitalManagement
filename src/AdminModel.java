@@ -68,7 +68,7 @@ public class AdminModel extends UserSuperClass {
 		}
 		else if(selectedItem.compareTo("Doctor") == 0)
 		{
-			//TODO
+			new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit an Account"));
 		}
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{

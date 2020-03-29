@@ -18,7 +18,7 @@ import net.miginfocom.swing.MigLayout;
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
-public class EditAccountView extends JDialog{
+public class EditDoctorView extends JDialog{
 	
 	JPanel contentPanel;
 	
@@ -35,7 +35,7 @@ public class EditAccountView extends JDialog{
 	
 	
 	//constructor
-	public EditAccountView(String title) 
+	public EditDoctorView(String title) 
 	{
 		//sets frame containers attributes
 		setTitle(title);

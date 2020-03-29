@@ -1,12 +1,12 @@
 import javax.swing.DefaultComboBoxModel;
 
-public class EditAccountController {
+public class EditDoctorController {
 	
-	private EditAccountModel model;
-	private EditAccountView view;
+	private EditDoctorModel model;
+	private EditDoctorView view;
 		
 	//constructor
-	public EditAccountController(EditAccountModel model, EditAccountView view) {
+	public EditDoctorController(EditDoctorModel model, EditDoctorView view) {
 		// TODO Auto-generated constructor stub
 		
 		this.model = model;
