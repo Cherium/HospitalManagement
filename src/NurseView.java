@@ -72,13 +72,14 @@ public class NurseView extends JFrame{
 	JScrollPane patListScroll;
 	JScrollPane schedListScroll;
 	
-	private JComboBox apptType;
+	private JComboBox<String> apptType;
 	private JComboBox<String> departmentDropDown;
-	private JComboBox chooseAppt;
-	private JComboBox labTime;
+	private JComboBox<String> chooseAppt;
+	private JComboBox<String> chooseDoc;
+	private JComboBox<String> labTime;
 	private JComboBox<String> year, month, day;
 	
-	private JComboBox<String>[] availTimes = new JComboBox[14];
+	private JComboBox<String>[] availTimes = new JComboBox[14];	//stores al drop-down menues for availability change; index 0= sunday start // index 13= sat end
 	
 	String[] times = {
 			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
@@ -130,10 +131,10 @@ public class NurseView extends JFrame{
 					welcomeLabel = new JLabel();
 						welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		//add scrolling to main container
-		JScrollPane scroll = new JScrollPane(contentPanel
-				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
+				//add scrolling to main container
+				JScrollPane scroll = new JScrollPane(contentPanel
+						, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 
 		
@@ -212,6 +213,9 @@ public class NurseView extends JFrame{
 				
 			departmentDropDown = new JComboBox<String>();
 			chooseAppt = new JComboBox<String>();
+				chooseAppt.setMaximumRowCount(10);
+				
+			chooseDoc = new JComboBox<String>();
 			labTime = new JComboBox<String>(times);
 				labTime.setEnabled(false);
 			year = initYearCombo();
@@ -227,19 +231,24 @@ public class NurseView extends JFrame{
 			bookPanel.add(new JLabel("Type:"));
 			bookPanel.add(apptType);
 			
-			bookPanel.add(new JLabel("Department:"), "gapleft 50" );
-			bookPanel.add(departmentDropDown, "growx");
-			bookPanel.add(new JLabel("Select Appointment: "));
-			bookPanel.add(chooseAppt, "span, pushx, growx, wrap");
+			bookPanel.add(new JLabel("Department:"), "gapleft 35, align right" );
+			bookPanel.add(departmentDropDown, "growx, align left, sg a");
 			
-			bookPanel.add(new JLabel("Lab Date: "), "skip 2, align right");
+			bookPanel.add(new JLabel("Lab Date: "), "align right");
 			bookPanel.add(year, "sg c, split");
 			bookPanel.add(month, "sg c, split");
-			bookPanel.add(day, "sg c");
-			bookPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
-			bookPanel.add(labTime, "sg c");
+			bookPanel.add(day, "sg c, wrap");
 			
-			bookPanel.add(bookAptBtn, "skip 2, align right");
+			bookPanel.add(new JLabel("Select Doctor: "), "skip 2, align right");
+			bookPanel.add(chooseDoc, "sg a, align left");
+			
+			bookPanel.add(new JLabel("Time: "), "align right");
+			bookPanel.add(labTime, "sg c, wrap");
+			
+			bookPanel.add(new JLabel("Select Appointment: "), "skip 2 , align right");
+			bookPanel.add(chooseAppt, "span 2, growx");
+			
+			bookPanel.add(bookAptBtn, "align right");
 			
 			
 		
@@ -264,9 +273,6 @@ public class NurseView extends JFrame{
 			reqAvailChangeBtn = new JButton("Send Request");
 			availChangePanel.add(reqAvailChangeBtn, "span, align right");
 		
-	
-			//add to inner panel
-			//schedPanel.add(schedList, "wrap 20");
 		
 		
 		
@@ -290,7 +296,14 @@ public class NurseView extends JFrame{
 		
 	}
 
-
+	//pop up a message-dialog box with a message passed in 
+	public void showDialogToUser(String message)
+	{
+		JOptionPane.showMessageDialog(contentPanel, message);
+	}	
+	
+	
+	
 	public void disableLab() {
 		
 		if (apptType.getSelectedItem().equals("Lab Test")) {
@@ -908,6 +921,14 @@ public class NurseView extends JFrame{
 
 	public void setSchedList(JTextArea schedList) {
 		this.schedList = schedList;
+	}
+
+	public JComboBox<String> getChooseDoc() {
+		return chooseDoc;
+	}
+
+	public void setChooseDoc(JComboBox<String> chooseDoc) {
+		this.chooseDoc = chooseDoc;
 	}
 	
 	

@@ -3,6 +3,16 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 29 mar 06:00 Sajid
+* Nurse MVC:
+    * changed fields to include doctor DropDown in booking panel
+    * initView() now uploads departments, and doctors of those departments to booking panel
+    * controller updates doctor menu based on department choice
+    * list of 100 next available appointments loads from initView (still needs listener)
+    * a lab test can now be booked for a patient
+* Schedule: created function nextOpenSlots() to find free slots in a given doctors schedule
+* UserSuperClass: created function that takes a doctors name, and returns its openSlots using above function
+
 ## 28 mar 15:05 Sajid
 * Database: remaining information for existing users now all imports. I believe this is all the importing fields we need to deal with.
 * Receptionist, Authority Models: constructor changed to import availability

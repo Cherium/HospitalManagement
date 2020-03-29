@@ -6,9 +6,11 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.*;
 
@@ -62,6 +64,70 @@ public class UserSuperClass {
 				
 				return temp.toArray(new String[0]);
 			}
+			
+			//return the doc usernames list in a string[] format for use with combobox
+			public String[] getDocList(String departmentName)
+			{
+				//for all users in the database
+				ArrayList<String> docList = new ArrayList<String>(5);
+				for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+				{
+					//if the user is a doctor
+					if(i.getValue().getRole().compareTo("doctor") == 0)
+					{
+						//if the doctors department matches input department
+						DoctorModel doc = ((DoctorModel) i.getValue());
+						if(doc.getDepartment().compareTo(departmentName) == 0)
+						{
+							//get docs username into list
+							docList.add(doc.getUsername() );
+						}
+						
+					}
+				}
+				
+				return docList.toArray(new String[0]);
+			}
+
+			
+			
+			//returns a list of names associated with a list of Object
+			public String[] getObjectsNames(String[]  usernames)
+			{
+				ArrayList<String> usernamesList = new ArrayList( Arrays.asList( usernames ) );
+				ArrayList<String> names = new ArrayList<>(5);
+				for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+				{
+					if(usernamesList.contains(i.getKey()))
+							names.add(i.getValue().getName() );
+				}
+				return names.toArray(new String[0]);
+			}
+			
+			//return the list of next 100 appointments from a provided doctors name
+			public String[] getOpenSlots(String docName)
+			{
+				//find doctor object from name
+				DoctorModel doc;
+				for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+				{
+					if(i.getValue().getName().compareTo(docName) == 0)
+					{
+						doc = (DoctorModel) i.getValue();
+						System.out.println(doc.getAppointments().get("patient").size() );
+						//return next 100 open slots of this doctor
+						return s.nextOpenSlots(doc.getAvailability(), doc.getAppointments());
+					}
+				}
+				
+				return new String[] {"f"};	//error flag for no available appointments
+
+				
+			}
+			
+			
+			
+			
 			
 			//returns the 'name' associated with an object in the database
 			public String getObjectsName(String username)

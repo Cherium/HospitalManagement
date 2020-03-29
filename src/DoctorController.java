@@ -22,6 +22,7 @@ public class DoctorController {
 		initView();
 		initListeners();
 	}
+	
 
 	// initialize the elements that the GUI sees from the database
 	// as soon as the view first opens for the user
@@ -30,6 +31,7 @@ public class DoctorController {
 		// Cannot do this in constructor as doctors are read from the database before patient
 		model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
 
+//model.s.nextOpenSlots(model.getAvailability(), model.getAppointments());	//debug
 		view.setShifts(convertToShiftTime(model.getAvailability()));
 		view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
 		view.setAppointments(convertAppointments(model.getAppointments()));

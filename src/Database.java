@@ -10,9 +10,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /*Create a Databsae and import CSV into that database*/
-public class Database {
+public class Database{
 
 	
+		//main database accessed everywhere
 		public HashMap<String, UserSuperClass> users;
 
 		//Can later be expanded by the appropriate user that has rights to add a department
@@ -20,7 +21,7 @@ public class Database {
 					(List.of("Cardiology", "Nephrology", "Neurology", "Receptionist", "ER"));
 		
 		
-		
+		private ArrayList<DoctorModel> docsToLoad = new ArrayList<DoctorModel>();
 		
 		
 		
@@ -103,6 +104,9 @@ public class Database {
 											
 											//add that doctor to the internal database
 											users.put(importUsername, temp);
+											
+											//add doctor to list to initialize appointments after importing
+											docsToLoad.add(temp);
 										}
 										
 										else if(importRole.compareTo("nurse")== 0)
@@ -275,6 +279,20 @@ public class Database {
 
 		public void setDepartmentList(ArrayList<String> departmentList) {
 			this.departmentList = departmentList;
+		}
+
+
+
+
+		public ArrayList<DoctorModel> getDocsToLoad() {
+			return docsToLoad;
+		}
+
+
+
+
+		public void setDocsToLoad(ArrayList<DoctorModel> docsToLoad) {
+			this.docsToLoad = docsToLoad;
 		}
 		
 

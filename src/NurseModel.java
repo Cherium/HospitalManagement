@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public class NurseModel extends UserSuperClass {
 	
 	private String[] docsPatientsUsernames;
 	
+	
 
 	
 	//constructor
@@ -28,7 +30,7 @@ public class NurseModel extends UserSuperClass {
 		
 		this.availability = arrayToLDTArray(avail);
 		
-		System.out.println(s.nextShiftsToString(availability));
+		//System.out.println(s.nextShiftsToString(availability));
 		
 		
 	}
@@ -55,6 +57,21 @@ public class NurseModel extends UserSuperClass {
 	
 	
 	
+
+    //0- takes in a single raw availability time, and returns a LocalDateTime object
+    public LocalDateTime storeApptInPatient(String rawData, int selectedPatient)
+    {
+    	//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
+    	
+        LocalDateTime temp = LocalDateTime.parse(rawData, formatter);
+        PatientModel pat = (PatientModel) Main.dbase.get(docsPatientsUsernames[selectedPatient]);
+        
+        return temp;
+        
+    }
+    
+
 	
 	
 /**Getters and Setters*/
@@ -92,5 +109,8 @@ public class NurseModel extends UserSuperClass {
 	public void setDocsPatientsUsernames(String[] docsPatientsUsernames) {
 		this.docsPatientsUsernames = docsPatientsUsernames;
 	}
+
+
+
 
 }

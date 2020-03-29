@@ -51,17 +51,17 @@ public class PatientModel extends UserSuperClass {
 		
 		//get list of appointments
 		this.appointments = listToAppointmentMap(appointments);
-		
-		//testing prints
-		for(Map.Entry<String, ArrayList<LocalDateTime>> i: this.appointments.entrySet() )
-		{
-			//print if not lab test
-			if(i.getKey().compareTo("labtest") == 0)
-			{continue;
-				
-			}
-			System.out.println("Doctor: " + i.getKey() + " Appt: " + i.getValue().get(3).toString() );
-		}
+
+		//testing prints-- dont delete
+//		for(Map.Entry<String, ArrayList<LocalDateTime>> i: this.appointments.entrySet() )
+//		{
+//			//print if not lab test
+//			if(i.getKey().compareTo("labtest") == 0)
+//			{
+//				continue;
+//			}
+//			System.out.println("Doctor: " + i.getKey() + " Appt: " + i.getValue().get(0).toString()  );
+//		}
 	}
 	
 
@@ -87,6 +87,7 @@ public class PatientModel extends UserSuperClass {
 				{
 					//add this appt to the appt list for that doc
 					temp.get(docname).add(apptTime);
+					
 				}					
 			}
 			else //doc is not in hashmap

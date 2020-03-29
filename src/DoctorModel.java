@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
@@ -41,6 +42,8 @@ public class DoctorModel extends UserSuperClass {
 			}
 			
 			this.availability = arrayToLDTArray(avail);
+			
+			
 	}
 	
 	
@@ -54,7 +57,29 @@ public class DoctorModel extends UserSuperClass {
 	}
 
 	
-	
+	//for all the doctors scheduled shifts, get a list of all the open slots for booking times in the docs schedule
+	public ArrayList<LocalDateTime> getRemainingTimes()
+	{
+		LocalDateTime now = LocalDateTime.now();
+		
+		//get 14 appointment dates
+		for(int i = 0; i < 14; i++)
+		{
+			//for all doctors appointments for this day, greater than his start shift time, and less than his end shift time
+			for (int j = 0; j < availability.length; j++) 
+			{
+				
+			}
+			
+		}
+		//for all appointments the doctor has booked
+		ArrayList<String> apptList = new ArrayList<String>(5);
+		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+		{
+
+		}
+		return null;
+	}
 
 /**Getters and Setters*/
 	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> xs) {
