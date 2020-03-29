@@ -5,6 +5,12 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.*;
 
@@ -14,7 +20,10 @@ public class UserSuperClass {
 			protected String role;
 			protected String username;
 			protected char[] password;
-
+			protected Schedule s = new Schedule();	//initialize s so now ALL model classes can use object 's' to get ease-of-use functions in Schedule class
+			protected LocalDateTime[] availability = new LocalDateTime[14];
+			
+			
 			public UserSuperClass()
 			{
 	
@@ -32,6 +41,94 @@ public class UserSuperClass {
 						this.password = password.toCharArray();
 			}
 			
+			
+			//takes in a 1D array of availability(size 14), and converts it to a LDT (size 14)
+			public LocalDateTime[] arrayToLDTArray(String[] availability)
+			{
+				LocalDateTime[] temp = new LocalDateTime[14];
+				
+				for(int i=0; i < availability.length; i++)
+				{
+					temp[i] = LocalDateTime.parse(availability[i] );
+				}
+				
+				return temp;
+			}
+			
+			
+			//return the department list in a string[] format for use with combobox
+			public String[] getDeptList() {
+				
+				ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+				
+				
+				return temp.toArray(new String[0]);
+			}
+			
+			//return the doc usernames list in a string[] format for use with combobox
+			public String[] getDocList(String departmentName)
+			{
+				//for all users in the database
+				ArrayList<String> docList = new ArrayList<String>(5);
+				for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+				{
+					//if the user is a doctor
+					if(i.getValue().getRole().compareTo("doctor") == 0)
+					{
+						//if the doctors department matches input department
+						DoctorModel doc = ((DoctorModel) i.getValue());
+						if(doc.getDepartment().compareTo(departmentName) == 0)
+						{
+							//get docs username into list
+							docList.add(doc.getUsername() );
+						}
+						
+					}
+				}
+				
+				return docList.toArray(new String[0]);
+			}
+
+			
+			
+			//returns a list of names associated with a list of Object
+			public String[] getObjectsNames(String[]  usernames)
+			{
+				ArrayList<String> usernamesList = new ArrayList( Arrays.asList( usernames ) );
+				ArrayList<String> names = new ArrayList<>(5);
+				for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+				{
+					if(usernamesList.contains(i.getKey()))
+							names.add(i.getValue().getName() );
+				}
+				return names.toArray(new String[0]);
+			}
+			
+			//return the list of next 100 appointments from a provided doctors name
+			public String[] getOpenSlots(String docName)
+			{
+				//find doctor object from name
+				DoctorModel doc;
+				for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+				{
+					if(i.getValue().getName().compareTo(docName) == 0)
+					{
+						doc = (DoctorModel) i.getValue();
+						System.out.println(doc.getAppointments().get("patient").size() );
+						//return next 100 open slots of this doctor
+						return s.nextOpenSlots(doc.getAvailability(), doc.getAppointments());
+					}
+				}
+				
+				return new String[] {"f"};	//error flag for no available appointments
+
+				
+			}
+			
+			
+			
+			
+			
 			//returns the 'name' associated with an object in the database
 			public String getObjectsName(String username)
 			{
@@ -39,18 +136,6 @@ public class UserSuperClass {
 				return Main.dbase.get(username).name;
 			}
 			
-			//convert a Unix Time (seconds) string to a LocalDateTime object
-			public LocalDateTime secondsToDate(String numberOfSecondsString) {
-				
-				//convert string to long
-				long timestampSeconds = Integer.parseInt(numberOfSecondsString);
-				
-				//convert long to LocalDate
-				//https://stackoverflow.com/questions/44883432/long-timestamp-to-localdatetime
-				LocalDateTime temp = LocalDateTime.ofEpochSecond(timestampSeconds, 0, ZoneOffset.UTC);
-
-				return temp;
-			}
 			
 			//convert a date string(uuuu/M/d) to a Unix Time (seconds) string
 			//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
@@ -96,6 +181,10 @@ public class UserSuperClass {
 			public void setPassword(char[] password) {
 						this.password = password;
 			}
+
+			public void setAvailability(LocalDateTime[] availability) {
+				this.availability = availability;
+			}
 		
 			public String getName() {
 						return name;
@@ -111,6 +200,10 @@ public class UserSuperClass {
 		
 			public char[] getPassword() {
 						return password;
+			}
+
+			public LocalDateTime[] getAvailability() {
+				return availability;
 			}
 		
 			public String toString() {

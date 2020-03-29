@@ -123,10 +123,12 @@ public class LoginView {
 			btnNewPatient = new JButton("New Patient");
 				btnNewPatient.setBackground(Color.DARK_GRAY);
 				btnNewPatient.setForeground(Color.WHITE);
+				btnNewPatient.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
 	
 			btnExit = new JButton("Exit");
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);
+				btnExit.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
 				btnExit.addActionListener(e -> frame.setVisible(false));
 				btnExit.addActionListener(e -> frame.dispose());
 				btnExit.addKeyListener(new KeyListener() {
