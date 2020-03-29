@@ -11,12 +11,10 @@ public class AdminModel extends UserSuperClass {
 	
 	
 	//constructor
-	public AdminModel(String username, char[] password, String name, String[] avail) {
+	public AdminModel(String username, char[] password, String name) {
 
 		super(name, username, password);
 		setRole("admin");
-		
-		this.availability = arrayToLDTArray(avail);
 	}
 
 
@@ -70,7 +68,7 @@ public class AdminModel extends UserSuperClass {
 		}
 		else if(selectedItem.compareTo("Doctor") == 0)
 		{
-			//TODO
+			new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit an Account"));
 		}
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{

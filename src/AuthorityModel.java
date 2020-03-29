@@ -6,12 +6,10 @@
 public class AuthorityModel extends UserSuperClass {
 
 	//constructor
-	public AuthorityModel(String username, char[] password, String name, String[] avail) {
+	public AuthorityModel(String username, char[] password, String name) {
 
 		super(name, username, password);
 		setRole("authority");
-		
-		this.availability = arrayToLDTArray(avail);
 	}
 	
 	
