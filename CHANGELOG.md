@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 30 MARCH Jeremy
+* Features implemented: account can now be created for nurses, role can no longer be edited, password can now be edited, nurse account can now be edited
+
 ## 24 MARCH 21:53 Jenny
 * Clarified storage of scheduleDays in Schedule toString function.
 
