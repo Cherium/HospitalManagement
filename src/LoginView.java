@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -64,7 +65,7 @@ public class LoginView {
 			//frame.setSize(460,200);
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
-		
+
 		initializeGUI();
 	}
 
@@ -127,7 +128,7 @@ public class LoginView {
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);
 				btnExit.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
-				btnExit.addActionListener(e -> frame.setVisible(false));
+				btnExit.addActionListener(e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)) );	//close all windows and exit program
 
 			deptPanel.add(btnExit, " sg a");
 			deptPanel.add(btnNewPatient, "sg a");
