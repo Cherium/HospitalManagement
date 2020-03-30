@@ -18,14 +18,14 @@ import net.miginfocom.swing.MigLayout;
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
-public class EditDoctorView extends JDialog{
+public class EditDoctorPersonalInfoView extends JDialog{
 	
 	JPanel contentPanel;
 	
-	
 	private JTextField usernameInput;
-	private JButton editScheduleButton;
-	private JButton editInformationButton;
+	private JTextField nameInput;
+	private JTextField roleInput;
+	private JButton confirmButton;
 	private JButton cancelButton;
 
 	
@@ -36,7 +36,7 @@ public class EditDoctorView extends JDialog{
 	
 	
 	//constructor
-	public EditDoctorView(String title) 
+	public EditDoctorPersonalInfoView(String title) 
 	{
 		//sets frame containers attributes
 		setTitle(title);
@@ -63,30 +63,34 @@ public class EditDoctorView extends JDialog{
 	contentPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );		//miglayout with 2 columns, 16px space between them
 		
 	//Labels
-		JLabel username = new JLabel("Username:");
-		
+		JLabel username = new JLabel("Confirm Username:");
+		JLabel name = new JLabel("Set New Name:");
+		JLabel role = new JLabel("Set New Role:");
+	
 	//TextFields
 		usernameInput = new JTextField();
-		
+		nameInput = new JTextField();
+		roleInput = new JTextField();
+
 	//Add components to panel in order
 		contentPanel.add(username, "right");
 		contentPanel.add(usernameInput, "width 80:160:300 ,wrap");	//set width of the component, wrap to next row for the next component to be added
-		
+		contentPanel.add(name, "right");
+		contentPanel.add(nameInput, "width 80:160:300 ,wrap");	//set width of the component, wrap to next row for the next component to be added
+		contentPanel.add(role, "right");
+		contentPanel.add(roleInput, "width 80:160:300 ,wrap");	//set width of the component, wrap to next row for the next component to be added
 		
 	JPanel buttonPanel = new JPanel(new MigLayout("wrap 2") );
 		
 	//Buttons
-		editScheduleButton = new JButton("Edit Schedule");
-		editInformationButton = new JButton("Edit Personal Info");
-
+		confirmButton = new JButton("Confirm Changes");
 		cancelButton = new JButton("Cancel");
 			cancelButton.addActionListener(e -> setVisible(false) );
 			
 	//Add components to panel in order	
-		buttonPanel.add(editScheduleButton, "gapleft 50");		//in the current column, place the component with a gap of 50px from the left
-		buttonPanel.add(editScheduleButton, "");					//place the next component in the second column
-		buttonPanel.add(editInformationButton, "gapleft 100");		//in the current column, place the component with a gap of 100px from the left
-		buttonPanel.add(editInformationButton, "");					//place the next component in the third column
+		buttonPanel.add(confirmButton, "gapleft 50");		//in the current column, place the component with a gap of 50px from the left
+		buttonPanel.add(confirmButton, "");					//place the next component in the second column
+		
 			
 		
 		
@@ -121,6 +125,30 @@ public class EditDoctorView extends JDialog{
 		this.cancelButton = cancelButton;
 	}
 
+	public JTextField getNameInput() {
+		return nameInput;
+	}
+
+	public void setNameInput(JTextField nameInput) {
+		this.nameInput = nameInput;
+	}
+
+	public JTextField getRoleInput() {
+		return roleInput;
+	}
+
+	public void setRoleInput(JTextField roleInput) {
+		this.roleInput = roleInput;
+	}
+
+	public JButton getConfirmButton() {
+		return confirmButton;
+	}
+
+	public void setConfirmButton(JButton confirmButton) {
+		this.confirmButton = confirmButton;
+	}
+
 	public JTextField getUsernameInput() {
 		return usernameInput;
 	}
@@ -128,22 +156,5 @@ public class EditDoctorView extends JDialog{
 	public void setUsernameInput(JTextField usernameInput) {
 		this.usernameInput = usernameInput;
 	}
-
-	public JButton getEditScheduleButton() {
-		return editScheduleButton;
-	}
-
-	public void setEditScheduleButton(JButton editScheduleButton) {
-		this.editScheduleButton = editScheduleButton;
-	}
-
-	public JButton getEditInformationButton() {
-		return editInformationButton;
-	}
-
-	public void setEditInformationButton(JButton editInformationButton) {
-		this.editInformationButton = editInformationButton;
-	}
-	
 
 }

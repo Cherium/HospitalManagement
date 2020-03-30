@@ -1,3 +1,8 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
  * class interacts with this class, not the other way around.)*/
@@ -9,25 +14,64 @@ public class NurseModel extends UserSuperClass {
 
 	private Schedule schedule;
 	
+	private String[] docsPatientsUsernames;
 	
+	
+
 	
 	//constructor
 	public NurseModel(String username, char[] password, String name
-			, String department, String assignedDocUsername){
+			, String department, String assignedDocUsername, String[] avail){
 		
 		super(name, username, password);
 		this.assignedDocUsername = assignedDocUsername;
 		this.department = department;
 		setRole("nurse");
-		//provide an ease-of-use doctor object for assigned doc of this Nurse, retrieved from the database
-		//any changes to this object are not reflected in the database, and must be done manually
+		
+		this.availability = arrayToLDTArray(avail);
+		
+		//System.out.println(s.nextShiftsToString(availability));
+		
+		
 	}
 
 	
+	public String getDocDept()
+	{
+		return ((DoctorModel) Main.dbase.get(assignedDocUsername)).getDepartment();
+	}
+	
+	public String[] getDocPats()
+	{
+		docsPatientsUsernames = ((DoctorModel) Main.dbase.get(assignedDocUsername)).getScheduledPatientsUsernames().toArray(new String[0]);
+		ArrayList<String> temp = new ArrayList<>(5);
+		for(String i: docsPatientsUsernames)
+		{
+			temp.add(getObjectsName(i));
+		}
+		
+		return temp.toArray(new String[0]);
+	}
 	
 	
 	
 	
+	
+
+    //0- takes in a single raw availability time, and returns a LocalDateTime object
+    public LocalDateTime storeApptInPatient(String rawData, int selectedPatient)
+    {
+    	//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
+    	
+        LocalDateTime temp = LocalDateTime.parse(rawData, formatter);
+        PatientModel pat = (PatientModel) Main.dbase.get(docsPatientsUsernames[selectedPatient]);
+        
+        return temp;
+        
+    }
+    
+
 	
 	
 /**Getters and Setters*/
@@ -55,5 +99,18 @@ public class NurseModel extends UserSuperClass {
 	public void setDepartment(String d) {
 		this.department = d;
 	}
+
+
+	public String[] getDocsPatientsUsernames() {
+		return docsPatientsUsernames;
+	}
+
+
+	public void setDocsPatientsUsernames(String[] docsPatientsUsernames) {
+		this.docsPatientsUsernames = docsPatientsUsernames;
+	}
+
+
+
 
 }

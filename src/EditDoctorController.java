@@ -4,6 +4,7 @@ public class EditDoctorController {
 	
 	private EditDoctorModel model;
 	private EditDoctorView view;
+	private EditDoctorPersonalInfoView personalInformationView;
 		
 	//constructor
 	public EditDoctorController(EditDoctorModel model, EditDoctorView view) {
@@ -15,6 +16,13 @@ public class EditDoctorController {
 		initListeners();
 	}
 	
+	public EditDoctorController(EditDoctorModel model, EditDoctorPersonalInfoView view2) {
+		
+		this.model = model;
+		this.personalInformationView = view2;
+		initView();
+		initListeners2();
+	}
 	
 	
 	//initialize the elements that the GUI sees from the database 
@@ -29,17 +37,26 @@ public class EditDoctorController {
 	//	need interaction with the model'
 	public void initListeners() 
 	{
-		view.getEditButton().addActionListener(e -> parseEntry() );	
+		view.getEditScheduleButton().addActionListener(e -> parseEntry() );
+		view.getEditInformationButton().addActionListener(e -> parseEntryPersonalInfo() );
+	}
+
+
+	//initialize 'only' the listeners the GUI handles 'that
+	//	need interaction with the model'
+	public void initListeners2() 
+	{
+		personalInformationView.getConfirmButton().addActionListener(e -> parseEntryPersonalInfoConfirmation() );	
 	}
 
 	
 	
-	//handle the user entered input
+	//handle the user entered input for schedule editing
 	public void parseEntry() {
 		
 		model.setUsername(view.getUsernameInput().getText());
-		
-		String returnMessage = model.editAccount();
+
+		String returnMessage = model.editSchedule();
 		if(returnMessage.compareTo("That Account does not exist!") == 0)
 		{
 			view.showDialogToUser(returnMessage);
@@ -49,6 +66,49 @@ public class EditDoctorController {
 			//view.showDialogToUser(returnMessage);
 			view.setVisible(false);
 		}
+	}
+
+	//handle the user entered input for editing personal information
+	public void parseEntryPersonalInfo() {
+		
+		model.setUsername(view.getUsernameInput().getText());
+
+		String returnMessage = model.editPersonalInfo();
+		if(returnMessage.compareTo("That Account does not exist!") == 0)
+		{
+			view.showDialogToUser(returnMessage);
+		}
+		else
+		{
+			//view.showDialogToUser(returnMessage);
+			view.setVisible(false);
+		}
+	}
+
+	public void parseEntryPersonalInfoConfirmation() {
+		//the below happens once "Confirmed" button is clicked
+
+		model.setUsername(personalInformationView.getUsernameInput().getText());
+		String returnMessage = model.checkPersonalInfo();
+
+		if(returnMessage.compareTo("That Account does not exist!") == 0)
+		{
+			personalInformationView.showDialogToUser(returnMessage);
+		} else if (returnMessage.compareTo("This Account is not a Doctor!") == 0) {
+			personalInformationView.showDialogToUser(returnMessage);
+		} else {
+			String tempName = personalInformationView.getNameInput().getText();
+			String tempRole = personalInformationView.getRoleInput().getText();
+			UserSuperClass user = Main.dbase.get(model.getUsername());
+			System.out.println(user.getUsername() + user.getName() + user.getRole());							
+			user.setName(tempName);
+			user.setRole(tempRole);		
+			personalInformationView.setVisible(false);
+			System.out.println(user.getUsername() + user.getName() + user.getRole());
+			
+
+		}
+		
 	}
 
 }

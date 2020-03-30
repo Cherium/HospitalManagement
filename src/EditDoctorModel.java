@@ -10,7 +10,7 @@ public class EditDoctorModel {
 
 	
 	
-	public String editAccount()
+	public String editSchedule()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
@@ -25,6 +25,44 @@ public class EditDoctorModel {
 		return "Account successfully edited!";
         }
 		
+	}
+
+
+	public String editPersonalInfo()
+	{
+		//check if the username is NOT on file
+		if(!Main.dbase.containsKey(username) )
+		{
+			return "That Account does not exist!";
+		}
+		else { 
+		//otherwise edit the account in the HashMap
+		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+		new EditDoctorController( new EditDoctorModel(), new EditDoctorPersonalInfoView("Doctor Information Portal") );
+
+
+		//new DoctorController( ((DoctorModel) user) , new DoctorView("Patient Portal") );
+		//make it so that you can edit doctor name, role, and password
+	
+
+
+		return "Account successfully edited!";}
+		}
+
+	public String checkPersonalInfo()
+	{
+		//check if the username is NOT on file
+		if(!Main.dbase.containsKey(username) ) {
+			return "That Account does not exist!";
+		} else { 
+		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+			if (this.user.getRole() == "doctor") {
+				return "Account successfully edited!";
+			} else {
+				return "This Account is not a Doctor!";
+			}
+		}
+	
 	}
 
 	
@@ -42,6 +80,14 @@ public class EditDoctorModel {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public UserSuperClass getUser() {
+		return user;
+	}
+
+	public void setUser(UserSuperClass user) {
+		this.user = user;
 	}
 
 }

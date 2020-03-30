@@ -10,6 +10,7 @@ public class Main {
 	 * 			ex. 'Main.dbase.containsKey()' checks the HashMap to see if a key is contained within it. */
 	
 	public static Database dbaseClass = new Database("dbase/dbase.txt");
+	
 	public static HashMap<String, UserSuperClass> dbase = dbaseClass.users;
 
 	
@@ -17,6 +18,12 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
+		
+		//upload doctor appointment information
+		for(DoctorModel d: Main.dbaseClass.getDocsToLoad() )
+		{
+			d.setAppointments(d.s.updateHashMap(d.getScheduledPatientsUsernames(), d.getUsername()));
+		}
 		
 		//initialize the MVC for the login screen
 		//the rest of the program proceeds from here
