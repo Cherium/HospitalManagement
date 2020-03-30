@@ -9,13 +9,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
-
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Jenny Z, Sajid C
+ *
+ */
 public class DoctorController {
 
 	private DoctorModel model;
 	private DoctorView view;
 
-	// constructor
+	
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public DoctorController(DoctorModel m, DoctorView v) {
 		this.model = m;
 		this.view = v;
@@ -24,8 +36,12 @@ public class DoctorController {
 	}
 	
 
-	// initialize the elements that the GUI sees from the database
-	// as soon as the view first opens for the user
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Jenny Z, Sajid C
+	 */
 	public void initView() {
 		// Set up the appointments in DoctorModel
 		// Cannot do this in constructor as doctors are read from the database before patient
@@ -59,58 +75,13 @@ public class DoctorController {
 		view.setPatientList(patients);
 
 	}
-
-	// Convert the HashMap of appointments to a LinkedHashMap with keys as appointment times
-	// This is the list of appointments for weekly and monthly view
-	private LinkedHashMap<String, String> convertAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
-		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
-
-		for (String keyString : appointments.keySet()) {
-			for (LocalDateTime ldt : appointments.get(keyString)) {
-				lhm.put(ldt.toString(), Main.dbase.get(keyString).getName());
-			}
-		}
-
-		return lhm;
-	}
-
-	// Get an array of size 7 that correspond to the days the doctor is scheduled to work
-	// Booleans in the form of {SUNDAY, MONDAY, ..., SATURDAY}
-	// This is for the monthly view
-	private Boolean[] convertToScheduledDays(LocalDateTime[] availability) {
-		Boolean[] days = new Boolean[7];
-		for (int i = 0; i < 7; i++) {
-			if (availability[i*2].equals(availability[i*2+1])) {
-				days[i] = false;
-			} else {
-				days[i] = true;
-			}
-		}
-		return days;
-	}
-
-	// Get an array of size 14 that correspond to the start and end of a scheduled shift time
-	// of a day. 
-	// Int correspond to start and end times in the form of {SUNDAY_start, SUNDAY_end, ..., SATURDAY_end}
-	// This is for the weekly view
-	private int[] convertToShiftTime(LocalDateTime[] availability) {
-		int[] times = new int[14];
-		for (int i = 0; i < 7; i++) {
-			// If the two times are the same, this means that the doctor has the day off
-			if (availability[i*2].equals(availability[i*2+1])) {
-				times[i*2] = -1;
-				times[i*2+1] = -1;
-			} else {
-				times[i*2] = availability[i*2].getHour();
-				times[i*2+1] = availability[i*2+1].getHour();
-			}
-		}
-
-		return times;
-	}
-
-	// initialize 'only' the listeners the GUI handles 'that
-	// need interaction with the model'
+	
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Jenny Z, Sajid C
+	 */
 	public void initListeners() {
 
 		// Show the selected nurse's schedule
@@ -181,11 +152,73 @@ public class DoctorController {
 		});
 	}
 
+	// 
+	// 
+	/**
+	 * Convert the HashMap of appointments to a LinkedHashMap with keys as appointment times.
+	 * This is the list of appointments for weekly and monthly view.
+	 * 
+	 * @author Jenny Z
+	 * @param appointments- list of appointments that this user has
+	 * @return- LinkedHashMap with keys as appointment times
+	 */
+	private LinkedHashMap<String, String> convertAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
+		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
+
+		for (String keyString : appointments.keySet()) {
+			for (LocalDateTime ldt : appointments.get(keyString)) {
+				lhm.put(ldt.toString(), Main.dbase.get(keyString).getName());
+			}
+		}
+
+		return lhm;
+	}
+
+	// Get an array of size 7 that correspond to the days the doctor is scheduled to work
+	// Booleans in the form of {SUNDAY, MONDAY, ..., SATURDAY}
+	// This is for the monthly view
+	private Boolean[] convertToScheduledDays(LocalDateTime[] availability) {
+		Boolean[] days = new Boolean[7];
+		for (int i = 0; i < 7; i++) {
+			if (availability[i*2].equals(availability[i*2+1])) {
+				days[i] = false;
+			} else {
+				days[i] = true;
+			}
+		}
+		return days;
+	}
+
+	// Get an array of size 14 that correspond to the start and end of a scheduled shift time
+	// of a day. 
+	// Int correspond to start and end times in the form of {SUNDAY_start, SUNDAY_end, ..., SATURDAY_end}
+	// This is for the weekly view
+	private int[] convertToShiftTime(LocalDateTime[] availability) {
+		int[] times = new int[14];
+		for (int i = 0; i < 7; i++) {
+			// If the two times are the same, this means that the doctor has the day off
+			if (availability[i*2].equals(availability[i*2+1])) {
+				times[i*2] = -1;
+				times[i*2+1] = -1;
+			} else {
+				times[i*2] = availability[i*2].getHour();
+				times[i*2+1] = availability[i*2+1].getHour();
+			}
+		}
+
+		return times;
+	}
+
+
 	
 	
 	
-	
-	// append new notes to current notes
+	// 
+	/**
+	 * append new notes to current notes in patient tab on button press
+	 * 
+	 * @author Sajid C
+	 */
 	public void saveNotes() {
 		int selectedIndex = view.getListPatients().getSelectedIndex();
 

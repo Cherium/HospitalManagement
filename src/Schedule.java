@@ -22,7 +22,13 @@ import java.util.concurrent.ThreadLocalRandom;
     
 	    
 	    
-	//return a string of next shifts (from current date) to print in JTextArea
+	
+	/**
+	 * return a string of next shifts (from current date) to print in JTextArea
+	 * @author Sajid C
+	 * @param availability list of start times and end times
+	 * @return all start and end times printed as a single formatted string
+	 */
 	public String nextShiftsToString(LocalDateTime[] availability)
 	{
 		StringBuilder nextShifts = new StringBuilder();
@@ -69,7 +75,13 @@ import java.util.concurrent.ThreadLocalRandom;
 	}
     
 	
-	//return a string[] of next open slots (from current date) to print in JCombobox
+	/**
+	 * return a string[] of next open slots (from current date) to print in JCombobox
+	 * @author Sajid C
+	 * @param availability list of start and end times
+	 * @param appointments appointment start times
+	 * @return list of 100 appointment times from the current day that do not contain any dates from appointment
+	 */
 	public String[] nextOpenSlots(LocalDateTime[] availability, HashMap<String, ArrayList<LocalDateTime>> appointments)
 	{
 		ArrayList<LocalDateTime> openSlots = new ArrayList<>(5);
@@ -170,8 +182,14 @@ import java.util.concurrent.ThreadLocalRandom;
 	
 	
 	
-    // Takes a list of patient usernames and a doctor username, returning all the appointments that the patients
-    // in the list have scheduled with the doctor
+
+    /**
+     *  Takes a list of patient usernames and a doctor username, returning all the appointments that the patients
+     *  in the list have scheduled with the doctor
+     * @param patU
+     * @param docU
+     * @return
+     */
     public HashMap<String, ArrayList<LocalDateTime>> updateHashMap(ArrayList<String> patU, String docU) {
 
         HashMap<String, ArrayList<LocalDateTime>> hm = new HashMap<String, ArrayList<LocalDateTime>>();
@@ -196,7 +214,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
  
     
-    //1-takes in raw availability change request data in form of array and returns a properly formatted, and updated, availability array
+    /**
+     * takes in raw availability change request data in form of array and returns a properly formatted, and updated, availability array
+     * @author Sajid C
+     * @param rawData raw availability change request data
+     * @return formatted, and updated, availability array of type LocalDateTime
+     */
     public LocalDateTime[] updateSchedule(String[] rawData)
     {
         LocalDateTime[] temp = new LocalDateTime[14];
@@ -208,8 +231,14 @@ import java.util.concurrent.ThreadLocalRandom;
         
     }
 
-    //2-retrieves this users availability as a string array for use in view
-    //input: users availability array; output: strings in format HH:MM for use in view
+    //
+    //input: 
+    /**
+     * retrieves this users availability as a string array for use in view
+     * @author Sajid C
+     * @param currentAvailability users availability array; output: strings in format HH:MM for use in view
+     * @return string representation of input
+     */
     public String[] updateSchedule(LocalDateTime[] currentAvailability)
     {
         String[] rawTimes = new String[14];

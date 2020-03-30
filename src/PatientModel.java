@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * handles all calculations, database queries, and the overall work needed to be
- * done for handling this associated role Does NOT interact with the view class
- * directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)
+ * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
+ * @author Sajid C
+ *
  */
 public class PatientModel extends UserSuperClass {
 
@@ -31,7 +31,24 @@ public class PatientModel extends UserSuperClass {
 	private HashMap<String, ArrayList<LocalDateTime>> appointments;
 	
 
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Sajid C
+	 * 
+	 * @param username value from database
+	 * @param password value from database
+	 * @param name value from database
+	 * @param addr address value from database
+	 * @param phNumber phone number value from database
+	 * @param email value from database
+	 * @param amountDue users amount due value from database
+	 * @param dob date of birth value from database
+	 * @param bloodType value from database
+	 * @param sex2 sex value from database
+	 * @param record2 patients record value from database
+	 * @param appointments list of appointments value from database
+	 */
 	public PatientModel(String username, char[] password, String name
 			, String addr, String phNumber, String email, float amountDue, String dob, String bloodType, String sex2, String record2, ArrayList<String> appointments)
 	{
@@ -68,7 +85,12 @@ public class PatientModel extends UserSuperClass {
 
 
 
-	//returns a HashMap containing a doctor username on one side and a LIST of appointment start time on the other- patient use
+	/**
+	 * store raw appointment data into a hashmap
+	 * @author Sajid C
+	 * @param rawAppts string of raw formatted appointments from the controller
+	 * @return a HashMap containing a doctor username on one side and a LIST of appointment start time on the other
+	 */
 	public HashMap<String, ArrayList<LocalDateTime> > listToAppointmentMap(ArrayList<String> rawAppts)
 	{
 		HashMap<String, ArrayList<LocalDateTime>> temp = new HashMap<>(5);
@@ -103,19 +125,34 @@ public class PatientModel extends UserSuperClass {
 		
 	}
 
-	//convert a string of digits to a phone number
+	
+	/**
+	 * convert a string of digits to a phone number
+	 * @author Sajid C
+	 * @return string formatted phone number
+	 */
 	public String convertToPhoneNumber()
 	{
 		//https://howtodoinjava.com/java/string/format-phone-number/
 		return  phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
 	}
 	
-	//convert a float to a String with 2 decimal places
+	
+	/**
+	 * convert a float to a String with 2 decimal places
+	 * @author Sajid C
+	 * @return formatted currency
+	 */
 	public String convertToDollar()
 	{
 		return String.format("$%.2f" , amountDue);
 	}
 
+	/**
+	 * validate user password entries and store new password values in database on success, otherwise provide error debug message
+	 * @author Sajid C
+	 * @return debug message for user on success/fail
+	 */
 	public String updatePassword()
 	{
 		//check that password is long enough; pwd's already verified at this point
@@ -140,6 +177,11 @@ public class PatientModel extends UserSuperClass {
 	
 	
 //TODO error checking on instance variables set by model.updateInfo()
+	/**
+	 * verify use entered infoPanel information and provide debug message
+	 * @author Sajid C
+	 * @return debug message for user
+	 */
 	public String verifyInfo()
 	{
 		//error checks, don't update database in here
@@ -152,32 +194,21 @@ public class PatientModel extends UserSuperClass {
 		return "Information Successfully Updated";
 	}
 	
-	public String getPatientInformation() {
-		StringBuilder bob = new StringBuilder();
-
-		bob.append("Name: " + getName());
-		bob.append("\n");
-		bob.append("Age: " + getAge());
-		bob.append("\n");
-		bob.append("Sex: " + getSex());
-		bob.append("\n");
-		bob.append("Blood type: " + getBlood());
-		bob.append("\n");
-		bob.append("Address: " + getAddress());
-		bob.append("\n");
-		bob.append("Phone: " + getPhoneNumber());
-		bob.append("\n");
-		bob.append("Email: " + getEmail());
 
 
-		return bob.toString();
-	}
 	
+	/**
+	 * 
+	 * @author Jenny Z
+	 * @return find the time (years) between today and patient birthdate
+	 */
 	public int getAge() {
 		// https://stackoverflow.com/questions/1116123/how-do-i-calculate-someones-age-in-java
 		//https://howtodoinjava.com/java/date-time/localdate-localdatetime-conversions/
 		return Period.between(birthday, LocalDate.now()).getYears();
 	}
+	
+	
 	
 /**Getters and Setters*/
 	public String getAddress() {

@@ -2,6 +2,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Sajid C
+ *
+ */
 public class ReceptionistController {
 
 	private ReceptionistModel model;
@@ -10,7 +16,13 @@ public class ReceptionistController {
 	
 	
 	
-	
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public ReceptionistController(ReceptionistModel model, ReceptionistView view) {
 
 		this.model = model;
@@ -23,8 +35,12 @@ public class ReceptionistController {
 	
 	
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Sajid C
+	 */
 	public void initView()
 	{
 		view.getWelcomeLabel().setText("Welcome Receptionist "+ model.getName() );
@@ -48,8 +64,12 @@ public class ReceptionistController {
 	}
 	
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Sajid C
+	 */
 	public void initListeners() 
 	{
 
@@ -74,7 +94,10 @@ public class ReceptionistController {
 	}
 
 
-		//set up patients in the center panels of 'View Patient'
+		/**
+		 * set up patients in the center panels of 'View Patient'
+		 * @author 
+		 */
 		public void setUpPatientView() {
 		
 			//Index selected in GUI == index of patient in model 'scheduledPatientUsername' array

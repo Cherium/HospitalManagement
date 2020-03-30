@@ -11,13 +11,18 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 	
-/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+/**
+ * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * 
+ * @author Sajid C
+ *
+ */
 public class DeleteAccountView extends JDialog{
 	
 	JPanel contentPanel;
@@ -34,7 +39,11 @@ public class DeleteAccountView extends JDialog{
 	
 	
 	
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @param title JFrame title
+	 */
 	public DeleteAccountView(String title) 
 	{
 		//sets frame containers attributes
@@ -48,7 +57,10 @@ public class DeleteAccountView extends JDialog{
 	}
 
 	
-	/**initialize the panels and components that will go inside the frame*/
+	/**
+	 * initialize the panels and components that will go inside the frame
+	 * @author Sajid C
+	 */
 	public void initializeGUI() {
 		// TODO Auto-generated method stub
 		
@@ -99,7 +111,11 @@ public class DeleteAccountView extends JDialog{
 
 	
 	
-	//pop up a message-dialog box with a message passed in
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
+	 */
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);

@@ -1,6 +1,11 @@
 import java.util.HashMap;
 
-/** Main function that starts the initial GUI*/
+
+/**
+ * Main class that initializes database and login GUI
+ * @author Sajid C
+ *
+ */
 public class Main {
 	
 	/**Global variable; 
@@ -17,6 +22,9 @@ public class Main {
 	
 	
 	
+	/**
+	 * Main function
+	 */
 	public static void main(String[] args) {
 		
 		//upload doctor appointment information

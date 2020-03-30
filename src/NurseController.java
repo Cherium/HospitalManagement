@@ -10,7 +10,13 @@ import javax.swing.JComboBox;
 import net.miginfocom.swing.MigLayout;
 
 
-/**Handles all interaction between the associated model class and the view class.*/
+
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Sajid C
+ *
+ */
 public class NurseController {
 	
 	private NurseModel model;
@@ -19,7 +25,13 @@ public class NurseController {
 	
 	
 	
-	//constructor initialized from the Login Model class
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public NurseController(NurseModel m, NurseView v)
 	{
 		//incoming objects from LoginController class
@@ -39,7 +51,12 @@ public class NurseController {
 	
 	
 	
-	//get information from model, and set labels, etc in view
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Sajid C
+	 */
 	public void initView()
 	{
 		//set up welcome label
@@ -70,9 +87,12 @@ public class NurseController {
 		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 	}
 	
-	//initialize the listeners from the view class that need to interact with model
-	//	and give functionality to these listeners once they 'hear' something.
-	//	listeners that do not interact with the model should stay in the view class.
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Sajid C
+	 */
 	public void initListeners() 
 	{
 		//view patient details when patient is clicked
@@ -96,7 +116,12 @@ public class NurseController {
 
 
 
-	//update doctor box and Appointments box when department box option changes - Booking panel
+	//
+	/**
+	 * update doctor box and Appointments box when department box option changes - Booking panel
+	 * 
+	 * @author Sajid C
+	 */
 	public void updateDocBox() {
 		// get current selected department option
 		String choice = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex() );
@@ -111,7 +136,12 @@ public class NurseController {
 	
 	
 
-	//book an appointment for the patient based on user entered values
+	
+	/**
+	 * book an appointment for the patient based on user entered values
+	 * 
+	 * @return ease-of-use early exit flag
+	 */
 	public int bookAppointment() {
 		
 		//get selected appointment type
@@ -149,7 +179,12 @@ public class NurseController {
 
 
 
-	//update availability based on user entered values
+	
+	/**
+	 * update availability in database and view, based on user entered values
+	 * 
+	 * 
+	 */
 	public void updateAvailability() {
 		
 		String[] newHours= new String[14];
@@ -176,7 +211,11 @@ public class NurseController {
 
 
 
-	//show patient information once a JList entry is clicked
+	/**
+	 * show patient information in the view once a JList entry is clicked
+	 * 
+	 * @author Sajid C
+	 */
 	public void setUpPatientView() {
 		int selectedIndex = view.getPatList().getSelectedIndex();
 		PatientModel pat = (PatientModel) Main.dbase.get(model.getDocsPatientsUsernames()[selectedIndex]);

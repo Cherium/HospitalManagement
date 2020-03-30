@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
+ * @author Sajid C
+ *
+ */
 public class CreateNewDoctorModel extends UserSuperClass {
 	
 	private String name;
@@ -21,6 +23,11 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	
 	
 	
+	/**
+	 * default empty constructor
+	 * 
+	 * @author Sajid C
+	 */
 	public CreateNewDoctorModel()
 	{
 		//empty constructor
@@ -33,7 +40,11 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	
 	
 	
-	//verify entered information and return an appropriate debug message accordingly
+	/**
+	 * verify entered information, store information in database, and return an appropriate debug message accordingly
+	 * @author Sajid C
+	 * @return debug message for user to view
+	 */
 	public String storeInDatabase()
 	{
 		//check if username already exists in database
@@ -102,7 +113,12 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	}
 	
 	
-	//return the list of nurses names currently in the database, as a String array for the purpose of combobox elements
+	
+	/**
+	 * return the list of nurses names currently in the database, as a String array for the purpose of combobox elements
+	 * @author Sajid C
+	 * @return list of nurses 
+	 */
 	public String[] getNurseList() {
 		
 		ArrayList<String> temp = new ArrayList<>(10);

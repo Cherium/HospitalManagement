@@ -26,6 +26,19 @@ import javax.swing.plaf.DimensionUIResource;
 
 import net.miginfocom.swing.MigLayout;
 
+
+/**
+ * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+ * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
+ * does not interact with the controller)
+ * 
+ * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
+ * with the model.)
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * 
+ * @author 
+ *
+ */
 public class ReceptionistView extends JFrame {
 
 	//Added for patient track

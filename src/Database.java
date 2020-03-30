@@ -9,7 +9,11 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-/*Create a Databsae and import CSV into that database*/
+
+/**
+ * @author Sajid C
+ * Create a Databsae and import CSV into that database
+ */
 public class Database{
 
 	
@@ -25,7 +29,11 @@ public class Database{
 		
 		
 		
-		//Constructor: provide filename to import when initializing database
+		/**
+		 * Constructor
+		 * @author Sajid C
+		 * @param filePath provided filename to import when initializing database
+		 */
 		public Database(String filePath) {
 			
 			users = new HashMap<String, UserSuperClass>();
@@ -35,12 +43,15 @@ public class Database{
 		
 		
 		
-		//import information from the provided file
+		
+		/**
+		 * import information from the provided file
+		 * @author Sajid C
+		 * @param filePath filename to import when initializing database
+		 */
 		public void importDatabase(String filePath) {
 
 			
-			//TODO implement so a .jar can find file in a given build
-			//1/File file = new File(filePath);
 			
 			/*
 			 * https://stackoverflow.com/questions/1464291/how-to-really-read-text-file-from-classpath-in-java

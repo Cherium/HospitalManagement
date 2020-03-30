@@ -26,13 +26,18 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 
-/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+/**
+ * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * 
+ * @author Sajid C
+ *
+ */
 public class NurseView extends JFrame{
 	
 	private JPanel contentPanel;
@@ -101,7 +106,11 @@ public class NurseView extends JFrame{
 
 	
 	
-	//Constructor, takes in its title from Login Model class
+	/**
+	 * constructor
+	 * 
+	 * @param title JFrame title
+	 */
 	public NurseView(String title)
 	{
 		//sets frame containers attributes
@@ -117,7 +126,10 @@ public class NurseView extends JFrame{
 	
 	
 
-	/**initialize the panels and components that will go inside the frame*/
+	/**
+	 * initialize the panels and components that will go inside the frame
+	 * @author Sajid C
+	 */
 	public void initializeGUI() 
 	{
 
@@ -296,7 +308,11 @@ public class NurseView extends JFrame{
 		
 	}
 
-	//pop up a message-dialog box with a message passed in 
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
+	 */
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);
@@ -304,6 +320,10 @@ public class NurseView extends JFrame{
 	
 	
 	
+	/**
+	 * enable/disable menues baed on chosen appointment type
+	 * @author Sajid C
+	 */
 	public void disableLab() {
 		
 		if (apptType.getSelectedItem().equals("Lab Test")) {
@@ -325,7 +345,12 @@ public class NurseView extends JFrame{
 		}
 	}
 
-	//set the lists for initiView
+	
+	/**
+	 * set the patient list for initiView
+	 * @author Sajid C
+	 * @param list
+	 */
 	public void setPatientList(String[] list)
 	{
 		patList = new JList(list);
@@ -339,7 +364,12 @@ public class NurseView extends JFrame{
 	}
 	
 
-	//create scheduling panel, pass in names of JComboBox fields
+	
+	/**
+	 * create schedule change panel- sets menus to instance variables
+	 * @author Sajid C
+	 * @return availability panel containing all labels and time menus
+	 */
 	public JPanel createAvailabilityChangePanel()
 	{
 		String[] days = {"Sunday", "", "Monday","","Tuesday","","Wednesday","","Thursday","","Friday","","Saturday"};
@@ -366,7 +396,11 @@ public class NurseView extends JFrame{
 	}
 
 	
-	//create box for year
+	/**
+	 * create a view for year
+	 * @author Sajid C
+	 * @return drop down menu for years
+	 */
 	public JComboBox<String> initYearCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 120; i++) {
@@ -377,7 +411,12 @@ public class NurseView extends JFrame{
 		return temp;
 	}
 	
-	//create box for month
+	/**
+	 * 
+	 * create box for month
+	 * @author Sajid C
+	 * @return dropdown menu of months in a year
+	 */
 	public JComboBox<String> initMonthCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 12; i++) {
@@ -388,7 +427,11 @@ public class NurseView extends JFrame{
 		return temp;
 	}
 	
-	//create box for day
+	/**
+	 * create box for day
+	 * @author Sajid C
+	 * @return empty list that will store days
+	 */
 	public JComboBox<String> initDayCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		temp.setBackground(Color.WHITE);
@@ -396,7 +439,10 @@ public class NurseView extends JFrame{
 		return temp;
 	}
 	
-	//add days to day box
+	/**
+	 * populate days menu with days based on current month selection
+	 * @author Sajid C
+	 */
 	public void initDaysinBox()
 	{//
 		//https://www.youtube.com/watch?v=yylaqeWkPmM

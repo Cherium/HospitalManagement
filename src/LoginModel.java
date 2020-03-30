@@ -1,10 +1,12 @@
 import java.util.Arrays;
 
 
-/**Handles calculations, database, etc that the Controller may need.
- * Does NOT initialize anything from the view or use any view methods.
- * If the methods of this class return anything, then it is likely the 
- * controller will use them.*/
+/**
+ * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
+ * @author Sajid C
+ *
+ */
 public class LoginModel {
 	
 	private String username;
@@ -14,13 +16,22 @@ public class LoginModel {
 	private String errorMessage;
 	
 	
-	//constructor
+	/**
+	 * default empty constructor
+	 * 
+	 * @author Sajid C
+	 */
 	public LoginModel() {
 
 	}
 	
 	
-	//verify entered information in database and change the GUI view the user sees
+	
+	/**
+	 * verify user entered information in database and change the GUI view the user sees
+	 * @author Sajid C
+	 * @return true if username matches password in database, otherwise false
+	 */
 	public boolean validate()
 	{
 		if(Main.dbase.containsKey(username))
@@ -30,7 +41,6 @@ public class LoginModel {
 			if(Arrays.equals(pwdInDatabase, password) )
 			{
 				this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-//System.out.println(Main.dbase.users.get(username).getPassword());
 				changePerspective();												//change the GUI the user sees
 				return true;
 			}
@@ -52,9 +62,14 @@ public class LoginModel {
 	
 	
 	
-	//change the GUI the user sees to a 'role screen' (ex.Patient) and update the MVC to the new role
+	/**
+	 * change the GUI the user sees to a 'role screen' (ex.Patient) and update the MVC to the new role
+	 * 
+	 * @author Sajid C
+	 */
 	public void changePerspective()
 	{
+		//get role of user from database and open the appropriate MVC construct
 		String roleFrame = user.getRole();
 		if (roleFrame.compareTo("doctor") == 0)
 		{
@@ -85,7 +100,12 @@ public class LoginModel {
 	
 	
 	
-	//open the dialog box MVC for Creating a new patient
+	/**
+	 * 
+	 * open the dialog box MVC for Creating a new patient
+	 * 
+	 * @author Sajid C
+	 */
 	public void openNewPatientDialog()
 	{
 		new CreateNewPatientController(new CreateNewPatientModel(), new CreateNewPatientView("New Patient Registration") );

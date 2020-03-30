@@ -49,16 +49,16 @@ import javax.swing.plaf.BorderUIResource.BevelBorderUIResource;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * Creates all the components that are needed to view the GUI for this role.
- * Contains nothing from the controller or view class. Does NOT interact with
- * the associated model class. The controller interacts with this view class,
- * but not the other way around (the view class does not interact with the
- * controller)
+ * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+ * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
+ * does not interact with the controller)
  * 
- * Contains listeners that DO NOT need interaction with the model (ex. a back
- * button listener that closes the view does not need interaction with the
- * model.) Remaining button/field listeners that DO need to interact withe the
- * model are initialized in the controller class.
+ * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
+ * with the model.)
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * 
+ * @author Jenny Z, Sajid C
+ *
  */
 public class DoctorView {
 
@@ -140,7 +140,12 @@ public class DoctorView {
 	 * #################################################################
 	 */
 
-	// Constructor
+	
+	/**
+	 *  Constructor
+	 *  
+	 * @param title
+	 */
 	public DoctorView(String title) {
 		// create frame container
 		// sets frame containers attributes
@@ -158,12 +163,19 @@ public class DoctorView {
 
 	}
 
+	/**
+	 * Initialize the view
+	 * @author Jenny Z
+	 */
 	public void initGUI() {
 		JPanel mainPane = new JPanel(new MigLayout());
 
 	}
 
-	/** initialize the panels and components that will go inside the frame */
+
+	/**
+	 * initialize the panels and components that will go inside the frame
+	 */
 	public void initializeGUI() {
 		setNow(LocalDate.now());
 		// Create title container(JLabel) and set it as top of page in the frame
@@ -296,7 +308,7 @@ public class DoctorView {
 
 	////////////////////////////////////////////////////
 
-	/** Getter and Setter Methods */
+	
 
 	public void setVisibility(Boolean a) {
 		frame.setVisible(a);
