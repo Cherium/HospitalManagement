@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 29 MARCH 21:12 Jenny
+* DoctorView: Misunderstood requirement, added top panel in patient view for booking appointments. Top panel is toggled by clicking on "Book appointment" in patient information. There is currently no functionalities implemented into the top panel.
+
 ## 28 MARCH 21:19 Jenny
 * DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views. 
 

@@ -14,6 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
@@ -82,6 +84,7 @@ public class DoctorView {
 	private JButton btnOwnSchedule;
 	private JButton btnOwn;
 	private JButton btnToggle;
+	private JButton bookAptBtn;
 
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
@@ -115,6 +118,11 @@ public class DoctorView {
 	private JScrollPane scroll;
 	private JList listPatients;
 
+	private JComboBox<String> apptType;
+	private JComboBox<String> departmentDropDown;
+	private JComboBox<String> chooseAppt;
+	private JComboBox<String> labTime;
+	private JComboBox<String> year, month, day;
 	/*
 	 * #################################################################
 	 * #  Sign out                                                     #
@@ -738,9 +746,54 @@ public class DoctorView {
 		patientPanel.setBackground(Color.WHITE);
 		patientPanel.setVisible(false);
 
-		JPanel topPanel = new JPanel();
-		topPanel.add(new JLabel("I am the top component"));
-		topPanel.setBorder(BorderFactory.createEtchedBorder());
+		String[] times = {
+			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
+			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
+		};
+
+		JPanel topPanel = new JPanel(new MigLayout("") );
+		topPanel.setBackground(Color.WHITE);
+		topPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
+		topPanel.setPreferredSize(new Dimension(900, 100));
+		topPanel.setMaximumSize(new Dimension(905, 125));
+		bookAptBtn = new JButton("Book Appointment");
+		
+		apptType = new JComboBox<String>();
+			apptType.addItem("Doctor Appointment");
+			apptType.addItem("Lab Test");
+			apptType.addActionListener(e -> disableLab() );
+			
+		departmentDropDown = new JComboBox<String>();
+		chooseAppt = new JComboBox<String>();
+		labTime = new JComboBox<String>(times);
+			labTime.setEnabled(false);
+		year = initYearCombo();
+			year.setEnabled(false);
+			year.addActionListener(e -> initDaysinBox());
+		month = initMonthCombo();
+			month.setEnabled(false);
+			month.addActionListener(e -> initDaysinBox());
+		day = initDayCombo();
+			day.setEnabled(false);
+			initDaysinBox();
+			
+		topPanel.add(new JLabel("Type:"));
+		topPanel.add(apptType);
+		
+		topPanel.add(new JLabel("Department:"), "gapleft 50" );
+		topPanel.add(departmentDropDown, "growx");
+		topPanel.add(new JLabel("Select Appointment: "));
+		topPanel.add(chooseAppt, "span, pushx, growx, wrap");
+		
+		topPanel.add(new JLabel("Lab Date: "), "skip 2, align right");
+		topPanel.add(year, "sg c, split");
+		topPanel.add(month, "sg c, split");
+		topPanel.add(day, "sg c");
+		topPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
+		topPanel.add(labTime, "sg c");
+		
+		topPanel.add(bookAptBtn, "skip 2, align right");
+
 		patientPanel.add(topPanel, BorderLayout.NORTH);
 		topPanel.setVisible(false);
 
@@ -771,25 +824,15 @@ public class DoctorView {
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
-		JPanel availPanel = new JPanel();
-		availPanel.setBackground(Color.WHITE);
-		availPanel.setBorder(new LineBorder(Color.ORANGE));
-		JButton btnReturnToPatient = new JButton("Return");
-		btnReturnToPatient.addActionListener(e -> {
-			availPanel.setVisible(false);
-			selectedPatient.setVisible(true);
-			patientPanel.add(selectedPatient, BorderLayout.CENTER);
-			topPanel.setVisible(false);
-		});
-		availPanel.add(btnReturnToPatient);
-		availPanel.setVisible(false);
-
-		JButton btnTest = new JButton("Test Click");
+		JButton btnTest = new JButton("Book appointment");
 		btnTest.addActionListener(e -> {
-			availPanel.setVisible(true);
-			selectedPatient.setVisible(false);
-			patientPanel.add(availPanel, BorderLayout.CENTER);
-			topPanel.setVisible(true);
+			if (topPanel.isVisible()) {
+				topPanel.setVisible(false);
+				btnTest.setText("Book appointment");
+			} else {
+				topPanel.setVisible(true);
+				btnTest.setText("Cancel");
+			}
 		});
 		selectedPatient.add(btnTest);
 
@@ -884,7 +927,78 @@ public class DoctorView {
 		getScheduleNameLabelWeek().setText(name + " Weekly Schedule");
 	}
 	
+	public void disableLab() {
+		
+		if (apptType.getSelectedItem().equals("Lab Test")) {
+			departmentDropDown.setEnabled(false);
+			chooseAppt.setEnabled(false);
+			
+			year.setEnabled(true);
+			month.setEnabled(true);
+			day.setEnabled(true);
+			labTime.setEnabled(true);			
+		} else {
+			departmentDropDown.setEnabled(true);
+			chooseAppt.setEnabled(true);
+			
+			year.setEnabled(false);
+			month.setEnabled(false);
+			day.setEnabled(false);
+			labTime.setEnabled(false);	
+		}
+	}
+
+	public JComboBox<String> initYearCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 120; i++) {
+			temp.addItem((LocalDate.now().getYear()-i)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
 	
+	//create box for month
+	public JComboBox<String> initMonthCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 12; i++) {
+			temp.addItem((i+1)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	//create box for day
+	public JComboBox<String> initDayCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	//add days to day box
+	public void initDaysinBox()
+	{//
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
+		}
+	}
+
 	
 	
 	
