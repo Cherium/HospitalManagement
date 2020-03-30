@@ -1,13 +1,13 @@
 import javax.swing.DefaultComboBoxModel;
 
-public class EditDoctorController {
+public class EditNurseController {
 	
-	private EditDoctorModel model;
-	private EditDoctorView view;
-	private EditDoctorPersonalInfoView personalInformationView;
+	private EditNurseModel model;
+	private EditNurseView view;
+	private EditNursePersonalInfoView personalInformationView;
 		
 	//constructor
-	public EditDoctorController(EditDoctorModel model, EditDoctorView view) {
+	public EditNurseController(EditNurseModel model, EditNurseView view) {
 		// TODO Auto-generated constructor stub
 		
 		this.model = model;
@@ -16,7 +16,7 @@ public class EditDoctorController {
 		initListeners();
 	}
 	
-	public EditDoctorController(EditDoctorModel model, EditDoctorPersonalInfoView view2) {
+	public EditNurseController(EditNurseModel model, EditNursePersonalInfoView view2) {
 		
 		this.model = model;
 		this.personalInformationView = view2;
@@ -94,7 +94,7 @@ public class EditDoctorController {
 		if(returnMessage.compareTo("That Account does not exist!") == 0)
 		{
 			personalInformationView.showDialogToUser(returnMessage);
-		} else if (returnMessage.compareTo("This Account is not a Doctor!") == 0) {
+		} else if (returnMessage.compareTo("This Account is not a Nurse!") == 0) {
 			personalInformationView.showDialogToUser(returnMessage);
 		} else {
 			String tempName = personalInformationView.getNameInput().getText();

@@ -37,7 +37,7 @@ public class AdminModel extends UserSuperClass {
 		}
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{
-			//TODO
+			new CreateNewNurseController(new CreateNewNurseModel(), new CreateNewNurseView("Create a New Nurse"));
 		}
 		else if(selectedItem.compareTo("Admin") == 0)
 		{
@@ -74,7 +74,8 @@ public class AdminModel extends UserSuperClass {
 		}
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{
-			//TODO
+			new EditNurseController(new EditNurseModel(), new EditNurseView("Edit an Account"));
+ 
 		}
 		else if(selectedItem.compareTo("Admin") == 0)
 		{
