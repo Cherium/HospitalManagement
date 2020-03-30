@@ -28,7 +28,7 @@ public class AdminModel extends UserSuperClass {
 
 		super(name, username, password);
 		setRole("admin");
-		
+
 		this.availability = arrayToLDTArray(avail);
 	}
 
@@ -58,7 +58,7 @@ public class AdminModel extends UserSuperClass {
 		}
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{
-			//TODO
+			new CreateNewNurseController(new CreateNewNurseModel(), new CreateNewNurseView("Create a New Nurse"));
 		}
 		else if(selectedItem.compareTo("Admin") == 0)
 		{
@@ -88,7 +88,37 @@ public class AdminModel extends UserSuperClass {
 		
 	}
 
+	public void editAccount(String selectedItem) {
+		
+		if(selectedItem.compareTo("Patient") == 0)
+		{
+			new EditAccountController(new EditAccountModel(), new EditAccountView("Edit an Account"));
+		}
+		else if(selectedItem.compareTo("Doctor") == 0)
+		{
+			new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit an Account"));
+		}
+		else if(selectedItem.compareTo("Nurse") == 0)
+		{
+			new EditNurseController(new EditNurseModel(), new EditNurseView("Edit an Account"));
+ 
+		}
+		else if(selectedItem.compareTo("Admin") == 0)
+		{
+			//TODO
+		}
+		else if(selectedItem.compareTo("Hospital Authority") == 0)
+		{
+			//TODO
+		}
+		else if(selectedItem.compareTo("Receptionist") == 0)
+		{
+			//TODO
+		}
+		
+	}
 
+	
 
 
 

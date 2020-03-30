@@ -1,3 +1,9 @@
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.Action;
+import javax.swing.JFrame;
 
 /**
  * Controller for this MVC construct
@@ -52,8 +58,43 @@ public class LoginController {
 	public void initListeners() 
 	{
 		view.getBtnLogin().addActionListener(e -> verifyCredentials() );
-		view.getBtnNewPatient().addActionListener(e -> newPatient() );
-	}
+		view.getBtnLogin().addKeyListener(new KeyListener() {
+
+			public void keyTyped(KeyEvent e){
+			}
+
+			public void keyPressed(KeyEvent e){
+				int keyCode = e.getKeyCode();
+				switch(keyCode) {
+					case KeyEvent.VK_ENTER:
+						verifyCredentials();
+						break;
+				}
+			}
+			public void keyReleased(KeyEvent e){
+			}
+
+	});
+	
+	view.getBtnNewPatient().addActionListener(e -> newPatient() );
+	view.getBtnNewPatient().addKeyListener(new KeyListener() {
+
+		public void keyTyped(KeyEvent e){
+		}
+
+		public void keyPressed(KeyEvent e){
+			int keyCode = e.getKeyCode();
+			switch(keyCode) {
+				case KeyEvent.VK_ENTER:
+					newPatient();
+					break;
+			}
+		}
+		public void keyReleased(KeyEvent e){
+		}
+
+	});
+}
 
 
 
@@ -88,7 +129,6 @@ public class LoginController {
 		}
 		
 	}
-
 	
 	
 

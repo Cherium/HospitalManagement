@@ -3,101 +3,8 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
-## 29 mar 06:00 Sajid
-* Nurse MVC:
-    * changed fields to include doctor DropDown in booking panel
-    * initView() now uploads departments, and doctors of those departments to booking panel
-    * controller updates doctor menu based on department choice
-    * list of 100 next available appointments loads from initView (still needs listener)
-    * a lab test can now be booked for a patient
-* Schedule: created function nextOpenSlots() to find free slots in a given doctors schedule
-* UserSuperClass: created function that takes a doctors name, and returns its openSlots using above function
-
-## 28 mar 15:05 Sajid
-* Database: remaining information for existing users now all imports. I believe this is all the importing fields we need to deal with.
-* Receptionist, Authority Models: constructor changed to import availability
-
-## 28 mar 00:45 Sajid
-* Database: added code to allow importing nurse availability; added txt files to represent nurse availability
-* Nurse MVC: 
-    * availability now populates from database
-    * model constructor updated
-    * buttons now active/inactive based on user choice
-* Schedule:
-    * nextShiftsToString(..) function created to:
-        * consider the days worked of the current user and
-        * return a list of strings showing the date worked + start time + end time for 14 days from current date
-    * changed arrayToLDTArray to take in String[] instead of ArrayList
-* Doctor Model: changed constructor definition as per the previous point
-
-## 27 mar 08:30 Sajid
-* changed doctor constructors in DoctorModel and in CreateNeDoctorModel
-
-## 27 mar 08:19 Sajid
-* added dummy test values for 'labtest' appointment for a patient
-
-
-## 27 mar 00:45 Sajid
-* PatientModel: line 67-99 is a function that takes the database imported list of a patients appointments, and creates a Hashmap of those values. Postcondition: PatientModel has a HashMap containing all of its appointments
-    * Added getters and setters for this
-        * the doctor can now access this database to get appointment times to fill the doctors schedule
-* UserSuperClass: line 21, 22 added. `protected` so all subclasses can use it without getters
-* CreateNewPatient: updated constructor
-* Database: line 105-120; read in patient appt info
-* dbase folder --> added files for patient appointments, and doctor availability
-
-
-## 27 MARCH Jenny
-* Removed availability field in DoctorModel. 
-# 08:55
-* Added getters + setters for availability variable in UserSuperClass.
-# 13:58
-* Added updateSchedule(String[]): LocalDateTime[] and updateSchedule(LocalDateTime[]): String[] to Schedule. 
-* The weekly calendar in DoctorView is now set up with the new appointment system. The appointments are initizlied in DoctorController, when the DoctorView is being loaded. The nurse buttons does not update as nurses have no availability as of now.
-# 14:15
-* The monthly calendar in DoctorView is now set up with appointment information from DoctorModel.
-# 17:25
-* Somewhat cleared up code from Schedule and Doctor MVC. Removed unneccessary functions and commented out functionalities. 
-
-##26 mar 13:16 Sajid
-**In branch nurse**
-* all buttons, boxes, and other fields added. Patient names populate labels.
-* need to populate availability box, and also set nurse availability.
-
-## 26 mar 05:01 Sajid
-**In Branch nurse**
-* Added nurse functionality from scratch
-    * panels for assigned docs patients, patient info, book appt, see schedule, request time off, change availability
-
-## 26 MARCH Jenny
-# 10:46 
-* Rehaul of Schedule and how appointments are stored/view with Sajid. Commenting out all information in Doctor MVC related to Schedule.
-# 10:57
-* Adding new field to DoctorModel constructor.
-
-## 25 MARCH 21:44 Jenny
-Overview/Summary:
-**Schedule**
-* There is now a default constructor in Schedule that randomly generates scheduled days of a work week (that will remain constant throughout time, currently). The default constructor also generates 60 random appointments (24 hours randomly) within 1 month of the current date for the two patients on file (patient, patient2). 
-**DoctorView & DoctorController**
-* The aforementioned bug has been fixed. The doctor view will show the weekly schedule of either the doctor or one of the selected assigned nurses, only from 08:00 - 19:00 currently. The data within view stores 24 hours. The monthly view shows a list of scheduled patients for each day. Nurses have no appointments. Moving forward/backward a week/month will update the appointment view. 
-* In DoctorController, the list of appointments are altered by replacing the username with the corresponding name and passed onto DoctorView.
-* In DoctorView, the altered list of appointments is filtered into an array of size 35 (based on the LocalDate now, within DoctorView), and used to populate the monthly schedule.
-* Some duplicate code have been moved into functions for easier readability. Toggling between monthly/weekly view has been moved into a function. Setting the name labels on top of the monthly/weekly schedule has been moved to a function.
-* Some of the direct references to global variables within DoctorView have been changed to their relevant setters and getters instead, in an effort to decrease coupling. 
-
-## 25 MARCH 21:05 Jenny
-* Toggling between months in DoctorView will now update the appointments shown. There is a bug where moving between months does not refresh the appointments or just removes them.
-
-## 25 MARCH 18:58 Jenny
-* Refined randomized appointment data in Schedule. Also changed input in DoctorView to take in the format of Schedule.
-
-## 25 March 18:55 Neil
-* Most of Reception View has been nicely set. Need to work on the second half and patient file loading. Non-functional edit on buttons performed for login
-
-
-## 25 MARCH 12:56 Jenny
-* Added dummy data in Schedule default constructor.
+## 30 MARCH Jeremy
+* Features implemented: account can now be created for nurses, role can no longer be edited, password can now be edited, nurse account can now be edited
 
 ## 24 MARCH 21:53 Jenny
 * Clarified storage of scheduleDays in Schedule toString function.
@@ -107,7 +14,7 @@ Overview/Summary:
 
 ## 24 MARCH 20:06 Jenny
 **DoctorView**
-* Integrated scheduled appointments into monthly schedule with the help of Mohammed.
+* Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
 * Current bug: switching between months does not update the appointments shown.
 
 ## 24 MARCH 17:02 Jenny

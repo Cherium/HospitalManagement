@@ -67,6 +67,10 @@ public class AdminController {
 		
 		view.getDelAccount().addActionListener(e -> model.deleteAccount() );								//handle 'delete account' button pressed
 		
+		view.getEditAccount().addActionListener(e -> model.editAccount( 
+				view.getRolesDropDown().getItemAt( view.getRolesDropDown().getSelectedIndex() )				//handle 'edit account button pressed'
+				));
+		
 		view.getCrtDepartment().addActionListener(e -> addDepartment() );
 		
 	}

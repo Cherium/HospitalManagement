@@ -135,7 +135,7 @@ public class LoginView {
 				btnNewPatient.setBackground(Color.DARK_GRAY);
 				btnNewPatient.setForeground(Color.WHITE);
 				btnNewPatient.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
-	
+
 			btnExit = new JButton("Exit");
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);

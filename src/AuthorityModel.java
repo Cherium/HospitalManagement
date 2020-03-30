@@ -23,7 +23,6 @@ public class AuthorityModel extends UserSuperClass {
 
 		super(name, username, password);
 		setRole("authority");
-		
 		this.availability = arrayToLDTArray(avail);
 	}
 	
