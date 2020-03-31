@@ -30,6 +30,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -75,13 +76,12 @@ public class DoctorView {
 	private JPanel btnPaneSchedule;
 	private JPanel buttonContainer;
 	private JPanel scheduleContainer;
+	private JPanel modifyScheduleContainer;
 
 	private JButton btnSignOut;
 	private JButton btnViewPatient;
 	private JButton btnMakeChanges;
 	private JButton btnAddTreatmentNotes;
-	private JButton btnSaveChanges;
-	private JButton btnOwnSchedule;
 	private JButton btnOwn;
 	private JButton btnToggle;
 	private JButton bookAptBtn;
@@ -92,6 +92,8 @@ public class DoctorView {
 	private JLabel nameLabel;
 	private JLabel deptLabel;
 	private JLabel scheduleNameLabelWeek, scheduleNameLabelMonth;
+
+	private JList<String> nurses;
 
 	private JTextArea patientInformation = new JTextArea(7, 90);
 	private JTextArea pastTreatments;
@@ -113,9 +115,12 @@ public class DoctorView {
 	private Boolean[] schDays;
 	private int[] shiftTimes;
 	private String name;
-	private String[] aptsInMonth;
 
-	private JScrollPane scroll;
+	String[] times = { "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00",
+			"11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",
+			"23:00", "24:00" };
+
+	// private JScrollPane scroll;
 	private JList listPatients;
 
 	private JComboBox<String> apptType;
@@ -124,29 +129,22 @@ public class DoctorView {
 	private JComboBox<String> labTime;
 	private JComboBox<String> year, month, day;
 	/*
-	 * #################################################################
-	 * #  Sign out                                                     #
-	 * #                                                               #
-	 * #  <Department> : <Name>, M.D.                                  #
-	 * #################################################################
-	 * #              <Name> Weekly/Monthly               #  Patients  #
-	 * #                                                  #   Nurses   #
-	 * #              Calendar + Appointments             #  Schedule  #
-	 * #                                                  # UselessBtn #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * #                                                  #            #
-	 * # _________________________________________________#            #
-	 * #   | Back | UselessButton | SwitchView | Forward  #            #
+	 * ################################################################# # Sign out
+	 * # # # # <Department> : <Name>, M.D. #
+	 * ################################################################# # <Name>
+	 * Weekly/Monthly # Patients # # # Nurses # # Calendar + Appointments # Schedule
+	 * # # # UselessBtn # # # # # # # # # # # # # # # # # # # # # # # # # #
+	 * _________________________________________________# # # | Back | UselessButton
+	 * | SwitchView | Forward # #
 	 * #################################################################
 	 */
 
 	// Constructor
+	
+	/**
+	 * 
+	 * @param title
+	 */
 	public DoctorView(String title) {
 		// create frame container
 		// sets frame containers attributes
@@ -164,12 +162,9 @@ public class DoctorView {
 
 	}
 
-	public void initGUI() {
-		JPanel mainPane = new JPanel(new MigLayout());
-
-	}
-
-	/** initialize the panels and components that will go inside the frame */
+	/**
+	 * 
+	 */
 	public void initializeGUI() {
 		setNow(LocalDate.now());
 		// Create title container(JLabel) and set it as top of page in the frame
@@ -179,10 +174,8 @@ public class DoctorView {
 		frame.getContentPane().add(titleContainer, BorderLayout.NORTH); // Add the JPanel to the frame
 
 		/**
-		 * #################################################################
-		 * #  Sign out                                                     #
-		 * #                                                               #
-		 * #  <Department> : <Name>, M.D.                                  #
+		 * ################################################################# # Sign out
+		 * # # # # <Department> : <Name>, M.D. #
 		 * #################################################################
 		 */
 
@@ -212,21 +205,11 @@ public class DoctorView {
 		namePane.add(nameLabel);
 
 		/**
-		 * #################################################################
-		 * #              <Name> Weekly/Monthly               #  Patients  #
-		 * #                                                  #   Nurses   #
-		 * #              Calendar + Appointments             #  Schedule  #
-		 * #                                                  # UselessBtn #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * #                                                  #            #
-		 * # _________________________________________________#            #
-		 * #   | Back | UselessButton | SwitchView | Forward  #            #
+		 * ################################################################# # <Name>
+		 * Weekly/Monthly # Patients # # # Nurses # # Calendar + Appointments # Schedule
+		 * # # # UselessBtn # # # # # # # # # # # # # # # # # # # # # # # # # #
+		 * _________________________________________________# # # | Back | UselessButton
+		 * | SwitchView | Forward # #
 		 * #################################################################
 		 */
 		// Create a content pane centered at the middle of the page
@@ -241,35 +224,22 @@ public class DoctorView {
 		scheduleContainer.setLayout(new MigLayout("hidemode 1"));
 		contentPane.add(scheduleContainer);
 
+		// Create a container for modifying the schedule
+		modifyScheduleContainer = new JPanel();
+		initializeModify();
+		contentPane.add(modifyScheduleContainer);
+
 		// Create container for patient panel
 
 		/**
-		 * #################################################################
-		 * #  Sign out                                                     #
-		 * #                                                               #
-		 * #  <Department> : <Name>, M.D.                                  #
-		 * #################################################################
-		 * #  Patient1  #   Patient information                            #
-		 * #  Patient2  #                                                  #
-		 * #  PatientX  #                                                  #
-		 * #            #   Past treatment                                 #
-		 * #            #                                                  #
-		 * #            #                                                  #
-		 * #            #                                                  #
-		 * #            #   Add treatment notes                            #
-		 * #            #                                                  #
-		 * #            #                                                  #
-		 * #            #                                                  #
-		 * #            #   AddTreatmentButton                             #
+		 * ################################################################# # Sign out
+		 * # # # # <Department> : <Name>, M.D. #
+		 * ################################################################# # Patient1
+		 * # Patient information # # Patient2 # # # PatientX # # # # Past treatment # #
+		 * # # # # # # # # # # Add treatment notes # # # # # # # # # # # #
+		 * AddTreatmentButton #
 		 * #################################################################
 		 */
-		// patientPanel = new JPanel();
-		// patientPanel.setBorder(new LineBorder(Color.CYAN));
-		// patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		// // patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		// patientPanel.setLayout(new BorderLayout());
-		// patientPanel.setBackground(Color.WHITE);
-		// patientPanel.setVisible(false);
 
 		initializePatients();
 		contentPane.add(patientPanel);
@@ -285,8 +255,8 @@ public class DoctorView {
 		scheduleMonthly = new JPanel();
 		scheduleWeekly = new JPanel();
 
-		scheduleContainer.add(scheduleWeekly, "align 50% 50%");
-		scheduleContainer.add(scheduleMonthly, "align 50% 50%");
+		scheduleContainer.add(scheduleWeekly);
+		scheduleContainer.add(scheduleMonthly);
 
 		// Create buttons for manipulating the schedule
 		initializeButtonsSchedule(WeekFields.of(Locale.CANADA).dayOfWeek());
@@ -295,19 +265,61 @@ public class DoctorView {
 		// Create the buttons on the right panel for viewing patients and nurses
 		initializeButtonsRight();
 		frame.getContentPane().add(buttonContainer, BorderLayout.EAST);
+
 		frame.setVisible(true);
 
 	}
 
 	////////////////////////////////////////////////////
+	/**
+	 * 
+	 */
+	public void initializeModify() {
+		modifyScheduleContainer = new JPanel(new MigLayout());
+		modifyScheduleContainer.setBackground(Color.WHITE);
+		modifyScheduleContainer.setBorder(BorderFactory.createLineBorder(Color.PINK));
+
+		String[] days = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+		JPanel availChangePanel = new JPanel(
+				new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]"));
+		availChangePanel.setBackground(Color.WHITE);
+		availChangePanel.setPreferredSize(new Dimension(325, 200));
+		availChangePanel.setBorder(BorderFactory.createTitledBorder("Request Availability Change"));
+
+		availChangePanel.add(new JLabel("Start"), "span 2");
+		availChangePanel.add(new JLabel("End"), " wrap");
+
+		JComboBox<String>[] availTimes = new JComboBox[14];
+		for (int i = 0; i < 7; i++) {
+			availChangePanel.add(new JLabel(days[i]));
+			availTimes[i * 2] = new JComboBox(times);
+			availTimes[i * 2 + 1] = new JComboBox(times);
+			availChangePanel.add(availTimes[i * 2]);
+			availChangePanel.add(availTimes[i * 2 + 1]);
+		}
+		for (JComboBox<String> jComboBox : availTimes) {
+			jComboBox.setBackground(Color.WHITE);
+		}
+
+		modifyScheduleContainer.add(availChangePanel, "dock east");
+		modifyScheduleContainer.setVisible(false);
+	}
 
 	/** Getter and Setter Methods */
 
+	/**
+	 * 
+	 * @param a
+	 */
 	public void setVisibility(Boolean a) {
 		frame.setVisible(a);
 	}
 
-	// show a dialog message if credentials do not validate
+	/**
+	 * 
+	 * @param message
+	 */
 	public void loginError(String message) {
 		JFrame frame = new JFrame();
 		frame.setSize(200, 100);
@@ -315,6 +327,9 @@ public class DoctorView {
 		JOptionPane.showMessageDialog(frame, message);
 	}
 
+	/**
+	 * 
+	 */
 	public void initializeButtonsRight() {
 
 		buttonContainer = new JPanel();
@@ -370,9 +385,9 @@ public class DoctorView {
 			public void actionPerformed(ActionEvent e) {
 				nurseComboBox.setSelectedIndex(-1);
 				btnOwn.setEnabled(false);
-				// contentPane.setVisible(true);
 				scheduleContainer.setVisible(true);
 				patientPanel.setVisible(false);
+				modifyScheduleContainer.setVisible(false);
 			}
 		});
 
@@ -383,6 +398,7 @@ public class DoctorView {
 				scheduleContainer.setVisible(false);
 				patientPanel.setVisible(true);
 				btnOwn.setEnabled(true);
+				modifyScheduleContainer.setVisible(false);
 			}
 		});
 
@@ -405,8 +421,10 @@ public class DoctorView {
 		btnChange.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				btnSaveChanges.setVisible(true);
-				btnOwnSchedule.setVisible(true);
+				modifyScheduleContainer.setVisible(true);
+				patientPanel.setVisible(false);
+				scheduleContainer.setVisible(false);
+				btnOwn.setEnabled(true);
 			}
 		});
 
@@ -415,6 +433,10 @@ public class DoctorView {
 		buttonContainer.setPreferredSize(buttonContainer.getPreferredSize());
 	}
 
+	/**
+	 * 
+	 * @param fieldISO
+	 */
 	public void initializeButtonsSchedule(TemporalField fieldISO) {
 		/*
 		 * #-----------------------------------# # buttons for schedule # # #
@@ -513,37 +535,14 @@ public class DoctorView {
 			}
 		});
 
-		btnSaveChanges = new JButton("Save changes");
-		btnPaneSchedule.add(btnSaveChanges);
-
-		btnSaveChanges.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				btnSaveChanges.setVisible(false);
-			}
-		});
-
-		btnOwnSchedule = new JButton("View current schedule");
-		btnPaneSchedule.add(btnOwnSchedule);
-
-		btnOwnSchedule.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				btnOwnSchedule.setVisible(false);
-				btnSaveChanges.setVisible(false);
-				patientPanel.setVisible(false);
-			}
-		});
-
 		btnPaneSchedule.setPreferredSize(new Dimension(500, 0));
-
-		btnSaveChanges.setVisible(false);
-		btnOwnSchedule.setVisible(false);
 
 		btnPaneSchedule.setBorder(BorderFactory.createEtchedBorder());
 	}
 
-	// Set up the date labels
+	/**
+	 * 
+	 */
 	public void initializeVariables() {
 		JLabel lblDay = new JLabel("Sunday");
 		lblDay.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -602,17 +601,19 @@ public class DoctorView {
 
 	}
 
-	// Set up weekly schedule view
+	/**
+	 * 
+	 */
 	public void initializeWeeklySchedule() {
 		Boolean[][] ava = new Boolean[24][7];
 		// i is for the hour
 		for (int i = 0; i < 24; i++) {
 			// j is for the day and also used as the index for shiftTimes
 			for (int j = 0; j < 7; j++) {
-				if (shiftTimes[j*2] == shiftTimes[j*2+1]) {
+				if (shiftTimes[j * 2] == shiftTimes[j * 2 + 1]) {
 					ava[i][j] = false;
 				} else {
-					if ((i >= shiftTimes[j*2]) && (i <= shiftTimes[j*2+1])) {
+					if ((i >= shiftTimes[j * 2]) && (i <= shiftTimes[j * 2 + 1])) {
 						ava[i][j] = true;
 					} else {
 						ava[i][j] = false;
@@ -629,8 +630,9 @@ public class DoctorView {
 			LocalDateTime time = LocalDateTime.parse(entry.getKey());
 			int day = time.getDayOfWeek().getValue() % 7;
 			int hour = time.getHour();
-			if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0) && (ava[hour][day] == true)) {
-				listApsWeek[time.getHour()][time.getDayOfWeek().getValue()%7] = entry.getValue();
+			if ((time.toLocalDate().compareTo(startRange) >= 0) && (time.toLocalDate().compareTo(endRange) <= 0)
+					&& (ava[hour][day] == true)) {
+				listApsWeek[time.getHour()][time.getDayOfWeek().getValue() % 7] = entry.getValue();
 			}
 
 		}
@@ -638,14 +640,15 @@ public class DoctorView {
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
 		scheduleWeekly.repaint();
-			scheduleWeekly.setLayout(new MigLayout("wrap 8", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
-			scheduleWeekly.setBackground(Color.WHITE);
-			scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+		scheduleWeekly.setLayout(new MigLayout("wrap 8",
+				"[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
+		scheduleWeekly.setBackground(Color.WHITE);
+		scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
+
 		scheduleNameLabelWeek = new JLabel(getName() + "'s Schedule: Weekly");
-			scheduleWeekly.add(scheduleNameLabelWeek, "span");
-			scheduleWeekly.add(Box.createHorizontalGlue());
-		
+		scheduleWeekly.add(scheduleNameLabelWeek, "span");
+		scheduleWeekly.add(Box.createHorizontalGlue());
+
 		setWeekDateLabels(getNow());
 		for (JLabel wd : weekYYYYMMDD) {
 			scheduleWeekly.add(wd);
@@ -660,19 +663,19 @@ public class DoctorView {
 		}
 
 		for (int i = 0; i < 12; i++) {
-			scheduleWeekly.add(new JLabel((i+8)+":00"));
+			scheduleWeekly.add(new JLabel((i + 8) + ":00"));
 			for (int j = 0; j < 7; j++) {
 				JLabel templbl = new JLabel("  ");
 				templbl.setBackground(Color.WHITE);
-				if (listApsWeek[i+8][j] != null) {
-					templbl.setText(listApsWeek[i+8][j]);
+				if (listApsWeek[i + 8][j] != null) {
+					templbl.setText(listApsWeek[i + 8][j]);
 					templbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 					templbl.setBackground(Color.ORANGE);
 				}
 				templbl.setOpaque(true);
 				scheduleWeekly.add(templbl);
-				templbl.setEnabled(ava[i+8][j]);
-				if (!ava[i+8][j]) {
+				templbl.setEnabled(ava[i + 8][j]);
+				if (!ava[i + 8][j]) {
 					templbl.setBackground(Color.LIGHT_GRAY);
 				}
 				templbl.setPreferredSize(new Dimension(100, 35));
@@ -680,25 +683,26 @@ public class DoctorView {
 			}
 		}
 
-		scheduleWeekly.setPreferredSize(new Dimension(2000,1000));
+		scheduleWeekly.setPreferredSize(new Dimension(2000, 1000));
 
 	}
-	
-	
-	// Set up monthly view of schedule
+
+	/**
+	 * 
+	 */
 	public void initializeMonthlySchedule() {
 		scheduleMonthly.removeAll();
 		scheduleMonthly.revalidate();
 		scheduleMonthly.repaint();
-			scheduleMonthly.setLayout(new MigLayout("wrap 7", "[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
-			scheduleMonthly.setBackground(Color.WHITE);
-			scheduleMonthly.setBorder(new EmptyBorder(5, 5, 5, 5));
-			scheduleMonthly.setBorder(new LineBorder(Color.RED));
-		
-		
+		scheduleMonthly.setLayout(new MigLayout("wrap 7",
+				"[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
+		scheduleMonthly.setBackground(Color.WHITE);
+		scheduleMonthly.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scheduleMonthly.setBorder(new LineBorder(Color.RED));
+
 		scheduleNameLabelMonth = new JLabel(getName() + "'s schedule: Monthly");
 		scheduleMonthly.add(scheduleNameLabelMonth, "span");
-		displayMonth = new JLabel(now.getMonth().toString()+" "+now.getYear());
+		displayMonth = new JLabel(now.getMonth().toString() + " " + now.getYear());
 		scheduleMonthly.add(displayMonth, "span");
 
 		setMonthDateLabels(getNow());
@@ -709,17 +713,17 @@ public class DoctorView {
 			d.setEnabled(true);
 		}
 
-
 		ArrayList<String[]> apts = filterAppointmentsMonth();
 
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 7; j++) {
-				scheduleMonthly.add(monthdays.get(i*7+j));
-				monthdays.get(i*7+j).setEnabled(schDays[j]);
+				scheduleMonthly.add(monthdays.get(i * 7 + j));
+				monthdays.get(i * 7 + j).setEnabled(schDays[j]);
 			}
 			for (int js = 0; js < 7; js++) {
-				JList<String> oneDayList = new JList<String>(apts.get(i*7+js));
-				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				JList<String> oneDayList = new JList<String>(apts.get(i * 7 + js));
+				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+						ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
 				oneDayList.setEnabled(schDays[js]);
@@ -727,10 +731,8 @@ public class DoctorView {
 			}
 		}
 
-
 		scheduleMonthly.setVisible(false);
-		scheduleMonthly.setPreferredSize(new Dimension(2000,1000));
-
+		scheduleMonthly.setPreferredSize(new Dimension(2000, 1000));
 
 	}
 
@@ -746,56 +748,51 @@ public class DoctorView {
 		patientPanel.setBackground(Color.WHITE);
 		patientPanel.setVisible(false);
 
-		String[] times = {
-			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
-			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
-		};
-
-		JPanel topPanel = new JPanel(new MigLayout("") );
+		JPanel topPanel = new JPanel(new MigLayout(""));
 		topPanel.setBackground(Color.WHITE);
 		topPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 		topPanel.setPreferredSize(new Dimension(900, 100));
 		topPanel.setMaximumSize(new Dimension(905, 125));
 		bookAptBtn = new JButton("Book Appointment");
-		
+
 		apptType = new JComboBox<String>();
-			apptType.addItem("Doctor Appointment");
-			apptType.addItem("Lab Test");
-			apptType.addActionListener(e -> disableLab() );
-			
+		apptType.addItem("Doctor Appointment");
+		apptType.addItem("Lab Test");
+		apptType.addActionListener(e -> disableLab());
+
 		departmentDropDown = new JComboBox<String>();
 		chooseAppt = new JComboBox<String>();
 		labTime = new JComboBox<String>(times);
-			labTime.setEnabled(false);
+		labTime.setEnabled(false);
 		year = initYearCombo();
-			year.setEnabled(false);
-			year.addActionListener(e -> initDaysinBox());
+		year.setEnabled(false);
+		year.addActionListener(e -> initDaysinBox());
 		month = initMonthCombo();
-			month.setEnabled(false);
-			month.addActionListener(e -> initDaysinBox());
+		month.setEnabled(false);
+		month.addActionListener(e -> initDaysinBox());
 		day = initDayCombo();
-			day.setEnabled(false);
-			initDaysinBox();
-			
+		day.setEnabled(false);
+		initDaysinBox();
+
 		topPanel.add(new JLabel("Type:"));
 		topPanel.add(apptType);
-		
-		topPanel.add(new JLabel("Department:"), "gapleft 50" );
+
+		topPanel.add(new JLabel("Department:"), "gapleft 50");
 		topPanel.add(departmentDropDown, "growx");
 		topPanel.add(new JLabel("Select Appointment: "));
 		topPanel.add(chooseAppt, "span, pushx, growx, wrap");
-		
+
 		topPanel.add(new JLabel("Lab Date: "), "skip 2, align right");
 		topPanel.add(year, "sg c, split");
 		topPanel.add(month, "sg c, split");
 		topPanel.add(day, "sg c");
 		topPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
 		topPanel.add(labTime, "sg c");
-		
+
 		topPanel.add(bookAptBtn, "skip 2, align right");
 
 		patientPanel.add(topPanel, BorderLayout.NORTH);
-		topPanel.setVisible(false);
+		// topPanel.setVisible(false);
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
 		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
@@ -805,9 +802,10 @@ public class DoctorView {
 		patientInformation.setEnabled(false);
 		selectedPatient.add(patientInformation);
 		selectedPatient.add(new JLabel("Detailed Treatment History"));
-		pastTreatments = new JTextArea(0,200);
+		pastTreatments = new JTextArea(0, 200);
 		pastTreatments.setLineWrap(true);
-		pastTreatments.setText("Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
+		pastTreatments.setText(
+				"Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
 		pastTreatments.setEnabled(false);
 		JScrollPane sp1 = new JScrollPane(pastTreatments);
 		selectedPatient.add(sp1, "span 1 10, height 300");
@@ -816,65 +814,79 @@ public class DoctorView {
 		currentTreatment.setText("I am a box for a doctor to enter treatment notes in");
 		currentTreatment.setLineWrap(true);
 
-		
 		JScrollPane sp2 = new JScrollPane(currentTreatment);
 		selectedPatient.add(sp2, "span 1 10, height 175");
-		
 
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
 		selectedPatient.add(btnAddTreatmentNotes);
 
-		JButton btnTest = new JButton("Book appointment");
-		btnTest.addActionListener(e -> {
-			if (topPanel.isVisible()) {
-				topPanel.setVisible(false);
-				btnTest.setText("Book appointment");
-			} else {
-				topPanel.setVisible(true);
-				btnTest.setText("Cancel");
-			}
-		});
-		selectedPatient.add(btnTest);
-
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);
 
 	}
-	
-	
-	
-	
-	//add list of patients (immutable) to 'Patient View' screen
-	public void setPatientList(String[] patients)
-	{
-		
+
+	/**
+	 * 
+	 * @param patients
+	 */
+	public void setPatientList(String[] patients) {
+
 		listPatients = new JList(patients);
 
-		scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setLayout(new ScrollPaneLayout());
 		scroll.setPreferredSize(new DimensionUIResource(200, 0));
 		scroll.getVerticalScrollBar().setUnitIncrement(10);
-		
+
 		patientPanel.add(scroll, BorderLayout.WEST);
 	}
-	
-	
-	
 
+	/**
+	 * 
+	 * @param n
+	 */
+	public void setNurseList(String[] n) {
+		nurses = new JList<String>(n);
+
+		JScrollPane scroll = new JScrollPane(nurses, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setLayout(new ScrollPaneLayout());
+		scroll.setPreferredSize(new Dimension(300, 300));
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+
+		JPanel namesPanel = new JPanel(new MigLayout("wrap 1"));
+		namesPanel.setBorder(BorderFactory.createTitledBorder("Upcoming shifts"));
+		JCheckBox selfCheck = new JCheckBox("Own availability", true);
+		selfCheck.setBackground(Color.WHITE);
+		nurses.setEnabled(false);
+		selfCheck.addItemListener(e -> {
+			if (e.getStateChange() == 1) {
+				nurses.setEnabled(false);
+			} else {
+				nurses.setEnabled(true);
+			}
+		});
+		namesPanel.add(selfCheck);
+		namesPanel.add(scroll);
+		modifyScheduleContainer.add(namesPanel, "dock west");
+	}
 
 	/**
 	 * Function sets up the specific day of the month labels for monthly layout
+	 * 
 	 * @param ld
 	 */
 	public void setMonthDateLabels(LocalDate ld) {
 		LocalDate tempTime = ld.withDayOfMonth(1).with(WeekFields.of(Locale.CANADA).dayOfWeek(), 1);
 		for (JLabel lbl : monthdays) {
-			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth()+"");
+			lbl.setText(tempTime.plusDays(monthdays.indexOf(lbl)).getDayOfMonth() + "");
 		}
-		displayMonth.setText(ld.getMonth().toString()+" "+ld.getYear());
+		displayMonth.setText(ld.getMonth().toString() + " " + ld.getYear());
 	}
 
 	/**
 	 * Function sets up the specific date of the year labels for weekly layout
+	 * 
 	 * @param ld
 	 */
 	public void setWeekDateLabels(LocalDate ld) {
@@ -884,8 +896,10 @@ public class DoctorView {
 		}
 	}
 
-	// Filters out a list of appointments starting from the first day (of the first week) of the current month
-	// Returns a list of appointments (as a list of list of names of patients) for a period of 35 days
+	/**
+	 * Filters out a list of appointments starting from the first day (of the first month) of the current month. Returns a list of appointments (as a list of list of names of patients) for a period of 35 days
+	 * @return
+	 */
 	public ArrayList<String[]> filterAppointmentsMonth() {
 		ArrayList<ArrayList<String>> interFilter = new ArrayList<ArrayList<String>>(0);
 		for (int i = 0; i < 35; i++) {
@@ -911,7 +925,10 @@ public class DoctorView {
 		return filtered;
 	}
 
-	// Sets the weekly/monthly schedule view
+	/**
+	 * Sets the weekly/monthly schedule view
+	 * @param b
+	 */
 	public void isWeekly(Boolean b) {
 		if (b) {
 			scheduleMonthly.setVisible(false);
@@ -922,621 +939,704 @@ public class DoctorView {
 		}
 	}
 
+	/**
+	 * Sets the name labels for the schedule
+	 * @param name
+	 */
 	public void setScheduleNameLabels(String name) {
 		getScheduleNameLabelMonth().setText(name + " Monthly Schedule");
 		getScheduleNameLabelWeek().setText(name + " Weekly Schedule");
 	}
-	
+
+	/**
+	 * 
+	 */
 	public void disableLab() {
-		
+
 		if (apptType.getSelectedItem().equals("Lab Test")) {
 			departmentDropDown.setEnabled(false);
 			chooseAppt.setEnabled(false);
-			
+
 			year.setEnabled(true);
 			month.setEnabled(true);
 			day.setEnabled(true);
-			labTime.setEnabled(true);			
+			labTime.setEnabled(true);
 		} else {
 			departmentDropDown.setEnabled(true);
 			chooseAppt.setEnabled(true);
-			
+
 			year.setEnabled(false);
 			month.setEnabled(false);
 			day.setEnabled(false);
-			labTime.setEnabled(false);	
+			labTime.setEnabled(false);
 		}
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JComboBox<String> initYearCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 120; i++) {
-			temp.addItem((LocalDate.now().getYear()-i)+"");
+			temp.addItem((LocalDate.now().getYear() - i) + "");
 		}
 		temp.setBackground(Color.WHITE);
-		
+
 		return temp;
 	}
-	
-	//create box for month
+
+	/**
+	 * 
+	 * @return
+	 */
 	public JComboBox<String> initMonthCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 12; i++) {
-			temp.addItem((i+1)+"");
+			temp.addItem((i + 1) + "");
 		}
 		temp.setBackground(Color.WHITE);
-		
+
 		return temp;
 	}
-	
-	//create box for day
+
+	/**
+	 * 
+	 * @return
+	 */
 	public JComboBox<String> initDayCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		temp.setBackground(Color.WHITE);
-		
+
 		return temp;
 	}
-	
-	//add days to day box
-	public void initDaysinBox()
-	{//
-		//https://www.youtube.com/watch?v=yylaqeWkPmM
-		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
-				.withResolverStyle(ResolverStyle.STRICT);
-		for (int i = 1; i <= 31 ; i++)
-		{
-			try
-			{
-				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
-					+"/"+ Integer.toString(i));
+
+	/**
+	 * 
+	 */
+	public void initDaysinBox() {//
+									// https://www.youtube.com/watch?v=yylaqeWkPmM
+									// https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d").withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31; i++) {
+			try {
+				df.parse((String) year.getSelectedItem() + "/" + (String) month.getSelectedItem() + "/"
+						+ Integer.toString(i));
 				day.addItem(Integer.toString(i));
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				continue;
 			}
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**Getter and Setter Methods*/
+	/** Getter and Setter Methods */
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JPanel getPanel() {
 		return panel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param panel
+	 */
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JPanel getScheduleWeekly() {
 		return scheduleWeekly;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param scheduleWeekly
+	 */
 	public void setScheduleWeekly(JPanel scheduleWeekly) {
 		this.scheduleWeekly = scheduleWeekly;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JPanel getScheduleMonthly() {
 		return scheduleMonthly;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param scheduleMonthly
+	 */
 	public void setScheduleMonthly(JPanel scheduleMonthly) {
 		this.scheduleMonthly = scheduleMonthly;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JPanel getPatientPanel() {
 		return patientPanel;
 	}
 
+	/**
+	 * 
+	 * @param patPanel
+	 */
 	public void setPatientPanel(JPanel patPanel) {
 		this.patientPanel = patPanel;
 	}
 
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JPanel getTitleContainer() {
 		return titleContainer;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param titleContainer
+	 */
 	public void setTitleContainer(JPanel titleContainer) {
 		this.titleContainer = titleContainer;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JPanel getBackPanel() {
 		return backPanel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param backPanel
+	 */
 	public void setBackPanel(JPanel backPanel) {
 		this.backPanel = backPanel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getBtnSignOut() {
 		return btnSignOut;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param btnSignOut
+	 */
 	public void setBtnSignOut(JButton btnSignOut) {
 		this.btnSignOut = btnSignOut;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getBtnViewPatient() {
 		return btnViewPatient;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param btnViewPatient
+	 */
 	public void setBtnViewPatient(JButton btnViewPatient) {
 		this.btnViewPatient = btnViewPatient;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getBtnMakeChanges() {
 		return btnMakeChanges;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param btnMakeChanges
+	 */
 	public void setBtnMakeChanges(JButton btnMakeChanges) {
 		this.btnMakeChanges = btnMakeChanges;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getTitleLabel() {
 		return titleLabel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param titleLabel
+	 */
 	public void setTitleLabel(JLabel titleLabel) {
 		this.titleLabel = titleLabel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getNursesLabel() {
 		return nursesLabel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param nursesLabel
+	 */
 	public void setNursesLabel(JLabel nursesLabel) {
 		this.nursesLabel = nursesLabel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getDisplayMonth() {
 		return displayMonth;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param displayMonth
+	 */
 	public void setDisplayMonth(JLabel displayMonth) {
 		this.displayMonth = displayMonth;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getNameLabel() {
 		return nameLabel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param nameLabel
+	 */
 	public void setNameLabel(JLabel nameLabel) {
 		this.nameLabel = nameLabel;
 	}
 
-
-
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getDeptLabel() {
 		return deptLabel;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param deptLabel
+	 */
 	public void setDeptLabel(JLabel deptLabel) {
 		this.deptLabel = deptLabel;
 	}
 
-
-
-
-
-
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<JLabel> getWeekdays() {
 		return weekYYYYMMDD;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param weekYYYYMMDD
+	 */
 	public void setWeekdays(ArrayList<JLabel> weekYYYYMMDD) {
 		this.weekYYYYMMDD = weekYYYYMMDD;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<JLabel> getDaysOfWeek() {
 		return sunToSatWeek;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param sunToSatWeek
+	 */
 	public void setDaysOfWeek(ArrayList<JLabel> sunToSatWeek) {
 		this.sunToSatWeek = sunToSatWeek;
 	}
 
-
-
-
-
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<JLabel> getMonthdays() {
 		return monthdays;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param monthdays
+	 */
 	public void setMonthdays(ArrayList<JLabel> monthdays) {
 		this.monthdays = monthdays;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public Container getContainer() {
 		return container;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param container
+	 */
 	public void setContainer(Container container) {
 		this.container = container;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public LocalDate getNow() {
 		return now;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param now
+	 */
 	public void setNow(LocalDate now) {
 		this.now = now;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JComboBox<String> getNurseComboBox() {
 		return nurseComboBox;
 	}
 
-
-
-
-
-
+	/**
+	 * 
+	 * @param nurseComboBox
+	 */
 	public void setNurseComboBox(JComboBox<String> nurseComboBox) {
 		this.nurseComboBox = nurseComboBox;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JTextArea getPastTreatmentBox() {
 		return pastTreatments;
 	}
 
+	/**
+	 * 
+	 * @param x
+	 */
 	public void setPastTreatmentBox(JTextArea x) {
 		this.pastTreatments = x;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JTextArea getCurrentTreatmentBox() {
 		return currentTreatment;
 	}
 
+	/**
+	 * 
+	 * @param x
+	 */
 	public void setCurrentTreatmentBox(JTextArea x) {
 		this.currentTreatment = x;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JTextArea getPatientInformation() {
 		return patientInformation;
 	}
 
+	/**
+	 * 
+	 * @param pi
+	 */
 	public void setPatientInformation(JTextArea pi) {
 		this.patientInformation = pi;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getButtonTreatmentNotes() {
 		return btnAddTreatmentNotes;
 	}
 
+	/**
+	 * 
+	 * @param xs
+	 */
 	public void setButtonTreatmentNotes(JButton xs) {
 		btnAddTreatmentNotes = xs;
 	}
 
+	/**
+	 * 
+	 * @param patList
+	 */
 	public void setPatientListPanels(ArrayList<JPanel> patList) {
 		this.patientListPanels = patList;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<JPanel> getPatientListPanels() {
 		return patientListPanels;
 	}
 
-	public void setScheduleNameLabelWeek (JLabel s) {
+	/**
+	 * 
+	 * @param s
+	 */
+	public void setScheduleNameLabelWeek(JLabel s) {
 		this.scheduleNameLabelWeek = s;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getScheduleNameLabelWeek() {
 		return scheduleNameLabelWeek;
 	}
 
-	public void setScheduleNameLabelMonth (JLabel s) {
+	/**
+	 * 
+	 * @param s
+	 */
+	public void setScheduleNameLabelMonth(JLabel s) {
 		this.scheduleNameLabelMonth = s;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JLabel getScheduleNameLabelMonth() {
 		return scheduleNameLabelMonth;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JList getListPatients() {
 		return listPatients;
 	}
 
-
+	/**
+	 * 
+	 * @param listPatients
+	 */
 	public void setListPatients(JList listPatients) {
 		this.listPatients = listPatients;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getBtnAddTreatmentNotes() {
 		return btnAddTreatmentNotes;
 	}
 
-
+	/**
+	 * 
+	 * @param btnAddTreatmentNotes
+	 */
 	public void setBtnAddTreatmentNotes(JButton btnAddTreatmentNotes) {
 		this.btnAddTreatmentNotes = btnAddTreatmentNotes;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JTextArea getCurrentTreatment() {
 		return currentTreatment;
 	}
 
-
+	/**
+	 * 
+	 * @param currentTreatment
+	 */
 	public void setCurrentTreatment(JTextArea currentTreatment) {
 		this.currentTreatment = currentTreatment;
 	}
 
-
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getButtonOwn() {
 		return btnOwn;
 	}
 
+	/**
+	 * 
+	 * @param o
+	 */
 	public void setButtonOwn(JButton o) {
 		this.btnOwn = o;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public LinkedHashMap<String, String> getAppointments() {
 		return appointments;
 	}
 
+	/**
+	 * 
+	 * @param appointments
+	 */
 	public void setAppointments(LinkedHashMap<String, String> appointments) {
 		this.appointments = appointments;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public Boolean[] getScheduledDays() {
 		return schDays;
 	}
 
+	/**
+	 * 
+	 * @param b
+	 */
 	public void setScheduledDays(Boolean[] b) {
 		this.schDays = b;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int[] getShifts() {
 		return shiftTimes;
 	}
 
+	/**
+	 * 
+	 * @param xs
+	 */
 	public void setShifts(int[] xs) {
 		this.shiftTimes = xs;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JButton getBtnToggle() {
 		return btnToggle;
 	}
 
+	/**
+	 * 
+	 * @param bt
+	 */
 	public void setBtnToggle(JButton bt) {
 		this.btnToggle = bt;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JList<String> getNursesList() {
+		return nurses;
+	}
+
+	/**
+	 * 
+	 * @param n
+	 */
+	public void setNursesList(JList<String> n) {
+		this.nurses = n;
 	}
 
 }

@@ -36,6 +36,7 @@ public class DoctorController {
 
 		view.initializeWeeklySchedule();
 		view.initializeMonthlySchedule();
+		String[] nurses = new String[model.getAssignedNurseUsernames().size()];
 
 		// set the Labels for view
 		view.getDeptLabel().setText(model.getDepartment() + ": ");
@@ -45,6 +46,7 @@ public class DoctorController {
 		// set the nurse name dropdown list for view
 		for (String n : model.getAssignedNurseUsernames()) {
 			view.getNurseComboBox().addItem(model.getObjectsName(n));
+			nurses[model.getAssignedNurseUsernames().indexOf(n)] = model.getObjectsName(n);
 		}
 		view.getNurseComboBox().setSelectedIndex(-1); // set default choice to blank
 
@@ -55,6 +57,7 @@ public class DoctorController {
 			patients[index] = Main.dbase.get(string).getName();
 		}
 		view.setPatientList(patients);
+		view.setNurseList(nurses);
 
 	}
 
