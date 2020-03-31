@@ -66,6 +66,16 @@ public class DoctorModel extends UserSuperClass {
 	
 	
 	
+	public DoctorModel(String username, char[] password, String name, String department2,
+			ArrayList<String> assignedNurseUsernames2, LocalDateTime[] availability) {
+	}
+
+
+
+
+
+
+
 	/**
 	 * @author 
 	 * @param p 

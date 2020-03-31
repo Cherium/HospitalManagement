@@ -5,6 +5,7 @@ public class EditDoctorController {
 	private EditDoctorModel model;
 	private EditDoctorView view;
 	private EditDoctorPersonalInfoView personalInformationView;
+	private DoctorModel doctorModel;
 		
 	//constructor
 	public EditDoctorController(EditDoctorModel model, EditDoctorView view) {
@@ -16,11 +17,12 @@ public class EditDoctorController {
 		initListeners();
 	}
 	
-	public EditDoctorController(EditDoctorModel model, EditDoctorPersonalInfoView view2) {
+	public EditDoctorController(EditDoctorModel model, EditDoctorPersonalInfoView view2, DoctorModel doctorModel) {
 		
 		this.model = model;
 		this.personalInformationView = view2;
-		initView();
+		this.doctorModel = doctorModel;
+		initView2();
 		initListeners2();
 	}
 	
@@ -29,9 +31,16 @@ public class EditDoctorController {
 	//	as soon as the view first opens for the user
 	public void initView()
 	{
-		
+
 	}
 	
+	//initialize the elements that the GUI sees from the database 
+	//	as soon as the view first opens for the user
+	public void initView2()
+	{
+		//list of departments to set in combobox
+		personalInformationView.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
+	}
 	
 	//initialize 'only' the listeners the GUI handles 'that
 	//	need interaction with the model'
@@ -70,7 +79,7 @@ public class EditDoctorController {
 
 	//handle the user entered input for editing personal information
 	public void parseEntryPersonalInfo() {
-		
+	
 		model.setUsername(view.getUsernameInput().getText());
 
 		String returnMessage = model.editPersonalInfo();
@@ -91,6 +100,11 @@ public class EditDoctorController {
 		model.setUsername(personalInformationView.getUsernameInput().getText());
 		String returnMessage = model.checkPersonalInfo();
 
+		//get the department chosen and set it in model
+		model.setDepartment(personalInformationView.getDepartmentDropDown().getItemAt(
+			personalInformationView.getDepartmentDropDown().getSelectedIndex()) );
+		String returnDepartmentMessage = model.checkDoctorDepartment();
+
 		if(returnMessage.compareTo("That Account does not exist!") == 0)
 		{
 			personalInformationView.showDialogToUser(returnMessage);
@@ -99,14 +113,21 @@ public class EditDoctorController {
 		} else {
 			String tempName = personalInformationView.getNameInput().getText();
 			char[] tempPass = personalInformationView.getPassInput().getText().toCharArray();
-			UserSuperClass user = Main.dbase.get(model.getUsername());
-			System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());							
-			user.setName(tempName);
-			user.setPassword(tempPass);		
-			personalInformationView.setVisible(false);
-			System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());
-			
 
+			if(returnDepartmentMessage.compareTo("No department selected!") == 0) {
+				personalInformationView.showDialogToUser(returnMessage);
+			}
+			else {
+				String tempDepartment = returnDepartmentMessage;
+				UserSuperClass user = Main.dbase.get(model.getUsername());
+				System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());							
+				user.setName(tempName);
+				user.setPassword(tempPass);
+				this.doctorModel = (DoctorModel) user;
+				doctorModel.setDepartment(tempDepartment);
+				personalInformationView.setVisible(false);
+				System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());
+			}
 		}
 		
 	}

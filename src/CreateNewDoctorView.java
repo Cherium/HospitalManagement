@@ -30,12 +30,7 @@ import javax.swing.border.EmptyBorder;
  *
  */
 public class CreateNewDoctorView  extends JDialog{
-/*
-	public static void main(String[] args)
-	{
-		new CreateNewDoctorView("hehe");
-	}
-*/
+
 		private JPanel contentPanel = new JPanel();
 		
 		private JTextField nameInput;
