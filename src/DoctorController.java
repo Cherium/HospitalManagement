@@ -153,6 +153,8 @@ public class DoctorController {
 				saveNotes();
 			}
 		});
+
+		view.getBtnBookApt().addActionListener(e -> bookAppointment());
 	}
 
 	// 
@@ -250,7 +252,42 @@ public class DoctorController {
 
 	}
 
+	/**
+	 * book an appointment for the patient based on user entered values
+	 * 
+	 * @return ease-of-use early exit flag
+	 */
+	public int bookAppointment() {
+		
+		//get selected appointment type
+		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
+		
+		//get selected patient
+		int selectedIndex = view.getListPatients().getSelectedIndex();
+		
+		//ensure a patient was selected
+		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
+		
+		if(appointmentType.compareTo("Doctor Appointment") == 0)
+		{
+			String department = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex()).toString();
+			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
+			return -1;
+		}
+		else	//appointment is lab test
+		{
+			//add appointment to selected patients list
+			//a lab test is stored with a time list
+			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();
+			String month = view.getMonth().getItemAt(view.getMonth().getSelectedIndex()).toString();
+			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
+			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
+			
+			model.storeApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
+			view.showDialogToUser("Booked Lab Appointment!");
+			return -1;
+		}
 
-	
+	}
 
 }

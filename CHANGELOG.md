@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 31 MARCH Jenny
+# 16:37
+* Set up booking appointments in Doctor MVC, copying the code and functions from Nurse MVC.
+
 ## 30 MARCH 21:34 Jenny
 * DoctorView: Added the visuals for adjusting availability of the doctor and patient. Added javadoc comments to all public functions in DoctorView. 
 
@@ -12,7 +16,6 @@ Example: 10 mar 21:13 SAJID\
 ## 28 MARCH 21:19 Jenny
 * DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views. 
 
-## 28 mar 00:45 Sajid
 ## 31 MARCH Jeremy
 * Features implemented: admins can now edit doctor departments
 

@@ -84,7 +84,7 @@ public class DoctorView {
 	private JButton btnAddTreatmentNotes;
 	private JButton btnOwn;
 	private JButton btnToggle;
-	private JButton bookAptBtn;
+	private JButton btnBookApt;
 
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
@@ -763,7 +763,7 @@ public class DoctorView {
 		topPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 		topPanel.setPreferredSize(new Dimension(900, 100));
 		topPanel.setMaximumSize(new Dimension(905, 125));
-		bookAptBtn = new JButton("Book Appointment");
+		btnBookApt = new JButton("Book Appointment");
 
 		apptType = new JComboBox<String>();
 		apptType.addItem("Doctor Appointment");
@@ -799,7 +799,7 @@ public class DoctorView {
 		topPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
 		topPanel.add(labTime, "sg c");
 
-		topPanel.add(bookAptBtn, "skip 2, align right");
+		topPanel.add(btnBookApt, "skip 2, align right");
 
 		patientPanel.add(topPanel, BorderLayout.NORTH);
 		// topPanel.setVisible(false);
@@ -1038,6 +1038,15 @@ public class DoctorView {
 			}
 		}
 	}
+
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @param message message to show user
+	 */
+	public void showDialogToUser(String message)
+	{
+		JOptionPane.showMessageDialog(getFrame().getContentPane(), message);
+	}	
 
 	/** Getter and Setter Methods */
 
@@ -1647,6 +1656,134 @@ public class DoctorView {
 	 */
 	public void setNursesList(JList<String> n) {
 		this.nurses = n;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JButton getBtnBookApt() {
+		return btnBookApt;
+	}
+
+	/**
+	 * 
+	 * @param btn
+	 */
+	public void setBtnBookApt(JButton btn) {
+		this.btnBookApt = btn;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getApptType() {
+		return apptType;
+	}
+
+	/**
+	 * 
+	 * @param apty
+	 */
+	public void setApptType(JComboBox<String> apty) {
+		this.apptType = apty;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getDepartmentDropDown() {
+		return departmentDropDown;
+	}
+
+	/**
+	 * 
+	 * @param ddd
+	 */
+	public void setDepartmentDropDown(JComboBox<String> ddd) {
+		this.departmentDropDown = ddd;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getChooseAppt() {
+		return chooseAppt;
+	}
+
+	/**
+	 * 
+	 * @param ca
+	 */
+	public void setChooseAppt(JComboBox<String> ca) {
+		this.chooseAppt = ca;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getLabTime() {
+		return labTime;
+	}
+
+	/**
+	 * 
+	 * @param lt
+	 */
+	public void setLabTime(JComboBox<String> lt) {
+		this.labTime = lt;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getYear() {
+		return year;
+	}
+
+	/**
+	 * 
+	 * @param y
+	 */
+	public void setYear(JComboBox<String> y) {
+		this.year = y;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getMonth() {
+		return month;
+	}
+
+	/**
+	 * 
+	 * @param m
+	 */
+	public void setMonth(JComboBox<String> m) {
+		this.month = m;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String> getDay() {
+		return day;
+	}
+
+	/**
+	 * 
+	 * @param d
+	 */
+	public void setDay(JComboBox<String> d) {
+		this.day = d;
 	}
 
 }
