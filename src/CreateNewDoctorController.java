@@ -1,6 +1,13 @@
 import javax.swing.DefaultComboBoxModel;
 
-//import javax.swing.JPasswordField;
+
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Sajid C
+ *
+ */
+
 
 public class CreateNewDoctorController {
 	
@@ -11,7 +18,13 @@ public class CreateNewDoctorController {
 	
 	
 	
-	
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public CreateNewDoctorController(CreateNewDoctorModel model, CreateNewDoctorView view) {
 
 		this.model = model;
@@ -22,7 +35,12 @@ public class CreateNewDoctorController {
 	
 	
 	
-	
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Sajid C
+	 */
 	public void initView()
 	{
 		//list of nurses to set in combobox
@@ -33,8 +51,12 @@ public class CreateNewDoctorController {
 	}
 	
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Sajid C
+	 */
 	public void initListeners() 
 	{
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle create button pressed
@@ -49,7 +71,13 @@ public class CreateNewDoctorController {
 	
 	
 	
-	//add nurse to GUI Textbox if it already isn't in the Textbox
+
+	/**
+	 * add nurse to GUI Textbox if it already isn't in the Textbox
+	 * 
+	 * @author Sajid C
+	 * 
+	 */
 	public void addNurseToList() 
 	{
 		//retrieve chosen nurse from the GUI ComboBox
@@ -69,7 +97,12 @@ public class CreateNewDoctorController {
 	}
 
 	
-	//get and store information entered in GUI
+	
+	/**
+	 * get and store information entered in GUI
+	 * 
+	 * @author Sajid C
+	 */
 	public void parseEntry() 
 	{
 		

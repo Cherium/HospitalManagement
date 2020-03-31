@@ -3,11 +3,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
+ * @author Sajid C
+ *
+ */
 public class DoctorModel extends UserSuperClass {
 	
 	//private DoctorModel doctor;
@@ -20,7 +24,18 @@ public class DoctorModel extends UserSuperClass {
 	
 	//constructor
 	
-	// public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats, ArrayList<String> available) 
+
+	/**
+	 * constructor
+	 * 
+	 * @param username value for this user from the database
+	 * @param password value for this user from the database
+	 * @param name value for this user from the database
+	 * @param department value for this user from the database
+	 * @param nurses assigned nurses value for this user from the database
+	 * @param assigPats assigned patient for this user value for this user from the database
+	 * @param avail availability value for this user from the database
+	 */
 	public DoctorModel(String username, char[]password, String name, String department, String[] nurses, String[] assigPats, String[] avail) 
 	{
 		
@@ -41,6 +56,8 @@ public class DoctorModel extends UserSuperClass {
 			}
 			
 			this.availability = arrayToLDTArray(avail);
+			
+			
 	}
 	
 	
@@ -49,13 +66,56 @@ public class DoctorModel extends UserSuperClass {
 	
 	
 	
+	public DoctorModel(String username, char[] password, String name, String department2,
+			ArrayList<String> assignedNurseUsernames2, LocalDateTime[] availability) {
+	}
+
+
+
+
+
+
+
+	/**
+	 * @author 
+	 * @param p 
+	 */
 	public void addPatient(String p) {
 		this.scheduledPatientsUsernames.add(p);
 	}
 
 	
-	
 
+	/**
+	 * for all the doctors scheduled shifts, get a list of all the open slots for booking times in the docs schedule
+	 * @author Sajid C
+	 * @return list of the next 100 open slots of this doctor form the current day
+	 */
+	public ArrayList<LocalDateTime> getRemainingTimes()
+	{
+		LocalDateTime now = LocalDateTime.now();
+		
+		//get 14 appointment dates
+		for(int i = 0; i < 14; i++)
+		{
+			//for all doctors appointments for this day, greater than his start shift time, and less than his end shift time
+			for (int j = 0; j < availability.length; j++) 
+			{
+				
+			}
+			
+		}
+		//for all appointments the doctor has booked
+		ArrayList<String> apptList = new ArrayList<String>(5);
+		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+		{
+
+		}
+		return null;
+	}
+
+	
+	
 /**Getters and Setters*/
 	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> xs) {
 		this.appointments = xs;

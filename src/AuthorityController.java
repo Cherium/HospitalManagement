@@ -1,5 +1,11 @@
 
-/**Handles all interaction between the associated model class and the view class.*/
+
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Sajid C
+ *
+ */
 public class AuthorityController {
 	
 	private AuthorityModel model;
@@ -8,7 +14,13 @@ public class AuthorityController {
 	
 	
 	
-	//constructor initialized from the Login controller class
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public AuthorityController(AuthorityModel m, AuthorityView v)
 	{
 		//incoming objects from LoginController class
@@ -25,14 +37,23 @@ public class AuthorityController {
 	}
 
 	
-	//get information from model, and set labels, etc in view
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Sajid C
+	 */
 	public void initView()
 	{
 		
 	}
 	
-	//initialize the listeners from the view class that need to interact with model
-	//	and give functionality to these listeners once they 'hear' something
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Sajid C
+	 */
 	public void initListeners() 
 	{
 		

@@ -13,7 +13,27 @@ Example: 10 mar 21:13 SAJID\
 * DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views. 
 
 ## 28 mar 00:45 Sajid
+## 31 MARCH Jeremy
+* Features implemented: admins can now edit doctor departments
 
+## 30 MARCH Jeremy
+* Features implemented: account can now be created for nurses, role can no longer be edited, password can now be edited, nurse account can now be edited
+
+## 29 mar 06:00 Sajid
+* Nurse MVC:
+    * changed fields to include doctor DropDown in booking panel
+    * initView() now uploads departments, and doctors of those departments to booking panel
+    * controller updates doctor menu based on department choice
+    * list of 100 next available appointments loads from initView (still needs listener)
+    * a lab test can now be booked for a patient
+* Schedule: created function nextOpenSlots() to find free slots in a given doctors schedule
+* UserSuperClass: created function that takes a doctors name, and returns its openSlots using above function
+
+## 28 mar 15:05 Sajid
+* Database: remaining information for existing users now all imports. I believe this is all the importing fields we need to deal with.
+* Receptionist, Authority Models: constructor changed to import availability
+
+## 28 mar 00:45 Sajid
 * Database: added code to allow importing nurse availability; added txt files to represent nurse availability
 * Nurse MVC: 
     * availability now populates from database
@@ -103,7 +123,7 @@ Overview/Summary:
 
 ## 24 MARCH 20:06 Jenny
 **DoctorView**
-* Integrated scheduled appointments into monthly schedule with the help of Mohammed.
+* Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
 * Current bug: switching between months does not update the appointments shown.
 
 ## 24 MARCH 17:02 Jenny

@@ -13,13 +13,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+
+/**
+ * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * 
+ * @author Sajid C
+ *
+ */
 public class AdminView extends JFrame {
 	
 	private JPanel contentPanel;
@@ -27,7 +33,8 @@ public class AdminView extends JFrame {
 	private JButton btnReturn;
     ////Added for Account creaiton and deletion
     private JButton crtAccount;
-    private JButton delAccount;
+	private JButton delAccount;
+	private JButton editAccount;
     private JButton crtDepartment;
     private JButton delDepartment;
     
@@ -37,7 +44,6 @@ public class AdminView extends JFrame {
     
     
     private JComboBox<String> rolesDropDown;
-    //private JComboBox<String> deptDropDown;
 	
 	
     
@@ -50,7 +56,11 @@ public class AdminView extends JFrame {
     
     
     
-    //constructor
+	/**
+	 * constructor
+	 * 
+	 * @param title JFrame title
+	 */
 	public AdminView(String title)
 	{
 		//sets frame containers attributes
@@ -64,7 +74,10 @@ public class AdminView extends JFrame {
 	}
 	
 	
-/**initialize the panels and components that will go inside the frame*/
+	/**
+	 * initialize the panels and components that will go inside the frame
+	 * @author Sajid C
+	 */
 	public void initializeGUI()
 	{
 //Main panel background
@@ -98,13 +111,14 @@ public class AdminView extends JFrame {
 	//Buttons			
 				crtAccount = new JButton("Create Account");
 				delAccount = new JButton("Delete Account");
+				editAccount = new JButton("Edit Account");
 				
 	//Add components to inner panel		
 				accountPanel.add(chooseRole, "right");
 				accountPanel.add(rolesDropDown, "wrap");
 				accountPanel.add(crtAccount);
 				accountPanel.add(delAccount);
-				
+				accountPanel.add(editAccount);
 				
 				
 				
@@ -159,7 +173,11 @@ public class AdminView extends JFrame {
 	
 	
 	
-	//pop up a message-dialog box with a message passed in 
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
+	 */
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);
@@ -189,6 +207,18 @@ public class AdminView extends JFrame {
 
 	public void setDltAccount(JButton dltAccount) {
 		this.delAccount = dltAccount;
+	}
+
+
+
+	public JButton getEditAccount() {
+		return editAccount;
+	}
+
+
+
+	public void setEditAccount(JButton editAccount) {
+		this.editAccount = editAccount;
 	}
 
 
