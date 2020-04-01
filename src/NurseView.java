@@ -146,6 +146,8 @@ public class NurseView extends JFrame{
 				//add scrolling to main container
 				JScrollPane scroll = new JScrollPane(contentPanel
 						, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					scroll.getVerticalScrollBar().setUnitIncrement(10);
+					scroll.getHorizontalScrollBar().setUnitIncrement(10);
 					add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 

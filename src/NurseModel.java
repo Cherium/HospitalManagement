@@ -2,6 +2,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
@@ -79,25 +81,71 @@ public class NurseModel extends UserSuperClass {
 	
 	
 
-    /**INCOMPLETE??
-     * takes in a single raw availability time, and returns a LocalDateTime object
+    /**
+     * takes in a single raw availability time, and a selected patient (index) and stores the lab appt in the patient
      * @author Sajid C
      * @param rawData raw availability time in format yyyy-M-d HH:mm
      * @param selectedPatient patient username in a list that is associated 1:1 with index of selection in the JList
      * @return 
      */
-    public LocalDateTime storeApptInPatient(String rawData, int selectedPatient)
+    public void storeLabApptInPatient(String rawData, int selectedPatient)
     {
     	//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
-    	
         LocalDateTime temp = LocalDateTime.parse(rawData, formatter);
+        
+        //get patient object
         PatientModel pat = (PatientModel) Main.dbase.get(docsPatientsUsernames[selectedPatient]);
         
-        return temp;
+        //get patient appointment hashmap
+        HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
         
+        //if test type already exists
+        if(patAppts.containsKey("Lab Test" ) )
+        {
+        	//append to list
+        	patAppts.get("Lab Test").add(temp);
+        }
+        else //appt type is not a key in hashmap; add it
+        {
+        	patAppts.put("Lab Test", new ArrayList<LocalDateTime>(List.of(temp)) );
+        }
     }
     
+    /**
+     * take appointment data from controller and store a new doctor appointment in patients appointment hashmap
+     * 
+     * @author Sajid
+     * @param appt string appointment time formatted to work with LocalDateTime.parse
+     * @param selectedPatient index of selected JList patient to use to pull patient username from an array
+     * @param department departmet selected from combobox
+     * @param selectedDocNameIndex index of chosen doctor in doctor combobox to use to pull doctor username from an array
+     */
+    public void storeDoctorApptInPatient(String appt, int selectedPatient, String department, int selectedDocNameIndex)
+    {
+    	//get patient object
+        PatientModel pat = (PatientModel) Main.dbase.get(docsPatientsUsernames[selectedPatient]);
+        
+        //get list of doctors currently in comboBox
+        String[] list = getDocList(department);
+        
+        //get patient appointment hashmap
+        HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
+        
+        //parse appointment
+        LocalDateTime temp = LocalDateTime.parse(appt);
+        
+        //if doc already exists in patients hashmap
+        if(patAppts.containsKey(list[selectedDocNameIndex]) )
+        {
+        	//append to list
+        	patAppts.get(list[selectedDocNameIndex]) .add(temp);
+        }
+        else //doc is not a key in hashmap; add it
+        {
+        	patAppts.put(list[selectedDocNameIndex] , new ArrayList<LocalDateTime>(List.of(temp))) ;
+        }
+    }
 
 	
 	
