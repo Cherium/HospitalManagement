@@ -6,6 +6,8 @@ Example: 10 mar 21:13 SAJID\
 ## 31 MARCH Jenny
 # 16:37
 * Set up booking appointments in Doctor MVC, copying the code and functions from Nurse MVC.
+# 21:23
+* Implemented the change of availability for assigned nurses and current doctor when logged in as doctor. This hasn't been tested in great detail, but changing the availability works for the doctor and is updated immediately. 
 
 ## 30 MARCH 21:34 Jenny
 * DoctorView: Added the visuals for adjusting availability of the doctor and patient. Added javadoc comments to all public functions in DoctorView. 

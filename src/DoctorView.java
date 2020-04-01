@@ -85,6 +85,7 @@ public class DoctorView {
 	private JButton btnOwn;
 	private JButton btnToggle;
 	private JButton btnBookApt;
+	private JButton reqAvailChangeBtn;
 
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
@@ -106,6 +107,9 @@ public class DoctorView {
 	private ArrayList<JPanel> patientListPanels = new ArrayList<JPanel>(0);
 
 	JComboBox<String> nurseComboBox;
+	JComboBox<String>[] availTimes;
+
+	JCheckBox selfCheck;
 
 	Container container;
 
@@ -300,7 +304,7 @@ public class DoctorView {
 		availChangePanel.add(new JLabel("Start"), "span 2");
 		availChangePanel.add(new JLabel("End"), " wrap");
 
-		JComboBox<String>[] availTimes = new JComboBox[14];
+		availTimes = new JComboBox[14];
 		for (int i = 0; i < 7; i++) {
 			availChangePanel.add(new JLabel(days[i]));
 			availTimes[i * 2] = new JComboBox(times);
@@ -311,6 +315,9 @@ public class DoctorView {
 		for (JComboBox<String> jComboBox : availTimes) {
 			jComboBox.setBackground(Color.WHITE);
 		}
+
+		reqAvailChangeBtn = new JButton("Send Request");
+		availChangePanel.add(reqAvailChangeBtn, "span, align right");
 
 		modifyScheduleContainer.add(availChangePanel, "dock east");
 		modifyScheduleContainer.setVisible(false);
@@ -866,7 +873,7 @@ public class DoctorView {
 
 		JPanel namesPanel = new JPanel(new MigLayout("wrap 1"));
 		namesPanel.setBorder(BorderFactory.createTitledBorder("Upcoming shifts"));
-		JCheckBox selfCheck = new JCheckBox("Own availability", true);
+		selfCheck = new JCheckBox("Own availability", true);
 		selfCheck.setBackground(Color.WHITE);
 		nurses.setEnabled(false);
 		selfCheck.addItemListener(e -> {
@@ -1784,6 +1791,54 @@ public class DoctorView {
 	 */
 	public void setDay(JComboBox<String> d) {
 		this.day = d;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JComboBox<String>[] getAvailTimes() {
+		return availTimes;
+	}
+
+	/**
+	 * 
+	 * @param at
+	 */
+	public void setAvailTimes(JComboBox<String>[] at) {
+		this.availTimes = at;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JCheckBox getCheckBox() {
+		return selfCheck;
+	}
+
+	/**
+	 * 
+	 * @param j
+	 */
+	public void setCheckBox(JCheckBox j) {
+		this.selfCheck = j;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public JButton getBtnAvailRequest() {
+		return reqAvailChangeBtn;
+	}
+
+	/**
+	 * 
+	 * @param bar
+	 */
+	public void setBtnAvailRequest(JButton bar) {
+		this.reqAvailChangeBtn = bar;
 	}
 
 }

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -155,6 +158,8 @@ public class DoctorController {
 		});
 
 		view.getBtnBookApt().addActionListener(e -> bookAppointment());
+
+		view.getBtnAvailRequest().addActionListener(e -> updateAvailability());
 	}
 
 	// 
@@ -288,6 +293,40 @@ public class DoctorController {
 			return -1;
 		}
 
+	}
+
+	/**
+	 * update availability in database and view, based on user entered values
+	 * 
+	 * 
+	 */
+	public void updateAvailability() {
+		
+		String[] newHours= new String[14];
+		
+
+		//retrieve all comboBoxes storing hour values as Strings
+		int i = 0;
+		for(JComboBox<String> j: view.getAvailTimes())
+		{
+			//get String from box and add to String array
+			newHours[i++] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+		}
+		
+		if (view.getCheckBox().isSelected()) {
+			//update availability for this User
+			model.setAvailability(model.s.updateSchedule(newHours) );
+		} else {
+			// else update availability for the nurse
+			int index = view.getNursesList().getSelectedIndex();
+			Main.dbase.get(model.getAssignedNurseUsernames().get(index)).s.updateSchedule(newHours);
+		}
+		
+		//show success to user
+		view.showDialogToUser("Availability Request Approved");
+		// initView();	//reset availabilty shown to patient
+		
+		
 	}
 
 }
