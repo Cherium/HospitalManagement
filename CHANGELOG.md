@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 31 MARCH Jenny
+# 21:51
+* Added a Referral inner class to PatientModel. Code is inspired by Eberly's code on Treap in 331. Patients have an ArrayList of Referrals. 
+
 ## 31 MARCH Jeremy
 * Features implemented: admins can now edit doctor departments
 
