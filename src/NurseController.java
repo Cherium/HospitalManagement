@@ -216,7 +216,9 @@ public class NurseController {
 		
 		//show success to user
 		view.showDialogToUser("Availability Request Approved");
-		initView();	//reset availabilty shown to patient
+
+		//reset availabilty shown to patient
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 		
 		
 	}

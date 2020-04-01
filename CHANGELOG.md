@@ -3,6 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+# 01 apr 01:10
+* fixed change scheduling bug
+* completed receptionist panel
+    * receptionist can view all patients in the system
+
 # 01 apr 00:20 Sajid
 * Completed doctor booking functionality in nurse
 * refined scrolling

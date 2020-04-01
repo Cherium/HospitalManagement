@@ -1,31 +1,30 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.DimensionUIResource;
 
 import net.miginfocom.swing.MigLayout;
-
 
 /**
  * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
@@ -36,202 +35,444 @@ import net.miginfocom.swing.MigLayout;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
  * 
- * @author 
+ * @author Sajid C
  *
  */
-public class ReceptionistView extends JFrame {
-
-	//Added for patient track
-	private ArrayList<String> newPatient = new ArrayList<String>();
-
-	private JFrame frame;
+public class ReceptionistView extends JFrame{
+	
+	private JPanel contentPanel;
+	private JPanel infoPanel;
+	private JPanel listPanel;
+	private JPanel schedPanel;
+	
+	
+	private JLabel welcomeLabel;
+	private JLabel usernameLabel;
+	private JLabel amountDue;
+	private JLabel ageLabel;
+	private JLabel patName;
+	private JLabel age;
+	private JLabel addr;
+	private JLabel phone;
+	private JLabel email;
+	private JLabel birth;
+	private JLabel blood;
+	private JLabel sex;
 
 	private JButton btnReturn;
-	private JButton btnAddTreatmentNotes;
-
-	private JLabel welcomeLabel;
-
-	private JTextArea patientInformation = new JTextArea(7, 90);
-	private JTextArea pastTreatments;
-	private JTextArea currentTreatment;
-
-	private JPanel listPatientsPanel;
-	private JPanel patientPanel;
-	private JPanel scheduleContainer;
-	private JPanel infoPanel;
-
-	private JScrollPane scroll;
-	private JList listPatients;
+	private JButton reqAvailChangeBtn;
+	private JButton bookAptBtn;
 	
+	
+	private JTextField nameText;
+	private JTextField addrText;
+	private JTextField phText;
+	private JTextField emailText;
+	private JTextField amountText;
+	
+	JList patList;
+	JTextArea schedList;
+	
+	JScrollPane patListScroll;
+	JScrollPane schedListScroll;
+	
+	private JComboBox<String> apptType;
+	private JComboBox<String> departmentDropDown;
+	private JComboBox<String> chooseAppt;
+	private JComboBox<String> chooseDoc;
+	private JComboBox<String> labTime;
+	private JComboBox<String> year, month, day;
+	
+	private JComboBox<String>[] availTimes = new JComboBox[14];	//stores al drop-down menues for availability change; index 0= sunday start // index 13= sat end
+	
+	String[] times = {
+			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
+			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
+	};
+	
+
+	
+//	public static void main(String[] args)
+//	{
+//		char[] a = {'a'};
+//		String[] b = {};
+//		new NurseController(new NurseModel("userName", a, "Nursey"
+//				, "Nephrology", "doctor", b), new NurseView("Hii"));
+//	}
+
+
+
+
+	
+	
+	/**
+	 * constructor
+	 * 
+	 * @param title JFrame title
+	 */
 	public ReceptionistView(String title)
 	{
 		//sets frame containers attributes
-		setSize(400,400);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle(title);
+		setSize(700,700);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setMinimumSize(new Dimension(1000,700));
-		setPreferredSize(new Dimension(1000, 700));
-		setLocation(10, 10);
-
-		initializeGUI();
 		
-			
-
+		initializeGUI();
 	}
 
+	//TODO scrollpane for jlists; jlist for upcoming appointments of patient
+	
+	
 
+	/**
+	 * initialize the panels and components that will go inside the frame
+	 * @author Sajid C
+	 */
 	public void initializeGUI() 
 	{
 
+
 		//Main panel background
-		JPanel contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
-			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
-			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
+				contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
+					contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+					
+					btnReturn = new JButton("Sign Out");
+						btnReturn.addActionListener(e -> setVisible(false) );
+					welcomeLabel = new JLabel();
+						welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		/*
-			#################################################
-			#	Back										#
-			#	Name, M.D.						#
-			#												#
-			#################################################
-		*/
+				//add scrolling to main container
+				JScrollPane scroll = new JScrollPane(contentPanel
+						, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					scroll.getVerticalScrollBar().setUnitIncrement(10);
+					scroll.getHorizontalScrollBar().setUnitIncrement(10);
+					add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 
-
+		
+		//inner panel
+		listPanel= new JPanel(new MigLayout("") );
+			listPanel.setBorder(BorderFactory.createTitledBorder("Select Patient"));
 			
-		btnReturn = new JButton("Sign Out");
-			btnReturn.addActionListener(e -> setVisible(false) );
+
+			listPanel.add(new JLabel("Patients List:"), "wrap");
 		
-		welcomeLabel = new JLabel();
-			welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-	
+		
+		
+		
+		
+		//inner panel
+		infoPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
+			infoPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
+			infoPanel.setPreferredSize(new Dimension(450, 200));
+		
+			//Labels
+			
+			JLabel nameLabel = new JLabel("Name:");
+			JLabel addrLabel = new JLabel("Address:");
+			JLabel phLabel = new JLabel("Phone Number:");
+			JLabel emailLabel = new JLabel("Email:");
+			JLabel amountDueLabel = new JLabel("Amount Owing:");
+				amountDue = new JLabel();
+			JLabel birthday = new JLabel("Date of birth:");
+			JLabel bloodLabel = new JLabel("Blood Type:");
+			JLabel sexLabel = new JLabel("Sex:");
+			
+			patName = new JLabel();
+			addr = new JLabel();
+			age = new JLabel();
+			phone = new JLabel();
+			email = new JLabel();
+			birth = new JLabel();
+			blood = new JLabel();
+			sex = new JLabel();
+			
+			//add to inner panel
+			infoPanel.add(nameLabel);
+			infoPanel.add(patName, "wrap");
+			infoPanel.add(birthday);
+			infoPanel.add(birth, "wrap");
+			infoPanel.add(sexLabel);
+			infoPanel.add(sex, "wrap");
+			infoPanel.add(bloodLabel);
+			infoPanel.add(blood, "wrap");
+			infoPanel.add(addrLabel);
+			infoPanel.add(addr, "wrap");
+			infoPanel.add(phLabel);
+			infoPanel.add(phone, "wrap");
+			infoPanel.add(emailLabel);
+			infoPanel.add(email, "wrap");
+		
+		
+		
+		//inner panel
+		JPanel bookPanel = new JPanel(new MigLayout("") );
+			bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
+			bookPanel.setPreferredSize(new Dimension(900, 50));
+			bookPanel.setMaximumSize(new Dimension(905, 125));
+			bookAptBtn = new JButton("Book Appointment");
+			
+			apptType = new JComboBox<String>();
+				apptType.addItem("Doctor Appointment");
+				apptType.addItem("Lab Test");
+				apptType.addActionListener(e -> disableLab() );
+				
+			departmentDropDown = new JComboBox<String>();
+			chooseAppt = new JComboBox<String>();
+				chooseAppt.setMaximumRowCount(10);
+				
+			chooseDoc = new JComboBox<String>();
+			labTime = new JComboBox<String>(times);
+				labTime.setEnabled(false);
+			year = initYearCombo();
+				year.setEnabled(false);
+				year.addActionListener(e -> initDaysinBox());
+			month = initMonthCombo();
+				month.setEnabled(false);
+				month.addActionListener(e -> initDaysinBox());
+			day = initDayCombo();
+				day.setEnabled(false);
+				initDaysinBox();
+				
+			bookPanel.add(new JLabel("Type:"));
+			bookPanel.add(apptType);
+			
+			bookPanel.add(new JLabel("Department:"), "gapleft 35, align right" );
+			bookPanel.add(departmentDropDown, "growx, align left, sg a");
+			
+			bookPanel.add(new JLabel("Lab Date: "), "align right");
+			bookPanel.add(year, "sg c, split");
+			bookPanel.add(month, "sg c, split");
+			bookPanel.add(day, "sg c, wrap");
+			
+			bookPanel.add(new JLabel("Select Doctor: "), "skip 2, align right");
+			bookPanel.add(chooseDoc, "sg a, align left");
+			
+			bookPanel.add(new JLabel("Time: "), "align right");
+			bookPanel.add(labTime, "sg c, wrap");
+			
+			bookPanel.add(new JLabel("Select Appointment: "), "skip 2 , align right");
+			bookPanel.add(chooseAppt, "span 2, growx");
+			
+			bookPanel.add(bookAptBtn, "align right");
+			
+			
+		
+		
+		//inner panel
+		schedPanel = new JPanel(new MigLayout("") );
+			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
+			schedPanel.setPreferredSize(new Dimension(325, 200));
 
-
-
-		contentPanel.add(btnReturn,"wrap 30px");
+			schedList = new JTextArea();
+				schedList.setFont( new Font("monospaced", Font.PLAIN, 10) );	//https://stackoverflow.com/questions/40901128/how-would-i-fix-this-jtextarea-formatting-error
+			//wrap availability box in scrollpane
+			schedListScroll = new JScrollPane(schedList
+					, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			schedListScroll.setPreferredSize(new Dimension(400, 200));
+			
+			schedPanel.add(schedListScroll, "sg d");
+		
+		
+		//inner panel
+		JPanel availChangePanel = createAvailabilityChangePanel();
+			reqAvailChangeBtn = new JButton("Send Request");
+			availChangePanel.add(reqAvailChangeBtn, "span, align right");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//add to main panel
+		contentPanel.add(btnReturn, "wrap");
 		contentPanel.add(welcomeLabel, "wrap");
-
-
-		patientPanel = new JPanel();
-			patientPanel.setBorder(new LineBorder(Color.CYAN));
-			patientPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-			// patientPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			patientPanel.setLayout(new BorderLayout());
-			patientPanel.setBackground(Color.WHITE);
-			patientPanel.setVisible(true);
-		contentPanel.add(patientPanel, "wrap");
-		// Main issue right here
-
-
-
-		
-		
-		JScrollPane scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setLayout(new ScrollPaneLayout());
-		scroll.setPreferredSize(new DimensionUIResource(200, 0));
-		scroll.getVerticalScrollBar().setUnitIncrement(10);
-		
-
-		//contentPanel.add(scroll, BorderLayout.WEST);
-		//contentPanel.add(scroll, "wrap 2");
-		initializeVariables();
-		initializeButtons();
-		
+		contentPanel.add(listPanel, "sg b");
+		contentPanel.add(infoPanel, "sg b, wrap");
+		contentPanel.add(bookPanel, "span, growx");
+		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
+		contentPanel.add(availChangePanel, " sg b");
 		setVisible(true);
+		
+		
+		
 	}
-
-	
-	///
 
 	/**
-	 * Set up the patients view in receptionist
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
 	 */
-	public void initializeVariables() {
-		listPatientsPanel = new JPanel();
-		listPatientsPanel.setLayout(new MigLayout("wrap 1"));
-		listPatientsPanel.setBackground(Color.WHITE);
+	public void showDialogToUser(String message)
+	{
+		JOptionPane.showMessageDialog(contentPanel, message);
+	}	
 	
-		
-		
-		listPatientsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		listPatientsPanel.revalidate();
-		listPatientsPanel.repaint();
-
-		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
-		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
-		selectedPatient.setBackground(Color.WHITE);
-		selectedPatient.add(new JLabel("Patient Information"));
-		patientInformation.setText("Name\nAge\nSex\nBlood type\nAddress\nPhone\nEmail\n");
-		patientInformation.setEnabled(false);
-		selectedPatient.add(patientInformation);
-		selectedPatient.add(new JLabel("Detailed Treatment History"));
-		pastTreatments = new JTextArea(0,200);
-		pastTreatments.setLineWrap(true);
-		pastTreatments.setText("Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
-		pastTreatments.setEnabled(false);
-		JScrollPane sp1 = new JScrollPane(pastTreatments);
-		selectedPatient.add(sp1, "span 1 10, height 300");
-
-
-		patientPanel.add(selectedPatient, BorderLayout.CENTER);
-
-
-
-
-		//https://www.techiedelight.com/print-all-keys-and-values-map-java/
-		HashMap<String, UserSuperClass> users = Main.dbaseClass.getUsers();
-		Iterator<String> itr = users.keySet().iterator();
-
-		while(itr.hasNext()){
-
-			String a = itr.next();
-			String b = Main.dbase.get(a).getRole();
-			if(b.compareTo("patient") == 0){
-				System.out.println(">"+Main.dbase.get(a).getName());
-				System.out.println("## "+b+" ##");
-				newPatient.add(Main.dbase.get(a).getName());
-			}
-
-		}
-		Object[] temp = newPatient.toArray();
-			//
-		
-			listPatients = new JList(temp);
-
-			scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			scroll.setLayout(new ScrollPaneLayout());
-			scroll.setPreferredSize(new DimensionUIResource(200, 0));
-			scroll.getVerticalScrollBar().setUnitIncrement(10);
 	
-			patientPanel.add(scroll, BorderLayout.WEST);
+	
+	/**
+	 * enable/disable menues baed on chosen appointment type
+	 * @author Sajid C
+	 */
+	public void disableLab() {
+		
+		if (apptType.getSelectedItem().equals("Lab Test")) {
+			departmentDropDown.setEnabled(false);
+			chooseAppt.setEnabled(false);
 			
-			///
-		
-
-		
+			year.setEnabled(true);
+			month.setEnabled(true);
+			day.setEnabled(true);
+			labTime.setEnabled(true);			
+		} else {
+			departmentDropDown.setEnabled(true);
+			chooseAppt.setEnabled(true);
+			
+			year.setEnabled(false);
+			month.setEnabled(false);
+			day.setEnabled(false);
+			labTime.setEnabled(false);	
+		}
 	}
-
-
-	public void initializeButtons(){
-		JButton btnChange = new JButton("Make changes");
-		btnChange.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//btnSaveChanges.setVisible(true);
-				//btnOwnSchedule.setVisible(true);
-			}
-		});
-	}
-
-
 
 	
-/**Getters and Setters*/
+	/**
+	 * set the patient list for initiView
+	 * @author Sajid C
+	 * @param list
+	 */
+	public void setPatientList(String[] list)
+	{
+		patList = new JList(list);
+		
+		//wrap lists in scrollpanes
+		patListScroll = new JScrollPane(patList
+				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		patListScroll.setPreferredSize(new Dimension(200, 200));
+		
+		listPanel.add(patListScroll, "sg d");
+	}
+	
+
+	
+	/**
+	 * create schedule change panel- sets menus to instance variables
+	 * @author Sajid C
+	 * @return availability panel containing all labels and time menus
+	 */
+	public JPanel createAvailabilityChangePanel()
+	{
+		String[] days = {"Sunday", "", "Monday","","Tuesday","","Wednesday","","Thursday","","Friday","","Saturday"};
+
+		JPanel availChangePanel = new JPanel(new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]") );
+		availChangePanel.setPreferredSize(new Dimension(325, 200));
+		availChangePanel.setBorder(BorderFactory.createTitledBorder("Request Availability Change"));
+		
+		availChangePanel.add(new JLabel("Start"), "span 2");
+		availChangePanel.add(new JLabel("End"), " wrap");
+		
+		for (int i = 0; i < this.availTimes.length; i=i+2) 
+		{
+			availChangePanel.add(new JLabel(days[i]) );
+			availTimes[i] = new JComboBox(times);
+			availTimes[i+1] = new JComboBox(times);
+			availChangePanel.add(availTimes[i] );
+			availChangePanel.add(availTimes[i+1] );
+		}
+		
+		return availChangePanel;
+
+		
+	}
+
+	
+	/**
+	 * create a view for year
+	 * @author Sajid C
+	 * @return drop down menu for years
+	 */
+	public JComboBox<String> initYearCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 120; i++) {
+			temp.addItem((LocalDate.now().getYear()-i)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * 
+	 * create box for month
+	 * @author Sajid C
+	 * @return dropdown menu of months in a year
+	 */
+	public JComboBox<String> initMonthCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 12; i++) {
+			temp.addItem((i+1)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * create box for day
+	 * @author Sajid C
+	 * @return empty list that will store days
+	 */
+	public JComboBox<String> initDayCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * populate days menu with days based on current month selection
+	 * @author Sajid C
+	 */
+	public void initDaysinBox()
+	{//
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
+		}
+		/**Getter and Setter Methods*/
+	}
+
+
+
+
+
+
 	public JLabel getWelcomeLabel() {
 		return welcomeLabel;
 	}
+
+
+
+
 
 
 	public void setWelcomeLabel(JLabel welcomeLabel) {
@@ -239,72 +480,492 @@ public class ReceptionistView extends JFrame {
 	}
 
 
-	public JPanel getListPatientsPanels() {
-		return listPatientsPanel;
-	}
-
-	public void setListPatientsPanel(JPanel p) {
-		this.listPatientsPanel = p;
-	}
 
 
-	///
-	public JList getListPatients() {
-		return listPatients;
-	}
 
 
-	public void setListPatients(JList listPatients) {
-		this.listPatients = listPatients;
+	public JLabel getUsernameLabel() {
+		return usernameLabel;
 	}
 
 
 
-	public void setPatientList(String[] patients)
-	{
-		
-		listPatients = new JList(patients);
 
-		scroll = new JScrollPane(listPatients, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setLayout(new ScrollPaneLayout());
-		scroll.setPreferredSize(new DimensionUIResource(200, 0));
-		scroll.getVerticalScrollBar().setUnitIncrement(10);
 
-		patientPanel.add(scroll, BorderLayout.WEST);
-		
-		
-		//patientPanel.add(scroll, BorderLayout.WEST);
-		///Major issue is this one right here
-	}
-	///
 
-	public JPanel getPatientPanel() {
-		return patientPanel;
+	public void setUsernameLabel(JLabel usernameLabel) {
+		this.usernameLabel = usernameLabel;
 	}
 
-	public void setPatientPanel(JPanel patPanel) {
-		this.patientPanel = patPanel;
+
+
+
+
+
+	public JLabel getPatName() {
+		return patName;
 	}
 
-	public JTextArea getPatientInformation() {
-		return patientInformation;
+
+
+
+
+
+	public void setPatName(JLabel patName) {
+		this.patName = patName;
 	}
 
-	public void setPatientInformation(JTextArea pi) {
-		this.patientInformation = pi;
+
+
+
+
+
+	public JLabel getAge() {
+		return age;
 	}
 
-	public JTextArea getPastTreatmentBox() {
-		return pastTreatments;
+
+
+
+
+
+	public void setAge(JLabel age) {
+		this.age = age;
 	}
 
-	public void setPastTreatmentBox(JTextArea x) {
-		this.pastTreatments = x;
+
+
+
+
+
+	public JLabel getBirth() {
+		return birth;
 	}
 
-	public ArrayList<String> getPatientList(){
-		return newPatient;
+
+
+
+
+
+	public void setBirth(JLabel birth) {
+		this.birth = birth;
 	}
 
+
+
+
+
+
+	public JLabel getBlood() {
+		return blood;
+	}
+
+
+
+
+
+
+	public void setBlood(JLabel blood) {
+		this.blood = blood;
+	}
+
+
+
+
+
+
+	public JLabel getSex() {
+		return sex;
+	}
+
+
+
+
+
+
+	public void setSex(JLabel sex) {
+		this.sex = sex;
+	}
+
+
+
+
+
+
+	public JButton getReqAvailChangeBtn() {
+		return reqAvailChangeBtn;
+	}
+
+
+
+
+
+
+	public void setReqAvailChangeBtn(JButton reqAvailChangeBtn) {
+		this.reqAvailChangeBtn = reqAvailChangeBtn;
+	}
+
+
+
+
+
+
+	public JButton getBookAptBtn() {
+		return bookAptBtn;
+	}
+
+
+
+
+
+
+	public void setBookAptBtn(JButton bookAptBtn) {
+		this.bookAptBtn = bookAptBtn;
+	}
+
+
+
+
+
+
+	public JTextField getNameText() {
+		return nameText;
+	}
+
+
+
+
+
+
+	public void setNameText(JTextField nameText) {
+		this.nameText = nameText;
+	}
+
+
+
+
+
+
+	public JTextField getAddrText() {
+		return addrText;
+	}
+
+
+
+
+
+
+	public void setAddrText(JTextField addrText) {
+		this.addrText = addrText;
+	}
+
+
+
+
+
+
+	public JTextField getPhText() {
+		return phText;
+	}
+
+
+
+
+
+
+	public void setPhText(JTextField phText) {
+		this.phText = phText;
+	}
+
+
+
+
+
+
+	public JTextField getEmailText() {
+		return emailText;
+	}
+
+
+
+
+
+
+	public void setEmailText(JTextField emailText) {
+		this.emailText = emailText;
+	}
+
+
+
+
+
+
+	public JTextField getAmountText() {
+		return amountText;
+	}
+
+
+
+
+
+
+	public void setAmountText(JTextField amountText) {
+		this.amountText = amountText;
+	}
+
+
+
+
+
+
+	public JList getPatList() {
+		return patList;
+	}
+
+
+
+
+
+
+	public void setPatList(JList patList) {
+		this.patList = patList;
+	}
+
+
+
+
+
+
+	public JComboBox getApptType() {
+		return apptType;
+	}
+
+
+
+
+
+
+	public void setApptType(JComboBox apptType) {
+		this.apptType = apptType;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getDepartmentDropDown() {
+		return departmentDropDown;
+	}
+
+
+
+
+
+
+	public void setDepartmentDropDown(JComboBox<String> departmentDropDown) {
+		this.departmentDropDown = departmentDropDown;
+	}
+
+
+
+
+
+
+	public JComboBox getChooseAppt() {
+		return chooseAppt;
+	}
+
+
+
+
+
+
+	public void setChooseAppt(JComboBox chooseAppt) {
+		this.chooseAppt = chooseAppt;
+	}
+
+
+
+
+
+
+	public JComboBox getLabTime() {
+		return labTime;
+	}
+
+
+
+
+
+
+	public void setLabTime(JComboBox labTime) {
+		this.labTime = labTime;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getYear() {
+		return year;
+	}
+
+
+
+
+
+
+	public void setYear(JComboBox<String> year) {
+		this.year = year;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getMonth() {
+		return month;
+	}
+
+
+
+
+
+
+	public void setMonth(JComboBox<String> month) {
+		this.month = month;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getDay() {
+		return day;
+	}
+
+
+
+
+
+
+	public void setDay(JComboBox<String> day) {
+		this.day = day;
+	}
+
+
+
+
+
+
+	public JComboBox<String>[] getAvailTimes() {
+		return availTimes;
+	}
+
+
+
+
+
+
+	public void setAvailTimes(JComboBox<String>[] availTimes) {
+		this.availTimes = availTimes;
+	}
+
+
+
+
+	public JLabel getAddr() {
+		return addr;
+	}
+
+
+
+
+
+
+	public void setAddr(JLabel addr) {
+		this.addr = addr;
+	}
+
+
+
+
+
+
+	public JLabel getPhone() {
+		return phone;
+	}
+
+
+
+
+
+
+	public void setPhone(JLabel phone) {
+		this.phone = phone;
+	}
+
+
+
+
+
+
+	public JLabel getEmail() {
+		return email;
+	}
+
+
+
+
+
+
+	public void setEmail(JLabel email) {
+		this.email = email;
+	}
+
+
+
+
+
+
+	public JTextArea getSchedList() {
+		return schedList;
+	}
+
+
+
+
+
+
+	public void setSchedList(JTextArea schedList) {
+		this.schedList = schedList;
+	}
+
+	public JComboBox<String> getChooseDoc() {
+		return chooseDoc;
+	}
+
+	public void setChooseDoc(JComboBox<String> chooseDoc) {
+		this.chooseDoc = chooseDoc;
+	}
+	
+	
+	
+	
+
+
+	
+
+	
+
+
+	
+	
+
+	
 
 }
