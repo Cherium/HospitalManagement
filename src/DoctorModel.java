@@ -195,6 +195,31 @@ public class DoctorModel extends UserSuperClass {
 
 
 
+	/**
+	 * Adds the selected appointment time to the list of appointments held by the selected patient. If the patient does not have a previous appointment under this doctor, create a new entry in the HashMap for this doctor (safety net).
+	 * @param selectAppointment The LocalDateTime char sequence, representing the appointment time selected.
+	 * @param selectPatient The index of the patient in the list of scheduled patients of a doctor, for whom the appointment is created.
+	 */
+	public void storeAppointmentInPatient(String selectAppointment, int selectPatient) {
+		try {
+			PatientModel pat = (PatientModel) Main.dbase.get(getScheduledPatientsUsernames().get(selectPatient));
+			try {
+				pat.getAppointments().get(getUsername()).add(LocalDateTime.parse(selectAppointment));
+			} catch (Exception e) {
+				ArrayList<LocalDateTime> newList = new ArrayList<LocalDateTime>();
+				newList.add(LocalDateTime.parse(selectAppointment));
+				pat.getAppointments().put(getUsername(), newList);
+			}
+		} catch (Exception e) {
+			System.err.println("A patient wasn't selected");
+		}
+	}
+
+
+
+
+
+
 
 
 

@@ -3,6 +3,12 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 02 APRIL Jenny
+# 17:22 
+* Taliored booking of appointments in DoctorView. Booking an appointment from Doctor is based on the assumption that the appointment is being booked with the current doctor. 
+* After booking an appointment, the list of open appointments for the doctor is updated. 
+* After booking an appointment, the appointment will immediately appear in calendar view. 
+
 ## 31 MARCH Jenny
 # 16:37
 * Set up booking appointments in Doctor MVC, copying the code and functions from Nurse MVC.

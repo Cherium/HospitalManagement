@@ -173,7 +173,7 @@ public class DoctorController {
 	 * 
 	 * @author Jenny Z
 	 * @param appointments- list of appointments that this user has
-	 * @return- LinkedHashMap with keys as appointment times
+	 * @return LinkedHashMap with keys as appointment times
 	 */
 	private LinkedHashMap<String, String> convertAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
@@ -278,8 +278,21 @@ public class DoctorController {
 		
 		if(appointmentType.compareTo("Doctor Appointment") == 0)
 		{
-			String department = model.getDepartment();
 			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
+			int selectPatient = view.getListPatients().getSelectedIndex();
+			model.storeAppointmentInPatient(selectAppointment, selectPatient);
+
+			// Update the schedule of the doctor
+			model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
+			view.setShifts(convertToShiftTime(model.getAvailability()));
+			view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
+			view.setAppointments(convertAppointments(model.getAppointments()));
+	
+			view.initializeWeeklySchedule();
+			view.initializeMonthlySchedule();
+
+			view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
+
 			return -1;
 		}
 		else	//appointment is lab test
