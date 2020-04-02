@@ -124,7 +124,7 @@ public class PatientController {
 				System.out.println(file);
 				model.getReferrals().add(file);
 				System.out.println(model.getReferrals().size());
-				view.initializeGUI();
+				// view.initializeGUI();
 			}
 		});
 
