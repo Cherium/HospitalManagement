@@ -1,5 +1,6 @@
 import java.awt.Component;
 
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -61,6 +62,7 @@ public class PatientController {
 		view.getDay().setSelectedItem(Integer.toString(model.getBirthday().getDayOfMonth()));
 		view.getBlood().setSelectedItem(model.getBlood());
 		view.getSex().setSelectedItem(model.getSex());
+		view.setReferrals(model.getReferrals());
 	}
 	
 
@@ -112,7 +114,20 @@ public class PatientController {
 		view.getSave().addActionListener(e -> updateInfo() );
 		view.getChangePassword().addActionListener(e -> changePass() );
 		
-		
+		view.getBtnAddReferral().addActionListener(e -> {
+			JFileChooser fc = new JFileChooser();
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			int returnVal = fc.showOpenDialog(null);
+			if (returnVal == 0) {
+				System.out.println(model.getReferrals().size());
+				String file = fc.getSelectedFile().getName();
+				System.out.println(file);
+				model.getReferrals().add(file);
+				System.out.println(model.getReferrals().size());
+				view.initializeGUI();
+			}
+		});
+
 		
 	}
 

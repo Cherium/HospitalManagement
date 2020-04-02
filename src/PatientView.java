@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,6 +41,7 @@ public class PatientView extends JFrame{
 	
 	private JPanel contentPanel;
 	private JPanel infoPanel;
+	private JPanel referralPanel = new JPanel();
 	
 	private JLabel welcomeLabel;
 	private JLabel usernameLabel;
@@ -50,6 +52,7 @@ public class PatientView extends JFrame{
 	private JButton btnReturn;
 	private JButton save;
 	private JButton changePassword;
+	private JButton btnAddReferral;
 	
 	private JTextField nameText;
 	private JTextField addrText;
@@ -66,6 +69,8 @@ public class PatientView extends JFrame{
 	private JComboBox<String> year, month, day;
 	private JComboBox<String> blood, posNeg;
 	private JComboBox<String> sex;
+
+	private String[] referrals = {""};
 	
 	
 	
@@ -94,7 +99,7 @@ public class PatientView extends JFrame{
 	 */
 	public void initializeGUI() 
 	{
-		
+
 //Main panel background
 		contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
@@ -226,7 +231,15 @@ public class PatientView extends JFrame{
 				credentialPanel.add(passwordInputConfirm, "wrap 20");
 				
 				credentialPanel.add(changePassword, "span, center, wrap");
-			
+
+
+			referralPanel = new JPanel(new MigLayout("wrap 1", "align left"));
+				referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
+				for (String ref : referrals) {
+					referralPanel.add(new JLabel(ref));
+				}
+				btnAddReferral = new JButton("Upload referral");
+				referralPanel.add(btnAddReferral);
 				
 					
 				
@@ -235,6 +248,7 @@ public class PatientView extends JFrame{
 			contentPanel.add(welcomeLabel, "wrap");
 			contentPanel.add(infoPanel);
 			contentPanel.add(credentialPanel);
+			contentPanel.add(referralPanel);
 			
 
 			
@@ -737,9 +751,13 @@ public class PatientView extends JFrame{
 
 	
 	
+	public void setReferrals(ArrayList<String> s) {
+		this.referrals = s.toArray(new String[0]);
+	}
 	
-	
-
+	public JButton getBtnAddReferral() {
+		return btnAddReferral;
+	}
 	
 
 

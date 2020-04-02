@@ -27,40 +27,9 @@ public class PatientModel extends UserSuperClass {
 	private String sex;
 	private String recordNotes;
 
-	private ArrayList<Referral> referrals;
+	private ArrayList<String> referrals;
 
-	/**
-	 * Referral
-	 */
-	public class Referral {
-		
-		String docFrom, docTo, departFrom, departTo;
 
-		Referral(String df, String dt, String dpf, String dpt) {
-			docFrom = df;
-			docTo = dt;
-			departFrom = dpf;
-			departTo = dpt;
-		}
-
-		String getDocFrom() {
-			return docFrom;
-		}
-
-		String getDocTo() {
-			return docTo;
-		}
-
-		String getDepartFrom() {
-			return departFrom;
-		}
-
-		String getDepartTo() {
-			return departTo;
-		}
-		
-	}
-	
 	//stores list of appointments
 	private HashMap<String, ArrayList<LocalDateTime>> appointments;
 	
@@ -102,6 +71,8 @@ public class PatientModel extends UserSuperClass {
 		
 		//get list of appointments
 		this.appointments = listToAppointmentMap(appointments);
+
+		this.referrals = new ArrayList<String>();
 
 		//testing prints-- dont delete
 //		for(Map.Entry<String, ArrayList<LocalDateTime>> i: this.appointments.entrySet() )
@@ -370,12 +341,12 @@ public class PatientModel extends UserSuperClass {
 		this.appointments = appointments;
 	}
 
-	public ArrayList<Referral> getReferrals() {
+	public ArrayList<String> getReferrals() {
 		return referrals;
 	}
 
-	public void addReferral(String doctorFrom, String doctorTo, String departmentFrom, String departmentTo) {
-		referrals.add(new Referral(doctorFrom, doctorTo, departmentFrom, departmentTo));
+	public void setReferrals(ArrayList<String> r) {
+		this.referrals = r;
 	}
 
 
