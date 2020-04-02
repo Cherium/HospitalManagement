@@ -128,7 +128,6 @@ public class DoctorView {
 	private JList listPatients;
 
 	private JComboBox<String> apptType;
-	private JComboBox<String> departmentDropDown;
 	private JComboBox<String> chooseAppt;
 	private JComboBox<String> labTime;
 	private JComboBox<String> year, month, day;
@@ -777,7 +776,6 @@ public class DoctorView {
 		apptType.addItem("Lab Test");
 		apptType.addActionListener(e -> disableLab());
 
-		departmentDropDown = new JComboBox<String>();
 		chooseAppt = new JComboBox<String>();
 		labTime = new JComboBox<String>(times);
 		labTime.setEnabled(false);
@@ -794,8 +792,6 @@ public class DoctorView {
 		topPanel.add(new JLabel("Type:"));
 		topPanel.add(apptType);
 
-		topPanel.add(new JLabel("Department:"), "gapleft 50");
-		topPanel.add(departmentDropDown, "growx");
 		topPanel.add(new JLabel("Select Appointment: "));
 		topPanel.add(chooseAppt, "span, pushx, growx, wrap");
 
@@ -971,7 +967,6 @@ public class DoctorView {
 	public void disableLab() {
 
 		if (apptType.getSelectedItem().equals("Lab Test")) {
-			departmentDropDown.setEnabled(false);
 			chooseAppt.setEnabled(false);
 
 			year.setEnabled(true);
@@ -979,7 +974,6 @@ public class DoctorView {
 			day.setEnabled(true);
 			labTime.setEnabled(true);
 		} else {
-			departmentDropDown.setEnabled(true);
 			chooseAppt.setEnabled(true);
 
 			year.setEnabled(false);
@@ -1697,22 +1691,7 @@ public class DoctorView {
 		this.apptType = apty;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public JComboBox<String> getDepartmentDropDown() {
-		return departmentDropDown;
-	}
 
-	/**
-	 * 
-	 * @param ddd
-	 */
-	public void setDepartmentDropDown(JComboBox<String> ddd) {
-		this.departmentDropDown = ddd;
-	}
-	
 	/**
 	 * 
 	 * @return

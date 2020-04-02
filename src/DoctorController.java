@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import java.awt.event.ActionEvent;
@@ -50,7 +51,7 @@ public class DoctorController {
 		// Cannot do this in constructor as doctors are read from the database before patient
 		model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
 
-//model.s.nextOpenSlots(model.getAvailability(), model.getAppointments());	//debug
+		// model.s.nextOpenSlots(model.getAvailability(), model.getAppointments());	//debug
 		view.setShifts(convertToShiftTime(model.getAvailability()));
 		view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
 		view.setAppointments(convertAppointments(model.getAppointments()));
@@ -79,6 +80,8 @@ public class DoctorController {
 		}
 		view.setPatientList(patients);
 		view.setNurseList(nurses);
+
+		view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
 
 	}
 	
@@ -275,7 +278,7 @@ public class DoctorController {
 		
 		if(appointmentType.compareTo("Doctor Appointment") == 0)
 		{
-			String department = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex()).toString();
+			String department = model.getDepartment();
 			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
 			return -1;
 		}

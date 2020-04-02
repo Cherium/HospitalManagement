@@ -81,6 +81,7 @@ public class NurseController {
 		
 		//list of appointments to set in combobox
 		String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
+		System.out.println(doc);
 		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
 		
 		//list of 50 next shifts of this user to print to text field
