@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 1 APRIL 22:12 Neil
+* Finished the Receptionist Portal and has it display the statistics from total
+departments, patients, doctors, and nurses
+
 ## 25 March 18:55 Neil
 * Most of Reception View has been nicely set. Need to work on the second half and patient file loading. Non-functional edit on buttons performed for login
 
