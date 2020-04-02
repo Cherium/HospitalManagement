@@ -4,6 +4,16 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Sajid C
+ *
+ */
+/**
+ * @author Sajid C
+ *
+ */
 public class PatientController {
 	
 	private PatientModel model;
@@ -12,7 +22,13 @@ public class PatientController {
 	
 	
 	
-	//constructor
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public PatientController(PatientModel m, PatientView v)
 	{
 		this.model = m;
@@ -24,8 +40,12 @@ public class PatientController {
 	
 	
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Sajid C
+	 */
 	public void initView()
 	{
 		view.getWelcomeLabel().setText("Welcome, "+ model.getName() );
@@ -43,8 +63,14 @@ public class PatientController {
 		view.getSex().setSelectedItem(model.getSex());
 	}
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+
+
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Sajid C
+	 */
 	public void initListeners() 
 	{/*
 		commenting out, low prioirty but still functional
@@ -92,7 +118,12 @@ public class PatientController {
 
 
 
-	//try to update the patients information in the database and show the error message resulting
+	/**
+	 * try to update the patients information in the database and show the error message resulting
+	 * 
+	 * @return ease-of use early function exit flag
+	 * @author Sajid C
+	 */
 	public int updateInfo() {
 
 		//check that no field is empty
@@ -128,8 +159,15 @@ public class PatientController {
 		
 	}
 	
+	
+	/**
+	 * Update password in database and return a message for user to view
+	 * 
+	 * @return ease-of use early function exit flag
+	 */
 	public int changePass()
 	{
+		//get password from fields in view and set them in model
 		//Note: getPassword does not throw an exception if it is empty
 		model.setPassword(view.getPasswordInput().getPassword() );
 		model.setPassword2(view.getPasswordInputConfirm().getPassword() );

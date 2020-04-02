@@ -1,5 +1,11 @@
 //import javax.swing.JPasswordField;
 
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Sajid C
+ *
+ */
 public class CreateNewPatientController {
 	
 	private CreateNewPatientModel model;
@@ -8,7 +14,13 @@ public class CreateNewPatientController {
 	
 	
 	
-	
+	/**
+	 * Constructor- sets references to associated view and model of this MVC construct
+	 * 
+	 * @author Sajid C
+	 * @param model the associated model with this controller
+	 * @param view the associated view with this controller
+	 */
 	public CreateNewPatientController(CreateNewPatientModel model, CreateNewPatientView view) {
 
 		this.model = model;
@@ -21,16 +33,24 @@ public class CreateNewPatientController {
 	
 	
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/**
+	 * initialize the elements that the GUI sees from the database 
+	 * as soon as the view first opens for the user.
+	 * 
+	 * @ author Sajid C
+	 */
 	public void initView()
 	{
 
 	}
 	
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * 
+	 * @author Sajid C
+	 */
 	public void initListeners() 
 	{
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle okay button being pressed
@@ -38,7 +58,11 @@ public class CreateNewPatientController {
 	}
 
 
-	//get and store information entered in GUI
+	/**
+	 * get and store information entered in GUI into the model
+	 * 
+	 * @author Sajid C
+	 */
 	public void parseEntry() {
 		
 //TODO could also change get methods in view to return .getText versions		

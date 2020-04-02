@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,13 +19,18 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 
-/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+/**
+ * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * 
+ * @author Sajid C
+ *
+ */
 public class LoginView {
 	
 	private JFrame frame;
@@ -53,7 +59,11 @@ public class LoginView {
 	
 	
 	
-	//Constructor
+	/**
+	 * constructor
+	 * 
+	 * @param title JFrame title
+	 */
 	public LoginView(String title)
 	{
 		//sets frame containers attributes
@@ -64,7 +74,7 @@ public class LoginView {
 			//frame.setSize(460,200);
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
-		
+
 		initializeGUI();
 	}
 
@@ -72,7 +82,10 @@ public class LoginView {
 	
 	
 
-	/**initialize the panels and components that will go inside the frame*/
+	/**
+	 * initialize the panels and components that will go inside the frame
+	 * @author Sajid C
+	 */
 	public void initializeGUI() 
 	{
 		
@@ -122,12 +135,12 @@ public class LoginView {
 				btnNewPatient.setBackground(Color.DARK_GRAY);
 				btnNewPatient.setForeground(Color.WHITE);
 				btnNewPatient.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
-	
+
 			btnExit = new JButton("Exit");
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);
 				btnExit.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
-				btnExit.addActionListener(e -> frame.setVisible(false));
+				btnExit.addActionListener(e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)) );	//close all windows and exit program
 
 			deptPanel.add(btnExit, " sg a");
 			deptPanel.add(btnNewPatient, "sg a");
@@ -145,14 +158,22 @@ public class LoginView {
 	}
 
 
-	//clear user inputs 
+	
+	/**
+	 * clear textfield inputs
+	 * @author Jenny Z
+	 */
 	protected void clearInputs() 
 	{
 		usernameField.setText("");
 		passwordField.setText("");
 	}
 	
-	//Only happens in login screen. No combination of user and password detected
+
+	/**
+	 * Display message to user
+	 * @param message to show to user
+	 */
 	public void loginError(String message) 
 	{
 				JFrame frame = new JFrame();

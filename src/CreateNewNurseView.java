@@ -17,20 +17,20 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-/**
- * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
- * 
- * @author Sajid C
- *
- */
-public class CreateNewDoctorView  extends JDialog{
-
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+public class CreateNewNurseView  extends JDialog{
+/*
+	public static void main(String[] args)
+	{
+		new CreateNewDoctorView("hehe");
+	}
+*/
 		private JPanel contentPanel = new JPanel();
 		
 		private JTextField nameInput;
@@ -41,22 +41,16 @@ public class CreateNewDoctorView  extends JDialog{
 		
 		private JButton cancelButton;
 		private JButton createButton;
-		private JButton addNurse;
+		private JButton addDoctor;
 		
-		private JComboBox<String> nurseDropDown;
+		private JComboBox<String> doctorDropDown;
 		private JComboBox<String> departmentDropDown;
 		
-		private JTextArea box;
+			
 		
 		
-		
-		
-		/**
-		 * constructor
-		 * 
-		 * @param title JFrame title
-		 */
-		public CreateNewDoctorView(String title)
+		//constructor
+		public CreateNewNurseView(String title)
 		{
 			//sets frame containers attributes
 			setTitle(title);
@@ -70,10 +64,7 @@ public class CreateNewDoctorView  extends JDialog{
 		
 		
 		
-		/**
-		 * initialize the panels and components that will go inside the frame
-		 * @author Sajid C
-		 */
+		/**initialize the panels and components that will go inside the frame*/
 		public void initializeGUI()
 		{
 //Main panel background
@@ -90,7 +81,7 @@ public class CreateNewDoctorView  extends JDialog{
 					JLabel name = new JLabel("Name:");
 					JLabel username = new JLabel("Username:");
 					JLabel department = new JLabel("Department:");
-					JLabel assignedNurses = new JLabel("Assigned Nurses:");
+					JLabel assignedNurses = new JLabel("Assigned Doctor:");
 					JLabel pwd = new JLabel("Password:");
 					JLabel pwd2 = new JLabel("Re-enter Password:");
 				
@@ -103,13 +94,12 @@ public class CreateNewDoctorView  extends JDialog{
 					passwordInputConfirm = new JPasswordField();
 					
 				//Buttons
-					addNurse = new JButton("add");
+					addDoctor = new JButton("add");
 					
-				//TextBox
-					box = new JTextArea("List of nurses to be assigned: \n");
+
 					
 				//ComboBox drop down lists	
-					nurseDropDown = new JComboBox<String>();
+					doctorDropDown = new JComboBox<String>();
 					departmentDropDown = new JComboBox<String>();
 						departmentDropDown.insertItemAt("", 0);
 						departmentDropDown.addActionListener(e -> disableNurseSelection() );
@@ -125,9 +115,8 @@ public class CreateNewDoctorView  extends JDialog{
 					contentPanel.add(departmentDropDown, "sg a,wrap");
 					
 					contentPanel.add(assignedNurses, "right");
-					contentPanel.add(nurseDropDown, "sg a");
-					contentPanel.add(addNurse, "wrap");
-					contentPanel.add(box, "span 3 2, center, height 50:150:, wrap");	//stretch the box across 3 horizontal columns and 2 vertical rows starting in the current row, set its height, and wrap to next row
+					contentPanel.add(doctorDropDown, "sg a");
+					contentPanel.add(addDoctor, "wrap");
 					
 					
 					contentPanel.add(pwd, "right");
@@ -166,10 +155,7 @@ public class CreateNewDoctorView  extends JDialog{
 		
 		
 		
-		
-		/**
-		 * clear textfield inputs
-		 */
+		//clear inputs
 		public void clearInputs() 
 		{
 			nameInput.setText("");
@@ -181,11 +167,7 @@ public class CreateNewDoctorView  extends JDialog{
 	
 		
 		
-		/**
-		 * pop up a message-dialog box with a message passed in 
-		 * @author Jenny Z
-		 * @param message message to show user
-		 */
+		//pop up a message-dialog box with a message passed in 
 		public void showDialogToUser(String message)
 		{
 			JOptionPane.showMessageDialog(contentPanel, message);
@@ -193,19 +175,15 @@ public class CreateNewDoctorView  extends JDialog{
 		
 		
 		
-		
-		/**
-		 * disable the nurse selection option for when the ER department is chosen by the User
-		 * @author Sajid C
-		 */
+		//disable the nurse selection option for when the ER department is chosen by the User
 		public void disableNurseSelection()
 		{
 			if (departmentDropDown.getSelectedItem().equals("ER")) {
-				nurseDropDown.setEnabled(false);
-				addNurse.setEnabled(false);			
+				doctorDropDown.setEnabled(false);
+				addDoctor.setEnabled(false);			
 			} else {
-				nurseDropDown.setEnabled(true);
-				addNurse.setEnabled(true);			
+				doctorDropDown.setEnabled(true);
+				addDoctor.setEnabled(true);			
 			}
 		}
 
@@ -285,14 +263,14 @@ public class CreateNewDoctorView  extends JDialog{
 
 
 
-		public JComboBox<String> getNurseDropDown() {
-			return nurseDropDown;
+		public JComboBox<String> getDoctorDropDown() {
+			return doctorDropDown;
 		}
 
 
 
-		public void setNurseDropDown(JComboBox<String> nurseDropDown) {
-			this.nurseDropDown = nurseDropDown;
+		public void setDoctorDropDown(JComboBox<String> doctorDropDown) {
+			this.doctorDropDown = doctorDropDown;
 		}
 
 
@@ -309,26 +287,14 @@ public class CreateNewDoctorView  extends JDialog{
 
 
 
-		public JButton getAddNurse() {
-			return addNurse;
+		public JButton getAddDoctor() {
+			return addDoctor;
 		}
 
 
 
-		public void setAddNurse(JButton addNurse) {
-			this.addNurse = addNurse;
-		}
-
-
-
-		public JTextArea getBox() {
-			return box;
-		}
-
-
-
-		public void setBox(JTextArea box) {
-			this.box = box;
+		public void setAddDoctor(JButton addDoctor) {
+			this.addDoctor = addDoctor;
 		}
 
 		

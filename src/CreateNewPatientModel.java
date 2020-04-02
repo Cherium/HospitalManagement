@@ -1,9 +1,12 @@
 import java.util.Arrays;
 
 
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
+ * @author Sajid C, Jenny Z
+ *
+ */
 public class CreateNewPatientModel extends UserSuperClass {
 	
 	private String name;
@@ -24,7 +27,11 @@ public class CreateNewPatientModel extends UserSuperClass {
 	
 	
 	
-	
+	/**
+	 * default empty constructor
+	 * 
+	 * @author Sajid C
+	 */
 	public CreateNewPatientModel()
 	{
 		//empty constructor
@@ -36,7 +43,11 @@ public class CreateNewPatientModel extends UserSuperClass {
 	
 	
 	
-	//verify entered information and return an appropriate debug message accordingly
+	/**
+	 * verify entered information, on success store a new patient; provide a debug message to patient
+	 * @author Sajid C
+	 * @return debug message for patient
+	 */
 	public String storeInDatabase()
 	{
 		//check if username already exists in database
@@ -79,7 +90,7 @@ public class CreateNewPatientModel extends UserSuperClass {
 		//store in database if all checks pass
 		Main.dbase.put(username
 				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0
-						, dob, bloodType, sex, ""));
+						, dob, bloodType, sex, "", null));
 		return "Account successfully created!";
 		
 	}

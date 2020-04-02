@@ -2,18 +2,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-/**
- * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
- * @author Sajid C
- *
- */
-public class CreateNewDoctorModel extends UserSuperClass {
+
+/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
+ * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
+ * class interacts with this class, not the other way around.)*/
+public class CreateNewNurseModel extends UserSuperClass {
 	
 	private String name;
 	private String username;
-	private String department;
-	private ArrayList<String> nurseListToAdd = new ArrayList<>(5);
+    private String department;
+    private String doctorToAdd;
 	private char[] pwd;
 	private char[] pwd2;
 	
@@ -23,12 +21,7 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	
 	
 	
-	/**
-	 * default empty constructor
-	 * 
-	 * @author Sajid C
-	 */
-	public CreateNewDoctorModel()
+	public CreateNewNurseModel()
 	{
 		//empty constructor
 	}
@@ -40,11 +33,7 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	
 	
 	
-	/**
-	 * verify entered information, store information in database, and return an appropriate debug message accordingly
-	 * @author Sajid C
-	 * @return debug message for user to view
-	 */
+	//verify entered information and return an appropriate debug message accordingly
 	public String storeInDatabase()
 	{
 		//check if username already exists in database
@@ -87,39 +76,23 @@ public class CreateNewDoctorModel extends UserSuperClass {
 			return "Please select a department!";
 		}
 		
-		//check that at least one nurse was selected
-		if(nurseListToAdd.size() == 0)
+		//check that at least one doctor was selected
+		if(doctorToAdd == null)
 		{
-			return "Please assign at least one nurse!";
+			return "Please assign at least one doctor!";
 		}
 		
 		
 		/**store in database if all checks pass*/
 		
-		//get list of nurses to assign
-		ArrayList<String> temp = new ArrayList<String>(5);
-		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
-		{
-			//if entry 'i' in DBase has 'name' that matches User selected nurse name
-			if(nurseListToAdd.contains(i.getValue().getName()) )
-			{
-				//add the associated username to temp
-				temp.add(i.getKey() );
-			}
-		}
-		//Create a new doctor with all information collected and store in database
-		Main.dbase.put(username, new DoctorModel(username,pwd, name,  department, temp.toArray(new String[0]), new String[0], new String[0] ) );
+		//Create a new nurse with all information collected and store in database
+		Main.dbase.put(username, new NurseModel(username, pwd, name,  department, doctorToAdd, new String[0] ) );
 		return "Account successfully created!";
 	}
 	
 	
-	
-	/**
-	 * return the list of nurses names currently in the database, as a String array for the purpose of combobox elements
-	 * @author Sajid C
-	 * @return list of nurses 
-	 */
-	public String[] getNurseList() {
+	//return the list of nurses names currently in the database, as a String array for the purpose of combobox elements
+	public String[] getDoctorList() {
 		
 		ArrayList<String> temp = new ArrayList<>(10);
 		
@@ -131,7 +104,7 @@ public class CreateNewDoctorModel extends UserSuperClass {
 		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
 		{
 			//if role is nurse, return nurse name
-			if(i.getValue().getRole().compareTo("nurse") == 0)
+			if(i.getValue().getRole().compareTo("doctor") == 0)
 			{
 				
 				temp.add(i.getValue().getName() );
@@ -192,12 +165,12 @@ public class CreateNewDoctorModel extends UserSuperClass {
 		this.pwd2 = pwd2;
 	}
 
-	public ArrayList<String> getNurseListToAdd() {
-		return nurseListToAdd;
+    public String getDoctorToAdd() {
+		return doctorToAdd;
 	}
 
-	public void setNurseListToAdd(ArrayList<String> nurseListToAdd) {
-		this.nurseListToAdd = nurseListToAdd;
+	public void setDoctorToAdd(String doctorToAdd) {
+		this.doctorToAdd = doctorToAdd;
 	}
 
 	public String getDepartment() {

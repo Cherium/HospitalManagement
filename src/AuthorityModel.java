@@ -18,7 +18,7 @@ public class AuthorityModel extends UserSuperClass {
 	private int nurseNum;
 
 	//constructor
-	public AuthorityModel(String username, char[] password, String name) {
+	public AuthorityModel(String username, char[] password, String name, String[] strings) {
 
 		super(name, username, password);
 		setRole("authority");

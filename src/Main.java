@@ -1,6 +1,11 @@
 import java.util.HashMap;
 
-/** Main function that starts the initial GUI*/
+
+/**
+ * Main class that initializes database and login GUI
+ * @author Sajid C
+ *
+ */
 public class Main {
 	
 	/**Global variable; 
@@ -10,13 +15,23 @@ public class Main {
 	 * 			ex. 'Main.dbase.containsKey()' checks the HashMap to see if a key is contained within it. */
 	
 	public static Database dbaseClass = new Database("dbase/dbase.txt");
+	
 	public static HashMap<String, UserSuperClass> dbase = dbaseClass.users;
 
 	
 	
 	
 	
+	/**
+	 * Main function
+	 */
 	public static void main(String[] args) {
+		
+		//upload doctor appointment information
+		for(DoctorModel d: Main.dbaseClass.getDocsToLoad() )
+		{
+			d.setAppointments(d.s.updateHashMap(d.getScheduledPatientsUsernames(), d.getUsername()));
+		}
 		
 		//initialize the MVC for the login screen
 		//the rest of the program proceeds from here

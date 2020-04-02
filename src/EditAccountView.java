@@ -11,25 +11,20 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 	
-/**
- * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
+/**Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
  * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
  * does not interact with the controller)
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
- * 
- * @author Sajid C
- *
- */
-public class DeleteAccountView extends JDialog{
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+public class EditAccountView extends JDialog{
 	
 	JPanel contentPanel;
 	
 	
 	private JTextField usernameInput;
-	private JButton deleteButton;
+	private JButton editButton;
 	private JButton cancelButton;
 
 	
@@ -39,12 +34,8 @@ public class DeleteAccountView extends JDialog{
 	
 	
 	
-	/**
-	 * constructor
-	 * 
-	 * @param title JFrame title
-	 */
-	public DeleteAccountView(String title) 
+	//constructor
+	public EditAccountView(String title) 
 	{
 		//sets frame containers attributes
 		setTitle(title);
@@ -57,10 +48,7 @@ public class DeleteAccountView extends JDialog{
 	}
 
 	
-	/**
-	 * initialize the panels and components that will go inside the frame
-	 * @author Sajid C
-	 */
+	/**initialize the panels and components that will go inside the frame*/
 	public void initializeGUI() {
 		// TODO Auto-generated method stub
 		
@@ -87,14 +75,14 @@ public class DeleteAccountView extends JDialog{
 	JPanel buttonPanel = new JPanel(new MigLayout("wrap 2") );
 		
 	//Buttons
-		deleteButton = new JButton("Delete Account");
+		editButton = new JButton("Edit Account");
 		
 		cancelButton = new JButton("Cancel");
 			cancelButton.addActionListener(e -> setVisible(false) );
 			
 	//Add components to panel in order	
-		buttonPanel.add(deleteButton, "gapleft 50");		//in the current column, place the component with a gap of 50px from the left
-		buttonPanel.add(cancelButton, "");					//place the next component in the second column
+		buttonPanel.add(editButton, "gapleft 50");		//in the current column, place the component with a gap of 50px from the left
+		buttonPanel.add(editButton, "");					//place the next component in the second column
 		
 			
 		
@@ -111,11 +99,7 @@ public class DeleteAccountView extends JDialog{
 
 	
 	
-	/**
-	 * pop up a message-dialog box with a message passed in 
-	 * @author Jenny Z
-	 * @param message message to show user
-	 */
+	//pop up a message-dialog box with a message passed in
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);
@@ -142,12 +126,14 @@ public class DeleteAccountView extends JDialog{
 		this.usernameInput = usernameInput;
 	}
 
-	public JButton getDeleteButton() {
-		return deleteButton;
+	
+
+	public JButton getEditButton() {
+		return editButton;
 	}
 
-	public void setDeleteButton(JButton deleteButton) {
-		this.deleteButton = deleteButton;
+	public void setEditButton(JButton editButton) {
+		this.editButton = editButton;
 	}
 	
 
