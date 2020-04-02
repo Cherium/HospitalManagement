@@ -331,6 +331,7 @@ public class NurseView extends JFrame{
 		if (apptType.getSelectedItem().equals("Lab Test")) {
 			departmentDropDown.setEnabled(false);
 			chooseAppt.setEnabled(false);
+			chooseDoc.setEnabled(false);
 			
 			year.setEnabled(true);
 			month.setEnabled(true);
@@ -339,6 +340,7 @@ public class NurseView extends JFrame{
 		} else {
 			departmentDropDown.setEnabled(true);
 			chooseAppt.setEnabled(true);
+			chooseDoc.setEnabled(true);
 			
 			year.setEnabled(false);
 			month.setEnabled(false);

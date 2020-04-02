@@ -121,7 +121,7 @@ public class NurseController {
 
 
 
-	//
+	
 	/**
 	 * update doctor box and Appointments box when department box option changes - Booking panel
 	 * 
