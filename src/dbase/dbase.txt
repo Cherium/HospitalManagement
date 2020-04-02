@@ -8,4 +8,4 @@ nurse	nancy	nancy	Henry Ford	Cardiology	null	doctor	null	0	null	0	0	null	null	nu
 nurse	drew	drew	Jason Chan	Cardiology	null	doctor	null	0	null	0	0	null	null	null
 receptionist	recipe	recipe	Dina Cho	null	null	null	null	0	null	0	0	null	null	null
 doctor	doctor2	doctor2	Bo Ferris	Neurology	nurse	null	null	0	null	0	null	null	null	patient2
-authority	authority	authority	Jenson Jendaughter	null	null	null	null	0	null	0	null	null	null	null
+authority	auth	auth	Jenson Jendaughter	null	null	null	null	0	null	0	null	null	null	null

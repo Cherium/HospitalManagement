@@ -28,7 +28,13 @@ public class AuthorityController {
 	//get information from model, and set labels, etc in view
 	public void initView()
 	{
-		
+		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
+		view.getDepNumLabel().setText("# of Departments: "+ model.getDepNum() );
+		model.getStats();
+		view.getPatientTotalLabel().setText("# of Registered Patients: "+model.getPatientNum());
+		view.getDoctorTotalLabel().setText("# of Registered Doctors: "+model.getDoctorNum());
+		view.getNurseTotalLabel().setText("# of Registered Nurses: "+model.getNurseNum());
+
 	}
 	
 	//initialize the listeners from the view class that need to interact with model

@@ -4,7 +4,7 @@ This project is a work-in-progress management system targeted at hospitals. It a
 
 ## Usage:
 
-The following instructions will get you a functional copy of the software running on your local machine. 
+The following instructions will get you a functional copy of the software running on your local machine.
 
 ### Prerequisites
 
@@ -40,7 +40,7 @@ The remaining portals have assigned portals, however the portals only display na
 
 ## Built With
 
-The software is built using Java, with love. 
+The software is built using Java, with love.
 
 ## Authors
 * **Sajid Choudhry**
