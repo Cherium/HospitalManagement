@@ -3,7 +3,7 @@
 /**
  * Controller for this MVC construct
  * Handles all interaction between the associated model class and the view class.
- * @author Sajid C
+ * @author Neil Mariano
  *
  */
 public class AuthorityController {
@@ -45,7 +45,13 @@ public class AuthorityController {
 	 */
 	public void initView()
 	{
-		
+		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
+		view.getDepNumLabel().setText("# of Departments: "+ model.getDepNum() );
+		model.getStats();
+		view.getPatientTotalLabel().setText("# of Registered Patients: "+model.getPatientNum());
+		view.getDoctorTotalLabel().setText("# of Registered Doctors: "+model.getDoctorNum());
+		view.getNurseTotalLabel().setText("# of Registered Nurses: "+model.getNurseNum());
+
 	}
 	
 	/**

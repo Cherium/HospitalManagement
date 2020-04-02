@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,7 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -50,6 +53,8 @@ public class PatientView extends JFrame{
 	private JButton btnReturn;
 	private JButton save;
 	private JButton changePassword;
+	private JButton bookAptBtn;
+	private JButton cancelApptBtn;
 	
 	private JTextField nameText;
 	private JTextField addrText;
@@ -63,9 +68,20 @@ public class PatientView extends JFrame{
 	private JPasswordField passwordInput;
 	private JPasswordField passwordInputConfirm;
 
-	private JComboBox<String> year, month, day;
 	private JComboBox<String> blood, posNeg;
 	private JComboBox<String> sex;
+	private JComboBox<String> apptType;
+	private JComboBox<String> departmentDropDown;
+	private JComboBox<String> chooseAppt;
+	private JComboBox<String> chooseDoc;
+	private JComboBox<String> labTime;
+	private JComboBox<String> year, month, day;
+	private JComboBox<String> cancelAppt;
+	
+	String[] times = {
+			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
+			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
+	};
 	
 	
 	
@@ -105,6 +121,14 @@ public class PatientView extends JFrame{
 
 			welcomeLabel = new JLabel();
 				welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));	
+				
+			//add scrolling to main container
+			JScrollPane scroll = new JScrollPane(contentPanel
+					, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				scroll.getVerticalScrollBar().setUnitIncrement(10);
+				scroll.getHorizontalScrollBar().setUnitIncrement(10);
+				add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
+
 
 //Inner Panels
 			
@@ -200,7 +224,7 @@ public class PatientView extends JFrame{
 				
 			
 					
-					
+		//Inner Panel		
 			JPanel credentialPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
 				credentialPanel.setBorder(BorderFactory.createTitledBorder("Patient Credentials"));
 			
@@ -228,13 +252,85 @@ public class PatientView extends JFrame{
 				credentialPanel.add(changePassword, "span, center, wrap");
 			
 				
+				
+		//Inner Panel
+				
+			JPanel bookPanel = new JPanel(new MigLayout("") );
+				bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
+				bookPanel.setPreferredSize(new Dimension(900, 50));
+				bookPanel.setMaximumSize(new Dimension(905, 125));
+				bookAptBtn = new JButton("Book Appointment");
+				
+				apptType = new JComboBox<String>();
+					apptType.addItem("Doctor Appointment");
+					apptType.addItem("Lab Test");
+					apptType.addActionListener(e -> disableLab() );
 					
+				departmentDropDown = new JComboBox<String>();
+				chooseAppt = new JComboBox<String>();
+					chooseAppt.setMaximumRowCount(10);
+					
+				chooseDoc = new JComboBox<String>();
+				labTime = new JComboBox<String>(times);
+					labTime.setEnabled(false);
+				year = initYearCombo();
+					year.setEnabled(false);
+					year.addActionListener(e -> initDaysinBox());
+				month = initMonthCombo();
+					month.setEnabled(false);
+					month.addActionListener(e -> initDaysinBox());
+				day = initDayCombo();
+					day.setEnabled(false);
+					initDaysinBox();
+					
+				bookPanel.add(new JLabel("Type:"));
+				bookPanel.add(apptType);
+				
+				bookPanel.add(new JLabel("Department:"), "gapleft 35, align right" );
+				bookPanel.add(departmentDropDown, "growx, align left, sg a");
+				
+				bookPanel.add(new JLabel("Lab Date: "), "align right");
+				bookPanel.add(year, "sg c, split");
+				bookPanel.add(month, "sg c, split");
+				bookPanel.add(day, "sg c, wrap");
+				
+				bookPanel.add(new JLabel("Select Doctor: "), "skip 2, align right");
+				bookPanel.add(chooseDoc, "sg a, align left");
+				
+				bookPanel.add(new JLabel("Time: "), "align right");
+				bookPanel.add(labTime, "sg c, wrap");
+				
+				bookPanel.add(new JLabel("Select Appointment: "), "skip 2 , align right");
+				bookPanel.add(chooseAppt, "span 2, growx");
+				
+				bookPanel.add(bookAptBtn, "align right");
+				
+				
+				
+				
+				
+		//Inner Panel
+			
+			JPanel cancelPanel = new JPanel(new MigLayout("") );
+				cancelPanel.setBorder(BorderFactory.createTitledBorder("Cancel An Appointment: "));
+				cancelPanel.setPreferredSize(new Dimension(450, 50));
+				cancelPanel.setMaximumSize(new Dimension(905, 125));				
+				
+				cancelAppt = new JComboBox<String>();
+				cancelApptBtn = new JButton("Cancel Appointment");
+				
+				cancelPanel.add(cancelAppt, "wrap");
+				cancelPanel.add(cancelApptBtn, "align right");
+				
+				
 				
 		//Add components to main panel
 			contentPanel.add(btnReturn, "wrap");
 			contentPanel.add(welcomeLabel, "wrap");
-			contentPanel.add(infoPanel);
-			contentPanel.add(credentialPanel);
+			contentPanel.add(infoPanel, "sg a");
+			contentPanel.add(credentialPanel, "sg a, wrap");
+			contentPanel.add(bookPanel, "span, wrap");
+			contentPanel.add(cancelPanel);
 			
 
 			
@@ -243,6 +339,36 @@ public class PatientView extends JFrame{
 
 
 
+	
+	/**
+	 * enable/disable menues baed on chosen appointment type
+	 * @author Sajid C
+	 */
+	public void disableLab() {
+		
+		if (apptType.getSelectedItem().equals("Lab Test")) {
+			departmentDropDown.setEnabled(false);
+			chooseAppt.setEnabled(false);
+			chooseDoc.setEnabled(false);
+			
+			year.setEnabled(true);
+			month.setEnabled(true);
+			day.setEnabled(true);
+			labTime.setEnabled(true);			
+		} else {
+			departmentDropDown.setEnabled(true);
+			chooseAppt.setEnabled(true);
+			chooseDoc.setEnabled(true);
+			
+			year.setEnabled(false);
+			month.setEnabled(false);
+			day.setEnabled(false);
+			labTime.setEnabled(false);	
+		}
+	}
+
+	
+	
 	/**
 	 * create a view for year
 	 * @author Sajid C
@@ -733,6 +859,150 @@ public class PatientView extends JFrame{
 
 	public void setAge(JLabel age) {
 		this.age = age;
+	}
+
+
+
+
+
+
+	public JButton getBookAptBtn() {
+		return bookAptBtn;
+	}
+
+
+
+
+
+
+	public void setBookAptBtn(JButton bookAptBtn) {
+		this.bookAptBtn = bookAptBtn;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getApptType() {
+		return apptType;
+	}
+
+
+
+
+
+
+	public void setApptType(JComboBox<String> apptType) {
+		this.apptType = apptType;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getDepartmentDropDown() {
+		return departmentDropDown;
+	}
+
+
+
+
+
+
+	public void setDepartmentDropDown(JComboBox<String> departmentDropDown) {
+		this.departmentDropDown = departmentDropDown;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getChooseAppt() {
+		return chooseAppt;
+	}
+
+
+
+
+
+
+	public void setChooseAppt(JComboBox<String> chooseAppt) {
+		this.chooseAppt = chooseAppt;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getChooseDoc() {
+		return chooseDoc;
+	}
+
+
+
+
+
+
+	public void setChooseDoc(JComboBox<String> chooseDoc) {
+		this.chooseDoc = chooseDoc;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getLabTime() {
+		return labTime;
+	}
+
+
+
+
+
+
+	public void setLabTime(JComboBox<String> labTime) {
+		this.labTime = labTime;
+	}
+
+
+
+
+
+
+	public JButton getCancelApptBtn() {
+		return cancelApptBtn;
+	}
+
+
+
+
+
+
+	public void setCancelApptBtn(JButton cancelApptBtn) {
+		this.cancelApptBtn = cancelApptBtn;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getCancelAppt() {
+		return cancelAppt;
+	}
+
+
+
+
+
+
+	public void setCancelAppt(JComboBox<String> cancelAppt) {
+		this.cancelAppt = cancelAppt;
 	}
 
 	

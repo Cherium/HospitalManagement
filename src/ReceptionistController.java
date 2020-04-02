@@ -1,6 +1,15 @@
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
+import net.miginfocom.swing.MigLayout;
+
+
 
 /**
  * Controller for this MVC construct
@@ -9,7 +18,7 @@ import java.util.ArrayList;
  *
  */
 public class ReceptionistController {
-
+	
 	private ReceptionistModel model;
 	private ReceptionistView view;
 	
@@ -23,14 +32,21 @@ public class ReceptionistController {
 	 * @param model the associated model with this controller
 	 * @param view the associated view with this controller
 	 */
-	public ReceptionistController(ReceptionistModel model, ReceptionistView view) {
-
-		this.model = model;
-		this.view = view;
+	public ReceptionistController(ReceptionistModel m, ReceptionistView v)
+	{
+		//incoming objects from LoginController class
+		this.model = m;
+		this.view = v;
+		
+		//initialize the elements that the GUI sees from the database 
+		//	as soon as the view first opens for the user
 		initView();
+		
+		//initialize 'only' the listeners the GUI handles 'that
+		//	need interaction with the model'
 		initListeners();
 	}
-	
+
 	
 	
 	
@@ -41,28 +57,29 @@ public class ReceptionistController {
 	 * 
 	 * @ author Sajid C
 	 */
+	@SuppressWarnings("unchecked")
 	public void initView()
 	{
-		view.getWelcomeLabel().setText("Welcome Receptionist "+ model.getName() );
-
-		/*
-				//ArrayList<String> newPatient
-				ArrayList<String> a = view.getPatientList();
-				model.setScheduledPatientsUsernames(a);
-				//*/
-
-		String[] patients = new String[model.getScheduledPatientsUsernames().size()];
-		for (String string : model.getScheduledPatientsUsernames()) {
-			int index = model.getScheduledPatientsUsernames().indexOf(string);
-			patients[index] = Main.dbase.get(string).getName();///Issue is here?
-		}
-		view.setPatientList(patients);
+		//set up welcome label
+		view.getWelcomeLabel().setText("Welcome, "+ model.getName() );
 		
-		///
+		//set up patients inside JList
+		view.setPatientList(model.getAllPats());
 
-
+		
+		//list of departments to set in combobox-- initial is Cardiology
+		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
+		
+		//list of doctors for initial department
+		view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList("Cardiology"))));
+		
+		//list of appointments to set in combobox
+		String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
+		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
+		
+		//list of 14 next shifts of this user to print to text field
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 	}
-	
 	
 	/**
 	 * initialize the listeners from the view class that need to interact with model
@@ -72,55 +89,153 @@ public class ReceptionistController {
 	 */
 	public void initListeners() 
 	{
-
-
-
+		//view patient details when patient is clicked
+		view.getPatList().addMouseListener(new MouseAdapter() {
 			
-				//listen for mouse clicks on patients names
-				view.getListPatients().addMouseListener(new MouseAdapter() {
-					
-					
-			
-					public void mousePressed(MouseEvent a) {		
-						 setUpPatientView();
-						 
-						 System.out.println("Ala");
-					}
-				});//*/
-
-
-
-
+			public void mousePressed(MouseEvent a) {		
+				 setUpPatientView();
+				 
+			}
+		});
+		
+		//update availability when 'send request' button is clicked
+		view.getReqAvailChangeBtn().addActionListener(e -> updateAvailability() );
+		
+		//department is changed
+		view.getDepartmentDropDown().addActionListener(e -> updateDocBox() );
+		
+		//doctor box is changed	//TODO test this
+		view.getChooseDoc().addActionListener(e -> updateDocBox());
+		
+		//book a patients apointment
+		view.getBookAptBtn().addActionListener(e -> bookAppointment() );
+		
 	}
 
 
-		/**
-		 * set up patients in the center panels of 'View Patient'
-		 * @author 
-		 */
-		public void setUpPatientView() {
-		
-			//Index selected in GUI == index of patient in model 'scheduledPatientUsername' array
-			//use it search hashmap for the patient
-			int selectedIndex = view.getListPatients().getSelectedIndex();
-			PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(selectedIndex));
-			
-			//update patient label info in view
-			view.getPatientInformation().setText(
-					"Name:\t" + pat.getName() +
-					"\nAge:\t" + pat.getAge() +
-					"\nSex:\t" + pat.getSex() +
-					"\nBlood Type:\t" + pat.getBlood() +
-					"\nAddress:\t" + pat.getAddress() +
-					"\nPhone:\t" + pat.getPhoneNumber() +
-					"\nEmail:\t" + pat.getEmail() + "\n"
-					);
-			
-			//update past history box in view
-			view.getPastTreatmentBox().setText(pat.getRecordNotes() );
-			
-			
-		}
 
+	//
+	/**
+	 * update doctor box and Appointments box when department box option changes - Booking panel
+	 * 
+	 * @author Sajid C
+	 */
+	public void updateDocBox() {
+		// get current selected department option
+		String choice = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex() );
+		
+		//update doctor box according to choice
+		view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList(choice))));
+		
+		//update appointments box according to selected doctor
+		String newDoc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
+		System.out.println("New Doc: "+newDoc);
+		///??
+		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(newDoc) ));
+	}
+	
+	
+
+	
+	/**
+	 * book an appointment for the patient based on user entered values
+	 * 
+	 * @author Sajid C
+	 * @return ease-of-use early exit flag
+	 */
+	public int bookAppointment() {
+		
+		//get selected appointment type
+		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
+		
+		//get selected patient
+		int selectedIndex = view.getPatList().getSelectedIndex();
+		
+		//ensure a patient was selected
+		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
+		
+		//book a doctor appointment
+		if(appointmentType.compareTo("Doctor Appointment") == 0)
+		{
+			String department = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex()).toString();
+			int doctor = view.getChooseDoc().getSelectedIndex();	//TODO test for empty doctor slot
+			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
+			
+			model.storeDoctorApptInPatient(selectAppointment, selectedIndex, department, doctor);
+			view.showDialogToUser("Booked Doctor Appointment!");
+			return -1;
+		}
+		else	//appointment is lab test
+		{
+			//add appointment to selected patients list
+			//a lab test is stored with a time list
+			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();
+			String month = view.getMonth().getItemAt(view.getMonth().getSelectedIndex()).toString();
+			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
+			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
+			
+			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
+			view.showDialogToUser("Booked Lab Appointment!");
+			return -1;
+		}
+		
+	}
+
+
+
+
+
+	
+	/**
+	 * update availability in database and view, based on user entered values
+	 * 
+	 * 
+	 */
+	public void updateAvailability() {
+		
+		String[] newHours= new String[14];
+		
+
+		//retrieve all comboBoxes storing hour values as Strings
+		int i = 0;
+		for(JComboBox j: view.getAvailTimes())
+		{
+			//get String from box and add to String array
+			newHours[i++] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+		}
+		
+		//update availability for this User
+		model.setAvailability(model.s.updateSchedule(newHours) );
+		
+		//show success to user
+		view.showDialogToUser("Availability Request Approved");
+		
+		//reset availabilty shown to patient
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
+		
+		
+		
+	}
+
+
+
+
+	/**
+	 * show patient information in the view once a JList entry is clicked
+	 * 
+	 * @author Sajid C
+	 */
+	public void setUpPatientView() {
+		int selectedIndex = view.getPatList().getSelectedIndex();
+		PatientModel pat = (PatientModel) Main.dbase.get(model.getAllPatientsUsernames()[selectedIndex]);
+		
+		view.getPatName().setText(pat.getName() );
+		view.getBirth().setText(pat.getBirthday().toString() );
+		view.getSex().setText(pat.getSex());
+		view.getBlood().setText(pat.getBlood());
+		view.getAddr().setText(pat.getAddress());
+		view.getPhone().setText(pat.getPhoneNumber());
+		view.getEmail().setText(pat.getEmail() );
+	}
 
 }

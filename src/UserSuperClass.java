@@ -149,7 +149,7 @@ public class UserSuperClass {
 					if(i.getValue().getName().compareTo(docName) == 0)
 					{
 						doc = (DoctorModel) i.getValue();
-						System.out.println(doc.getAppointments().get("patient").size() );
+						//System.out.println(doc.getAppointments().get("patient").size() );
 						//return next 100 open slots of this doctor
 						return s.nextOpenSlots(doc.getAvailability(), doc.getAppointments());
 					}
