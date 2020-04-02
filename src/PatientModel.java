@@ -31,6 +31,12 @@ public class PatientModel extends UserSuperClass {
 	//stores list of appointments
 	private HashMap<String, ArrayList<LocalDateTime>> appointments;
 	
+	//contains the usernames of 'appointments' hashmap for use in Cancel combobox
+	private ArrayList<String> usernameToCancel = new ArrayList<String>(5);
+	
+	//contains the associated timings of the ArrayList usernameToCancel in a 1:1 with respect to index
+	private ArrayList<LocalDateTime> timeToCancel = new ArrayList<LocalDateTime>(5);
+	
 
 	/**
 	 * constructor
@@ -82,14 +88,80 @@ public class PatientModel extends UserSuperClass {
 //		}
 	}
 	
+	
+	/**
+	 * Remove an appointment from the patients appointment list
+	 * @author Sajid C
+	 * @param indexToCancel
+	 */
+	public void cancelAppt(int indexToCancel)
+	{
+		System.out.println("uSize: " + usernameToCancel.size() + " tSize: " + timeToCancel.size() );
+		//remove appt from hashmap
+		//for all entries in the appointment hashmap
+		for(Map.Entry<String, ArrayList<LocalDateTime> > j: appointments.entrySet() )
+		{
+			//find the username that matches the user-selected entry
+			if(j.getKey().compareTo(usernameToCancel.get(indexToCancel)) == 0 )
+			{
+				//delete the time from that username
+				j.getValue().remove(timeToCancel.get(indexToCancel));
+				
+				//if the time array is now empty, delete the key
+				if(j.getValue().isEmpty() )
+					appointments.remove(j.getKey() );
+				
+				//clear from usernameToCancel and timeToCancel
+				usernameToCancel.clear();
+				timeToCancel.clear();
+			}
+			
+		}
+		
+		
+		
+	}
 
+	/**
+	 * Generate a complete formatted list of all the appointments of this patient
+	 * @author Sajid C
+	 * @return formatted list of doctor names(or lab test) and appointment times
+	 */
+	public String[] printApptList()
+	{
+		ArrayList<String> apptList = new ArrayList<String>(5);
+
+		//add all appointments in patient list to the list, formatted as 'appt with - apt time'
+		for(Map.Entry<String, ArrayList<LocalDateTime> > j: appointments.entrySet() )
+		{
+			for(LocalDateTime t: j.getValue() )
+			{
+				StringBuilder temp = new StringBuilder();
+				
+				if(j.getKey().compareTo("labtest") == 0)
+					temp.append(j.getKey() );
+				else
+					temp.append(Main.dbase.get(j.getKey() ).getName() );					//get doctors name from thei username
+					
+				usernameToCancel.add(j.getKey() );	//create indices of combobox entries for easy access to usernames of associated Dr names
+				temp.append(" "+ t.toString() );
+				timeToCancel.add(t);
+				
+				apptList.add(temp.toString() );
+			}
+
+		}
+		
+		return apptList.toArray(new String[0] );
+	}
+	
 	
     /**
      * take appointment data from controller and store a new doctor appointment in patients appointment hashmap
      * 
      * @author Sajid
      * @param appt string appointment time formatted to work with LocalDateTime.parse
-     * @param selectedPatient index of selected JList patient to use to pull patient username from an array
+     * @param selectedPatient this patient object
      * @param department departmet selected from combobox
      * @param selectedDocNameIndex index of chosen doctor in doctor combobox to use to pull doctor username from an array
      */
@@ -123,7 +195,7 @@ public class PatientModel extends UserSuperClass {
      * takes in a single raw availability time, and a selected patient (index) and stores the lab appt in the patient
      * @author Sajid C
      * @param rawData raw availability time in format yyyy-M-d HH:mm
-     * @param selectedPatient patient username in a list that is associated 1:1 with index of selection in the JList
+     * @param selectedPatient this patient object
      * @return 
      */
     public void storeLabApptInPatient(String rawData, PatientModel selectedPatient)

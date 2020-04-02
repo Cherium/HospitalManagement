@@ -69,9 +69,12 @@ public class PatientController {
 		//list of doctors for initial department
 		view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList("Cardiology"))));
 		
-		//list of appointments to set in combobox
+		//list of doctor appointments to set in combobox
 		String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
 		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
+		
+		//list of patient appointments to set in combobox
+		view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 	}
 	
 
@@ -131,6 +134,9 @@ public class PatientController {
 		
 		//book a patients apointment
 		view.getBookAptBtn().addActionListener(e -> bookAppointment() );
+		
+		//cancel a selected appointment
+		view.getCancelApptBtn().addActionListener(e -> cancelAppt() );
 
 
 	}
@@ -139,13 +145,34 @@ public class PatientController {
 	
 	
 	/**
+	 * Cancel the selected view appointment on the button press
+	 * @author Sajid C
+	 * 
+	 */
+	public void cancelAppt() {
+		
+		//get index of appointment to cancel
+		int apptIndex = view.getCancelAppt().getSelectedIndex();
+		
+		//cancel selected appointment
+		model.cancelAppt(apptIndex);
+//TODO maybe need to remove the patient from the doctors assigned patients		
+		
+		//update cancel box in view
+		view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
+	}
+
+
+
+
+	/**
 	 * book an appointment for the patient based on user entered values
 	 * 
 	 * @author Sajid C
 	 * @return ease-of-use early exit flag
 	 */
 	public int bookAppointment() {
-		
+//TODO maybe need to add this patient to the doctors patient list; depends on how doctor retrieves its patient list
 		//get selected appointment type
 		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
 		

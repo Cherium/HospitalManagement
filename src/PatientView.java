@@ -54,6 +54,7 @@ public class PatientView extends JFrame{
 	private JButton save;
 	private JButton changePassword;
 	private JButton bookAptBtn;
+	private JButton cancelApptBtn;
 	
 	private JTextField nameText;
 	private JTextField addrText;
@@ -75,6 +76,7 @@ public class PatientView extends JFrame{
 	private JComboBox<String> chooseDoc;
 	private JComboBox<String> labTime;
 	private JComboBox<String> year, month, day;
+	private JComboBox<String> cancelAppt;
 	
 	String[] times = {
 			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
@@ -307,6 +309,19 @@ public class PatientView extends JFrame{
 				
 				
 				
+		//Inner Panel
+			
+			JPanel cancelPanel = new JPanel(new MigLayout("") );
+				cancelPanel.setBorder(BorderFactory.createTitledBorder("Cancel An Appointment: "));
+				cancelPanel.setPreferredSize(new Dimension(450, 50));
+				cancelPanel.setMaximumSize(new Dimension(905, 125));				
+				
+				cancelAppt = new JComboBox<String>();
+				cancelApptBtn = new JButton("Cancel Appointment");
+				
+				cancelPanel.add(cancelAppt, "wrap");
+				cancelPanel.add(cancelApptBtn, "align right");
+				
 				
 				
 		//Add components to main panel
@@ -314,7 +329,8 @@ public class PatientView extends JFrame{
 			contentPanel.add(welcomeLabel, "wrap");
 			contentPanel.add(infoPanel, "sg a");
 			contentPanel.add(credentialPanel, "sg a, wrap");
-			contentPanel.add(bookPanel, "span");
+			contentPanel.add(bookPanel, "span, wrap");
+			contentPanel.add(cancelPanel);
 			
 
 			
@@ -951,6 +967,42 @@ public class PatientView extends JFrame{
 
 	public void setLabTime(JComboBox<String> labTime) {
 		this.labTime = labTime;
+	}
+
+
+
+
+
+
+	public JButton getCancelApptBtn() {
+		return cancelApptBtn;
+	}
+
+
+
+
+
+
+	public void setCancelApptBtn(JButton cancelApptBtn) {
+		this.cancelApptBtn = cancelApptBtn;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getCancelAppt() {
+		return cancelAppt;
+	}
+
+
+
+
+
+
+	public void setCancelAppt(JComboBox<String> cancelAppt) {
+		this.cancelAppt = cancelAppt;
 	}
 
 	
