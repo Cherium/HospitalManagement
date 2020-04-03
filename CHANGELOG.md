@@ -3,6 +3,14 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+
+
+## 03 apr 05:00 Sajid
+* Patient
+    * cancel button updates cancel list and also removes appt from patient list
+    * booking appt updates cancel list
+    * cancel button now updates doctors open slots, and doctors assigned patients (if required)
+
 ## 03 apr 03:54 Sajid
 * Receptionist, Nurse, Patient
     * appointment list shortens once an appointment is booked

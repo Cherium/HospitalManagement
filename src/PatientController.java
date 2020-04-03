@@ -158,7 +158,7 @@ public class PatientController {
 		model.cancelAppt(apptIndex);
 //TODO maybe need to remove the patient from the doctors assigned patients		
 		
-		//update cancel box in view
+		//update cancel box in view; repopulates usernameToCancel and timeToCancel arrays
 		view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 	}
 
@@ -192,10 +192,12 @@ public class PatientController {
 			model.storeDoctorApptInPatient(selectAppointment, this.model, department, doctor);
 			view.showDialogToUser("Booked Doctor Appointment!");
 			
-			//list of doctor appointments to set in combobox
+			//update list of doctor appointments to set in combobox
 			String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
 			view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
 			
+			//update list of appointments to set in cancel combobox
+			view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 			return -1;
 		}
 		else	//appointment is lab test

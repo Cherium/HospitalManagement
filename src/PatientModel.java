@@ -96,24 +96,49 @@ public class PatientModel extends UserSuperClass {
 	 */
 	public void cancelAppt(int indexToCancel)
 	{
-		System.out.println("uSize: " + usernameToCancel.size() + " tSize: " + timeToCancel.size() );
+		
+		
+		
 		//remove appt from hashmap
+		
 		//for all entries in the appointment hashmap
 		for(Map.Entry<String, ArrayList<LocalDateTime> > j: appointments.entrySet() )
-		{
+		{//System.out.println("uSize: " + usernameToCancel.size() + " tSize: " + timeToCancel.size() );
 			//find the username that matches the user-selected entry
 			if(j.getKey().compareTo(usernameToCancel.get(indexToCancel)) == 0 )
 			{
-				//delete the time from that username
+				//delete the time from patients appointments for that doc's username or labtest
 				j.getValue().remove(timeToCancel.get(indexToCancel));
+				
+				//if it was a labtest, break early
+				if(usernameToCancel.get(indexToCancel).compareTo("labtest") == 0 )
+				{
+					//clear from usernameToCancel and timeToCancel
+					usernameToCancel.clear();
+					timeToCancel.clear();
+					break;
+				}
+				//create doctor object
+				DoctorModel doc = (DoctorModel) Main.dbase.get(usernameToCancel.get(indexToCancel));
 				
 				//if the time array is now empty, delete the key
 				if(j.getValue().isEmpty() )
+				{
 					appointments.remove(j.getKey() );
+					
+					//TODO test: and remove patient from doctors assigned patient
+					doc.getScheduledPatientsUsernames().remove(this.getUsername() );	//remove patient username from doctor assigned patient list
+				}
+				
+				//add available slot back into doctor
+				//TODO test this
+		        doc.setAppointments(doc.s.updateHashMap(doc.getScheduledPatientsUsernames(), doc.getUsername()));
+					
 				
 				//clear from usernameToCancel and timeToCancel
 				usernameToCancel.clear();
 				timeToCancel.clear();
+				break;
 			}
 			
 		}
