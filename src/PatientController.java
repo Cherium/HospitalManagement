@@ -145,56 +145,21 @@ public class PatientController {
 	
 	
 	/**
-	 * Cancel the selected view appointment on the button press; fine if late cancellation; update view
+	 * Cancel the selected view appointment on the button press
 	 * @author Sajid C
 	 * 
 	 */
-	public void cancelAppt() 
-	{
-		
+	public void cancelAppt() {
 		
 		//get index of appointment to cancel
 		int apptIndex = view.getCancelAppt().getSelectedIndex();
 		
-		//check if appointment cancellation is late
-		if(model.isLateCancellation(apptIndex) )
-		{
-			//confirm  late cancellation dialog with user
-			if(view.showOptionPane() )
-			{
-				//increase users fine
-				model.setAmountDue(model.getAmountDue() + 25);
-				
-				//cancel selected appointment
-				model.cancelAppt(apptIndex);	
-				
-				//update view
-				view.showDialogToUser("The appointment was cancelled!");
-				view.getAmountDue().setText(model.convertToDollar() );
-				
-				//update cancel box in view; repopulates usernameToCancel and timeToCancel arrays
-				view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
-				
-				
-				
-			}
-		}
-		else	//not a late cancellation
-		{
-			//cancel selected appointment
-			model.cancelAppt(apptIndex);
-			
-			//update view
-			view.showDialogToUser("The appointment was cancelled!");
-			
-			//update cancel box in view; repopulates usernameToCancel and timeToCancel arrays
-			view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
-			
-			
-		}
+		//cancel selected appointment
+		model.cancelAppt(apptIndex);
+//TODO maybe need to remove the patient from the doctors assigned patients		
 		
-		
-		
+		//update cancel box in view
+		view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 	}
 
 
@@ -226,13 +191,6 @@ public class PatientController {
 			
 			model.storeDoctorApptInPatient(selectAppointment, this.model, department, doctor);
 			view.showDialogToUser("Booked Doctor Appointment!");
-			
-			//update list of doctor appointments to set in combobox
-			String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
-			view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
-			
-			//update list of appointments to set in cancel combobox
-			view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 			return -1;
 		}
 		else	//appointment is lab test

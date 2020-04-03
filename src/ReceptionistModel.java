@@ -103,7 +103,6 @@ public class ReceptionistModel extends UserSuperClass {
     
     /**
      * take appointment data from controller and store a new doctor appointment in patients appointment hashmap
-     * Updates a doctors patient username list
      * 
      * @author Sajid
      * @param appt string appointment time formatted to work with LocalDateTime.parse
@@ -118,9 +117,6 @@ public class ReceptionistModel extends UserSuperClass {
         
         //get list of doctors currently in comboBox
         String[] list = getDocList(department);
-        
-        //get doc object
-        DoctorModel doc = (DoctorModel) Main.dbase.get(list[selectedDocNameIndex]);
         
         //get patient appointment hashmap
         HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
@@ -137,13 +133,7 @@ public class ReceptionistModel extends UserSuperClass {
         else //doc is not a key in hashmap; add it
         {
         	patAppts.put(list[selectedDocNameIndex] , new ArrayList<LocalDateTime>(List.of(temp))) ;
-        	
-        	//add patient to doctors scheduled patients
-        	doc.getScheduledPatientsUsernames().add(allPatientsUsernames[selectedPatient]);
         }
-        
-      //remove appt time from docs availability
-        doc.setAppointments(doc.s.updateHashMap(doc.getScheduledPatientsUsernames(), doc.getUsername()));
     }
 
 
