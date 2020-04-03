@@ -3,13 +3,19 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 03 APRIL 13:54 pm
+* Authority focus
+* Adjusted frames, compiled functions together to streamline and save space.
+ accurately depicts upcoming appointments from today till 24 hours, or from today
+ till 2 months
+
 ## 02 apr 2pm
 * Patient:
     * created 'book appt' functionality for patient
     * created 'cancel appt' functionality for patient
         * still needs to check if a fine is applicable
 
-## 1 APRIL 22:12 Neil
+## 01 APRIL 22:12 Neil
 * Finished the Receptionist Portal and has it display the statistics from total
 departments, patients, doctors, and nurses
 

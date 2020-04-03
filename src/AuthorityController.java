@@ -48,6 +48,7 @@ public class AuthorityController {
 		//PatientModel pat = (PatientModel) Main.dbase.get(username).getAppointments();
 
 
+		model.gatherInfo();
 
 		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
 
@@ -56,7 +57,9 @@ public class AuthorityController {
 		view.getPatientLabel().setText(""+model.getPatientNum());
 		view.getDoctorLabel().setText(""+model.getDoctorNum());
 		view.getNurseLabel().setText(""+model.getNurseNum());
-		view.getTotalAppointLabel().setText(""+model.getAvail());
+
+		view.getActualAppDayLabel().setText(""+model.getUpcomeDay());
+		view.getTotalAppointLabel().setText(""+model.getUpcomeMonth());
 
 
 

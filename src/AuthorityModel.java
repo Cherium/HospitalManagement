@@ -2,7 +2,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -17,9 +16,13 @@ public class AuthorityModel extends UserSuperClass {
 	public HashMap<String, UserSuperClass> users;
 	public HashMap<String, UserSuperClass> appoints;
 
+	//Total number of each one
 	private int patientNum;
 	private int doctorNum;
 	private int nurseNum;
+
+	private int upcomeMonth;
+	private int upcomeDay;
 
 
 	private String[] allPatientsUsernames;
@@ -29,69 +32,60 @@ public class AuthorityModel extends UserSuperClass {
 
 		super(name, username, password);
 		setRole("authority");
+		
 	}
 
+	//Sets up necessary information
+	//Checks for how many appointments fulfill the criteria
+	public void gatherInfo(){
+		LocalDateTime currentDate = LocalDateTime.now();
+		currentDate.plusDays(1);
 
-	//Get the available appointments within 2 months
-	//Author Neil
-	public int getAvail(){
-		int appointVal = 0;
-		LocalDateTime compare = LocalDateTime.now().plusDays(60);
+		upcomeMonth = 0;
+		upcomeDay = 0;
+
+		//Necessary to update how many times a role is detected
+		patientNum = 0;
+		doctorNum = 0;
+		nurseNum = 0;
+
+		
+		
+		
+
 		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet()){
 			if(i.getValue().getRole().compareTo("patient") == 0 ){
+				patientNum++; 
 				String c = i.getValue().getUsername();
 				PatientModel pat = (PatientModel) Main.dbase.get(c);
 				HashMap<String, ArrayList<LocalDateTime>> appointments = pat.getAppointments();
 				for (Map.Entry<String, ArrayList<LocalDateTime>> j:appointments.entrySet()){
 					for(LocalDateTime t:j.getValue()){
-						boolean isBefore = t.isBefore(compare);
-						if(isBefore)
-							appointVal++;
+						boolean isBefore1 = (t.isBefore(currentDate.plusDays(60))&&(t.isAfter(currentDate)));
+						if(isBefore1)
+							upcomeMonth++;
+						boolean isBefore2 = (t.isBefore(currentDate.plusDays(1))&&(t.isAfter(currentDate)));
+						if(isBefore2)
+							upcomeDay++;
 					}
 				}
-				
 			}
-		}
-		return appointVal;
-	}
-
-
-
-
-	//Gets the amount of existing patients, doctors, and nurses
-	//Author - Neil
-	public void getStats(){
-		users = Main.dbaseClass.getUsers();
-		Iterator<String> itr = users.keySet().iterator();
-
-		int patientNum = 0;
-		int doctorNum = 0;
-		int nurseNum = 0;
-
-		while(itr.hasNext()){
-
-			String a = itr.next();
-			String b = Main.dbase.get(a).getRole();
-			if(b.compareTo("patient") == 0){
-				patientNum++;
-			}
-			if(b.compareTo("doctor")==0){
+			if(i.getValue().getRole().compareTo("doctor") == 0 ){
 				doctorNum++;
 			}
-			if (b.compareTo("nurse")==0){
+			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
 			}
-
 		}
-		this.patientNum = patientNum;
-		this.doctorNum = doctorNum;
-		this.nurseNum = nurseNum;
-
-		System.out.println("The date is "+LocalDateTime.now().plusDays(60));
+		//*/
 	}
 
 
-	//Getters and Setters
+
+
+
+
+
 	
 
 	public int getDepNum(){
@@ -99,6 +93,18 @@ public class AuthorityModel extends UserSuperClass {
 		
 		return temp.size();
 	}
+
+	//Getters and Setters
+
+
+	public int getUpcomeMonth(){
+		return upcomeMonth;
+	}
+	
+	public int getUpcomeDay(){
+		return upcomeDay;
+	}
+
 
 	public int getPatientNum(){
 		return patientNum;
