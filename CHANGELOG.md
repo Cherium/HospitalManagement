@@ -3,7 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
-
+## 03 apr 06:00 Sajid
+* Patient
+    * completed cancellation of appt functionality
+        * late cancellations are checked, confirmation dialog shown, and fines are incremented
 
 ## 03 apr 05:00 Sajid
 * Patient

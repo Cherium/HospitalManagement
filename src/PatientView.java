@@ -468,6 +468,27 @@ public class PatientView extends JFrame{
 	}
 	
 	
+	/**
+	 * Shows a yes/no dialog to the user
+	 * @author Sajid C
+	 * @return true if user selects yes, false otherwise
+	 */
+	public boolean showOptionPane()
+	{
+		//https://stackoverflow.com/questions/8396870/joptionpane-yes-or-no-window
+		int reply = JOptionPane.showConfirmDialog(contentPanel,
+			    "Cancelling this appointment will result in a $25 fine.\n "
+			    + "Are you sure you want to cancel?",
+			    "Confirm Cancellation",
+			    JOptionPane.YES_NO_OPTION);
+		
+		if (reply == JOptionPane.YES_OPTION)
+			return true;
+		else
+			return false;
+	}
+	
+	
 	
 	
 	/**Getter and Setter Methods*/	

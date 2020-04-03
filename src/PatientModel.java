@@ -88,16 +88,28 @@ public class PatientModel extends UserSuperClass {
 //		}
 	}
 	
+	/**
+	 * Compares a user selected appointment time against the current time for fine purposes
+	 * @author Sajid C
+	 * @param indexToCancel
+	 * @return true if user selected appointment time is within 48 hrs of the appointment time (and still before the current time); else false
+	 */
+	public boolean isLateCancellation(int indexToCancel) {
+		
+		//If the cancellation time is after the 48 hr cancel deadline of the appointment time, and the appt time is still after the current cancellation time
+		if(LocalDateTime.now().isAfter(timeToCancel.get(indexToCancel).minusHours(48)) &&  timeToCancel.get(indexToCancel).isAfter(LocalDateTime.now())  )
+				return true;
+		else
+			return false;
+	}
 	
 	/**
-	 * Remove an appointment from the patients appointment list
+	 * Remove an appointment from the patients appointment list and update changes with doctor (or lab test)
 	 * @author Sajid C
 	 * @param indexToCancel
 	 */
 	public void cancelAppt(int indexToCancel)
 	{
-		
-		
 		
 		//remove appt from hashmap
 		
@@ -507,6 +519,9 @@ public class PatientModel extends UserSuperClass {
 	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
 		this.appointments = appointments;
 	}
+
+
+	
 
 
 }
