@@ -45,6 +45,7 @@ public class AuthorityController {
 	 */
 	public void initView()
 	{
+<<<<<<< HEAD
 		//PatientModel pat = (PatientModel) Main.dbase.get(username).getAppointments();
 
 
@@ -62,6 +63,14 @@ public class AuthorityController {
 		view.getTotalAppointLabel().setText(""+model.getUpcomeMonth());
 
 
+=======
+		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
+		view.getDepNumLabel().setText("# of Departments: "+ model.getDepNum() );
+		model.getStats();
+		view.getPatientTotalLabel().setText("# of Registered Patients: "+model.getPatientNum());
+		view.getDoctorTotalLabel().setText("# of Registered Doctors: "+model.getDoctorNum());
+		view.getNurseTotalLabel().setText("# of Registered Nurses: "+model.getNurseNum());
+>>>>>>> parent of 54654e0... Updating Authority
 
 	}
 	

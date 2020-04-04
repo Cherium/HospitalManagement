@@ -3,6 +3,7 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+<<<<<<< HEAD
 ## 3 APRIL Jenny
 # 21:35 
 * Completed uploading of referrals in patient. The patient starts out with an empty list (JList) of referrals. Selecting a file via "Upload referral" will update the list (by updating the DefaultListModel) with the name of the file. 
@@ -22,10 +23,28 @@ Example: 10 mar 21:13 SAJID\
  till 2 months
 
 ## 02 apr 2pm
+=======
+## 03 apr 06:00 Sajid
+* Patient
+    * completed cancellation of appt functionality
+        * late cancellations are checked, confirmation dialog shown, and fines are incremented
+
+## 03 apr 05:00 Sajid
+* Patient
+    * cancel button updates cancel list and also removes appt from patient list
+    * booking appt updates cancel list
+    * cancel button now updates doctors open slots, and doctors assigned patients (if required)
+
+## 03 apr 03:54 Sajid
+* Receptionist, Nurse, Patient
+    * appointment list shortens once an appointment is booked
+
+## 02 apr 14:00 Sajid
+>>>>>>> parent of 54654e0... Updating Authority
 * Patient:
     * created 'book appt' functionality for patient
     * created 'cancel appt' functionality for patient
-        * still needs to check if a fine is applicable
+        * still needs to check if a fine$ is applicable
 
 
 
