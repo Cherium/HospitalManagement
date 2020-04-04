@@ -93,32 +93,69 @@ public class PatientModel extends UserSuperClass {
 //		}
 	}
 	
+	/**
+	 * Compares a user selected appointment time against the current time for fine purposes
+	 * @author Sajid C
+	 * @param indexToCancel
+	 * @return true if user selected appointment time is within 48 hrs of the appointment time (and still before the current time); else false
+	 */
+	public boolean isLateCancellation(int indexToCancel) {
+		
+		//If the cancellation time is after the 48 hr cancel deadline of the appointment time, and the appt time is still after the current cancellation time
+		if(LocalDateTime.now().isAfter(timeToCancel.get(indexToCancel).minusHours(48)) &&  timeToCancel.get(indexToCancel).isAfter(LocalDateTime.now())  )
+				return true;
+		else
+			return false;
+	}
 	
 	/**
-	 * Remove an appointment from the patients appointment list
+	 * Remove an appointment from the patients appointment list and update changes with doctor (or lab test)
 	 * @author Sajid C
 	 * @param indexToCancel
 	 */
 	public void cancelAppt(int indexToCancel)
 	{
-		System.out.println("uSize: " + usernameToCancel.size() + " tSize: " + timeToCancel.size() );
+		
 		//remove appt from hashmap
+		
 		//for all entries in the appointment hashmap
 		for(Map.Entry<String, ArrayList<LocalDateTime> > j: appointments.entrySet() )
-		{
+		{//System.out.println("uSize: " + usernameToCancel.size() + " tSize: " + timeToCancel.size() );
 			//find the username that matches the user-selected entry
 			if(j.getKey().compareTo(usernameToCancel.get(indexToCancel)) == 0 )
 			{
-				//delete the time from that username
+				//delete the time from patients appointments for that doc's username or labtest
 				j.getValue().remove(timeToCancel.get(indexToCancel));
+				
+				//if it was a labtest, break early
+				if(usernameToCancel.get(indexToCancel).compareTo("labtest") == 0 )
+				{
+					//clear from usernameToCancel and timeToCancel
+					usernameToCancel.clear();
+					timeToCancel.clear();
+					break;
+				}
+				//create doctor object
+				DoctorModel doc = (DoctorModel) Main.dbase.get(usernameToCancel.get(indexToCancel));
 				
 				//if the time array is now empty, delete the key
 				if(j.getValue().isEmpty() )
+				{
 					appointments.remove(j.getKey() );
+					
+					//TODO test: and remove patient from doctors assigned patient
+					doc.getScheduledPatientsUsernames().remove(this.getUsername() );	//remove patient username from doctor assigned patient list
+				}
+				
+				//add available slot back into doctor
+				//TODO test this
+		        doc.setAppointments(doc.s.updateHashMap(doc.getScheduledPatientsUsernames(), doc.getUsername()));
+					
 				
 				//clear from usernameToCancel and timeToCancel
 				usernameToCancel.clear();
 				timeToCancel.clear();
+				break;
 			}
 			
 		}
@@ -162,7 +199,8 @@ public class PatientModel extends UserSuperClass {
 	
 	
     /**
-     * take appointment data from controller and store a new doctor appointment in patients appointment hashmap
+     * take appointment data from controller and store a new doctor appointment in patients appointment hashmap.
+     * Updates a doctors patient username list
      * 
      * @author Sajid
      * @param appt string appointment time formatted to work with LocalDateTime.parse
@@ -177,6 +215,9 @@ public class PatientModel extends UserSuperClass {
         
         //get list of doctors currently in comboBox
         String[] list = getDocList(department);
+        
+      //get doc object
+        DoctorModel doc = (DoctorModel) Main.dbase.get(list[selectedDocNameIndex]);
         
         //get patient appointment hashmap
         HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
@@ -193,7 +234,13 @@ public class PatientModel extends UserSuperClass {
         else //doc is not a key in hashmap; add it
         {
         	patAppts.put(list[selectedDocNameIndex] , new ArrayList<LocalDateTime>(List.of(temp))) ;
+        	
+        	//add patient to doctors scheduled patients usernames
+        	doc.getScheduledPatientsUsernames().add(pat.getUsername());
         }
+        
+      //remove appt time from docs availability
+        doc.setAppointments(doc.s.updateHashMap(doc.getScheduledPatientsUsernames(), doc.getUsername()));
     }
 
     /**
@@ -352,6 +399,61 @@ public class PatientModel extends UserSuperClass {
 	
 	
 	
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append(getAddress());	
+		bob.append("\t");
+		bob.append(getPhoneNumber());
+		bob.append("\t");
+		bob.append(getEmail());
+		bob.append("\t");
+		bob.append(getAmountDue());
+		bob.append("\t");
+		bob.append(getBirthday().toString());
+		bob.append("\t");
+		bob.append(getBlood());
+		bob.append("\t");
+		bob.append(getSex());
+		bob.append("\t");		
+		bob.append("null");
+
+		
+
+		
+		return bob.toString();
+		
+	}
+	
+	public String toStringAppt() {
+		StringBuilder bob = new StringBuilder();
+		for(Map.Entry<String, ArrayList<LocalDateTime>> element: this.appointments.entrySet()) {
+			ArrayList<LocalDateTime> temp = element.getValue();
+			for(LocalDateTime appt: temp) {
+				bob.append(element.getKey());
+				bob.append("\t");
+				bob.append(appt.toString());
+				bob.append("\n");
+
+			}
+		}
+		
+		return bob.toString();
+	}
+	
 /**Getters and Setters*/
 	public String getAddress() {
 		return address;
@@ -485,6 +587,9 @@ public class PatientModel extends UserSuperClass {
 	public void setReferrals(ArrayList<String> r) {
 		this.referrals = r;
 	}
+
+
+	
 
 
 }

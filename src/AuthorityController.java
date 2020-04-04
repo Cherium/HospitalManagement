@@ -38,20 +38,21 @@ public class AuthorityController {
 
 	
 	/**
-	 * initialize the elements that the GUI sees from the database 
+	 * Initialize the elements that the GUI sees from the database 
 	 * as soon as the view first opens for the user.
 	 * 
-	 * @ author Sajid C
+	 * @ author Neil M
 	 */
 	public void initView()
 	{
-		//PatientModel pat = (PatientModel) Main.dbase.get(username).getAppointments();
 
-
+		//Gets all the necessary information about users and appointments
 		model.gatherInfo();
+		model.departInfo();
 
+
+		//Adjusts any of the JLabels in accordance to the above
 		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
-
 
 		view.getDepLabel().setText(""+model.getDepNum());
 		view.getPatientLabel().setText(""+model.getPatientNum());
@@ -69,7 +70,7 @@ public class AuthorityController {
 	 * initialize the listeners from the view class that need to interact with model
 	 * and give functionality to these listeners once they 'hear' something
 	 * 
-	 * @author Sajid C
+	 * @author 
 	 */
 	public void initListeners() 
 	{

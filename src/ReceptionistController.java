@@ -215,6 +215,11 @@ public class ReceptionistController {
 			
 			model.storeDoctorApptInPatient(selectAppointment, selectedIndex, department, doctor);
 			view.showDialogToUser("Booked Doctor Appointment!");
+			
+			//list of appointments to set in combobox
+			String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
+			view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
+			
 			return -1;
 		}
 		else	//appointment is lab test

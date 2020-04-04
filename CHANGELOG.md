@@ -20,25 +20,32 @@ Example: 10 mar 21:13 SAJID\
 # 21:35 
 * Completed uploading of referrals in patient. The patient starts out with an empty list (JList) of referrals. Selecting a file via "Upload referral" will update the list (by updating the DefaultListModel) with the name of the file. 
 
-## 1 APRIL Jenny
-* Removed Referral inner class from PatientModel and changed referrals to strings instead, for the sake of sanity. 
-* Added a referral section to PatientView and an upload referral option. Upload referral opens up a JFileChooser and the name of the selected file will be added to the list of referrals (String) in PatientModel. This button click event is implemented in PatientController.
-* Currently, the view isn't updated when a file is selected. 
-
-## 31 MARCH Jenny
-# 21:51
-* Added a Referral inner class to PatientModel. Code is inspired by Eberly's code on Treap in 331. Patients have an ArrayList of Referrals. 
 ## 03 APRIL 13:54 pm
 * Authority focus
 * Adjusted frames, compiled functions together to streamline and save space.
  accurately depicts upcoming appointments from today till 24 hours, or from today
  till 2 months
 
-## 02 apr 2pm
+## 03 apr 06:00 Sajid
+* Patient
+    * completed cancellation of appt functionality
+        * late cancellations are checked, confirmation dialog shown, and fines are incremented
+
+## 03 apr 05:00 Sajid
+* Patient
+    * cancel button updates cancel list and also removes appt from patient list
+    * booking appt updates cancel list
+    * cancel button now updates doctors open slots, and doctors assigned patients (if required)
+
+## 03 apr 03:54 Sajid
+* Receptionist, Nurse, Patient
+    * appointment list shortens once an appointment is booked
+
+## 02 apr 14:00 Sajid
 * Patient:
     * created 'book appt' functionality for patient
     * created 'cancel appt' functionality for patient
-        * still needs to check if a fine is applicable
+        * still needs to check if a fine$ is applicable
 
 
 
@@ -48,25 +55,17 @@ Example: 10 mar 21:13 SAJID\
 * After booking an appointment, the list of open appointments for the doctor is updated. 
 * After booking an appointment, the appointment will immediately appear in calendar view. 
 
-## 31 MARCH Jenny
-# 16:37
-* Set up booking appointments in Doctor MVC, copying the code and functions from Nurse MVC.
-# 21:23
-* Implemented the change of availability for assigned nurses and current doctor when logged in as doctor. This hasn't been tested in great detail, but changing the availability works for the doctor and is updated immediately. 
+## 1 APRIL Jenny
+* Removed Referral inner class from PatientModel and changed referrals to strings instead, for the sake of sanity. 
+* Added a referral section to PatientView and an upload referral option. Upload referral opens up a JFileChooser and the name of the selected file will be added to the list of referrals (String) in PatientModel. This button click event is implemented in PatientController.
+* Currently, the view isn't updated when a file is selected. 
 
-## 30 MARCH 21:34 Jenny
-* DoctorView: Added the visuals for adjusting availability of the doctor and patient. Added javadoc comments to all public functions in DoctorView. 
-
-## 29 MARCH 21:12 Jenny
-* DoctorView: Misunderstood requirement, added top panel in patient view for booking appointments. Top panel is toggled by clicking on "Book appointment" in patient information. There is currently no functionalities implemented into the top panel.
-
-## 28 MARCH 21:19 Jenny
-* DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views. 
+ 
 ## 01 APRIL 22:12 Neil
 * Finished the Receptionist Portal and has it display the statistics from total
 departments, patients, doctors, and nurses
 
-# 01 apr 01:10
+# 01 apr 01:10 Sajid
 * fixed change scheduling bug
 * completed receptionist panel
     * receptionist can view all patients in the system
@@ -78,8 +77,23 @@ departments, patients, doctors, and nurses
 ## 31 MARCH Jeremy
 * Features implemented: admins can now edit doctor departments
 
+## 31 MARCH Jenny
+# 16:37
+* Set up booking appointments in Doctor MVC, copying the code and functions from Nurse MVC.
+# 21:23
+* Implemented the change of availability for assigned nurses and current doctor when logged in as doctor. This hasn't been tested in great detail, but changing the availability works for the doctor and is updated immediately. 
+# 21:51
+* Added a Referral inner class to PatientModel. Code is inspired by Eberly's code on Treap in 331. Patients have an ArrayList of Referrals. 
+
+## 30 MARCH 21:34 Jenny
+* DoctorView: Added the visuals for adjusting availability of the doctor and patient. Added javadoc comments to all public functions in DoctorView. 
+
+
 ## 30 MARCH Jeremy
 * Features implemented: account can now be created for nurses, role can no longer be edited, password can now be edited, nurse account can now be edited
+
+## 29 MARCH 21:12 Jenny
+* DoctorView: Misunderstood requirement, added top panel in patient view for booking appointments. Top panel is toggled by clicking on "Book appointment" in patient information. There is currently no functionalities implemented into the top panel.
 
 ## 29 mar 06:00 Sajid
 * Nurse MVC:
@@ -90,6 +104,10 @@ departments, patients, doctors, and nurses
     * a lab test can now be booked for a patient
 * Schedule: created function nextOpenSlots() to find free slots in a given doctors schedule
 * UserSuperClass: created function that takes a doctors name, and returns its openSlots using above function
+
+
+## 28 MARCH 21:19 Jenny
+* DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views.
 
 ## 28 mar 15:05 Sajid
 * Database: remaining information for existing users now all imports. I believe this is all the importing fields we need to deal with.

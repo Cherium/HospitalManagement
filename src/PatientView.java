@@ -76,8 +76,6 @@ public class PatientView extends JFrame{
 
 	private JComboBox<String> blood, posNeg;
 	private JComboBox<String> sex;
-
-	private String[] referrals = {""};
 	private JComboBox<String> apptType;
 	private JComboBox<String> departmentDropDown;
 	private JComboBox<String> chooseAppt;
@@ -86,6 +84,7 @@ public class PatientView extends JFrame{
 	private JComboBox<String> year, month, day;
 	private JComboBox<String> cancelAppt;
 	
+	private String[] referrals = {""};
 	String[] times = {
 			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
 			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
@@ -338,11 +337,11 @@ public class PatientView extends JFrame{
 			contentPanel.add(welcomeLabel, "wrap");
 			contentPanel.add(infoPanel);
 			contentPanel.add(credentialPanel);
-			contentPanel.add(referralPanel);
 			contentPanel.add(infoPanel, "sg a");
 			contentPanel.add(credentialPanel, "sg a, wrap");
 			contentPanel.add(bookPanel, "span, wrap");
-			contentPanel.add(cancelPanel);
+			contentPanel.add(cancelPanel, "wrap");
+			contentPanel.add(referralPanel);
 			
 
 			
@@ -501,6 +500,27 @@ public class PatientView extends JFrame{
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);
+	}
+	
+	
+	/**
+	 * Shows a yes/no dialog to the user
+	 * @author Sajid C
+	 * @return true if user selects yes, false otherwise
+	 */
+	public boolean showOptionPane()
+	{
+		//https://stackoverflow.com/questions/8396870/joptionpane-yes-or-no-window
+		int reply = JOptionPane.showConfirmDialog(contentPanel,
+			    "Cancelling this appointment will result in a $25 fine.\n "
+			    + "Are you sure you want to cancel?",
+			    "Confirm Cancellation",
+			    JOptionPane.YES_NO_OPTION);
+		
+		if (reply == JOptionPane.YES_OPTION)
+			return true;
+		else
+			return false;
 	}
 	
 	

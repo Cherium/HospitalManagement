@@ -19,17 +19,18 @@ import net.miginfocom.swing.MigLayout;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
  * 
- * @author Sajid C
+ * Purpose of this is to set up Authority View
+ * @author Neil M
  *
  */
 public class AuthorityView extends JFrame{
 	
 	
+	//Sign out button
 	private JButton btnReturn;
 
 	
 	private JLabel welcomeLabel;
-
 
 	private JLabel departBaseLabel;
 		private JLabel departValLabel;
@@ -50,23 +51,17 @@ public class AuthorityView extends JFrame{
 	private JLabel totalAppointNurLabel;
 	
 
-	
+	//Panels for JLabels
 	private JPanel contentPanel;
 	private JPanel statPanel;
 
-	
-	private int depVal;
-	private int patientVal;
-	private int docVal;
-	private int nurVal;
-	
 	
 	
 	
 	
 	
 	/**
-	 * constructor
+	 * constructor for the portal screen
 	 * 
 	 * @param title JFrame title
 	 */
@@ -84,11 +79,12 @@ public class AuthorityView extends JFrame{
 	
 	/**
 	 * initialize the panels and components that will go inside the frame
-	 * @author 
+	 * @author Neil M
+	 * #TODO Organize the java labels in a different fashion. Change names
 	 */
 	public void initializeGUI() {
-		// TODO Auto-generated method stub
-
+		
+		//Welcome Panel set up
 		welcomeLabel = new JLabel();
 			welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -97,16 +93,16 @@ public class AuthorityView extends JFrame{
 			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 
-
+		//Sign out panel
 		btnReturn = new JButton("Sign Out");
 			btnReturn.addActionListener(e -> setVisible(false) );
 
 
 
-
+		//All other JLabels necessary
 		departBaseLabel = new JLabel("# of Departments: ");
 			departBaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		departValLabel = new JLabel(""+depVal);
+		departValLabel = new JLabel();
 			departValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 
@@ -114,14 +110,14 @@ public class AuthorityView extends JFrame{
 		patientTotalLabel = new JLabel("# of Registered Patients: ");
 			patientTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			
-		patientValueLabel = new JLabel(""+patientVal);
+		patientValueLabel = new JLabel();
 			patientValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 
 
 		regDoctorTotalLabel = new JLabel("# of Registered Doctors: ");
 			regDoctorTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		regDoctorValLabel = new JLabel(""+docVal);
+		regDoctorValLabel = new JLabel();
 			regDoctorValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 
@@ -130,18 +126,18 @@ public class AuthorityView extends JFrame{
 		regNurseTotalLabel = new JLabel("# of Registered Nurses: ");
 			regNurseTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		regNurseValLabel = new JLabel(""+nurVal);
+		regNurseValLabel = new JLabel();
 		regNurseValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		
 		appDayLabel = new JLabel("# of Upcoming Scheduled appointments in 24 hours: ");
 			appDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		actualAppDayLabel = new JLabel("");
+		actualAppDayLabel = new JLabel();
 			actualAppDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		appointLabel = new JLabel("# of Upcoming Scheduled appointments in 2 months: ");
 			appointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		totalAppointLabel = new JLabel("");
+		totalAppointLabel = new JLabel();
 			totalAppointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		totalAppointDocLabel = new JLabel("# of Doctors today: ");
@@ -152,9 +148,7 @@ public class AuthorityView extends JFrame{
 			
 
 		
-
-
-
+		//Compile all JLabels in a single panel
 		statPanel= new JPanel(new MigLayout("wrap 2", "[] 16 []") );
 			statPanel.setBorder(BorderFactory.createTitledBorder("Statistics here"));
 
@@ -186,14 +180,15 @@ public class AuthorityView extends JFrame{
 
 		
 		
-
+		
 		contentPanel.add(welcomeLabel, "center, wrap");
 		contentPanel.add(btnReturn, "center, wrap");
 		contentPanel.add(statPanel, BorderLayout.CENTER);
-
 		setVisible(true);
 	}
 	
+	/**Getter and Setter Methods*/	
+
 	public JLabel getWelcomeLabel() {
 		return welcomeLabel;
 	}

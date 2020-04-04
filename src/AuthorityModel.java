@@ -35,16 +35,19 @@ public class AuthorityModel extends UserSuperClass {
 		
 	}
 
-	//Sets up necessary information
-	//Checks for how many appointments fulfill the criteria
+	/**
+	 * Gathers all necessary information and keeps track of them
+	 * @author Neil M
+	 *
+	 */
 	public void gatherInfo(){
 		LocalDateTime currentDate = LocalDateTime.now();
-		currentDate.plusDays(1);
 
+		//Instatntiates values as 0
+			//How many appointments within a timeframe
 		upcomeMonth = 0;
 		upcomeDay = 0;
-
-		//Necessary to update how many times a role is detected
+			//How many existing users of each role
 		patientNum = 0;
 		doctorNum = 0;
 		nurseNum = 0;
@@ -77,16 +80,45 @@ public class AuthorityModel extends UserSuperClass {
 				nurseNum++;
 			}
 		}
-		//*/
+	}
+
+
+	/*
+	* #To do
+	* # of patients seen by a department
+	* # of doctors/nurses in a department
+	* # of appointments scheduled for a doctor/nurse
+	* # of appointments in a department
+	* # of patients scheduled by a doctor
+	# @author Neil M
+	*/
+	public void departInfo(){
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+		System.out.println();
+
+		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet()){
+			i.getValue().getDeptList();
+			System.out.println(i);
+			i.getValue();
+			System.out.println(i);
+			//{
+				
+				//String c = i.getValue().getUsername();
+			//}
+		}
 	}
 
 
 
-
-
-
-
-	
+		/*
+	* #To do - find a better method to track this
+	* # of patients seen by a department
+	* # of doctors/nurses in a department
+	* # of appointments scheduled for a doctor/nurse
+	* # of appointments in a department
+	* # of patients scheduled by a doctor
+	* @author Neil M
+	*/
 
 	public int getDepNum(){
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
@@ -94,6 +126,69 @@ public class AuthorityModel extends UserSuperClass {
 		return temp.size();
 	}
 
+	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return the string stored in dbase.txt
+	 */
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");	
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");		
+		bob.append("null");
+
+		
+
+		
+		return bob.toString();
+		
+	}
+	
+	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return list of availability to store in Availability.txt
+	 */
+	public String toStringAvailability() {
+		StringBuilder bob = new StringBuilder();
+		
+		for(int i= 0; i<super.getAvailability().length; i ++) {
+			bob.append(super.getAvailability()[i]);
+			bob.append("\n");
+			
+		}
+
+		return bob.toString();
+	}
+	
 	//Getters and Setters
 
 

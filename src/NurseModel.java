@@ -114,6 +114,7 @@ public class NurseModel extends UserSuperClass {
     
     /**
      * take appointment data from controller and store a new doctor appointment in patients appointment hashmap
+     * Updates a doctors patient username list
      * 
      * @author Sajid
      * @param appt string appointment time formatted to work with LocalDateTime.parse
@@ -129,13 +130,16 @@ public class NurseModel extends UserSuperClass {
         //get list of doctors currently in comboBox
         String[] list = getDocList(department);
         
+        //get doc object
+        DoctorModel doc = (DoctorModel) Main.dbase.get(list[selectedDocNameIndex]);
+        
         //get patient appointment hashmap
         HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
         
         //parse appointment
         LocalDateTime temp = LocalDateTime.parse(appt);
         
-        //if doc already exists in patients hashmap
+        //if doc already exists in patients hashmap (means doctor already has this as an assignedPatient)
         if(patAppts.containsKey(list[selectedDocNameIndex]) )
         {
         	//append to list
@@ -144,11 +148,73 @@ public class NurseModel extends UserSuperClass {
         else //doc is not a key in hashmap; add it
         {
         	patAppts.put(list[selectedDocNameIndex] , new ArrayList<LocalDateTime>(List.of(temp))) ;
+        	
+        	//add patient to doctors scheduled patients usernames
+        	doc.getScheduledPatientsUsernames().add(docsPatientsUsernames[selectedPatient]);
         }
+        
+        //remove appt time from docs availability
+        doc.setAppointments(doc.s.updateHashMap(doc.getScheduledPatientsUsernames(), doc.getUsername()));
     }
 
+    /**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return the string stored in dbase.txt
+	 */
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append(getDepartment());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append(getAssignedDocUsername());
+		bob.append("\t");
+		bob.append("null");	
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+
+
+		
+		return bob.toString();
+	}
 	
-	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return list of availability to store in Availability.txt
+	 */
+	public String toStringAvailability() {
+		StringBuilder bob = new StringBuilder();
+		
+		for(int i= 0; i<super.getAvailability().length; i ++) {
+			bob.append(super.getAvailability()[i]);
+			bob.append("\n");
+			
+		}
+
+		return bob.toString();
+	}
 /**Getters and Setters*/
 	
 	public String getAssignedDocUsername() {
