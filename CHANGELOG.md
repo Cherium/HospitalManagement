@@ -28,7 +28,7 @@ Example: 10 mar 21:13 SAJID\
 * Finished the Receptionist Portal and has it display the statistics from total
 departments, patients, doctors, and nurses
 
-# 01 apr 01:10
+# 01 apr 01:10 Sajid
 * fixed change scheduling bug
 * completed receptionist panel
     * receptionist can view all patients in the system
