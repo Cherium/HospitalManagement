@@ -14,7 +14,7 @@ public class CreateNewDoctorController {
 	private CreateNewDoctorModel model;
 	private CreateNewDoctorView view;
 	
-	
+	 
 	
 	
 	
@@ -117,6 +117,7 @@ public class CreateNewDoctorController {
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());
+		
 		
 		
 		
