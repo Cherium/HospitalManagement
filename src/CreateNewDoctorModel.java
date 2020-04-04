@@ -207,8 +207,7 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-
-
+	
 
 
 	

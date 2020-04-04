@@ -213,7 +213,7 @@ public class DoctorController {
 	
 	
 	
-	// 
+	 
 	/**
 	 * append new notes to current notes in patient tab on button press
 	 * 

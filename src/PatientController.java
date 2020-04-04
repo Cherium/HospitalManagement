@@ -1,6 +1,5 @@
 import java.awt.Component;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -62,19 +61,6 @@ public class PatientController {
 		view.getDay().setSelectedItem(Integer.toString(model.getBirthday().getDayOfMonth()));
 		view.getBlood().setSelectedItem(model.getBlood());
 		view.getSex().setSelectedItem(model.getSex());
-		
-		//list of departments to set in combobox-- initial is Cardiology
-		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
-		
-		//list of doctors for initial department
-		view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList("Cardiology"))));
-		
-		//list of doctor appointments to set in combobox
-		String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
-		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
-		
-		//list of patient appointments to set in combobox
-		view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 	}
 	
 
@@ -126,112 +112,12 @@ public class PatientController {
 		view.getSave().addActionListener(e -> updateInfo() );
 		view.getChangePassword().addActionListener(e -> changePass() );
 		
-		//department is changed
-		view.getDepartmentDropDown().addActionListener(e -> updateDocBox() );
 		
-		//doctor box is changed	//TODO test this
-		view.getChooseDoc().addActionListener(e -> updateDocBox());
-		
-		//book a patients apointment
-		view.getBookAptBtn().addActionListener(e -> bookAppointment() );
-		
-		//cancel a selected appointment
-		view.getCancelApptBtn().addActionListener(e -> cancelAppt() );
-
-
-	}
-
-
-	
-	
-	/**
-	 * Cancel the selected view appointment on the button press
-	 * @author Sajid C
-	 * 
-	 */
-	public void cancelAppt() {
-		
-		//get index of appointment to cancel
-		int apptIndex = view.getCancelAppt().getSelectedIndex();
-		
-		//cancel selected appointment
-		model.cancelAppt(apptIndex);
-//TODO maybe need to remove the patient from the doctors assigned patients		
-		
-		//update cancel box in view
-		view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
-	}
-
-
-
-
-	/**
-	 * book an appointment for the patient based on user entered values
-	 * 
-	 * @author Sajid C
-	 * @return ease-of-use early exit flag
-	 */
-	public int bookAppointment() {
-//TODO maybe need to add this patient to the doctors patient list; depends on how doctor retrieves its patient list
-		//get selected appointment type
-		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
-		
-//		//get selected patient
-//		int selectedIndex = view.getPatList().getSelectedIndex();
-		
-//		//ensure a patient was selected
-//		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
-		
-		//book a doctor appointment
-		if(appointmentType.compareTo("Doctor Appointment") == 0)
-		{
-			String department = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex()).toString();
-			int doctor = view.getChooseDoc().getSelectedIndex();	//TODO test for empty doctor slot
-			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
-			
-			model.storeDoctorApptInPatient(selectAppointment, this.model, department, doctor);
-			view.showDialogToUser("Booked Doctor Appointment!");
-			return -1;
-		}
-		else	//appointment is lab test
-		{
-			//add appointment to selected patients list
-			//a lab test is stored with a time list
-			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();
-			String month = view.getMonth().getItemAt(view.getMonth().getSelectedIndex()).toString();
-			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
-			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
-			
-			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, this.model);
-			view.showDialogToUser("Booked Lab Appointment!");
-			return -1;
-		}
 		
 	}
-	
-	
-	
 
-	/**
-	 * update doctor box and Appointments box when department box option changes - Booking panel
-	 * 
-	 * @author Sajid C
-	 */
-	public void updateDocBox() {
-		// get current selected department option
-		String choice = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex() );
-		
-		//update doctor box according to choice
-		view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList(choice))));
-		
-		//update appointments box according to selected doctor
-		String newDoc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
-		System.out.println("New Doc: "+newDoc);
-		///??
-		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(newDoc) ));
-	}
-	
-	
+
+
 	/**
 	 * try to update the patients information in the database and show the error message resulting
 	 * 

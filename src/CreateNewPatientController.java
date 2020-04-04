@@ -75,6 +75,7 @@ public class CreateNewPatientController {
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());
 		
+		
 		model.setDob(view.getBirthday() );	//uuuu-M-d
 		model.setBloodType(view.getBlood().getItemAt(view.getBlood().getSelectedIndex() ));
 		model.setSex(view.getSex().getItemAt(view.getSex().getSelectedIndex() ));

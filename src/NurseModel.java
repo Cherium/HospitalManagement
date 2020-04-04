@@ -44,7 +44,10 @@ public class NurseModel extends UserSuperClass {
 		this.availability = arrayToLDTArray(avail);
 		
 		//System.out.println(s.nextShiftsToString(availability));
-		
+//		System.out.println(this.toStringDbase());
+//		System.out.println("------------------------------------------");
+//		System.out.println(this.toStringAvailability());
+//		
 		
 	}
 
@@ -185,6 +188,55 @@ public class NurseModel extends UserSuperClass {
 		this.docsPatientsUsernames = docsPatientsUsernames;
 	}
 
+	
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append(getDepartment());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append(getAssignedDocUsername());
+		bob.append("\t");
+		bob.append("null");	
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+
+
+		
+		return bob.toString();
+	}
+	public String toStringAvailability() {
+		StringBuilder bob = new StringBuilder();
+		
+		for(int i= 0; i<super.getAvailability().length; i ++) {
+			bob.append(super.getAvailability()[i]);
+			bob.append("\n");
+			
+		}
+
+		return bob.toString();
+	}
+		
 
 
 

@@ -286,16 +286,12 @@ public class Database{
 			this.departmentList = departmentList;
 		}
 		
-
 		public ArrayList<DoctorModel> getDocsToLoad() {
 			return docsToLoad;
 		}
 
-
-
-
 		public void setDocsToLoad(ArrayList<DoctorModel> docsToLoad) {
 			this.docsToLoad = docsToLoad;
 		}
-
+		
 }

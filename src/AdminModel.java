@@ -1,6 +1,5 @@
 
 
-
 /**
  * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
  * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
@@ -8,12 +7,6 @@
  *
  */
 public class AdminModel extends UserSuperClass {
-
-	
-	
-	
-	
-	
 	/**
 	 * constructor
 	 * 
@@ -30,13 +23,10 @@ public class AdminModel extends UserSuperClass {
 		setRole("admin");
 
 		this.availability = arrayToLDTArray(avail);
+//		System.out.println(this.toStringDbase());
+//		System.out.println("------------------------------------------");
+//		System.out.println(this.toStringAvailability());
 	}
-
-
-
-
-
-
 
 	/**
 	 * bring up the dialog box to handle New Account creation for various roles
@@ -45,6 +35,7 @@ public class AdminModel extends UserSuperClass {
 	 * 
 	 * @author Sajid C
 	 */
+
 	public void createAccount(String selectedItem) {
 		
 		//open a new view based on user entered values
@@ -75,8 +66,6 @@ public class AdminModel extends UserSuperClass {
 		
 	}
 
-	
-	
 	/**
 	 * bring up the dialog to handle Account Deletion
 	 * 
@@ -117,11 +106,8 @@ public class AdminModel extends UserSuperClass {
 		}
 		
 	}
-
 	
-
-
-
+	
 	/**
 	 * 
 	 * add the department to the DatabaseModel list of departments, send a debug message back
@@ -141,11 +127,65 @@ public class AdminModel extends UserSuperClass {
 		{
 			return "Department already exists!";
 		}
-
+		
 		//else add department
 		Main.dbaseClass.getDepartmentList().add(temp);
 		return "Department created!";
 
 	}
+	
+	
+	
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");	
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");		
+		bob.append("null");
+
+		
+
+		
+		return bob.toString();
+		
+	}
+	
+	public String toStringAvailability() {
+		StringBuilder bob = new StringBuilder();
+		
+		for(int i= 0; i<super.getAvailability().length; i ++) {
+			bob.append(super.getAvailability()[i]);
+			bob.append("\n");
+			
+		}
+
+		return bob.toString();
+	}
+		
 
 }

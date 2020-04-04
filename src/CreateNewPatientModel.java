@@ -94,10 +94,7 @@ public class CreateNewPatientModel extends UserSuperClass {
 		return "Account successfully created!";
 		
 	}
-	
-	
 
-	
 /**Getters and Setters*/
 
 	public String getName() {
@@ -172,22 +169,10 @@ public class CreateNewPatientModel extends UserSuperClass {
 		this.phoneNumber = phoneNumber;
 	}
 
-
-
-
-
-
-
 	public String getEmail() {
 		return email;
 	}
-
-
-
-
-
-
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -230,16 +215,25 @@ public class CreateNewPatientModel extends UserSuperClass {
 		return sex;
 	}
 
-
-
-
-
-
-
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
+
+	public String toString()
+	{
+		StringBuilder bob = new StringBuilder();
+		bob.append("Namee: ");
+		bob.append(getName());
+		bob.append("\n");
+		bob.append("Role: ");
+		bob.append(getRole());
+		bob.append("\n");
+		bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
+		bob.append("\n");
+		
+		return bob.toString();
+	}
+
 	
 
 }

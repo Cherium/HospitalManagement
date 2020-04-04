@@ -28,7 +28,6 @@ public class UserSuperClass {
 			protected Schedule s = new Schedule();	//initialize s so now ALL model classes can use object 's' to get ease-of-use functions in Schedule class
 			protected LocalDateTime[] availability = new LocalDateTime[14];
 			
-			
 			/**
 			 * empty constructor
 			 */
@@ -48,6 +47,7 @@ public class UserSuperClass {
 						this.username = username;
 						this.password = password.toCharArray();
 			}
+			
 			
 			
 			
@@ -108,6 +108,7 @@ public class UserSuperClass {
 						
 					}
 				}
+
 				
 				return docList.toArray(new String[0]);
 			}
@@ -244,7 +245,7 @@ public class UserSuperClass {
 			public LocalDateTime[] getAvailability() {
 				return availability;
 			}
-		
+	
 			public String toString() {
 						StringBuilder bob = new StringBuilder();
 						bob.append("Name: ");
@@ -257,4 +258,6 @@ public class UserSuperClass {
 						bob.append("\n");
 						return bob.toString();
 			}
+
+
 }

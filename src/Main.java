@@ -33,6 +33,7 @@ public class Main {
 			d.setAppointments(d.s.updateHashMap(d.getScheduledPatientsUsernames(), d.getUsername()));
 		}
 		
+		
 		//initialize the MVC for the login screen
 		//the rest of the program proceeds from here
 		LoginController c = new LoginController(new LoginModel(), new LoginView("Login Screen") );

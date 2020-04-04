@@ -23,7 +23,6 @@ public class DoctorModel extends UserSuperClass {
 
 	
 	//constructor
-	
 
 	/**
 	 * constructor
@@ -56,8 +55,10 @@ public class DoctorModel extends UserSuperClass {
 			}
 			
 			this.availability = arrayToLDTArray(avail);
-			
-			
+//			System.out.println(this.toStringDbase());
+//			System.out.println("------------------------------------------");
+//			System.out.println(this.toStringAvailability());
+						
 	}
 	
 	
@@ -158,21 +159,69 @@ public class DoctorModel extends UserSuperClass {
 
 
 	//testing class; will later be export class for database
-	public String toString()
-	{
+	public String toStringDbase() {
 		StringBuilder bob = new StringBuilder();
-		bob.append("Namee: ");
-		bob.append(getName());
-		bob.append("\n");
-		bob.append("Role: ");
 		bob.append(getRole());
-		bob.append("\n");
-		bob.append("Username: " + getUsername() + " Password: " + getPassword().toString());
-		bob.append("\n");
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append(getDepartment());
+		bob.append("\t");
+		
+		for(int i =0 ;i <this.assignedNurseUsernames.size() ;i++){
+			int size =assignedNurseUsernames.size();
+			bob.append(assignedNurseUsernames.get(i));	
+			if( this.assignedNurseUsernames.size()>1 &&  size - i != assignedNurseUsernames .size()- 1 ) {	
+				bob.append(",");
+			}
+		}
+		
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");	
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		for(int i =0 ;i <this.scheduledPatientsUsernames.size() ;i++){
+			int size = this.scheduledPatientsUsernames.size();
+			bob.append(this.scheduledPatientsUsernames.get(i));	
+			if(this.scheduledPatientsUsernames.size() >1 && size - i != this.scheduledPatientsUsernames.size() -1 ) {	
+				bob.append(",");
+			}
+		}
+		
+
+		
 		return bob.toString();
 	}
+	
+	public String toStringAvailability() {
+		StringBuilder bob = new StringBuilder();
+		
+		for(int i= 0; i<super.getAvailability().length; i ++) {
+			bob.append(super.getAvailability()[i]);
+			bob.append("\n");
+			
+		}
 
-
+		return bob.toString();
+	}
+		
 
 
 
