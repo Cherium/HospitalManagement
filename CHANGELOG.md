@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 3 APRIL Jenny
+# 21:35 
+* Completed uploading of referrals in patient. The patient starts out with an empty list (JList) of referrals. Selecting a file via "Upload referral" will update the list (by updating the DefaultListModel) with the name of the file. 
+
 ## 1 APRIL Jenny
 * Removed Referral inner class from PatientModel and changed referrals to strings instead, for the sake of sanity. 
 * Added a referral section to PatientView and an upload referral option. Upload referral opens up a JFileChooser and the name of the selected file will be added to the list of referrals (String) in PatientModel. This button click event is implemented in PatientController.

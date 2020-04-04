@@ -13,11 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -45,6 +47,7 @@ public class PatientView extends JFrame{
 	private JPanel contentPanel;
 	private JPanel infoPanel;
 	private JPanel referralPanel = new JPanel();
+	private DefaultListModel<String> model = new DefaultListModel<String>();
 	
 	private JLabel welcomeLabel;
 	private JLabel usernameLabel;
@@ -256,14 +259,7 @@ public class PatientView extends JFrame{
 				
 				credentialPanel.add(changePassword, "span, center, wrap");
 
-
-			referralPanel = new JPanel(new MigLayout("wrap 1", "align left"));
-				referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
-				for (String ref : referrals) {
-					referralPanel.add(new JLabel(ref));
-				}
-				btnAddReferral = new JButton("Upload referral");
-				referralPanel.add(btnAddReferral);
+			setupReferralPanel();
 				
 				
 		//Inner Panel
@@ -355,11 +351,35 @@ public class PatientView extends JFrame{
 
 
 
-	
 	/**
-	 * enable/disable menues baed on chosen appointment type
-	 * @author Sajid C
+	 * Setup the list of referrals for patient. A button is added that allows the upload of a referral file.
 	 */
+	public void setupReferralPanel() {
+		referralPanel = new JPanel(new MigLayout("wrap 1", "align left"));
+		referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
+		setupReferralModel();
+		JList<String> referralList = new JList<String> (model);
+		referralList.setPreferredSize(new Dimension(300,200));
+		btnAddReferral = new JButton("Upload referral");
+		referralPanel.add(btnAddReferral, "south");
+		referralPanel.add(referralList);
+	}
+
+	/**
+	 * Update the referral list in referral panel.
+	 */
+	public void setupReferralModel() {
+		model.removeAllElements();
+		for (String r : referrals) {
+			model.addElement(r);
+		}
+	}
+
+/**
+ * enable/disable menues baed on chosen appointment type
+ * 
+ * @author Sajid C
+ */
 	public void disableLab() {
 		
 		if (apptType.getSelectedItem().equals("Lab Test")) {
@@ -1025,14 +1045,13 @@ public class PatientView extends JFrame{
 	
 	public void setReferrals(ArrayList<String> s) {
 		this.referrals = s.toArray(new String[0]);
+		System.out.println(referrals.length);
 	}
 	
 	public JButton getBtnAddReferral() {
 		return btnAddReferral;
 	}
 	
-
-
 
 
 
