@@ -13,6 +13,8 @@ Example: 10 mar 21:13 SAJID\
 # 16:31
 * Completed uploading of referrals to a patient in ReceptionistMVC. A receptionist can now upload a referral file to a selected patient (system wide).
 * Added additional dialog boxes upon successful uploading/assigning of referrals.
+# 16:57
+* Fixed the error where the referral list in PatientView is initialized as a blank list. 
 
 ## 3 APRIL Jenny
 # 21:35 
