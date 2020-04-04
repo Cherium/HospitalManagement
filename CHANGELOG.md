@@ -10,6 +10,9 @@ Example: 10 mar 21:13 SAJID\
 # 16:17
 * Completed uploading of referrals to a patient in NurseMVC. A nurse can now upload a referral file to a selected patient.
 * Added dialog boxes to both DoctorMVC and NurseMVC for viewability. 
+# 16:31
+* Completed uploading of referrals to a patient in ReceptionistMVC. A receptionist can now upload a referral file to a selected patient (system wide).
+* Added additional dialog boxes upon successful uploading/assigning of referrals.
 
 ## 3 APRIL Jenny
 # 21:35 

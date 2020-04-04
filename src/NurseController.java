@@ -145,6 +145,7 @@ public class NurseController {
 	
 			if (view.getFileName().isVisible()) {
 				pat.getReferrals().add(fileName);
+				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
 			} else {
 				view.showDialogToUser("No file selected!");
 			}

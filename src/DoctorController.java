@@ -189,10 +189,12 @@ public class DoctorController {
 	
 			if (view.getFileNameJLabel().isVisible()) {
 				pat.getReferrals().add(fileName);
+				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
 			} 
 	
 			if ((departmentInput.length() > 0) && (nameInput.length() > 0)) {
 				pat.getReferrals().add(departmentInput+" : "+nameInput);
+				view.showDialogToUser("Referral generated for "+pat.getName());
 			}
 
 			if (!view.getFileNameJLabel().isVisible() && (departmentInput.length() == 0) && (nameInput.length() == 0)) {
