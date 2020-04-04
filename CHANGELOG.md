@@ -15,6 +15,8 @@ Example: 10 mar 21:13 SAJID\
 * Added additional dialog boxes upon successful uploading/assigning of referrals.
 # 16:57
 * Fixed the error where the referral list in PatientView is initialized as a blank list. 
+# 17:25
+* Added focus listeners to the textfields in DoctorView to indicate what should be inputed for the fields. 
 
 ## 3 APRIL Jenny
 # 21:35 

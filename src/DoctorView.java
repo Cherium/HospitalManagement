@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
@@ -821,7 +823,39 @@ public class DoctorView {
 		fileName.setVisible(false);
 
 		departmentInput = new JTextField(20);
+		departmentInput.setText("Input Department/Lab test");
 		nameInput = new JTextField(20);
+		nameInput.setText("Input Doctor/Test type");
+
+		departmentInput.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent fe) {
+				if (departmentInput.getText().equals("Input Department/Lab test"))
+					departmentInput.setText("");
+
+			}
+			@Override
+			public void focusLost(FocusEvent fe) {
+				if (departmentInput.getText().length() == 0) {
+					departmentInput.setText("Input Department/Lab test");
+				} 
+			}
+		});
+
+		nameInput.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent fe) {
+				if (nameInput.getText().equals("Input Doctor/Test type"))
+					nameInput.setText("");
+
+			}
+			@Override
+			public void focusLost(FocusEvent fe) {
+				if (nameInput.getText().length() == 0) {
+					nameInput.setText("Input Doctor/Test type");
+				} 
+			}
+		});
 
 		btnUpdateReferral = new JButton("Assign referral");
 
