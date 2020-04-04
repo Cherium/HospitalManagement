@@ -1,5 +1,6 @@
 import java.awt.Component;
 
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -62,6 +63,8 @@ public class PatientController {
 		view.getDay().setSelectedItem(Integer.toString(model.getBirthday().getDayOfMonth()));
 		view.getBlood().setSelectedItem(model.getBlood());
 		view.getSex().setSelectedItem(model.getSex());
+
+		view.setReferrals(model.getReferrals());
 		
 		//list of departments to set in combobox-- initial is Cardiology
 		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
@@ -126,6 +129,8 @@ public class PatientController {
 		view.getSave().addActionListener(e -> updateInfo() );
 		view.getChangePassword().addActionListener(e -> changePass() );
 		
+		view.getBtnAddReferral().addActionListener(e -> selectReferralToUpload() );
+
 		//department is changed
 		view.getDepartmentDropDown().addActionListener(e -> updateDocBox() );
 		
@@ -141,7 +146,21 @@ public class PatientController {
 
 	}
 
-
+	/**
+	 * Opens a dialog window, allowing the selection of a file for upload.
+	 */
+	public void selectReferralToUpload() {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		int returnVal = fc.showOpenDialog(null);
+		if (returnVal == 0) {
+			String file = fc.getSelectedFile().getName();
+			model.getReferrals().add(file);
+			// Update the list of referrals shown.
+			view.setReferrals(model.getReferrals());
+			view.setupReferralModel();
+		}
+	}
 	
 	
 	/**

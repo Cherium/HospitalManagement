@@ -13,10 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -43,6 +46,8 @@ public class PatientView extends JFrame{
 	
 	private JPanel contentPanel;
 	private JPanel infoPanel;
+	private JPanel referralPanel = new JPanel();
+	private DefaultListModel<String> model = new DefaultListModel<String>();
 	
 	private JLabel welcomeLabel;
 	private JLabel usernameLabel;
@@ -53,6 +58,7 @@ public class PatientView extends JFrame{
 	private JButton btnReturn;
 	private JButton save;
 	private JButton changePassword;
+	private JButton btnAddReferral;
 	private JButton bookAptBtn;
 	private JButton cancelApptBtn;
 	
@@ -70,6 +76,8 @@ public class PatientView extends JFrame{
 
 	private JComboBox<String> blood, posNeg;
 	private JComboBox<String> sex;
+
+	private String[] referrals = {""};
 	private JComboBox<String> apptType;
 	private JComboBox<String> departmentDropDown;
 	private JComboBox<String> chooseAppt;
@@ -110,7 +118,7 @@ public class PatientView extends JFrame{
 	 */
 	public void initializeGUI() 
 	{
-		
+
 //Main panel background
 		contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
@@ -250,7 +258,8 @@ public class PatientView extends JFrame{
 				credentialPanel.add(passwordInputConfirm, "wrap 20");
 				
 				credentialPanel.add(changePassword, "span, center, wrap");
-			
+
+			setupReferralPanel();
 				
 				
 		//Inner Panel
@@ -327,6 +336,9 @@ public class PatientView extends JFrame{
 		//Add components to main panel
 			contentPanel.add(btnReturn, "wrap");
 			contentPanel.add(welcomeLabel, "wrap");
+			contentPanel.add(infoPanel);
+			contentPanel.add(credentialPanel);
+			contentPanel.add(referralPanel);
 			contentPanel.add(infoPanel, "sg a");
 			contentPanel.add(credentialPanel, "sg a, wrap");
 			contentPanel.add(bookPanel, "span, wrap");
@@ -339,11 +351,35 @@ public class PatientView extends JFrame{
 
 
 
-	
 	/**
-	 * enable/disable menues baed on chosen appointment type
-	 * @author Sajid C
+	 * Setup the list of referrals for patient. A button is added that allows the upload of a referral file.
 	 */
+	public void setupReferralPanel() {
+		referralPanel = new JPanel(new MigLayout("wrap 1", "align left"));
+		referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
+		setupReferralModel();
+		JList<String> referralList = new JList<String> (model);
+		referralList.setPreferredSize(new Dimension(300,200));
+		btnAddReferral = new JButton("Upload referral");
+		referralPanel.add(btnAddReferral, "south");
+		referralPanel.add(referralList);
+	}
+
+	/**
+	 * Update the referral list in referral panel.
+	 */
+	public void setupReferralModel() {
+		model.removeAllElements();
+		for (String r : referrals) {
+			model.addElement(r);
+		}
+	}
+
+/**
+ * enable/disable menues baed on chosen appointment type
+ * 
+ * @author Sajid C
+ */
 	public void disableLab() {
 		
 		if (apptType.getSelectedItem().equals("Lab Test")) {
@@ -1007,12 +1043,14 @@ public class PatientView extends JFrame{
 
 	
 	
+	public void setReferrals(ArrayList<String> s) {
+		this.referrals = s.toArray(new String[0]);
+	}
 	
+	public JButton getBtnAddReferral() {
+		return btnAddReferral;
+	}
 	
-
-	
-
-
 
 
 
