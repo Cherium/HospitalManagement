@@ -1045,7 +1045,6 @@ public class PatientView extends JFrame{
 	
 	public void setReferrals(ArrayList<String> s) {
 		this.referrals = s.toArray(new String[0]);
-		System.out.println(referrals.length);
 	}
 	
 	public JButton getBtnAddReferral() {
