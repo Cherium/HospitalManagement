@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,36 +19,49 @@ import net.miginfocom.swing.MigLayout;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
  * 
- * @author Sajid C
+ * Purpose of this is to set up Authority View
+ * @author Neil M
  *
  */
 public class AuthorityView extends JFrame{
 	
 	
+	//Sign out button
 	private JButton btnReturn;
 
-	private JComboBox departmentDropDown;
 	
 	private JLabel welcomeLabel;
+
 	private JLabel departBaseLabel;
+		private JLabel departValLabel;
 	private JLabel patientTotalLabel;
+		private JLabel patientValueLabel;
+
 	private JLabel regDoctorTotalLabel;
+		private JLabel regDoctorValLabel;
 	private JLabel regNurseTotalLabel;
-	private JLabel totalAppointDepLabel;
-	private JLabel totalAppointDocLabel;//Per doctor
+		private JLabel regNurseValLabel;
+		
+	private JLabel appointLabel;
+		private JLabel totalAppointLabel;
+	private JLabel appDayLabel;
+		private JLabel actualAppDayLabel;
+
+	private JLabel totalAppointDocLabel;
+	private JLabel totalAppointNurLabel;
 	
+
+	//Panels for JLabels
 	private JPanel contentPanel;
 	private JPanel statPanel;
-	
-	
-	
+
 	
 	
 	
 	
 	
 	/**
-	 * constructor
+	 * constructor for the portal screen
 	 * 
 	 * @param title JFrame title
 	 */
@@ -57,7 +69,7 @@ public class AuthorityView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setSize(600,500);
+		setSize(470,360);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -67,11 +79,12 @@ public class AuthorityView extends JFrame{
 	
 	/**
 	 * initialize the panels and components that will go inside the frame
-	 * @author 
+	 * @author Neil M
+	 * #TODO Organize the java labels in a different fashion. Change names
 	 */
 	public void initializeGUI() {
-		// TODO Auto-generated method stub
-
+		
+		//Welcome Panel set up
 		welcomeLabel = new JLabel();
 			welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
@@ -80,55 +93,102 @@ public class AuthorityView extends JFrame{
 			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 
-
+		//Sign out panel
 		btnReturn = new JButton("Sign Out");
 			btnReturn.addActionListener(e -> setVisible(false) );
 
 
 
-
-		departBaseLabel = new JLabel();
+		//All other JLabels necessary
+		departBaseLabel = new JLabel("# of Departments: ");
 			departBaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		
-		patientTotalLabel = new JLabel();
+		departValLabel = new JLabel();
+			departValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+
+
+		patientTotalLabel = new JLabel("# of Registered Patients: ");
 			patientTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			
+		patientValueLabel = new JLabel();
+			patientValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+
 
 		regDoctorTotalLabel = new JLabel("# of Registered Doctors: ");
 			regDoctorTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		regDoctorValLabel = new JLabel();
+			regDoctorValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+
+
 
 		regNurseTotalLabel = new JLabel("# of Registered Nurses: ");
 			regNurseTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				
-		totalAppointDocLabel = new JLabel("# of Scheduled appointments for Specific Doctor: TBA");
+
+		regNurseValLabel = new JLabel();
+		regNurseValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		
+		appDayLabel = new JLabel("# of Upcoming Scheduled appointments in 24 hours: ");
+			appDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		actualAppDayLabel = new JLabel();
+			actualAppDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		appointLabel = new JLabel("# of Upcoming Scheduled appointments in 2 months: ");
+			appointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		totalAppointLabel = new JLabel();
+			totalAppointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		totalAppointDocLabel = new JLabel("# of Doctors today: ");
 			totalAppointDocLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		totalAppointNurLabel = new JLabel("# of Nurses today: ");
+			totalAppointNurLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		totalAppointDepLabel = new JLabel("# of Scheduled appointments for Department: 0");
-			totalAppointDepLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			
 
+		
+		//Compile all JLabels in a single panel
 		statPanel= new JPanel(new MigLayout("wrap 2", "[] 16 []") );
 			statPanel.setBorder(BorderFactory.createTitledBorder("Statistics here"));
 
 
-		//Scroll bar
-		departmentDropDown = new JComboBox<String>();
-		departmentDropDown.insertItemAt("", 0);
 
 		
-		statPanel.add(departBaseLabel, "wrap");
-		statPanel.add(patientTotalLabel, "wrap");
-		statPanel.add(regDoctorTotalLabel, "wrap");
-		statPanel.add(regNurseTotalLabel, "wrap");
-		statPanel.add(totalAppointDocLabel, "wrap");
-		statPanel.add(totalAppointDepLabel, "wrap");
+		statPanel.add(departBaseLabel);
+		statPanel.add(departValLabel, "wrap");
+	
+		statPanel.add(patientTotalLabel);
+		statPanel.add(patientValueLabel, "wrap");
+		
 
+
+		statPanel.add(regDoctorTotalLabel);
+		statPanel.add(regDoctorValLabel, "wrap");
+
+		statPanel.add(regNurseTotalLabel);
+		statPanel.add(regNurseValLabel, "wrap");
+
+		statPanel.add(appDayLabel);
+		statPanel.add(actualAppDayLabel, "wrap");
+
+		statPanel.add(appointLabel);
+		statPanel.add(totalAppointLabel, "wrap");
+
+		statPanel.add(totalAppointDocLabel, "wrap");
+		statPanel.add(totalAppointNurLabel, "wrap");
+
+		
+		
+		
 		contentPanel.add(welcomeLabel, "center, wrap");
 		contentPanel.add(btnReturn, "center, wrap");
-		contentPanel.add(statPanel, "center, wrap");
-		//contentPanel.add(departmentDropDown); //Temporarily locked
-
+		contentPanel.add(statPanel, BorderLayout.CENTER);
 		setVisible(true);
 	}
 	
+	/**Getter and Setter Methods*/	
+
 	public JLabel getWelcomeLabel() {
 		return welcomeLabel;
 	}
@@ -137,39 +197,53 @@ public class AuthorityView extends JFrame{
 		this.welcomeLabel = welcomeLabel;
 	}
 	
-	public JLabel getDepNumLabel(){
-		return departBaseLabel; 
+	public JLabel getDepLabel(){
+		return departValLabel; 
+		
 	}
 
-	public void setDepNumLabel(JLabel departBaseLabel){
-		this.departBaseLabel = departBaseLabel;
+	public void setDepLabel(JLabel label){
+		departValLabel = label;
 	}
 
-	public JLabel getPatientTotalLabel(){
-		return patientTotalLabel; 
+	public JLabel getPatientLabel(){
+		return patientValueLabel; 
 	}
 
-	public void setPatientTotalLabel(JLabel label){
-		patientTotalLabel = label;
+	public void setPatientLabel(JLabel label){
+		patientValueLabel = label;
 	}
 
-	public JLabel getDoctorTotalLabel(){
-		return regDoctorTotalLabel; 
+	public JLabel getDoctorLabel(){
+		return regDoctorValLabel; 
 	}
 
-	public void setDoctorTotalLabel(JLabel label){
-		regDoctorTotalLabel = label;
+	public void setDoctorLabel(JLabel label){
+		regDoctorValLabel = label;
 	}
 
-	public JLabel getNurseTotalLabel(){
-		return regNurseTotalLabel; 
+	public JLabel getNurseLabel(){
+		return regNurseValLabel; 
 	}
 
-	public void setNurseTotalLabel(JLabel label){
-		regNurseTotalLabel = label;
+	public void setNurseLabel(JLabel label){
+		regNurseValLabel = label;
 	}
 
+	public JLabel getTotalAppointLabel(){
+		return totalAppointLabel;
+	}
 
+	public void setTotalAppointLabel(JLabel label){
+		totalAppointLabel = label;
+	}
 	
+	public JLabel getActualAppDayLabel(){
+		return actualAppDayLabel;
+	}
+
+	public void setActualAppDayLabel(JLabel label){
+		actualAppDayLabel = label;
+	}
 
 }
