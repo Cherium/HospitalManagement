@@ -35,8 +35,19 @@ public class AuthorityView extends JFrame{
 	private JLabel patientTotalLabel;
 	private JLabel regDoctorTotalLabel;
 	private JLabel regNurseTotalLabel;
+<<<<<<< HEAD
+		private JLabel regNurseValLabel;
+		
+	private JLabel appointLabel;
+		private JLabel totalAppointLabel;
+	private JLabel totalAppointDocLabel;
+	private JLabel totalAppointNurLabel;
+	
+
+=======
 	private JLabel totalAppointDepLabel;
 	private JLabel totalAppointDocLabel;//Per doctor
+>>>>>>> parent of 54654e0... Updating Authority
 	
 	private JPanel contentPanel;
 	private JPanel statPanel;
@@ -57,7 +68,15 @@ public class AuthorityView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		setSize(470,360);
+=======
 		setSize(600,500);
+>>>>>>> parent of 54654e0... Updating Authority
+=======
+		setSize(340,360);
+>>>>>>> parent of 25a57b9... Better accurate version of Authority
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -98,8 +117,22 @@ public class AuthorityView extends JFrame{
 
 		regNurseTotalLabel = new JLabel("# of Registered Nurses: ");
 			regNurseTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+<<<<<<< HEAD
+
+		regNurseValLabel = new JLabel(""+nurVal);
+		regNurseValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+				
+		appointLabel = new JLabel("# of Upcoming Scheduled appointments: ");
+			appointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		totalAppointLabel = new JLabel("");
+			totalAppointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		totalAppointDocLabel = new JLabel("# of Doctors today: ");
+=======
 				
 		totalAppointDocLabel = new JLabel("# of Scheduled appointments for Specific Doctor: TBA");
+>>>>>>> parent of 54654e0... Updating Authority
 			totalAppointDocLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		totalAppointDepLabel = new JLabel("# of Scheduled appointments for Department: 0");
@@ -114,12 +147,35 @@ public class AuthorityView extends JFrame{
 		departmentDropDown.insertItemAt("", 0);
 
 		
+<<<<<<< HEAD
+		statPanel.add(departBaseLabel);
+		statPanel.add(departValLabel, "wrap");
+	
+		statPanel.add(patientTotalLabel);
+		statPanel.add(patientValueLabel, "wrap");
+		
+
+
+		statPanel.add(regDoctorTotalLabel);
+		statPanel.add(regDoctorValLabel, "wrap");
+
+		statPanel.add(regNurseTotalLabel);
+		statPanel.add(regNurseValLabel, "wrap");
+
+		statPanel.add(appointLabel);
+		statPanel.add(totalAppointLabel, "wrap");
+
+		statPanel.add(totalAppointDocLabel, "wrap");
+		statPanel.add(totalAppointNurLabel, "wrap");
+		
+=======
 		statPanel.add(departBaseLabel, "wrap");
 		statPanel.add(patientTotalLabel, "wrap");
 		statPanel.add(regDoctorTotalLabel, "wrap");
 		statPanel.add(regNurseTotalLabel, "wrap");
 		statPanel.add(totalAppointDocLabel, "wrap");
 		statPanel.add(totalAppointDepLabel, "wrap");
+>>>>>>> parent of 54654e0... Updating Authority
 
 		contentPanel.add(welcomeLabel, "center, wrap");
 		contentPanel.add(btnReturn, "center, wrap");

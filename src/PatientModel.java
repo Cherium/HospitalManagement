@@ -27,7 +27,10 @@ public class PatientModel extends UserSuperClass {
 	private String bloodtype;
 	private String sex;
 	private String recordNotes;
-	
+
+	private ArrayList<String> referrals;
+
+
 	//stores list of appointments
 	private HashMap<String, ArrayList<LocalDateTime>> appointments;
 	
@@ -75,6 +78,8 @@ public class PatientModel extends UserSuperClass {
 		
 		//get list of appointments
 		this.appointments = listToAppointmentMap(appointments);
+
+		this.referrals = new ArrayList<String>();
 
 		//testing prints-- dont delete
 //		for(Map.Entry<String, ArrayList<LocalDateTime>> i: this.appointments.entrySet() )
@@ -518,6 +523,14 @@ public class PatientModel extends UserSuperClass {
 
 	public void setAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
 		this.appointments = appointments;
+	}
+
+	public ArrayList<String> getReferrals() {
+		return referrals;
+	}
+
+	public void setReferrals(ArrayList<String> r) {
+		this.referrals = r;
 	}
 
 

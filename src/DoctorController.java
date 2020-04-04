@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -47,13 +51,14 @@ public class DoctorController {
 		// Cannot do this in constructor as doctors are read from the database before patient
 		model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
 
-//model.s.nextOpenSlots(model.getAvailability(), model.getAppointments());	//debug
+		// model.s.nextOpenSlots(model.getAvailability(), model.getAppointments());	//debug
 		view.setShifts(convertToShiftTime(model.getAvailability()));
 		view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
 		view.setAppointments(convertAppointments(model.getAppointments()));
 
 		view.initializeWeeklySchedule();
 		view.initializeMonthlySchedule();
+		String[] nurses = new String[model.getAssignedNurseUsernames().size()];
 
 		// set the Labels for view
 		view.getDeptLabel().setText(model.getDepartment() + ": ");
@@ -63,6 +68,7 @@ public class DoctorController {
 		// set the nurse name dropdown list for view
 		for (String n : model.getAssignedNurseUsernames()) {
 			view.getNurseComboBox().addItem(model.getObjectsName(n));
+			nurses[model.getAssignedNurseUsernames().indexOf(n)] = model.getObjectsName(n);
 		}
 		view.getNurseComboBox().setSelectedIndex(-1); // set default choice to blank
 
@@ -73,6 +79,9 @@ public class DoctorController {
 			patients[index] = Main.dbase.get(string).getName();
 		}
 		view.setPatientList(patients);
+		view.setNurseList(nurses);
+
+		view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
 
 	}
 	
@@ -150,6 +159,10 @@ public class DoctorController {
 				saveNotes();
 			}
 		});
+
+		view.getBtnBookApt().addActionListener(e -> bookAppointment());
+
+		view.getBtnAvailRequest().addActionListener(e -> updateAvailability());
 	}
 
 	// 
@@ -160,7 +173,7 @@ public class DoctorController {
 	 * 
 	 * @author Jenny Z
 	 * @param appointments- list of appointments that this user has
-	 * @return- LinkedHashMap with keys as appointment times
+	 * @return LinkedHashMap with keys as appointment times
 	 */
 	private LinkedHashMap<String, String> convertAppointments(HashMap<String, ArrayList<LocalDateTime>> appointments) {
 		LinkedHashMap<String, String> lhm = new LinkedHashMap<String, String>();
@@ -247,7 +260,89 @@ public class DoctorController {
 
 	}
 
+	/**
+	 * book an appointment for the patient based on user entered values
+	 * 
+	 * @return ease-of-use early exit flag
+	 */
+	public int bookAppointment() {
+		
+		//get selected appointment type
+		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
+		
+		//get selected patient
+		int selectedIndex = view.getListPatients().getSelectedIndex();
+		
+		//ensure a patient was selected
+		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
+		
+		if(appointmentType.compareTo("Doctor Appointment") == 0)
+		{
+			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
+			int selectPatient = view.getListPatients().getSelectedIndex();
+			model.storeAppointmentInPatient(selectAppointment, selectPatient);
 
+			// Update the schedule of the doctor
+			model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
+			view.setShifts(convertToShiftTime(model.getAvailability()));
+			view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
+			view.setAppointments(convertAppointments(model.getAppointments()));
 	
+			view.initializeWeeklySchedule();
+			view.initializeMonthlySchedule();
+
+			view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
+
+			return -1;
+		}
+		else	//appointment is lab test
+		{
+			//add appointment to selected patients list
+			//a lab test is stored with a time list
+			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();
+			String month = view.getMonth().getItemAt(view.getMonth().getSelectedIndex()).toString();
+			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
+			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
+			
+			model.storeApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
+			view.showDialogToUser("Booked Lab Appointment!");
+			return -1;
+		}
+
+	}
+
+	/**
+	 * update availability in database and view, based on user entered values
+	 * 
+	 * 
+	 */
+	public void updateAvailability() {
+		
+		String[] newHours= new String[14];
+		
+
+		//retrieve all comboBoxes storing hour values as Strings
+		int i = 0;
+		for(JComboBox<String> j: view.getAvailTimes())
+		{
+			//get String from box and add to String array
+			newHours[i++] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+		}
+		
+		if (view.getCheckBox().isSelected()) {
+			//update availability for this User
+			model.setAvailability(model.s.updateSchedule(newHours) );
+		} else {
+			// else update availability for the nurse
+			int index = view.getNursesList().getSelectedIndex();
+			Main.dbase.get(model.getAssignedNurseUsernames().get(index)).s.updateSchedule(newHours);
+		}
+		
+		//show success to user
+		view.showDialogToUser("Availability Request Approved");
+		// initView();	//reset availabilty shown to patient
+		
+		
+	}
 
 }
