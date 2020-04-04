@@ -7,6 +7,9 @@ Example: 10 mar 21:13 SAJID\
 # 12:12 
 * Completed uploading and assigning of referrals to a patient in DoctorMVC. A doctor can upload and/or assign referrals to a scheduled patient. If there is an uploaded file and an assigned referral, both referrals will be added to patient.
 * Found a bug where the referral list in PatientView is initialized as a blank list, when a patient actually has a list of referrals. The list is only updated when a new referral is added in PatientView. 
+# 16:17
+* Completed uploading of referrals to a patient in NurseMVC. A nurse can now upload a referral file to a selected patient.
+* Added dialog boxes to both DoctorMVC and NurseMVC for viewability. 
 
 ## 3 APRIL Jenny
 # 21:35 

@@ -59,10 +59,13 @@ public class NurseView extends JFrame{
 	private JLabel birth;
 	private JLabel blood;
 	private JLabel sex;
+	private JLabel fileName;
 
 	private JButton btnReturn;
 	private JButton reqAvailChangeBtn;
 	private JButton bookAptBtn;
+	private JButton btnSelectFile;
+	private JButton btnUploadReferral;
 	
 	
 	private JTextField nameText;
@@ -265,8 +268,26 @@ public class NurseView extends JFrame{
 			bookPanel.add(bookAptBtn, "align right");
 			
 			
-		
-		
+		JPanel referPanel = new JPanel(new MigLayout("hidemode 3"));
+			referPanel.setBorder(BorderFactory.createTitledBorder("Upload Referral"));
+			referPanel.setPreferredSize(new Dimension(900, 50));
+			referPanel.setMaximumSize(new Dimension(905, 125));
+			
+			fileName = new JLabel();
+			fileName.setVisible(false);
+
+			btnSelectFile = new JButton("Select file");
+
+			btnUploadReferral = new JButton("Upload");
+
+
+			referPanel.add(new JLabel("Referral: "));
+			referPanel.add(fileName);
+			referPanel.add(btnSelectFile, "wrap");
+			referPanel.add(btnUploadReferral);
+			
+			
+	
 		//inner panel
 		schedPanel = new JPanel(new MigLayout("") );
 			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
@@ -301,6 +322,7 @@ public class NurseView extends JFrame{
 		contentPanel.add(welcomeLabel, "wrap");
 		contentPanel.add(listPanel, "sg b");
 		contentPanel.add(infoPanel, "sg b, wrap");
+		contentPanel.add(referPanel, "span, growx");
 		contentPanel.add(bookPanel, "span, growx");
 		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
 		contentPanel.add(availChangePanel, " sg b");
@@ -982,7 +1004,17 @@ public class NurseView extends JFrame{
 	}
 	
 	
-	
+	public JButton getBtnSelectFile() {
+		return btnSelectFile;
+	}
+
+	public JLabel getFileName() {
+		return fileName;
+	}
+
+	public JButton getBtnUploadReferral() {
+		return btnUploadReferral;
+	}
 	
 
 

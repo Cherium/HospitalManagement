@@ -161,17 +161,22 @@ public class DoctorController {
 			}
 		});
 
+		// Books appointment between a selected patient and this doctor
 		view.getBtnBookApt().addActionListener(e -> bookAppointment());
 
+		// Updates the availability of the doctor or the selected nurse
 		view.getBtnAvailRequest().addActionListener(e -> updateAvailability());
 
+		// Select a file via JFileChooser
 		view.getBtnSelectFile().addActionListener(e -> selectReferral());
 
+		// Upload a referral file for a selected patient
 		view.getBtnUpdateFerral().addActionListener(e -> assignReferral());
 	}
 
 	/**
 	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
+	 * @author Jenny
 	 */
 	private void assignReferral() {
 		int selectedIndex = view.getListPatients().getSelectedIndex();
@@ -189,8 +194,12 @@ public class DoctorController {
 			if ((departmentInput.length() > 0) && (nameInput.length() > 0)) {
 				pat.getReferrals().add(departmentInput+" : "+nameInput);
 			}
-		} catch (Exception e) {
 
+			if (!view.getFileNameJLabel().isVisible() && (departmentInput.length() == 0) && (nameInput.length() == 0)) {
+				view.showDialogToUser("No file selected and no input detected!");
+			}
+		} catch (Exception e) {
+			view.showDialogToUser("No patient selected!");
 		}
 
 		// Clear all input
@@ -200,6 +209,10 @@ public class DoctorController {
 
 	}
 
+	/**
+	 * Select a referral file via a JFileChooser
+	 * @author Jenny
+	 */
 	private void selectReferral() {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
