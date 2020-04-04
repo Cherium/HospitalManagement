@@ -126,6 +126,69 @@ public class AuthorityModel extends UserSuperClass {
 		return temp.size();
 	}
 
+	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return the string stored in dbase.txt
+	 */
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");	
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("0");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");		
+		bob.append("null");
+
+		
+
+		
+		return bob.toString();
+		
+	}
+	
+	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return list of availability to store in Availability.txt
+	 */
+	public String toStringAvailability() {
+		StringBuilder bob = new StringBuilder();
+		
+		for(int i= 0; i<super.getAvailability().length; i ++) {
+			bob.append(super.getAvailability()[i]);
+			bob.append("\n");
+			
+		}
+
+		return bob.toString();
+	}
+	
 	//Getters and Setters
 
 

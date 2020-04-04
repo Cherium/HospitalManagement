@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,15 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.util.ArrayList;
 
 
 /**
  * @author Sajid C
  * Create a Databsae and import CSV into that database
  */
-public class Database{
+public class Database {
 
 		//main database accessed everywhere	
 		public HashMap<String, UserSuperClass> users;
@@ -254,19 +251,54 @@ public class Database{
 								}
 						
 								
-	
+						exportDbase();
 						//close the scanner
 						sc.close();
 								
-								
-								
-
 			
-			
-			
-			
-			
-			
+		}
+		
+		
+		public void exportDbase()
+		{
+			for(Map.Entry<String, UserSuperClass> i: users.entrySet())
+			{
+				if(i.getValue().getRole().compareTo("doctor") == 0)
+				{
+					DoctorModel user = (DoctorModel) i.getValue();
+					System.out.println(user.toStringDbase() );
+				}
+				
+				else if(i.getValue().getRole().compareTo("nurse")== 0)
+				{
+					NurseModel user = (NurseModel) i.getValue();
+					System.out.println(user.toStringDbase() );
+				}
+				
+				else if(i.getValue().getRole().compareTo("patient")== 0)
+				{
+					PatientModel user = (PatientModel) i.getValue();
+					System.out.println(user.toStringDbase() );
+				}
+				
+				else if(i.getValue().getRole().compareTo("admin")== 0)
+				{
+					AdminModel user = (AdminModel) i.getValue();
+					System.out.println(user.toStringDbase() );
+				}
+				
+				else if(i.getValue().getRole().compareTo("authority")== 0)
+				{
+					AuthorityModel user = (AuthorityModel) i.getValue();
+					System.out.println(user.toStringDbase() );
+				}
+				
+				else if(i.getValue().getRole().compareTo("receptionist")== 0)
+				{
+					ReceptionistModel user = (ReceptionistModel) i.getValue();
+					System.out.println(user.toStringDbase() );
+				}
+			}
 		}
 
 	/**Getters and Setters*/	

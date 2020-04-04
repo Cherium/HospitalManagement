@@ -189,7 +189,7 @@ public class UserSuperClass {
 			public LocalDate dateStringToLocalDate(String dateString)
 			{
 				//convert string to formatted date object
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu/M/d").withResolverStyle(ResolverStyle.STRICT);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-M-d").withResolverStyle(ResolverStyle.STRICT);
 				
 				//convert date object to LocalDateTime object
 				LocalDate temp = LocalDate.parse(dateString, formatter);

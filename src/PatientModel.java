@@ -399,6 +399,61 @@ public class PatientModel extends UserSuperClass {
 	
 	
 	
+	public String toStringDbase() {
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRole());
+		bob.append("\t");
+		bob.append(getUsername());
+		bob.append("\t");
+		bob.append(getPassword());
+		bob.append("\t");
+		bob.append(getName());
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append("null");
+		bob.append("\t");
+		bob.append(getAddress());	
+		bob.append("\t");
+		bob.append(getPhoneNumber());
+		bob.append("\t");
+		bob.append(getEmail());
+		bob.append("\t");
+		bob.append(getAmountDue());
+		bob.append("\t");
+		bob.append(getBirthday().toString());
+		bob.append("\t");
+		bob.append(getBlood());
+		bob.append("\t");
+		bob.append(getSex());
+		bob.append("\t");		
+		bob.append("null");
+
+		
+
+		
+		return bob.toString();
+		
+	}
+	
+	public String toStringAppt() {
+		StringBuilder bob = new StringBuilder();
+		for(Map.Entry<String, ArrayList<LocalDateTime>> element: this.appointments.entrySet()) {
+			ArrayList<LocalDateTime> temp = element.getValue();
+			for(LocalDateTime appt: temp) {
+				bob.append(element.getKey());
+				bob.append("\t");
+				bob.append(appt.toString());
+				bob.append("\n");
+
+			}
+		}
+		
+		return bob.toString();
+	}
+	
 /**Getters and Setters*/
 	public String getAddress() {
 		return address;
