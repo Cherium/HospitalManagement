@@ -45,29 +45,12 @@ public class AuthorityController {
 	 */
 	public void initView()
 	{
-<<<<<<< HEAD
-		//PatientModel pat = (PatientModel) Main.dbase.get(username).getAppointments();
-
-
-
-		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
-
-
-		view.getDepLabel().setText(""+model.getDepNum());
-		view.getPatientLabel().setText(""+model.getPatientNum());
-		view.getDoctorLabel().setText(""+model.getDoctorNum());
-		view.getNurseLabel().setText(""+model.getNurseNum());
-		view.getTotalAppointLabel().setText(""+model.getAvail());
-
-
-=======
 		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
 		view.getDepNumLabel().setText("# of Departments: "+ model.getDepNum() );
 		model.getStats();
 		view.getPatientTotalLabel().setText("# of Registered Patients: "+model.getPatientNum());
 		view.getDoctorTotalLabel().setText("# of Registered Doctors: "+model.getDoctorNum());
 		view.getNurseTotalLabel().setText("# of Registered Nurses: "+model.getNurseNum());
->>>>>>> parent of 54654e0... Updating Authority
 
 	}
 	
