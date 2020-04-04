@@ -146,6 +146,8 @@ public class NurseView extends JFrame{
 				//add scrolling to main container
 				JScrollPane scroll = new JScrollPane(contentPanel
 						, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+					scroll.getVerticalScrollBar().setUnitIncrement(10);
+					scroll.getHorizontalScrollBar().setUnitIncrement(10);
 					add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 
@@ -329,6 +331,7 @@ public class NurseView extends JFrame{
 		if (apptType.getSelectedItem().equals("Lab Test")) {
 			departmentDropDown.setEnabled(false);
 			chooseAppt.setEnabled(false);
+			chooseDoc.setEnabled(false);
 			
 			year.setEnabled(true);
 			month.setEnabled(true);
@@ -337,6 +340,7 @@ public class NurseView extends JFrame{
 		} else {
 			departmentDropDown.setEnabled(true);
 			chooseAppt.setEnabled(true);
+			chooseDoc.setEnabled(true);
 			
 			year.setEnabled(false);
 			month.setEnabled(false);

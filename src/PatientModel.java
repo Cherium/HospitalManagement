@@ -2,6 +2,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +33,12 @@ public class PatientModel extends UserSuperClass {
 
 	//stores list of appointments
 	private HashMap<String, ArrayList<LocalDateTime>> appointments;
+	
+	//contains the usernames of 'appointments' hashmap for use in Cancel combobox
+	private ArrayList<String> usernameToCancel = new ArrayList<String>(5);
+	
+	//contains the associated timings of the ArrayList usernameToCancel in a 1:1 with respect to index
+	private ArrayList<LocalDateTime> timeToCancel = new ArrayList<LocalDateTime>(5);
 	
 
 	/**
@@ -86,9 +93,139 @@ public class PatientModel extends UserSuperClass {
 //		}
 	}
 	
+	
+	/**
+	 * Remove an appointment from the patients appointment list
+	 * @author Sajid C
+	 * @param indexToCancel
+	 */
+	public void cancelAppt(int indexToCancel)
+	{
+		System.out.println("uSize: " + usernameToCancel.size() + " tSize: " + timeToCancel.size() );
+		//remove appt from hashmap
+		//for all entries in the appointment hashmap
+		for(Map.Entry<String, ArrayList<LocalDateTime> > j: appointments.entrySet() )
+		{
+			//find the username that matches the user-selected entry
+			if(j.getKey().compareTo(usernameToCancel.get(indexToCancel)) == 0 )
+			{
+				//delete the time from that username
+				j.getValue().remove(timeToCancel.get(indexToCancel));
+				
+				//if the time array is now empty, delete the key
+				if(j.getValue().isEmpty() )
+					appointments.remove(j.getKey() );
+				
+				//clear from usernameToCancel and timeToCancel
+				usernameToCancel.clear();
+				timeToCancel.clear();
+			}
+			
+		}
+		
+		
+		
+	}
 
+	/**
+	 * Generate a complete formatted list of all the appointments of this patient
+	 * @author Sajid C
+	 * @return formatted list of doctor names(or lab test) and appointment times
+	 */
+	public String[] printApptList()
+	{
+		ArrayList<String> apptList = new ArrayList<String>(5);
 
+		//add all appointments in patient list to the list, formatted as 'appt with - apt time'
+		for(Map.Entry<String, ArrayList<LocalDateTime> > j: appointments.entrySet() )
+		{
+			for(LocalDateTime t: j.getValue() )
+			{
+				StringBuilder temp = new StringBuilder();
+				
+				if(j.getKey().compareTo("labtest") == 0)
+					temp.append(j.getKey() );
+				else
+					temp.append(Main.dbase.get(j.getKey() ).getName() );					//get doctors name from thei username
+					
+				usernameToCancel.add(j.getKey() );	//create indices of combobox entries for easy access to usernames of associated Dr names
+				temp.append(" "+ t.toString() );
+				timeToCancel.add(t);
+				
+				apptList.add(temp.toString() );
+			}
 
+		}
+		
+		return apptList.toArray(new String[0] );
+	}
+	
+	
+    /**
+     * take appointment data from controller and store a new doctor appointment in patients appointment hashmap
+     * 
+     * @author Sajid
+     * @param appt string appointment time formatted to work with LocalDateTime.parse
+     * @param selectedPatient this patient object
+     * @param department departmet selected from combobox
+     * @param selectedDocNameIndex index of chosen doctor in doctor combobox to use to pull doctor username from an array
+     */
+    public void storeDoctorApptInPatient(String appt, PatientModel selectedPatient, String department, int selectedDocNameIndex)
+    {
+    	//get patient object
+        PatientModel pat = selectedPatient;
+        
+        //get list of doctors currently in comboBox
+        String[] list = getDocList(department);
+        
+        //get patient appointment hashmap
+        HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
+        
+        //parse appointment
+        LocalDateTime temp = LocalDateTime.parse(appt);
+        
+        //if doc already exists in patients hashmap
+        if(patAppts.containsKey(list[selectedDocNameIndex]) )
+        {
+        	//append to list
+        	patAppts.get(list[selectedDocNameIndex]) .add(temp);
+        }
+        else //doc is not a key in hashmap; add it
+        {
+        	patAppts.put(list[selectedDocNameIndex] , new ArrayList<LocalDateTime>(List.of(temp))) ;
+        }
+    }
+
+    /**
+     * takes in a single raw availability time, and a selected patient (index) and stores the lab appt in the patient
+     * @author Sajid C
+     * @param rawData raw availability time in format yyyy-M-d HH:mm
+     * @param selectedPatient this patient object
+     * @return 
+     */
+    public void storeLabApptInPatient(String rawData, PatientModel selectedPatient)
+    {
+    	//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
+        LocalDateTime temp = LocalDateTime.parse(rawData, formatter);
+        
+        //get patient object
+        PatientModel pat = selectedPatient;
+        
+        //get patient appointment hashmap
+        HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
+        
+        //if test type already exists
+        if(patAppts.containsKey("Lab Test" ) )
+        {
+        	//append to list
+        	patAppts.get("Lab Test").add(temp);
+        }
+        else //appt type is not a key in hashmap; add it
+        {
+        	patAppts.put("Lab Test", new ArrayList<LocalDateTime>(List.of(temp)) );
+        }
+    }
 
 	/**
 	 * store raw appointment data into a hashmap

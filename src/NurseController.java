@@ -57,6 +57,7 @@ public class NurseController {
 	 * 
 	 * @ author Sajid C
 	 */
+	@SuppressWarnings("unchecked")
 	public void initView()
 	{
 		//set up welcome label
@@ -83,7 +84,7 @@ public class NurseController {
 		String doc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
 		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(doc) ));
 		
-		//list of 50 next shifts of this user to print to text field
+		//list of 14 next shifts of this user to print to text field
 		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 	}
 	
@@ -109,6 +110,10 @@ public class NurseController {
 		
 		//department is changed
 		view.getDepartmentDropDown().addActionListener(e -> updateDocBox() );
+		
+		//doctor box is changed	//TODO test this
+		view.getChooseDoc().addActionListener(e -> updateDocBox());
+		
 		//book a patients apointment
 		view.getBookAptBtn().addActionListener(e -> bookAppointment() );
 		
@@ -116,7 +121,7 @@ public class NurseController {
 
 
 
-	//
+	
 	/**
 	 * update doctor box and Appointments box when department box option changes - Booking panel
 	 * 
@@ -131,7 +136,9 @@ public class NurseController {
 		
 		//update appointments box according to selected doctor
 		String newDoc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
-		//////??
+		System.out.println("New Doc: "+newDoc);
+		///??
+		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(newDoc) ));
 	}
 	
 	
@@ -140,6 +147,7 @@ public class NurseController {
 	/**
 	 * book an appointment for the patient based on user entered values
 	 * 
+	 * @author Sajid C
 	 * @return ease-of-use early exit flag
 	 */
 	public int bookAppointment() {
@@ -153,10 +161,15 @@ public class NurseController {
 		//ensure a patient was selected
 		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
 		
+		//book a doctor appointment
 		if(appointmentType.compareTo("Doctor Appointment") == 0)
 		{
 			String department = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex()).toString();
+			int doctor = view.getChooseDoc().getSelectedIndex();	//TODO test for empty doctor slot
 			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
+			
+			model.storeDoctorApptInPatient(selectAppointment, selectedIndex, department, doctor);
+			view.showDialogToUser("Booked Doctor Appointment!");
 			return -1;
 		}
 		else	//appointment is lab test
@@ -168,7 +181,7 @@ public class NurseController {
 			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
 			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
 			
-			model.storeApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
+			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
 			view.showDialogToUser("Booked Lab Appointment!");
 			return -1;
 		}
@@ -203,7 +216,9 @@ public class NurseController {
 		
 		//show success to user
 		view.showDialogToUser("Availability Request Approved");
-		initView();	//reset availabilty shown to patient
+
+		//reset availabilty shown to patient
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 		
 		
 	}

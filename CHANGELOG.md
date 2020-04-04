@@ -11,6 +11,30 @@ Example: 10 mar 21:13 SAJID\
 ## 31 MARCH Jenny
 # 21:51
 * Added a Referral inner class to PatientModel. Code is inspired by Eberly's code on Treap in 331. Patients have an ArrayList of Referrals. 
+## 03 APRIL 13:54 pm
+* Authority focus
+* Adjusted frames, compiled functions together to streamline and save space.
+ accurately depicts upcoming appointments from today till 24 hours, or from today
+ till 2 months
+
+## 02 apr 2pm
+* Patient:
+    * created 'book appt' functionality for patient
+    * created 'cancel appt' functionality for patient
+        * still needs to check if a fine is applicable
+
+## 01 APRIL 22:12 Neil
+* Finished the Receptionist Portal and has it display the statistics from total
+departments, patients, doctors, and nurses
+
+# 01 apr 01:10
+* fixed change scheduling bug
+* completed receptionist panel
+    * receptionist can view all patients in the system
+
+# 01 apr 00:20 Sajid
+* Completed doctor booking functionality in nurse
+* refined scrolling
 
 ## 31 MARCH Jeremy
 * Features implemented: admins can now edit doctor departments
@@ -34,7 +58,7 @@ Example: 10 mar 21:13 SAJID\
 
 ## 28 mar 00:45 Sajid
 * Database: added code to allow importing nurse availability; added txt files to represent nurse availability
-* Nurse MVC: 
+* Nurse MVC:
     * availability now populates from database
     * model constructor updated
     * buttons now active/inactive based on user choice
@@ -63,16 +87,16 @@ Example: 10 mar 21:13 SAJID\
 
 
 ## 27 MARCH Jenny
-* Removed availability field in DoctorModel. 
+* Removed availability field in DoctorModel.
 # 08:55
 * Added getters + setters for availability variable in UserSuperClass.
 # 13:58
-* Added updateSchedule(String[]): LocalDateTime[] and updateSchedule(LocalDateTime[]): String[] to Schedule. 
+* Added updateSchedule(String[]): LocalDateTime[] and updateSchedule(LocalDateTime[]): String[] to Schedule.
 * The weekly calendar in DoctorView is now set up with the new appointment system. The appointments are initizlied in DoctorController, when the DoctorView is being loaded. The nurse buttons does not update as nurses have no availability as of now.
 # 14:15
 * The monthly calendar in DoctorView is now set up with appointment information from DoctorModel.
 # 17:25
-* Somewhat cleared up code from Schedule and Doctor MVC. Removed unneccessary functions and commented out functionalities. 
+* Somewhat cleared up code from Schedule and Doctor MVC. Removed unneccessary functions and commented out functionalities.
 
 ##26 mar 13:16 Sajid
 **In branch nurse**
@@ -85,7 +109,7 @@ Example: 10 mar 21:13 SAJID\
     * panels for assigned docs patients, patient info, book appt, see schedule, request time off, change availability
 
 ## 26 MARCH Jenny
-# 10:46 
+# 10:46
 * Rehaul of Schedule and how appointments are stored/view with Sajid. Commenting out all information in Doctor MVC related to Schedule.
 # 10:57
 * Adding new field to DoctorModel constructor.
@@ -93,13 +117,13 @@ Example: 10 mar 21:13 SAJID\
 ## 25 MARCH 21:44 Jenny
 Overview/Summary:
 **Schedule**
-* There is now a default constructor in Schedule that randomly generates scheduled days of a work week (that will remain constant throughout time, currently). The default constructor also generates 60 random appointments (24 hours randomly) within 1 month of the current date for the two patients on file (patient, patient2). 
+* There is now a default constructor in Schedule that randomly generates scheduled days of a work week (that will remain constant throughout time, currently). The default constructor also generates 60 random appointments (24 hours randomly) within 1 month of the current date for the two patients on file (patient, patient2).
 **DoctorView & DoctorController**
-* The aforementioned bug has been fixed. The doctor view will show the weekly schedule of either the doctor or one of the selected assigned nurses, only from 08:00 - 19:00 currently. The data within view stores 24 hours. The monthly view shows a list of scheduled patients for each day. Nurses have no appointments. Moving forward/backward a week/month will update the appointment view. 
+* The aforementioned bug has been fixed. The doctor view will show the weekly schedule of either the doctor or one of the selected assigned nurses, only from 08:00 - 19:00 currently. The data within view stores 24 hours. The monthly view shows a list of scheduled patients for each day. Nurses have no appointments. Moving forward/backward a week/month will update the appointment view.
 * In DoctorController, the list of appointments are altered by replacing the username with the corresponding name and passed onto DoctorView.
 * In DoctorView, the altered list of appointments is filtered into an array of size 35 (based on the LocalDate now, within DoctorView), and used to populate the monthly schedule.
 * Some duplicate code have been moved into functions for easier readability. Toggling between monthly/weekly view has been moved into a function. Setting the name labels on top of the monthly/weekly schedule has been moved to a function.
-* Some of the direct references to global variables within DoctorView have been changed to their relevant setters and getters instead, in an effort to decrease coupling. 
+* Some of the direct references to global variables within DoctorView have been changed to their relevant setters and getters instead, in an effort to decrease coupling.
 
 ## 25 MARCH 21:05 Jenny
 * Toggling between months in DoctorView will now update the appointments shown. There is a bug where moving between months does not refresh the appointments or just removes them.
@@ -122,7 +146,7 @@ Overview/Summary:
 
 ## 24 MARCH 20:06 Jenny
 **DoctorView**
-* Integrated scheduled appointments into monthly schedule with the help of Mohammed. 
+* Integrated scheduled appointments into monthly schedule with the help of Mohammed.
 * Current bug: switching between months does not update the appointments shown.
 
 ## 24 MARCH 17:02 Jenny
