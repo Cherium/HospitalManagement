@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -163,9 +164,57 @@ public class DoctorController {
 		view.getBtnBookApt().addActionListener(e -> bookAppointment());
 
 		view.getBtnAvailRequest().addActionListener(e -> updateAvailability());
+
+		view.getBtnSelectFile().addActionListener(e -> selectReferral());
+
+		view.getBtnUpdateFerral().addActionListener(e -> assignReferral());
 	}
 
-	// 
+	/**
+	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
+	 */
+	private void assignReferral() {
+		int selectedIndex = view.getListPatients().getSelectedIndex();
+
+		try {
+			PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(selectedIndex));
+			String fileName = view.getFileNameJLabel().getText();
+			String departmentInput = view.getDepartmentInput().getText();
+			String nameInput = view.getNameInput().getText();
+	
+			if (view.getFileNameJLabel().isVisible()) {
+				pat.getReferrals().add(fileName);
+			} 
+	
+			if ((departmentInput.length() > 0) && (nameInput.length() > 0)) {
+				pat.getReferrals().add(departmentInput+" : "+nameInput);
+			}
+		} catch (Exception e) {
+
+		}
+
+		// Clear all input
+		view.getFileNameJLabel().setVisible(false);
+		view.getDepartmentInput().setText("");
+		view.getNameInput().setText("");
+
+	}
+
+	private void selectReferral() {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		int returnVal = fc.showOpenDialog(null);
+		if (returnVal == 0) {
+			String file = fc.getSelectedFile().getName();
+			view.getFileNameJLabel().setText(file);
+			view.getFileNameJLabel().setVisible(true);
+		} else {
+			view.getFileNameJLabel().setVisible(false);
+		}
+
+	}
+
+	//
 	// 
 	/**
 	 * Convert the HashMap of appointments to a LinkedHashMap with keys as appointment times.

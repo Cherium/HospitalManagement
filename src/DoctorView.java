@@ -86,6 +86,8 @@ public class DoctorView {
 	private JButton btnToggle;
 	private JButton btnBookApt;
 	private JButton reqAvailChangeBtn;
+	private JButton btnSelectFile;
+	private JButton btnUpdateReferral;
 
 	private JLabel titleLabel;
 	private JLabel nursesLabel;
@@ -93,8 +95,12 @@ public class DoctorView {
 	private JLabel nameLabel;
 	private JLabel deptLabel;
 	private JLabel scheduleNameLabelWeek, scheduleNameLabelMonth;
+	private JLabel fileName;
 
 	private JList<String> nurses;
+
+	private JTextField departmentInput;
+	private JTextField nameInput;
 
 	private JTextArea patientInformation = new JTextArea(7, 90);
 	private JTextArea pastTreatments;
@@ -764,11 +770,12 @@ public class DoctorView {
 		patientPanel.setBackground(Color.WHITE);
 		patientPanel.setVisible(false);
 
-		JPanel topPanel = new JPanel(new MigLayout(""));
-		topPanel.setBackground(Color.WHITE);
-		topPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
-		topPanel.setPreferredSize(new Dimension(900, 100));
-		topPanel.setMaximumSize(new Dimension(905, 125));
+		JPanel topPanel = new JPanel(new MigLayout("wrap 1"));
+		JPanel appointmentPanel = new JPanel(new MigLayout());
+		appointmentPanel.setBackground(Color.WHITE);
+		appointmentPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
+		appointmentPanel.setPreferredSize(new Dimension(1300, 100));
+		appointmentPanel.setMaximumSize(new Dimension(1400, 125));
 		btnBookApt = new JButton("Book Appointment");
 
 		apptType = new JComboBox<String>();
@@ -789,23 +796,51 @@ public class DoctorView {
 		day.setEnabled(false);
 		initDaysinBox();
 
-		topPanel.add(new JLabel("Type:"));
-		topPanel.add(apptType);
+		appointmentPanel.add(new JLabel("Type:"));
+		appointmentPanel.add(apptType);
 
-		topPanel.add(new JLabel("Select Appointment: "));
-		topPanel.add(chooseAppt, "span, pushx, growx, wrap");
+		appointmentPanel.add(new JLabel("Select Appointment: "));
+		appointmentPanel.add(chooseAppt, "span, pushx, growx, wrap");
 
-		topPanel.add(new JLabel("Lab Date: "), "skip 2, align right");
-		topPanel.add(year, "sg c, split");
-		topPanel.add(month, "sg c, split");
-		topPanel.add(day, "sg c");
-		topPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
-		topPanel.add(labTime, "sg c");
+		appointmentPanel.add(new JLabel("Lab Date: "), "skip 2, align right");
+		appointmentPanel.add(year, "sg c, split");
+		appointmentPanel.add(month, "sg c, split");
+		appointmentPanel.add(day, "sg c");
+		appointmentPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
+		appointmentPanel.add(labTime, "sg c");
 
-		topPanel.add(btnBookApt, "skip 2, align right");
+		appointmentPanel.add(btnBookApt, "skip 2, align right");
+
+		JPanel referralPanel = new JPanel(new MigLayout("hidemode 3"));
+		referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
+		referralPanel.setPreferredSize(new Dimension(1300, 0));
+		referralPanel.setBackground(Color.WHITE);
+
+		btnSelectFile = new JButton("Select file");
+		fileName = new JLabel("Can't see me");
+		fileName.setVisible(false);
+
+		departmentInput = new JTextField(20);
+		nameInput = new JTextField(20);
+
+		btnUpdateReferral = new JButton("Assign referral");
+
+		referralPanel.add(new JLabel("Upload referral: "));
+		referralPanel.add(fileName);
+		referralPanel.add(btnSelectFile, "wrap");
+		referralPanel.add(new JLabel("Give referral: "));
+		referralPanel.add(departmentInput, "span 2");
+		referralPanel.add(nameInput, "wrap");
+		referralPanel.add(btnUpdateReferral);
+
+		topPanel.add(appointmentPanel, "north, span");
+		topPanel.add(referralPanel, "span");
 
 		patientPanel.add(topPanel, BorderLayout.NORTH);
-		// topPanel.setVisible(false);
+
+
+
+
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
 		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
@@ -1818,6 +1853,26 @@ public class DoctorView {
 	 */
 	public void setBtnAvailRequest(JButton bar) {
 		this.reqAvailChangeBtn = bar;
+	}
+
+	public JButton getBtnSelectFile() {
+		return btnSelectFile;
+	}
+
+	public JLabel getFileNameJLabel() {
+		return fileName;
+	}
+
+	public JTextField getDepartmentInput() {
+		return departmentInput;
+	}
+
+	public JTextField getNameInput() {
+		return nameInput;
+	}
+
+	public JButton getBtnUpdateFerral() {
+		return btnUpdateReferral;
 	}
 
 }

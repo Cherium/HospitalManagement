@@ -3,6 +3,11 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 4 APRIL Jenny
+# 12:12 
+* Completed uploading and assigning of referrals to a patient in DoctorMVC. A doctor can upload and/or assign referrals to a scheduled patient. If there is an uploaded file and an assigned referral, both referrals will be added to patient.
+* Found a bug where the referral list in PatientView is initialized as a blank list, when a patient actually has a list of referrals. The list is only updated when a new referral is added in PatientView. 
+
 ## 3 APRIL Jenny
 # 21:35 
 * Completed uploading of referrals in patient. The patient starts out with an empty list (JList) of referrals. Selecting a file via "Upload referral" will update the list (by updating the DefaultListModel) with the name of the file. 
