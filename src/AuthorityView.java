@@ -40,9 +40,6 @@ public class AuthorityView extends JFrame{
 		
 	private JLabel appointLabel;
 		private JLabel totalAppointLabel;
-	private JLabel appDayLabel;
-		private JLabel actualAppDayLabel;
-
 	private JLabel totalAppointDocLabel;
 	private JLabel totalAppointNurLabel;
 	
@@ -72,10 +69,14 @@ public class AuthorityView extends JFrame{
 		//sets frame containers attributes
 		setTitle(title);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		setSize(470,360);
 =======
 		setSize(600,500);
 >>>>>>> parent of 54654e0... Updating Authority
+=======
+		setSize(340,360);
+>>>>>>> parent of 25a57b9... Better accurate version of Authority
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -121,13 +122,8 @@ public class AuthorityView extends JFrame{
 		regNurseValLabel = new JLabel(""+nurVal);
 		regNurseValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		
-		appDayLabel = new JLabel("# of Upcoming Scheduled appointments in 24 hours: ");
-			appDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		actualAppDayLabel = new JLabel("");
-			actualAppDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-
-		appointLabel = new JLabel("# of Upcoming Scheduled appointments in 2 months: ");
+				
+		appointLabel = new JLabel("# of Upcoming Scheduled appointments: ");
 			appointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		totalAppointLabel = new JLabel("");
 			totalAppointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -166,16 +162,11 @@ public class AuthorityView extends JFrame{
 		statPanel.add(regNurseTotalLabel);
 		statPanel.add(regNurseValLabel, "wrap");
 
-		statPanel.add(appDayLabel);
-		statPanel.add(actualAppDayLabel, "wrap");
-
 		statPanel.add(appointLabel);
 		statPanel.add(totalAppointLabel, "wrap");
 
 		statPanel.add(totalAppointDocLabel, "wrap");
 		statPanel.add(totalAppointNurLabel, "wrap");
-
-		
 		
 =======
 		statPanel.add(departBaseLabel, "wrap");
@@ -236,12 +227,5 @@ public class AuthorityView extends JFrame{
 
 
 	
-	public JLabel getActualAppDayLabel(){
-		return actualAppDayLabel;
-	}
-
-	public void setActualAppDayLabel(JLabel label){
-		actualAppDayLabel = label;
-	}
 
 }

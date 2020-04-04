@@ -4,6 +4,7 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID\
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## 3 APRIL Jenny
 # 21:35 
 * Completed uploading of referrals in patient. The patient starts out with an empty list (JList) of referrals. Selecting a file via "Upload referral" will update the list (by updating the DefaultListModel) with the name of the file. 
@@ -22,6 +23,8 @@ Example: 10 mar 21:13 SAJID\
  accurately depicts upcoming appointments from today till 24 hours, or from today
  till 2 months
 
+=======
+>>>>>>> parent of 25a57b9... Better accurate version of Authority
 ## 02 apr 2pm
 =======
 ## 03 apr 06:00 Sajid
@@ -46,6 +49,7 @@ Example: 10 mar 21:13 SAJID\
     * created 'cancel appt' functionality for patient
         * still needs to check if a fine$ is applicable
 
+<<<<<<< HEAD
 
 
 ## 02 APRIL Jenny
@@ -69,6 +73,9 @@ Example: 10 mar 21:13 SAJID\
 ## 28 MARCH 21:19 Jenny
 * DoctorView: Added the two panels for scheduling patient appointments. The list of patients for viewing patient record is the same list used in scheduling. Two buttons are included that toggle between the two views. 
 ## 01 APRIL 22:12 Neil
+=======
+## 1 APRIL 22:12 Neil
+>>>>>>> parent of 25a57b9... Better accurate version of Authority
 * Finished the Receptionist Portal and has it display the statistics from total
 departments, patients, doctors, and nurses
 
