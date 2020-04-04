@@ -259,8 +259,23 @@ public class Database {
 		}
 		
 		
+		
+		
+		
+		
 		public void exportDbase()
 		{
+//			File tmp = new File(getClass().getResource("/temp/").getPath() );
+//			tmp.mkdir();
+//			//https://stackoverflow.com/questions/9658297/java-how-to-create-a-file-in-a-directory-using-relative-path/9658353
+//			File dbase = new File(tmp, "dbasee.txt");
+//			try {
+//				dbase.createNewFile();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
 			for(Map.Entry<String, UserSuperClass> i: users.entrySet())
 			{
 				if(i.getValue().getRole().compareTo("doctor") == 0)
@@ -300,6 +315,11 @@ public class Database {
 				}
 			}
 		}
+		
+		
+		
+		
+		
 
 	/**Getters and Setters*/	
 		public HashMap<String, UserSuperClass> getUsers() {
