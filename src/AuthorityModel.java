@@ -28,11 +28,12 @@ public class AuthorityModel extends UserSuperClass {
 	private String[] allPatientsUsernames;
 
 	//constructor
-	public AuthorityModel(String username, char[] password, String name, String[] strings) {
+	public AuthorityModel(String username, char[] password, String name, String[] avail) {
 
 		super(name, username, password);
 		setRole("authority");
 		
+		this.availability = arrayToLDTArray(avail);
 	}
 
 	/**
@@ -185,7 +186,7 @@ public class AuthorityModel extends UserSuperClass {
 			bob.append("\n");
 			
 		}
-
+		bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
 	

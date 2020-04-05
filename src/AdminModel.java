@@ -210,7 +210,7 @@ public class AdminModel extends UserSuperClass {
 			bob.append("\n");
 			
 		}
-
+		bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
 

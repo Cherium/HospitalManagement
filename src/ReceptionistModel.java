@@ -147,7 +147,7 @@ public class ReceptionistModel extends UserSuperClass {
     }
 
 
-    /**
+	    /**
 	 * prints out values for database export
 	 * @author Muhammad R
 	 * @return the string stored in dbase.txt
@@ -205,7 +205,7 @@ public class ReceptionistModel extends UserSuperClass {
 			bob.append("\n");
 			
 		}
-
+		bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
 	

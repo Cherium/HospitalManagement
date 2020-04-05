@@ -397,8 +397,20 @@ public class PatientModel extends UserSuperClass {
 		return Period.between(birthday, LocalDate.now()).getYears();
 	}
 	
+	public String toStringRecord()
+	{
+		StringBuilder bob = new StringBuilder();
+		bob.append(getRecordNotes() );
+		
+		
+		return bob.toString();
+	}
 	
-	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return the string stored in dbase.txt
+	 */
 	public String toStringDbase() {
 		StringBuilder bob = new StringBuilder();
 		bob.append(getRole());
@@ -438,6 +450,11 @@ public class PatientModel extends UserSuperClass {
 		
 	}
 	
+	/**
+	 * prints out values for database export
+	 * @author Muhammad R
+	 * @return the string stored in [patientUsername]Appt.txt
+	 */
 	public String toStringAppt() {
 		StringBuilder bob = new StringBuilder();
 		for(Map.Entry<String, ArrayList<LocalDateTime>> element: this.appointments.entrySet()) {
@@ -450,7 +467,7 @@ public class PatientModel extends UserSuperClass {
 
 			}
 		}
-		
+		bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
 	
