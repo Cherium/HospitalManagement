@@ -1,5 +1,7 @@
 
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
@@ -36,6 +38,10 @@ public class AdminModel extends UserSuperClass {
 		this.availability = arrayToLDTArray(avail);
 	}
 
+	public AdminModel(String username, char[] password, String name, LocalDateTime[] avail) {
+	
+	}
+
 
 
 
@@ -66,15 +72,15 @@ public class AdminModel extends UserSuperClass {
 		}
 		else if(selectedItem.compareTo("Admin") == 0)
 		{
-			//TODO
+			new CreateNewAdminController(new CreateNewAdminModel(), new CreateNewAdminView("Create a New Admin"));
 		}
 		else if(selectedItem.compareTo("Hospital Authority") == 0)
 		{
-			//TODO
+			new CreateAuthorityController(new CreateAuthorityModel(), new CreateAuthorityView("Create a New Authority"));
 		}
 		else if(selectedItem.compareTo("Receptionist") == 0)
 		{
-			//TODO
+			new CreateNewReceptionistController(new CreateNewReceptionistModel(), new CreateNewReceptionistView("Create a New Receptionist"));
 		}
 		
 	}
@@ -105,19 +111,18 @@ public class AdminModel extends UserSuperClass {
 		else if(selectedItem.compareTo("Nurse") == 0)
 		{
 			new EditNurseController(new EditNurseModel(), new EditNurseView("Edit an Account"));
- 
 		}
 		else if(selectedItem.compareTo("Admin") == 0)
 		{
-			//TODO
+			new EditAdminController(new EditAdminModel(), new EditAdminView("Edit an Account"));
 		}
 		else if(selectedItem.compareTo("Hospital Authority") == 0)
 		{
-			//TODO
+			new EditAuthorityController(new EditAuthorityModel(), new EditAuthorityView("Edit an Account"));
 		}
 		else if(selectedItem.compareTo("Receptionist") == 0)
 		{
-			//TODO
+			new EditReceptionistController(new EditReceptionistModel(), new EditReceptionistView("Edit an Account"));
 		}
 		
 	}
@@ -151,8 +156,8 @@ public class AdminModel extends UserSuperClass {
 		return "Department created!";
 
 	}
-	
-	
+
+
 	/**
 	 * prints out values for database export
 	 * @author Muhammad R
@@ -213,5 +218,8 @@ public class AdminModel extends UserSuperClass {
 
 		return bob.toString();
 	}
+
+	
+
 
 }

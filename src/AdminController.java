@@ -1,4 +1,14 @@
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
+import net.miginfocom.swing.MigLayout;
 /**
  * Controller for this MVC construct
  * Handles all interaction between the associated model class and the view class.
@@ -43,7 +53,10 @@ public class AdminController {
 	public void initView()
 	{
 		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
-		
+	
+	
+		//list of 14 next shifts of this user to print to text field
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
 
 	}
 	
@@ -72,6 +85,9 @@ public class AdminController {
 				));
 		
 		view.getCrtDepartment().addActionListener(e -> addDepartment() );
+
+		view.getReqAvailChangeBtn().addActionListener(e -> updateAvailability() );
+
 		
 	}
 	
@@ -101,6 +117,36 @@ public class AdminController {
 		{
 			view.showDialogToUser("Enter a Department Name!");
 		}
+		
+	}
+
+	/**
+	 * update availability in database and view, based on user entered values
+	 * 
+	 * 
+	 */
+	public void updateAvailability() {
+		
+		String[] newHours= new String[14];
+		
+
+		//retrieve all comboBoxes storing hour values as Strings
+		int i = 0;
+		for(JComboBox j: view.getAvailTimes())
+		{
+			//get String from box and add to String array
+			newHours[i++] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+		}
+		
+		//update availability for this User
+		model.setAvailability(model.s.updateSchedule(newHours) );
+		
+		//show success to user
+		view.showDialogToUser("Availability Request Approved");
+
+		//reset availabilty shown to patient
+		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
+		
 		
 	}
 }
