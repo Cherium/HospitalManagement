@@ -104,6 +104,7 @@ public class EditNurseController {
 			user.setName(tempName);
 			user.setPassword(tempPass);		
 			personalInformationView.setVisible(false);
+			personalInformationView.showDialogToUser(returnMessage);
 			System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());
 			
 

@@ -1,17 +1,30 @@
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
 
 
 /**
@@ -29,6 +42,8 @@ import javax.swing.border.EmptyBorder;
 public class AdminView extends JFrame {
 	
 	private JPanel contentPanel;
+	private JPanel schedPanel;
+
 	
 	private JButton btnReturn;
     ////Added for Account creaiton and deletion
@@ -36,19 +51,31 @@ public class AdminView extends JFrame {
 	private JButton delAccount;
 	private JButton editAccount;
     private JButton crtDepartment;
-    private JButton delDepartment;
+	private JButton delDepartment;
+	private JButton reqAvailChangeBtn;
+
+	
     
-    private JLabel welcomeLabel;
+	private JLabel welcomeLabel;
+	JTextArea schedList;
+	JScrollPane schedListScroll;
+
     
     private JTextField createDeptText;
     
     
     private JComboBox<String> rolesDropDown;
 	
+	private JComboBox<String> year, month, day;
 	
-    
-    
-    
+	private JComboBox<String>[] availTimes = new JComboBox[14];	//stores al drop-down menues for availability change; index 0= sunday start // index 13= sat end
+	
+	String[] times = {
+			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
+			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
+	};
+	
+
     
     
     
@@ -66,7 +93,7 @@ public class AdminView extends JFrame {
 		//sets frame containers attributes
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(400,400);
+		setSize(800,800);
 		setLocationRelativeTo(null);
 		
 		initializeGUI();
@@ -119,8 +146,26 @@ public class AdminView extends JFrame {
 				accountPanel.add(crtAccount);
 				accountPanel.add(delAccount);
 				accountPanel.add(editAccount);
-				
-				
+	
+	//inner bottom panel
+	schedPanel = new JPanel(new MigLayout("") );
+	schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
+	schedPanel.setPreferredSize(new Dimension(325, 200));
+
+	schedList = new JTextArea();
+		schedList.setFont( new Font("monospaced", Font.PLAIN, 10) );	//https://stackoverflow.com/questions/40901128/how-would-i-fix-this-jtextarea-formatting-error
+	//wrap availability box in scrollpane
+	schedListScroll = new JScrollPane(schedList
+			, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	schedListScroll.setPreferredSize(new Dimension(400, 200));
+	
+	schedPanel.add(schedListScroll, "sg d");
+
+
+//inner panel
+JPanel availChangePanel = createAvailabilityChangePanel();
+	reqAvailChangeBtn = new JButton("Send Request");
+	availChangePanel.add(reqAvailChangeBtn, "span, align right");
 				
 				
 				
@@ -161,6 +206,8 @@ public class AdminView extends JFrame {
 		//contentPanel.add(accountPanel, "grow, wrap");	
 		contentPanel.add(accountPanel, "wrap");			//print label, wrap to the next row which will be 200 pixels lower
 		contentPanel.add(deptPanel, "wrap");
+		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
+		contentPanel.add(availChangePanel, " sg b");
 
 			
 			
@@ -183,6 +230,106 @@ public class AdminView extends JFrame {
 		JOptionPane.showMessageDialog(contentPanel, message);
 	}	
 	
+	/**
+	 * create schedule change panel- sets menus to instance variables
+	 * @author Sajid C
+	 * @return availability panel containing all labels and time menus
+	 */
+	public JPanel createAvailabilityChangePanel()
+	{
+		String[] days = {"Sunday", "", "Monday","","Tuesday","","Wednesday","","Thursday","","Friday","","Saturday"};
+
+		JPanel availChangePanel = new JPanel(new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]") );
+		availChangePanel.setPreferredSize(new Dimension(325, 200));
+		availChangePanel.setBorder(BorderFactory.createTitledBorder("Request Availability Change"));
+		
+		availChangePanel.add(new JLabel("Start"), "span 2");
+		availChangePanel.add(new JLabel("End"), " wrap");
+		
+		for (int i = 0; i < this.availTimes.length; i=i+2) 
+		{
+			availChangePanel.add(new JLabel(days[i]) );
+			availTimes[i] = new JComboBox(times);
+			availTimes[i+1] = new JComboBox(times);
+			availChangePanel.add(availTimes[i] );
+			availChangePanel.add(availTimes[i+1] );
+		}
+		
+		return availChangePanel;
+
+		
+	}
+
+	
+	/**
+	 * create a view for year
+	 * @author Sajid C
+	 * @return drop down menu for years
+	 */
+	public JComboBox<String> initYearCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 120; i++) {
+			temp.addItem((LocalDate.now().getYear()-i)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * 
+	 * create box for month
+	 * @author Sajid C
+	 * @return dropdown menu of months in a year
+	 */
+	public JComboBox<String> initMonthCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 12; i++) {
+			temp.addItem((i+1)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * create box for day
+	 * @author Sajid C
+	 * @return empty list that will store days
+	 */
+	public JComboBox<String> initDayCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * populate days menu with days based on current month selection
+	 * @author Sajid C
+	 */
+	public void initDaysinBox()
+	{//
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
+		}
+	}
+
+
 	
 	
 /**Getter and Setter Methods*/
@@ -285,6 +432,29 @@ public class AdminView extends JFrame {
 
 	public void setCreateDeptText(JTextField createDeptText) {
 		this.createDeptText = createDeptText;
+	}
+
+	public JButton getReqAvailChangeBtn() {
+		return reqAvailChangeBtn;
+	}
+
+	public void setReqAvailChangeBtn(JButton reqAvailChangeBtn) {
+		this.reqAvailChangeBtn = reqAvailChangeBtn;
+	}
+
+	public JComboBox<String>[] getAvailTimes() {
+		return availTimes;
+	}
+
+	public void setAvailTimes(JComboBox<String>[] availTimes) {
+		this.availTimes = availTimes;
+	}
+	public JTextArea getSchedList() {
+		return schedList;
+	}
+
+	public void setSchedList(JTextArea schedList) {
+		this.schedList = schedList;
 	}
 
 }
