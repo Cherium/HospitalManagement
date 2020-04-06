@@ -76,63 +76,53 @@ public class AuthorityModel extends UserSuperClass {
 			}
 			if(i.getValue().getRole().compareTo("doctor") == 0 ){
 				doctorNum++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 			}
 			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
-=======
 
 
 
-				DoctorModel doc = (DoctorModel) Main.dbase.get(c);
-				String department = doc.getDepartment();
+				// DoctorModel doc = (DoctorModel) Main.dbase.get(c);
+				// String department = doc.getDepartment();
 
-				HashMap<String, ArrayList<LocalDateTime>> appointments = doc.getAppointments();
+				// HashMap<String, ArrayList<LocalDateTime>> appointments = doc.getAppointments();
 
-				///NOTICE!! This thing crashes if you reopen Authority after creating a new doctor
-				//It might be because there's a null point java error.
-				//The new doctor does not have any new appointments
-				//Check with Jeremy
+				// ///NOTICE!! This thing crashes if you reopen Authority after creating a new doctor
+				// //It might be because there's a null point java error.
+				// //The new doctor does not have any new appointments
+				// //Check with Jeremy
 
-				for (Map.Entry<String, ArrayList<LocalDateTime>> j:appointments.entrySet()){
-					for(LocalDateTime t:j.getValue()){
-						boolean isAfter = (t.isAfter(currentDate))&&(t.isBefore(currentDate.plusDays(60)));
-						if(isAfter){
-							if(!docCheck){
-								upcomeDoc++;
-								docCheck = true;
-							}
-						}
-					}
-				}//*/
+				// for (Map.Entry<String, ArrayList<LocalDateTime>> j:appointments.entrySet()){
+				// 	for(LocalDateTime t:j.getValue()){
+				// 		boolean isAfter = (t.isAfter(currentDate))&&(t.isBefore(currentDate.plusDays(60)));
+				// 		if(isAfter){
+				// 			if(!docCheck){
+				// 				upcomeDoc++;
+				// 				docCheck = true;
+				// 			}
+				// 		}
+				// 	}
+				// }//*/
 
-				System.out.println("Doctor "+doc.getName()+" is part of "+department);
-				System.out.println("Doctor "+doc.getName()+" has served "+upcomeDoc+" patients");
-				updateCount(department);
+				// System.out.println("Doctor "+doc.getName()+" is part of "+department);
+				// System.out.println("Doctor "+doc.getName()+" has served "+upcomeDoc+" patients");
+				// updateCount(department);
 
 			}
 			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
-				NurseModel nur = (NurseModel) Main.dbase.get(c);
-				String department = nur.getDepartment();
-				System.out.println("Nurse "+nur.getName()+" is part of "+department);
+				// NurseModel nur = (NurseModel) Main.dbase.get(c);
+				// String department = nur.getDepartment();
+				// System.out.println("Nurse "+nur.getName()+" is part of "+department);
 
 
->>>>>>> parent of 6ebc7e2... Small print edit
-=======
-			}
-			if(i.getValue().getRole().compareTo("nurse") == 0 ){
-				nurseNum++;
->>>>>>> parent of c5562b1... Updated Authority April 6
-			}
-=======
 			}
 			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
 			}
->>>>>>> parent of 8cea123... Merge pull request #3 from Cherium/combine2
+			if(i.getValue().getRole().compareTo("nurse") == 0 ){
+				nurseNum++;
+			}
 		}
 	}
 
