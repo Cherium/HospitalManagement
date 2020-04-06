@@ -53,7 +53,7 @@ public class CreateAuthorityModel extends UserSuperClass {
 				
 		/**store in database if all checks pass*/
 		
-        String[] strings = null;
+        String[] strings = new String[0];
 		Main.dbase.put(username, new AuthorityModel(username, pwd, name, strings));
 		return "Account successfully created!";
 	}
