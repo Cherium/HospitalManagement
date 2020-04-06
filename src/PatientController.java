@@ -65,7 +65,6 @@ public class PatientController {
 		view.getSex().setSelectedItem(model.getSex());
 
 		view.setReferrals(model.getReferrals());
-		view.setupReferralModel();
 		
 		//list of departments to set in combobox-- initial is Cardiology
 		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );

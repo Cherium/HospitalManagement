@@ -48,21 +48,32 @@ public class AuthorityController {
 
 		//Gets all the necessary information about users and appointments
 		model.gatherInfo();
-		model.departInfo();
+		
+		
+		//To be adjusted to hopefully account for nurses and patients
+		//model.departInfo();
 
 
 		//Adjusts any of the JLabels in accordance to the above
-		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
+		view.getWelLabel().setText("Hello, "+ model.getName() );
 
-		view.getDepLabel().setText(""+model.getDepNum());
-		view.getPatientLabel().setText(""+model.getPatientNum());
-		view.getDoctorLabel().setText(""+model.getDoctorNum());
-		view.getNurseLabel().setText(""+model.getNurseNum());
+		view.getdepNumTotalL().setText(""+model.getDepNum());
+		view.getregPatTotalL().setText(""+model.getPatientNum());
+		view.getregDocTotalL().setText(""+model.getDoctorNum());
+		view.getregNurTotalL().setText(""+model.getNurseNum());
 
-		view.getActualAppDayLabel().setText(""+model.getUpcomeDay());
-		view.getTotalAppointLabel().setText(""+model.getUpcomeMonth());
+		view.getupcomeDayTotalL().setText(""+model.getUpcomeDay());
+		view.getupcomeMonTotalL().setText(""+model.getUpcomeMonth());
 
+		view.getdocToday().setText(""+model.getDocToday());
 
+		view.getcardioCL().setText(""+model.getCardio());
+		view.getnephroCL().setText(""+model.getNephro());
+		view.getneuroCL().setText(""+model.getNeuro());
+		view.getrecepCL().setText(""+model.getRecep());
+		view.geterCL().setText(""+model.getER());
+
+		
 
 	}
 	
@@ -74,7 +85,6 @@ public class AuthorityController {
 	 */
 	public void initListeners() 
 	{
-		
 	}
 
 }

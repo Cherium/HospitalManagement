@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -88,7 +87,6 @@ public class NurseController {
 		
 		//list of 14 next shifts of this user to print to text field
 		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
-	
 	}
 	
 	/**
@@ -120,66 +118,13 @@ public class NurseController {
 		//book a patients apointment
 		view.getBookAptBtn().addActionListener(e -> bookAppointment() );
 		
-		//Select a file via a JFileChooser
-		view.getBtnSelectFile().addActionListener(e -> selectReferral());
-
-		//Upload a referral for a patient
-		view.getBtnUploadReferral().addActionListener(e -> assignReferral());
-
 	}
 
 
 
 	
 	/**
-	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
-	 * @author Jenny
-	 */
-	private void assignReferral() {
-		int selectedIndex = view.getPatList().getSelectedIndex();
-
-		try {
-			DoctorModel doc = (DoctorModel) Main.dbase.get(model.getAssignedDocUsername());
-			PatientModel pat = (PatientModel) Main.dbase.get(doc.getScheduledPatientsUsernames().get(selectedIndex));
-			String fileName = view.getFileName().getText();
-	
-			if (view.getFileName().isVisible()) {
-				pat.getReferrals().add(fileName);
-				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
-			} else {
-				view.showDialogToUser("No file selected!");
-			}
-	
-		} catch (Exception e) {
-			view.showDialogToUser("No patient selected!");
-		}
-
-		// Clear all input
-		view.getFileName().setVisible(false);
-
-	}
-
-	/**
-	 * Select a referral file via a JFileChooser
-	 * @author Jenny
-	 */
-	private void selectReferral() {
-		JFileChooser fc = new JFileChooser();
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int returnVal = fc.showOpenDialog(null);
-		if (returnVal == 0) {
-			String file = fc.getSelectedFile().getName();
-			view.getFileName().setText(file);
-			view.getFileName().setVisible(true);
-		} else {
-			view.getFileName().setVisible(false);
-		}
-
-	}
-
-	/**
-	 * update doctor box and Appointments box when department box option changes -
-	 * Booking panel
+	 * update doctor box and Appointments box when department box option changes - Booking panel
 	 * 
 	 * @author Sajid C
 	 */
