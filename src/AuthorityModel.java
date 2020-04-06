@@ -78,6 +78,7 @@ public class AuthorityModel extends UserSuperClass {
 				doctorNum++;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			}
 			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
@@ -126,6 +127,12 @@ public class AuthorityModel extends UserSuperClass {
 				nurseNum++;
 >>>>>>> parent of c5562b1... Updated Authority April 6
 			}
+=======
+			}
+			if(i.getValue().getRole().compareTo("nurse") == 0 ){
+				nurseNum++;
+			}
+>>>>>>> parent of 8cea123... Merge pull request #3 from Cherium/combine2
 		}
 	}
 
