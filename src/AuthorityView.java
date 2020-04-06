@@ -29,29 +29,27 @@ public class AuthorityView extends JFrame{
 	//Sign out button
 	private JButton btnReturn;
 
+	
+	private JLabel welcomeLabel;
 
-	//Labels
-	private JLabel welcomeL;
+	private JLabel departBaseLabel;
+		private JLabel departValLabel;
+	private JLabel patientTotalLabel;
+		private JLabel patientValueLabel;
 
-	private JLabel depNumTotalL;
+	private JLabel regDoctorTotalLabel;
+		private JLabel regDoctorValLabel;
+	private JLabel regNurseTotalLabel;
+		private JLabel regNurseValLabel;
+		
+	private JLabel appointLabel;
+		private JLabel totalAppointLabel;
+	private JLabel appDayLabel;
+		private JLabel actualAppDayLabel;
 
-	private JLabel regPatTotalL;
-
-	private JLabel regDocTotalL;
-
-	private JLabel regNurTotalL;
-
-	private JLabel upcomeDayTotalL;
-
-	private JLabel upcomeMonTotalL;
-
-	private JLabel cardioCL;
-	private JLabel neuroCL;
-	private JLabel nephroCL;
-	private JLabel recepCL;
-	private JLabel erCL;
-
-	private JLabel docToday;
+	private JLabel totalAppointDocLabel;
+	private JLabel totalAppointNurLabel;
+	
 
 	//Panels for JLabels
 	private JPanel contentPanel;
@@ -71,7 +69,7 @@ public class AuthorityView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setSize(600,420);
+		setSize(470,360);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -84,234 +82,168 @@ public class AuthorityView extends JFrame{
 	 * @author Neil M
 	 * #TODO Organize the java labels in a different fashion. Change names
 	 */
-	public void initializeGUI(){
-		//Welcome Panel set up		
-		welcomeL = new JLabel();
-			welcomeL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+	public void initializeGUI() {
+		
+		//Welcome Panel set up
+		welcomeLabel = new JLabel();
+			welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		contentPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );		//initialize jpanel and set its layout
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
-		add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
+			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
+
 
 		//Sign out panel
 		btnReturn = new JButton("Sign Out");
 			btnReturn.addActionListener(e -> setVisible(false) );
 
 
+
 		//All other JLabels necessary
-		depNumTotalL = new JLabel();
-			depNumTotalL.setFont(new Font("Tahoma", Font.PLAIN, 13));		
-		regPatTotalL = new JLabel();
-			regPatTotalL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		regDocTotalL = new JLabel();
-			regDocTotalL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		regNurTotalL = new JLabel();
-			regNurTotalL.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		departBaseLabel = new JLabel("# of Departments: ");
+			departBaseLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		departValLabel = new JLabel();
+			departValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+
+
+		patientTotalLabel = new JLabel("# of Registered Patients: ");
+			patientTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			
+		patientValueLabel = new JLabel();
+			patientValueLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+
+
+		regDoctorTotalLabel = new JLabel("# of Registered Doctors: ");
+			regDoctorTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		regDoctorValLabel = new JLabel();
+			regDoctorValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+
+
+
+		regNurseTotalLabel = new JLabel("# of Registered Nurses: ");
+			regNurseTotalLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		regNurseValLabel = new JLabel();
+		regNurseValLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
 		
-		upcomeDayTotalL = new JLabel();
-			upcomeDayTotalL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		upcomeMonTotalL = new JLabel();
-			upcomeMonTotalL.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		appDayLabel = new JLabel("# of Upcoming Scheduled appointments in 24 hours: ");
+			appDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		actualAppDayLabel = new JLabel();
+			actualAppDayLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
+		appointLabel = new JLabel("# of Upcoming Scheduled appointments in 2 months: ");
+			appointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		totalAppointLabel = new JLabel();
+			totalAppointLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		totalAppointDocLabel = new JLabel("# of Doctors today: ");
+			totalAppointDocLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		totalAppointNurLabel = new JLabel("# of Nurses today: ");
+			totalAppointNurLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+			
 
 		
-		//Compile non-Department stats JLabels in a single panel
+		//Compile all JLabels in a single panel
 		statPanel= new JPanel(new MigLayout("wrap 2", "[] 16 []") );
 			statPanel.setBorder(BorderFactory.createTitledBorder("Statistics here"));
 
 
 
-
 		
-		statPanel.add(new JLabel("# of Departments: "));
-		statPanel.add(depNumTotalL, "wrap");
+		statPanel.add(departBaseLabel);
+		statPanel.add(departValLabel, "wrap");
 	
-		statPanel.add(new JLabel("# of Registered Patients: "));
-		statPanel.add(regPatTotalL, "wrap");
+		statPanel.add(patientTotalLabel);
+		statPanel.add(patientValueLabel, "wrap");
 		
 
 
-		statPanel.add(new JLabel("# of Registered Doctors: "));
-		statPanel.add(regDocTotalL, "wrap");
+		statPanel.add(regDoctorTotalLabel);
+		statPanel.add(regDoctorValLabel, "wrap");
 
-		statPanel.add(new JLabel("# of Registered Nurses: "));
-		statPanel.add(regNurTotalL, "wrap");
+		statPanel.add(regNurseTotalLabel);
+		statPanel.add(regNurseValLabel, "wrap");
 
-		statPanel.add(new JLabel("# of Upcoming Scheduled appointments in 24 hours: "));
-		statPanel.add(upcomeDayTotalL, "wrap");
+		statPanel.add(appDayLabel);
+		statPanel.add(actualAppDayLabel, "wrap");
 
-		statPanel.add(new JLabel("# of Upcoming Scheduled appointments in 2 months: "));
-		statPanel.add(upcomeMonTotalL, "wrap");
+		statPanel.add(appointLabel);
+		statPanel.add(totalAppointLabel, "wrap");
 
-
-
-		docToday = new JLabel();
-			docToday.setFont(new Font("Tahoma", Font.PLAIN, 13));
-
-		//Required Doctor for today
-		statPanel.add(new JLabel("# of Doctor needed for today: "));
-		statPanel.add(docToday, "wrap");
-
-		//Required Nurse for today, implement is possible
-		//statPanel.add(new JLabel("# of Nurse needed for today: "), "wrap");
-
-
-
-
-		cardioCL = new JLabel();
-		cardioCL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		neuroCL = new JLabel();
-		neuroCL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nephroCL = new JLabel();
-		nephroCL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		recepCL = new JLabel();
-		recepCL.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		erCL = new JLabel();
-		erCL.setFont(new Font("Tahoma", Font.PLAIN, 13));//*/
-
-
-
-		statPanel.add(new JLabel ("# of Doctors in Cardio: "));
-		statPanel.add(cardioCL, "wrap");
-		statPanel.add(new JLabel ("# of Doctors in Nephrology: "));
-		statPanel.add(nephroCL, "wrap");
-		statPanel.add(new JLabel ("# of Doctors in Neurology: "));
-		statPanel.add(neuroCL, "wrap");
-		statPanel.add(new JLabel ("# of Doctors in Receptionist: "));
-		statPanel.add(recepCL, "wrap");
-		statPanel.add(new JLabel ("# of Doctors in ER: "));
-		statPanel.add(erCL, "wrap");
-
+		statPanel.add(totalAppointDocLabel, "wrap");
+		statPanel.add(totalAppointNurLabel, "wrap");
 
 		
 		
 		
-		contentPanel.add(welcomeL, "center, wrap");
+		contentPanel.add(welcomeLabel, "center, wrap");
 		contentPanel.add(btnReturn, "center, wrap");
 		contentPanel.add(statPanel, BorderLayout.CENTER);
 		setVisible(true);
-
-				
-		}
-
-
-	/**Getter and Setter Methods*/	
-
-	public JLabel getWelLabel() {
-		return welcomeL;
-	}
-
-	public void setwelLabel(JLabel label) {
-		welcomeL = label;
 	}
 	
-	public JLabel getdepNumTotalL (){
-		return depNumTotalL;
-	}
-	public void setdepNumTotalL (JLabel label){
-		depNumTotalL = label;
-	}
+	/**Getter and Setter Methods*/	
 
-	public JLabel getregPatTotalL (){
-		return regPatTotalL;
-	}
-	public void setregPatTotalL(JLabel label){
-		regPatTotalL = label;
+	public JLabel getWelcomeLabel() {
+		return welcomeLabel;
 	}
 
-	public JLabel getregDocTotalL (){
-		return regDocTotalL;
+	public void setWelcomeLabel(JLabel welcomeLabel) {
+		this.welcomeLabel = welcomeLabel;
 	}
-	public void setregDocTotalL(JLabel label){
-		regDocTotalL = label;
-	}
-
-	public JLabel getregNurTotalL (){
-		return regNurTotalL;
-	}
-	public void setregNurTotalL(JLabel label){
-		regNurTotalL = label;
+	
+	public JLabel getDepLabel(){
+		return departValLabel; 
+		
 	}
 
-	public JLabel getupcomeDayTotalL (){
-		return upcomeDayTotalL;
-	}
-	public void setupcomeDayTotalL(JLabel label){
-		upcomeDayTotalL = label;
+	public void setDepLabel(JLabel label){
+		departValLabel = label;
 	}
 
-	public JLabel getupcomeMonTotalL (){
-		return upcomeMonTotalL;
-	}
-	public void setupcomeMonTotalL(JLabel label){
-		upcomeMonTotalL = label;
+	public JLabel getPatientLabel(){
+		return patientValueLabel; 
 	}
 
-	public JLabel getcardioCL(){
-		return cardioCL;
+	public void setPatientLabel(JLabel label){
+		patientValueLabel = label;
 	}
 
-	public void setcardioCL(JLabel label){
-		cardioCL = label;
+	public JLabel getDoctorLabel(){
+		return regDoctorValLabel; 
 	}
 
-	public JLabel getneuroCL(){
-		return neuroCL;
+	public void setDoctorLabel(JLabel label){
+		regDoctorValLabel = label;
 	}
 
-	public void setneuroCL(JLabel label){
-		neuroCL= label;
+	public JLabel getNurseLabel(){
+		return regNurseValLabel; 
 	}
 
-
-	public JLabel getnephroCL(){
-		return nephroCL;
+	public void setNurseLabel(JLabel label){
+		regNurseValLabel = label;
 	}
 
-	public void setnephroCL(JLabel label){
-		nephroCL = label;
+	public JLabel getTotalAppointLabel(){
+		return totalAppointLabel;
 	}
 
-
-	public JLabel getrecepCL(){
-		return recepCL;
+	public void setTotalAppointLabel(JLabel label){
+		totalAppointLabel = label;
+	}
+	
+	public JLabel getActualAppDayLabel(){
+		return actualAppDayLabel;
 	}
 
-	public void setrecepCL(JLabel label){
-		recepCL = label;
+	public void setActualAppDayLabel(JLabel label){
+		actualAppDayLabel = label;
 	}
-
-
-	public JLabel geterCL(){
-		return erCL;
-	}
-
-	public void seterCL(JLabel label){
-		erCL = label;
-	}
-
-	public JLabel getdocToday(){
-		return docToday;
-	}
-
-	public void setdocToday(JLabel label){
-		docToday = label;
-	}
-
-
-	/*
-
-	public JLabel get(){
-		return ;
-	}
-
-	public void set(JLabel label){
-		= label;
-	}
-
-	*/
-
-
 
 }

@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.Map;
 
 /**
@@ -20,30 +20,20 @@ public class AuthorityModel extends UserSuperClass {
 	private int patientNum;
 	private int doctorNum;
 	private int nurseNum;
+
 	private int upcomeMonth;
 	private int upcomeDay;
-
-	//Required for today
-	private int upcomeDoc;
-	private int upcomeNur;
-
-	//Department related
-	private int cardioCount;
-	private int nephroCount;
-	private int neuroCount;
-	private int recepCount;
-	private int erCount;
-
 
 
 	private String[] allPatientsUsernames;
 
 	//constructor
-	public AuthorityModel(String username, char[] password, String name, String[] strings) {
+	public AuthorityModel(String username, char[] password, String name, String[] avail) {
 
 		super(name, username, password);
 		setRole("authority");
-
+		
+		this.availability = arrayToLDTArray(avail);
 	}
 
 	/**
@@ -62,158 +52,82 @@ public class AuthorityModel extends UserSuperClass {
 		patientNum = 0;
 		doctorNum = 0;
 		nurseNum = 0;
-		upcomeDoc = 0;
 
-		cardioCount = 0;
-		nephroCount = 0;
-		neuroCount = 0;
-		recepCount = 0;
-		erCount = 0;
-		//Checks for if a Doctor has been checked
-		boolean docCheck, nurCheck;
-
-
-
-
+		
+		
+		
 
 		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet()){
-			String c = i.getValue().getUsername();
-			docCheck = false;
-			nurCheck = false;
-
 			if(i.getValue().getRole().compareTo("patient") == 0 ){
-				patientNum++;
-
+				patientNum++; 
+				String c = i.getValue().getUsername();
 				PatientModel pat = (PatientModel) Main.dbase.get(c);
-
-
-
 				HashMap<String, ArrayList<LocalDateTime>> appointments = pat.getAppointments();
 				for (Map.Entry<String, ArrayList<LocalDateTime>> j:appointments.entrySet()){
 					for(LocalDateTime t:j.getValue()){
-						boolean isAfter = (t.isAfter(currentDate));
-						if(isAfter){
-								boolean isBefore1 = t.isBefore(currentDate.plusDays(60));
-								if(isBefore1)
-									upcomeMonth++;
-								boolean isBefore2 = t.isBefore(currentDate.plusDays(1));
-								if(isBefore2)
-									upcomeDay++;//*/
-						}
+						boolean isBefore1 = (t.isBefore(currentDate.plusDays(60))&&(t.isAfter(currentDate)));
+						if(isBefore1)
+							upcomeMonth++;
+						boolean isBefore2 = (t.isBefore(currentDate.plusDays(1))&&(t.isAfter(currentDate)));
+						if(isBefore2)
+							upcomeDay++;
 					}
 				}
 			}
 			if(i.getValue().getRole().compareTo("doctor") == 0 ){
-
 				doctorNum++;
-
-
-
-				DoctorModel doc = (DoctorModel) Main.dbase.get(c);
-				String department = doc.getDepartment();
-
-				HashMap<String, ArrayList<LocalDateTime>> appointments = doc.getAppointments();
-
-				///NOTICE!! This thing crashes if you reopen Authority after creating a new doctor
-				//It might be because there's a null point java error.
-				//The new doctor does not have any new appointments
-				//Check with Jeremy
-
-				for (Map.Entry<String, ArrayList<LocalDateTime>> j:appointments.entrySet()){
-					for(LocalDateTime t:j.getValue()){
-						boolean isAfter = (t.isAfter(currentDate))&&(t.isBefore(currentDate.plusDays(60)));
-						if(isAfter){
-							if(!docCheck){
-								upcomeDoc++;
-								docCheck = true;
-							}
-						}
-					}
-				}//*/
-
-				//System.out.println("Doctor "+doc.getName()+" is part of "+department);
-				//System.out.println("Doctor "+doc.getName()+" has served "+upcomeDoc+" patients");
-				updateCount(department);
-
 			}
 			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
-				NurseModel nur = (NurseModel) Main.dbase.get(c);
-				String department = nur.getDepartment();
-				//System.out.println("Nurse "+nur.getName()+" is part of "+department);
-
-
 			}
 		}
-		System.out.println("Total number of doctors needed today: "+upcomeDoc);
-	}
-
-	public void updateCount(String department){
-		switch (department){
-			case "Cardiology":
-				cardioCount++;
-				break;
-			case "Nephrology":
-				nephroCount++;
-				break;
-			case "Neurology":
-				neuroCount++;
-				break;
-			case "Receptionist":
-				recepCount++;
-				break;
-			case "ER":
-				erCount++;
-				break;
-			}
 	}
 
 
 	/*
-	* Reference - https://www.java2novice.com/java-collections-and-util/arraylist/iterator/
 	* #To do
-	* # of patients seen by a department (Connect to below)
-	* # of doctors/nurses in a department (Figure out a checker)
-		* # of appointments in a department (Need to specify... Find a way to track)
-	##### Figured out a checker for Doctor. Now just needs to add nurses and patients
-	##### Appointments can be attached here
-	PRIMARY - Nurse, Patient --> Appointments
-	* # of appointments scheduled for a doctor/nurse (Can do one for doctors)
-	//DONE
-	* # of patients scheduled by a doctor (This doesn't make sense)
+	* # of patients seen by a department
+	* # of doctors/nurses in a department
+	* # of appointments scheduled for a doctor/nurse
+	* # of appointments in a department
+	* # of patients scheduled by a doctor
 	# @author Neil M
-
-	Don't delete just yet
 	*/
 	public void departInfo(){
-
-		/*
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
 		System.out.println();
-		System.out.println("SPECIAL: "+temp);
-
-		Iterator<String> itr = temp.iterator();
-        while(itr.hasNext()){
-            System.out.println("Iterator event "+itr.next());
-        }
-
 
 		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet()){
 			i.getValue().getDeptList();
-			//System.out.println("Value get Dept List: "+i);
+			System.out.println(i);
 			i.getValue();
-			//System.out.println("Value "+i);
+			System.out.println(i);
 			//{
-
+				
 				//String c = i.getValue().getUsername();
 			//}
-
-		}//*/
+		}
 	}
 
 
 
+		/*
+	* #To do - find a better method to track this
+	* # of patients seen by a department
+	* # of doctors/nurses in a department
+	* # of appointments scheduled for a doctor/nurse
+	* # of appointments in a department
+	* # of patients scheduled by a doctor
+	* @author Neil M
+	*/
 
+	public int getDepNum(){
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+		
+		return temp.size();
+	}
+
+	
 	/**
 	 * prints out values for database export
 	 * @author Muhammad R
@@ -235,7 +149,7 @@ public class AuthorityModel extends UserSuperClass {
 		bob.append("\t");
 		bob.append("null");
 		bob.append("\t");
-		bob.append("null");
+		bob.append("null");	
 		bob.append("\t");
 		bob.append("0");
 		bob.append("\t");
@@ -248,17 +162,17 @@ public class AuthorityModel extends UserSuperClass {
 		bob.append("null");
 		bob.append("\t");
 		bob.append("null");
-		bob.append("\t");
+		bob.append("\t");		
 		bob.append("null");
 
+		
 
-
-
+		
 		return bob.toString();
-
+		
 	}
-
-
+	
+	
 	/**
 	 * prints out values for database export
 	 * @author Muhammad R
@@ -266,36 +180,23 @@ public class AuthorityModel extends UserSuperClass {
 	 */
 	public String toStringAvailability() {
 		StringBuilder bob = new StringBuilder();
-
+		
 		for(int i= 0; i<super.getAvailability().length; i ++) {
 			bob.append(super.getAvailability()[i]);
 			bob.append("\n");
-
+			
 		}
 		bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
-
-
-
-		/*
-	* Gets the department total number here
-	* @author Neil M
-	*/
-
-	public int getDepNum(){
-		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
-
-		return temp.size();
-	}
-
+	
 	//Getters and Setters
 
 
 	public int getUpcomeMonth(){
 		return upcomeMonth;
 	}
-
+	
 	public int getUpcomeDay(){
 		return upcomeDay;
 	}
@@ -308,7 +209,7 @@ public class AuthorityModel extends UserSuperClass {
 	public void setPatientNum(int val){
 		patientNum = val;
 	}
-
+	
 	public int getDoctorNum(){
 		return doctorNum;
 	}
@@ -325,42 +226,11 @@ public class AuthorityModel extends UserSuperClass {
 		nurseNum = val;
 	}
 
-	public int getCardio(){
-		return cardioCount;
-	}
-
-	public int getNephro(){
-		return nephroCount;
-	}
-
-	public int getNeuro(){
-		return neuroCount;
-	}
-
-	public int getRecep(){
-		return recepCount;
-	}
-
-	public int getER(){
-		return erCount;
-	}
-
-	public int getDocToday(){
-		return upcomeDoc;
-	}
-
-	public int getNurToday(){
-		return upcomeNur;
-	}
 
 
 	public String[] getAllPatientsUsernames() {
 		return allPatientsUsernames;
 	}
-
-
-
-
-
+	
 
 }
