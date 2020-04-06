@@ -4,6 +4,7 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID\
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 ## 5 APRIL Neil
 # 1:48
@@ -15,6 +16,8 @@ Example: 10 mar 21:13 SAJID\
 *** Hopefully can do the same for nurses and patients but it's a low priority
 
 >>>>>>> parent of 6ebc7e2... Small print edit
+=======
+>>>>>>> parent of c5562b1... Updated Authority April 6
 ## 6 apr 08:41 Sajid
 * started a database export function; still working on it
     * need to figure out how to universally store and access database files on any computer this program runs on

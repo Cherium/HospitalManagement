@@ -77,6 +77,7 @@ public class AuthorityModel extends UserSuperClass {
 			if(i.getValue().getRole().compareTo("doctor") == 0 ){
 				doctorNum++;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			}
 			if(i.getValue().getRole().compareTo("nurse") == 0 ){
 				nurseNum++;
@@ -119,6 +120,11 @@ public class AuthorityModel extends UserSuperClass {
 
 
 >>>>>>> parent of 6ebc7e2... Small print edit
+=======
+			}
+			if(i.getValue().getRole().compareTo("nurse") == 0 ){
+				nurseNum++;
+>>>>>>> parent of c5562b1... Updated Authority April 6
 			}
 		}
 	}
