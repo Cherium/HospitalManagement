@@ -131,8 +131,8 @@ public class AuthorityModel extends UserSuperClass {
 					}
 				}//*/
 
-				System.out.println("Doctor "+doc.getName()+" is part of "+department);
-				System.out.println("Doctor "+doc.getName()+" has served "+upcomeDoc+" patients");
+				//System.out.println("Doctor "+doc.getName()+" is part of "+department);
+				//System.out.println("Doctor "+doc.getName()+" has served "+upcomeDoc+" patients");
 				updateCount(department);
 
 			}
@@ -140,7 +140,7 @@ public class AuthorityModel extends UserSuperClass {
 				nurseNum++;
 				NurseModel nur = (NurseModel) Main.dbase.get(c);
 				String department = nur.getDepartment();
-				System.out.println("Nurse "+nur.getName()+" is part of "+department);
+				//System.out.println("Nurse "+nur.getName()+" is part of "+department);
 
 
 			}
