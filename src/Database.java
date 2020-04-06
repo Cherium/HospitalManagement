@@ -1,19 +1,20 @@
+import java.util.HashMap;
 import java.util.*;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.*;
+import java.util.Scanner;
+import java.util.ArrayList;
+
 
 /**
  * @author Sajid C
  * Create a Databsae and import CSV into that database
  */
-public class Database {
+public class Database{
 
 		//main database accessed everywhere	
 		public HashMap<String, UserSuperClass> users;
@@ -253,191 +254,20 @@ public class Database {
 								}
 						
 								
-						
+	
 						//close the scanner
 						sc.close();
 								
+								
+								
+
+			
+			
+			
+			
+			
 			
 		}
-		
-		
-		
-		
-		
-		
-		/**
-		 * Create temp database files, verify these files work with importDatabase() and then save temp files as actual dbase files
-		 * --tested from main
-		 * @author Sajid C
-		 * @throws IOException 
-		 */
-		public void exportDbase() throws IOException
-		{
-/*attempt 1			
-			File tmp = new File(getClass().getResource("/temp/").getPath() );
-			tmp.mkdir();
-			//https://stackoverflow.com/questions/9658297/java-how-to-create-a-file-in-a-directory-using-relative-path/9658353
-			File dbase = new File(tmp, "dbasee.txt");
-			try {
-				dbase.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-*/			
-
-/*attempt two
-			//https://www.baeldung.com/java-how-to-create-a-file
-			//create a path object (that may not yet exist) and try to create the specified file at the specified path
-			String path = System.getProperty("user.dir");
-			Path tempFolder = Paths.get(path+"/temp/");
-			if(!Files.exists(tempFolder))
-				Files.createDirectory(tempFolder);
-			
-			Path tempDbase = Paths.get("../temp/dbase.txt");
-			if(!Files.exists(tempDbase))
-				Files.createFile(tempDbase);
-			
-			//create a writer to the dbase file
-			BufferedWriter writer = Files.newBufferedWriter(tempDbase, Charset.forName("UTF-8"));
-*/			
-			StringBuilder tmp = new StringBuilder();	//builds dbase.txt
-			
-			for(Map.Entry<String, UserSuperClass> i: users.entrySet())
-			{
-				if(i.getValue().getRole().compareTo("doctor") == 0)
-				{
-					DoctorModel user = (DoctorModel) i.getValue();
-					
-					//write entry for main database
-					tmp.append(user.toStringDbase() );
-					tmp.append("\n");
-					
-					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
-					
-					System.out.println(user.toStringDbase() );
-				}
-				
-				else if(i.getValue().getRole().compareTo("nurse")== 0)
-				{
-					NurseModel user = (NurseModel) i.getValue();
-					
-					//write entry for main database
-					tmp.append(user.toStringDbase() );
-					tmp.append("\n");
-					
-					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
-					
-					System.out.println(user.toStringDbase() );
-				}
-				
-				else if(i.getValue().getRole().compareTo("patient")== 0)
-				{
-					PatientModel user = (PatientModel) i.getValue();
-					
-					//write entry for main database
-					tmp.append(user.toStringDbase() );
-					tmp.append("\n");
-					
-					//write entry for appointments
-//					writeToFile("../temp/" + user.getUsername() +"Appt.txt", user.toStringAppt() );
-					
-					//write entry for patient record
-//					writeToFile("../temp/" + user.getUsername() +".txt", user.toStringRecord() );
-					
-					System.out.println(user.toStringDbase() );
-				}
-				
-				else if(i.getValue().getRole().compareTo("admin")== 0)
-				{
-					AdminModel user = (AdminModel) i.getValue();
-					
-					//write entry for main database
-					tmp.append(user.toStringDbase() );
-					tmp.append("\n");
-					
-					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
-					
-					System.out.println(user.toStringDbase() );
-				}
-				
-				else if(i.getValue().getRole().compareTo("authority")== 0)
-				{
-					AuthorityModel user = (AuthorityModel) i.getValue();
-					
-					//write entry for main database
-					tmp.append(user.toStringDbase() );
-					tmp.append("\n");
-					
-					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
-					
-					System.out.println(user.toStringDbase() );
-				}
-				
-				else if(i.getValue().getRole().compareTo("receptionist")== 0)
-				{
-					ReceptionistModel user = (ReceptionistModel) i.getValue();
-					
-					//write entry for main database
-					tmp.append(user.toStringDbase() );
-					tmp.append("\n");
-					
-					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
-					
-					System.out.println(user.toStringDbase() );
-				}
-			}
-
-			tmp.deleteCharAt(tmp.length()-1);
-			//writer.write(tmp.toString() );
-			//writer.close();
-
-			//check that the temporary external database can load into the program without errors, and if errors exist, keep the old database
-//			try {
-				//importDatabase("../temp/");
-//				System.out.println("Successful Internal Database Extraction");
-//				
-//				
-//			} catch (Exception e) {
-//				System.out.println("Unsuccessful Internal Database Extraction");
-//				e.printStackTrace();
-//				// TODO: handle exception
-//			}
-	
-		}
-		
-		
-		
-		
-		
-		/**
-		 * @author Sajid C
-		 * @param fileNameToCreate file path to create if it doesn't exist, and to then write to
-		 * @param textToWrite block of text to write to the file
-		 * @throws IOException
-		 */
-		public void writeToFile(String fileNameToCreate, String textToWrite) throws IOException 
-		{
-			//create the filename if it doesn't exist
-			Path temp = Paths.get(fileNameToCreate);
-			if(!Files.exists(temp))
-				Files.createFile(temp);
-			
-			//create an appender to the dbase file
-			BufferedWriter appender = Files.newBufferedWriter(temp, Charset.forName("UTF-8"));
-			
-			//write to the new file
-			appender.write(textToWrite );
-			
-			appender.close();
-				
-		}
-		
 
 	/**Getters and Setters*/	
 		public HashMap<String, UserSuperClass> getUsers() {

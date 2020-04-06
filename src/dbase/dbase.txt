@@ -1,8 +1,8 @@
 role	username	password	name	department	nursesUsernames	assignedDoctorUsername	address	phoneNumber	email	amountDue	dob	blood	sex	docPatUsernames
 doctor	doctor	doctor	Jane Brown	Cardiology	nancy,drew	null	null	0	null	0	0	null	null	patient,patient2
 nurse	nurse	nurse	Cathy Joy	Cardiology	null	doctor	null	0	null	0	0	null	null	null
-patient	patient	patient	Dave Smith	null	null	null	99 University Way	4039999999	patient@ucalgary.ca	25	1990-10-10	AB-	Male	null
-patient	patient2	patient2	Danielle Peters	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	patient	patient	Dave Smith	null	null	null	99 University Way	4039999999	patient@ucalgary.ca	25	1990/10/10	AB-	Male	null
+patient	patient2	patient2	Danielle Peters	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018/9/2	A+	Female	null
 admin	admin	admin	Admy Aden	null	null	null	null	0	null	0	0	null	null	null
 nurse	nancy	nancy	Henry Ford	Cardiology	null	doctor	null	0	null	0	0	null	null	null
 nurse	drew	drew	Jason Chan	Cardiology	null	doctor	null	0	null	0	0	null	null	null

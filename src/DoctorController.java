@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -161,75 +160,12 @@ public class DoctorController {
 			}
 		});
 
-		// Books appointment between a selected patient and this doctor
 		view.getBtnBookApt().addActionListener(e -> bookAppointment());
 
-		// Updates the availability of the doctor or the selected nurse
 		view.getBtnAvailRequest().addActionListener(e -> updateAvailability());
-
-		// Select a file via JFileChooser
-		view.getBtnSelectFile().addActionListener(e -> selectReferral());
-
-		// Upload a referral file for a selected patient
-		view.getBtnUpdateFerral().addActionListener(e -> assignReferral());
 	}
 
-	/**
-	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
-	 * @author Jenny
-	 */
-	private void assignReferral() {
-		int selectedIndex = view.getListPatients().getSelectedIndex();
-
-		try {
-			PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(selectedIndex));
-			String fileName = view.getFileNameJLabel().getText();
-			String departmentInput = view.getDepartmentInput().getText();
-			String nameInput = view.getNameInput().getText();
-	
-			if (view.getFileNameJLabel().isVisible()) {
-				pat.getReferrals().add(fileName);
-				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
-			} 
-	
-			if ((departmentInput.length() > 0) && (nameInput.length() > 0)) {
-				pat.getReferrals().add(departmentInput+" : "+nameInput);
-				view.showDialogToUser("Referral generated for "+pat.getName());
-			}
-
-			if (!view.getFileNameJLabel().isVisible() && (departmentInput.length() == 0) && (nameInput.length() == 0)) {
-				view.showDialogToUser("No file selected and no input detected!");
-			}
-		} catch (Exception e) {
-			view.showDialogToUser("No patient selected!");
-		}
-
-		// Clear all input
-		view.getFileNameJLabel().setVisible(false);
-		view.getDepartmentInput().setText("");
-		view.getNameInput().setText("");
-
-	}
-
-	/**
-	 * Select a referral file via a JFileChooser
-	 * @author Jenny
-	 */
-	private void selectReferral() {
-		JFileChooser fc = new JFileChooser();
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int returnVal = fc.showOpenDialog(null);
-		if (returnVal == 0) {
-			String file = fc.getSelectedFile().getName();
-			view.getFileNameJLabel().setText(file);
-			view.getFileNameJLabel().setVisible(true);
-		} else {
-			view.getFileNameJLabel().setVisible(false);
-		}
-
-	}
-
-	//
+	// 
 	// 
 	/**
 	 * Convert the HashMap of appointments to a LinkedHashMap with keys as appointment times.
