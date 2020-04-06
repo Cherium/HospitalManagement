@@ -3,6 +3,18 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+<<<<<<< HEAD
+=======
+## 5 APRIL Neil
+# 1:48
+* Authority Portal Adjustments
+** Authority Portal actively displays how many doctors are in each existing department
+*** Hopefully could make it dynamic and include new Department Labels
+*** Hopefully could make it so it includes nurses and serviced patients
+** Doctor section updates to show the amount of doctors needed per day
+*** Hopefully can do the same for nurses and patients but it's a low priority
+
+>>>>>>> parent of 6ebc7e2... Small print edit
 ## 6 apr 08:41 Sajid
 * started a database export function; still working on it
     * need to figure out how to universally store and access database files on any computer this program runs on
