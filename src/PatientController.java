@@ -20,7 +20,7 @@ public class PatientController {
 	
 	private PatientModel model;
 	private PatientView view;
-	
+	private boolean isFileUploaded = false;
 	
 	
 	
@@ -130,7 +130,7 @@ public class PatientController {
 		view.getSave().addActionListener(e -> updateInfo() );
 		view.getChangePassword().addActionListener(e -> changePass() );
 		
-		view.getBtnAddReferral().addActionListener(e -> selectReferralToUpload() );
+		//view.getBtnAddReferral().addActionListener(e -> selectReferralToUpload() );
 
 		//department is changed
 		view.getDepartmentDropDown().addActionListener(e -> updateDocBox() );
@@ -145,10 +145,10 @@ public class PatientController {
 		view.getCancelApptBtn().addActionListener(e -> cancelAppt() );
 		
 		//Select a file via a JFileChooser
-		//view.getBtnSelectFile().addActionListener(e -> selectReferral());
+		view.getBtnSelectFile().addActionListener(e -> selectReferral());
 
 		//Upload a referral for a patient
-		//view.getBtnUploadReferral().addActionListener(e -> assignReferral());
+		view.getBtnUploadReferral().addActionListener(e -> assignReferral());
 
 
 	}
@@ -156,19 +156,63 @@ public class PatientController {
 	/**
 	 * Opens a dialog window, allowing the selection of a file for upload.
 	 */
-	public void selectReferralToUpload() {
+//	public void selectReferralToUpload() {
+//		JFileChooser fc = new JFileChooser();
+//		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//		int returnVal = fc.showOpenDialog(null);
+//		if (returnVal == 0) {
+//			String file = fc.getSelectedFile().getName();
+//			model.getReferrals().add(file);
+//			// Update the list of referrals shown.
+//			view.setReferrals(model.getReferrals());
+//			view.setupReferralModel();
+//		}
+//	}
+	/**
+	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
+	 * @author Jenny, Sajid C
+	 */
+	private void assignReferral() {
+		//int selectedIndex = view.getPatList().getSelectedIndex();
+
+		try {
+			//DoctorModel doc = (DoctorModel) Main.dbase.get(model.getAssignedDocUsername());
+			PatientModel pat = this.model;
+			String fileName = view.getFileName().getText();
+	
+			if (view.getFileName().getText().compareTo("") != 0) {
+				isFileUploaded = true;
+				pat.getReferrals().add(fileName);
+				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
+			} else {
+				view.showDialogToUser("No file selected!");
+			}
+	
+		} catch (Exception e) {
+			view.showDialogToUser("No patient selected!");
+		}
+
+		// Clear all input
+		view.getFileName().setText("");
+
+	}
+
+	/**
+	 * Select a referral file via a JFileChooser
+	 * @author Jenny
+	 */
+	private void selectReferral() {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int returnVal = fc.showOpenDialog(null);
 		if (returnVal == 0) {
 			String file = fc.getSelectedFile().getName();
-			model.getReferrals().add(file);
-			// Update the list of referrals shown.
-			view.setReferrals(model.getReferrals());
-			view.setupReferralModel();
+			view.getFileName().setText(file);
+		} else {
+			view.getFileName().setText("");
 		}
+
 	}
-	
 	
 	/**
 	 * Cancel the selected view appointment on the button press; fine if late cancellation; update view
@@ -233,15 +277,19 @@ public class PatientController {
 	 * @return ease-of-use early exit flag
 	 */
 	public int bookAppointment() {
-//TODO maybe need to add this patient to the doctors patient list; depends on how doctor retrieves its patient list
+
 		//get selected appointment type
 		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
 		
-//		//get selected patient
-//		int selectedIndex = view.getPatList().getSelectedIndex();
-		
-//		//ensure a patient was selected
-//		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
+		//check that referral was uploaded
+		if(!isFileUploaded)
+		{
+			view.showDialogToUser("No referral uploaded");
+			return -1;
+		}
+		else
+			isFileUploaded = false;	//reset
+			
 		
 		//book a doctor appointment
 		if(appointmentType.compareTo("Doctor Appointment") == 0)

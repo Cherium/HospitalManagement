@@ -155,7 +155,7 @@ public class NurseController {
 		}
 
 		// Clear all input
-		view.getFileName().setVisible(false);
+		view.getFileName().setText("");
 
 	}
 

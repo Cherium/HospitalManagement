@@ -122,7 +122,7 @@ public class PatientView extends JFrame{
 	{
 
 //Main panel background
-		contentPanel = new JPanel(new MigLayout("debug") );		//initialize jpanel and set its layout
+		contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
 			contentPanel.setBackground(new Color(231,239,255));
 			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
@@ -146,7 +146,7 @@ public class PatientView extends JFrame{
 
 //Inner Panels
 			
-			infoPanel = new JPanel(new MigLayout("debug, wrap 2", "[align right] 16 [align left]") );
+			infoPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
 				infoPanel.setMinimumSize(new Dimension(450, 50));	//extends jpanel in this sg to have 1/2 the width of booking panel
 				infoPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 				infoPanel.setBackground(new Color(255, 247, 231));
@@ -259,11 +259,8 @@ public class PatientView extends JFrame{
 				credentialPanel.add(pwdLabel);
 				credentialPanel.add(passwordInput, "wrap");
 				credentialPanel.add(pwd2Label);
-				credentialPanel.add(passwordInputConfirm, "wrap 20");
-				
+				credentialPanel.add(passwordInputConfirm, "wrap 20");			
 				credentialPanel.add(changePassword, "span, center, wrap");
-
-			setupReferralPanel();
 				
 				
 			//inner panel
@@ -355,7 +352,6 @@ public class PatientView extends JFrame{
 			contentPanel.add(credentialPanel, "sg a, wrap");
 			contentPanel.add(bookPanel, "span, wrap");
 			contentPanel.add(cancelPanel, "span, growx, wrap");
-			contentPanel.add(referralPanel);
 			
 
 			
@@ -367,16 +363,16 @@ public class PatientView extends JFrame{
 	/**
 	 * Setup the list of referrals for patient. A button is added that allows the upload of a referral file.
 	 */
-	public void setupReferralPanel() {
-		referralPanel = new JPanel(new MigLayout("wrap 1", "align left"));
-		referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
-		setupReferralModel();
-		JList<String> referralList = new JList<String> (model);
-		referralList.setPreferredSize(new Dimension(300,200));
-		btnAddReferral = new JButton("Upload referral");
-		referralPanel.add(btnAddReferral, "south");
-		referralPanel.add(referralList);
-	}
+//	public void setupReferralPanel() {
+//		referralPanel = new JPanel(new MigLayout("wrap 1", "align left"));
+//		referralPanel.setBorder(BorderFactory.createTitledBorder("Referrals"));
+//		setupReferralModel();
+//		JList<String> referralList = new JList<String> (model);
+//		referralList.setPreferredSize(new Dimension(300,200));
+//		btnAddReferral = new JButton("Upload referral");
+//		referralPanel.add(btnAddReferral, "south");
+//		referralPanel.add(referralList);
+//	}
 
 	/**
 	 * Update the referral list in referral panel.

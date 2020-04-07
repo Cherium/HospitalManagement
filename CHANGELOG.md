@@ -4,6 +4,13 @@ Timestamp Format: __day month HOURS:MINUTES (military time) USER__
 Example: 10 mar 21:13 SAJID\
 
 
+## 7 apr 07:51 Sajid
+* Patient and Nurse
+    * moved referral stuff inside booking panel
+    * changed referral label into textfield
+        * check is made for an empty textbox
+    *added colours and aligned components
+
 ## 6 APRIL Jenny
 # 21:13
 * Fixed null pointer exception issue mentioned by Neil where creating a new doctor results in the stats in authority view to not show up. 
