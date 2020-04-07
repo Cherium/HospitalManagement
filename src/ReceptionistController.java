@@ -22,6 +22,7 @@ public class ReceptionistController {
 	
 	private ReceptionistModel model;
 	private ReceptionistView view;
+	private boolean isFileUploaded = false;
 	
 	
 	
@@ -118,7 +119,7 @@ public class ReceptionistController {
 		view.getBtnUploadReferral().addActionListener(e -> assignReferral());
 		
 	}
-
+	
 	/**
 	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
 	 * @author Jenny
@@ -127,11 +128,11 @@ public class ReceptionistController {
 		int selectedIndex = view.getPatList().getSelectedIndex();
 
 		try {
-
 			PatientModel pat = (PatientModel) Main.dbase.get(model.getAllPatientsUsernames()[selectedIndex]);
 			String fileName = view.getFileName().getText();
 	
-			if (view.getFileName().isVisible()) {
+			if (view.getFileName().getText().compareTo("") != 0) {
+				isFileUploaded = true;
 				pat.getReferrals().add(fileName);
 				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
 			} else {
@@ -143,7 +144,7 @@ public class ReceptionistController {
 		}
 
 		// Clear all input
-		view.getFileName().setVisible(false);
+		view.getFileName().setText("");
 
 	}
 
@@ -158,9 +159,8 @@ public class ReceptionistController {
 		if (returnVal == 0) {
 			String file = fc.getSelectedFile().getName();
 			view.getFileName().setText(file);
-			view.getFileName().setVisible(true);
 		} else {
-			view.getFileName().setVisible(false);
+			view.getFileName().setText("");
 		}
 
 	}
@@ -199,6 +199,15 @@ public class ReceptionistController {
 		
 		//get selected appointment type
 		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
+		
+		//check that referral was uploaded
+		if(!isFileUploaded)
+		{
+			view.showDialogToUser("No referral uploaded");
+			return -1;
+		}
+		else
+			isFileUploaded = false;	//reset
 		
 		//get selected patient
 		int selectedIndex = view.getPatList().getSelectedIndex();

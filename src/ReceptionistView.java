@@ -58,7 +58,6 @@ public class ReceptionistView extends JFrame{
 	private JLabel birth;
 	private JLabel blood;
 	private JLabel sex;
-	private JLabel fileName;
 
 	private JButton btnReturn;
 	private JButton reqAvailChangeBtn;
@@ -72,6 +71,7 @@ public class ReceptionistView extends JFrame{
 	private JTextField phText;
 	private JTextField emailText;
 	private JTextField amountText;
+	private JTextField fileName;
 	
 	JList patList;
 	JTextArea schedList;
@@ -117,9 +117,10 @@ public class ReceptionistView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setSize(700,700);
+		setMinimumSize(new Dimension(1000, 800));
+		//setSize(700,700);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		initializeGUI();
 	}
@@ -137,13 +138,16 @@ public class ReceptionistView extends JFrame{
 
 
 		//Main panel background
-				contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
+				contentPanel = new JPanel(new MigLayout("align 50% 50%") );		//initialize jpanel and set its layout
 					contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+					contentPanel.setBackground(new Color(231,239,255));
 					
 					btnReturn = new JButton("Sign Out");
 						btnReturn.addActionListener(e -> setVisible(false) );
+						btnReturn.setBackground(new Color(154,50,50));
+						btnReturn.setForeground(Color.WHITE);
 					welcomeLabel = new JLabel();
-						welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
+						welcomeLabel.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 36));
 		
 				//add scrolling to main container
 				JScrollPane scroll = new JScrollPane(contentPanel
@@ -157,7 +161,7 @@ public class ReceptionistView extends JFrame{
 		//inner panel
 		listPanel= new JPanel(new MigLayout("") );
 			listPanel.setBorder(BorderFactory.createTitledBorder("Select Patient"));
-			
+			listPanel.setBackground(new Color(255, 247, 231));
 
 			listPanel.add(new JLabel("Patients List:"), "wrap");
 		
@@ -170,6 +174,7 @@ public class ReceptionistView extends JFrame{
 		infoPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
 			infoPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 			infoPanel.setPreferredSize(new Dimension(450, 200));
+			infoPanel.setBackground(new Color(255, 247, 231));
 		
 			//Labels
 			
@@ -214,7 +219,9 @@ public class ReceptionistView extends JFrame{
 		JPanel bookPanel = new JPanel(new MigLayout("") );
 			bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 			bookPanel.setPreferredSize(new Dimension(900, 50));
-			bookPanel.setMaximumSize(new Dimension(905, 125));
+			bookPanel.setMaximumSize(new Dimension(905, 300));
+			bookPanel.setBackground(new Color(255, 247, 231));
+			
 			bookAptBtn = new JButton("Book Appointment");
 			
 			apptType = new JComboBox<String>();
@@ -239,51 +246,62 @@ public class ReceptionistView extends JFrame{
 				day.setEnabled(false);
 				initDaysinBox();
 				
+			fileName = new JTextField();		
+			btnSelectFile = new JButton("Select file");
+			btnUploadReferral = new JButton("Upload");
+				
 			bookPanel.add(new JLabel("Type:"));
 			bookPanel.add(apptType);
 			
 			bookPanel.add(new JLabel("Department:"), "gapleft 35, align right" );
-			bookPanel.add(departmentDropDown, "growx, align left, sg a");
+			bookPanel.add(departmentDropDown, "growx, align left, sg e");
 			
-			bookPanel.add(new JLabel("Lab Date: "), "align right");
+			bookPanel.add(new JLabel("Lab Date: "), "gapleft 30, align right");
 			bookPanel.add(year, "sg c, split");
 			bookPanel.add(month, "sg c, split");
-			bookPanel.add(day, "sg c, wrap");
+			bookPanel.add(day, "sg c, span, pushx, wrap");	//span final column to edge of JPanel and push to extend column all the way to edge
 			
 			bookPanel.add(new JLabel("Select Doctor: "), "skip 2, align right");
-			bookPanel.add(chooseDoc, "sg a, align left");
+			bookPanel.add(chooseDoc, "sg e, align left");
 			
 			bookPanel.add(new JLabel("Time: "), "align right");
 			bookPanel.add(labTime, "sg c, wrap");
 			
 			bookPanel.add(new JLabel("Select Appointment: "), "skip 2 , align right");
-			bookPanel.add(chooseAppt, "span 2, growx");
+			bookPanel.add(chooseAppt, "sg e, wrap");
 			
-			bookPanel.add(bookAptBtn, "align right");
+			bookPanel.add(new JLabel("Referral:"), "skip 2, align right");
+			bookPanel.add(fileName, "sg e, align left");
+			bookPanel.add(btnSelectFile, "sg b, split, span 2, align left");
+			bookPanel.add(btnUploadReferral, "sg b, wrap 20");
 			
-		JPanel referPanel = new JPanel(new MigLayout("hidemode 3"));
-			referPanel.setBorder(BorderFactory.createTitledBorder("Upload Referral"));
-			referPanel.setPreferredSize(new Dimension(900, 50));
-			referPanel.setMaximumSize(new Dimension(905, 125));
 			
-			fileName = new JLabel();
-			fileName.setVisible(false);
-
-			btnSelectFile = new JButton("Select file");
-
-			btnUploadReferral = new JButton("Upload");
-
-
-			referPanel.add(new JLabel("Referral: "));
-			referPanel.add(fileName);
-			referPanel.add(btnSelectFile, "wrap");
-			referPanel.add(btnUploadReferral);
-		
+			bookPanel.add(bookAptBtn, "spanx, align right");
+			
+//		JPanel referPanel = new JPanel(new MigLayout("hidemode 3"));
+//			referPanel.setBorder(BorderFactory.createTitledBorder("Upload Referral"));
+//			referPanel.setPreferredSize(new Dimension(900, 50));
+//			referPanel.setMaximumSize(new Dimension(905, 125));
+//			
+//			fileName = new JLabel();
+//			fileName.setVisible(false);
+//
+//			btnSelectFile = new JButton("Select file");
+//
+//			btnUploadReferral = new JButton("Upload");
+//
+//
+//			referPanel.add(new JLabel("Referral: "));
+//			referPanel.add(fileName);
+//			referPanel.add(btnSelectFile, "wrap");
+//			referPanel.add(btnUploadReferral);
+//		
 		
 		//inner panel
 		schedPanel = new JPanel(new MigLayout("") );
 			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
 			schedPanel.setPreferredSize(new Dimension(325, 200));
+			schedPanel.setBackground(new Color(255, 247, 231));
 
 			schedList = new JTextArea();
 				schedList.setFont( new Font("monospaced", Font.PLAIN, 10) );	//https://stackoverflow.com/questions/40901128/how-would-i-fix-this-jtextarea-formatting-error
@@ -297,6 +315,7 @@ public class ReceptionistView extends JFrame{
 		
 		//inner panel
 		JPanel availChangePanel = createAvailabilityChangePanel();
+			availChangePanel.setBackground(new Color(255, 247, 231));
 			reqAvailChangeBtn = new JButton("Send Request");
 			availChangePanel.add(reqAvailChangeBtn, "span, align right");
 		
@@ -314,7 +333,7 @@ public class ReceptionistView extends JFrame{
 		contentPanel.add(welcomeLabel, "wrap");
 		contentPanel.add(listPanel, "sg b");
 		contentPanel.add(infoPanel, "sg b, wrap");
-		contentPanel.add(referPanel, "span, growx");
+		//contentPanel.add(referPanel, "span, growx");
 		contentPanel.add(bookPanel, "span, growx");
 		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
 		contentPanel.add(availChangePanel, " sg b");
@@ -978,7 +997,7 @@ public class ReceptionistView extends JFrame{
 		return btnSelectFile;
 	}
 
-	public JLabel getFileName() {
+	public JTextField getFileName() {
 		return fileName;
 	}
 

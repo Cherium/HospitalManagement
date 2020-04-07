@@ -100,7 +100,7 @@ public class PatientView extends JFrame{
 	{
 		//create frame container
 		setTitle(title);
-		setMinimumSize(new Dimension(1000, 800));
+		setMinimumSize(new Dimension(1000, 700));
 		//setPreferredSize(new Dimension(1000, 1000));
 		setMaximumSize(new Dimension(1005, 1005));
 		//setSize(700,700);
@@ -240,7 +240,7 @@ public class PatientView extends JFrame{
 					
 		//Inner Panel		
 			JPanel credentialPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
-				credentialPanel.setBorder(BorderFactory.createTitledBorder("Patient Credentials"));
+				credentialPanel.setBorder(BorderFactory.createTitledBorder(""));
 				credentialPanel.setBackground(new Color(255, 247, 231));
 			
 		//Labels
@@ -255,7 +255,11 @@ public class PatientView extends JFrame{
 			
 		//Buttons
 				changePassword = new JButton("Change Password");
+				cancelApptBtn = new JButton("Cancel Appointment");
 			
+		//JComboBox
+				cancelAppt = new JComboBox<String>();
+				
 		//Add components to inner panel
 				credentialPanel.add(usernameTitleLabel);
 				credentialPanel.add(usernameLabel, "wrap");
@@ -263,8 +267,11 @@ public class PatientView extends JFrame{
 				credentialPanel.add(passwordInput, "wrap");
 				credentialPanel.add(pwd2Label);
 				credentialPanel.add(passwordInputConfirm, "wrap 20");			
-				credentialPanel.add(changePassword, "span, center, wrap");
+				credentialPanel.add(changePassword, "span, center, wrap 60");
 				
+				credentialPanel.add(new JLabel("List of Upcoming Appointments:"), "align left, span, wrap 10");
+				credentialPanel.add(cancelAppt, "span, gapleft 6, split");
+				credentialPanel.add(cancelApptBtn);
 				
 			//inner panel
 			JPanel bookPanel = new JPanel(new MigLayout("") );
@@ -332,17 +339,17 @@ public class PatientView extends JFrame{
 				
 				
 				
-		//Inner Panel
-			
-			JPanel cancelPanel = new JPanel(new MigLayout("") );
-				cancelPanel.setBorder(BorderFactory.createTitledBorder("List of Upcoming Appointments"));
-				cancelPanel.setBackground(new Color(255, 247, 231));
-				
-				cancelAppt = new JComboBox<String>();
-				cancelApptBtn = new JButton("Cancel Appointment");
-				
-				cancelPanel.add(cancelAppt);
-				cancelPanel.add(cancelApptBtn, "gapleft 10");
+//		//Inner Panel
+//			
+//			JPanel cancelPanel = new JPanel(new MigLayout("") );
+//				cancelPanel.setBorder(BorderFactory.createTitledBorder("List of Upcoming Appointments"));
+//				cancelPanel.setBackground(new Color(255, 247, 231));
+//				
+//				cancelAppt = new JComboBox<String>();
+//				cancelApptBtn = new JButton("Cancel Appointment");
+//				
+//				cancelPanel.add(cancelAppt);
+//				cancelPanel.add(cancelApptBtn, "gapleft 10");
 				
 				
 				
@@ -354,7 +361,7 @@ public class PatientView extends JFrame{
 			contentPanel.add(infoPanel, "sg a");
 			contentPanel.add(credentialPanel, "sg a, wrap");
 			contentPanel.add(bookPanel, "span, wrap");
-			contentPanel.add(cancelPanel, "span, growx, wrap");
+			//contentPanel.add(cancelPanel, "span, growx, wrap");
 			
 
 			

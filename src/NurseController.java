@@ -22,7 +22,7 @@ public class NurseController {
 	
 	private NurseModel model;
 	private NurseView view;
-	
+	private boolean isFileUploaded = false;
 	
 	
 	
@@ -143,7 +143,8 @@ public class NurseController {
 			PatientModel pat = (PatientModel) Main.dbase.get(doc.getScheduledPatientsUsernames().get(selectedIndex));
 			String fileName = view.getFileName().getText();
 	
-			if (view.getFileName().isVisible()) {
+			if (view.getFileName().getText().compareTo("") != 0) {
+				isFileUploaded = true;
 				pat.getReferrals().add(fileName);
 				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
 			} else {
@@ -170,9 +171,8 @@ public class NurseController {
 		if (returnVal == 0) {
 			String file = fc.getSelectedFile().getName();
 			view.getFileName().setText(file);
-			view.getFileName().setVisible(true);
 		} else {
-			view.getFileName().setVisible(false);
+			view.getFileName().setText("");
 		}
 
 	}
@@ -211,6 +211,15 @@ public class NurseController {
 		//get selected appointment type
 		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
 		
+		//check that referral was uploaded
+		if(!isFileUploaded)
+		{
+			view.showDialogToUser("No referral uploaded");
+			return -1;
+		}
+		else
+			isFileUploaded = false;	//reset
+				
 		//get selected patient
 		int selectedIndex = view.getPatList().getSelectedIndex();
 		
