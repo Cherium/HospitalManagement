@@ -228,7 +228,7 @@ public class NurseView extends JFrame{
 			chooseDoc = new JComboBox<String>();
 			labTime = new JComboBox<String>(times);
 				labTime.setEnabled(false);
-			year = initYearCombo();
+			year = initYearComboForward();
 				year.setEnabled(false);
 				year.addActionListener(e -> initDaysinBox());
 			month = initMonthCombo();
@@ -405,7 +405,55 @@ public class NurseView extends JFrame{
 
 		
 	}
-
+	/**
+	 * Calculates the set of years encompassing the next 3 months
+	 * @return set of years encompassing the next 3 months in a JComboBox
+	 */
+	public JComboBox<String> initYearComboForward()
+	{
+		LocalDate date3MonthsAway = LocalDate.now().plusMonths(3);
+		LocalDate now = LocalDate.now();
+		
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.addItem(Integer.toString(now.getYear()) );
+		while(now.isBefore(date3MonthsAway) )
+		{
+			if(now.getYear() == date3MonthsAway.getYear() )
+				now = now.plusDays(1);
+			else
+			{
+				temp.addItem(Integer.toString(now.getYear()) );
+				now = now.plusDays(1);
+			}
+		}		
+		return temp;
+	}
+	
+	/**
+	 * Check that selected lab date is in the future
+	 * @return true if selected lab date is in the future
+	 */
+	public boolean isFutureDate()
+	{
+		//current values
+		int yr = LocalDate.now().getYear();
+		int mn = LocalDate.now().getMonthValue();
+		int dy = LocalDate.now().getDayOfMonth();
+		
+		//selected values
+		int selYr = Integer.parseInt(year.getItemAt(year.getSelectedIndex()).toString() );
+		int selMn = Integer.parseInt(month.getItemAt(month.getSelectedIndex()).toString() );
+		int selDay = Integer.parseInt(day.getItemAt(day.getSelectedIndex()).toString() );
+		
+		if(selMn == mn && selDay > dy)
+			return true;
+		else if(selMn == mn && selDay <= dy)
+			return false;
+		else if(selMn < mn)
+			return false;
+		else
+			return true;
+	}
 	
 	/**
 	 * create a view for year
@@ -456,6 +504,7 @@ public class NurseView extends JFrame{
 	 */
 	public void initDaysinBox()
 	{//
+		day.removeAllItems();
 		//https://www.youtube.com/watch?v=yylaqeWkPmM
 		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")

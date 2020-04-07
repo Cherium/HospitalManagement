@@ -244,6 +244,12 @@ public class NurseController {
 		}
 		else	//appointment is lab test
 		{
+			//check that selected date is greater than current date
+			if(! view.isFutureDate() )
+			{
+				view.showDialogToUser("Choose a Future Date!");
+				return -1;
+			}
 			//add appointment to selected patients list
 			//a lab test is stored with a time list
 			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();

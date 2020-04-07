@@ -316,6 +316,7 @@ JPanel availChangePanel = createAvailabilityChangePanel();
 	 */
 	public void initDaysinBox()
 	{//
+		day.removeAllItems();
 		//https://www.youtube.com/watch?v=yylaqeWkPmM
 		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
