@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+
 
 
 /**
@@ -288,6 +290,42 @@ public class DoctorModel extends UserSuperClass {
 		}
 	}
 
+
+
+
+
+
+
+    /**
+     * takes in a single raw availability time, and a selected patient (index) and stores the lab appt in the patient
+     * @author Sajid C
+     * @param rawData raw availability time in format yyyy-M-d HH:mm
+     * @param selectedPatient patient username in a list that is associated 1:1 with index of selection in the JList
+     * @return 
+     */
+    public void storeLabApptInPatient(String rawData, int selectedPatient)
+    {
+    	//https://www.java67.com/2016/04/how-to-convert-string-to-localdatetime-in-java8-example.html
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
+        LocalDateTime temp = LocalDateTime.parse(rawData, formatter);
+        
+        //get patient object
+        PatientModel pat = (PatientModel) Main.dbase.get(scheduledPatientsUsernames.get(selectedPatient));
+        
+        //get patient appointment hashmap
+        HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
+        
+        //if test type already exists
+        if(patAppts.containsKey("labtest" ) )
+        {
+        	//append to list
+        	patAppts.get("labtest").add(temp);
+        }
+        else //appt type is not a key in hashmap; add it
+        {
+        	patAppts.put("labtest", new ArrayList<LocalDateTime>(List.of(temp)) );
+        }
+    }
 
 
 

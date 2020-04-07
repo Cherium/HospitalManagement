@@ -356,7 +356,7 @@ public class DoctorController {
 			view.initializeMonthlySchedule();
 
 			view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
-
+			view.showDialogToUser("Booked follow-up appointment!");
 			return -1;
 		}
 		else	//appointment is lab test
@@ -375,7 +375,7 @@ public class DoctorController {
 			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
 			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
 			
-			model.storeApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
+			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
 			view.showDialogToUser("Booked Lab Appointment!");
 			return -1;
 		}

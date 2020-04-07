@@ -3,6 +3,9 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 7 APRIL 17:10 Jenny
+* Fixed issue where booking a lab test from the doctor doesn't add the appointment to the patient (the appointment doesn't show up in the drop down menu). 
+
 ## 7 apr 10:30 Sajid
 * Added 'general' as a department as per Requirements meeting doc
 * Removed ER from patients,receptionists, nurses department choices as per the req meeting doc
