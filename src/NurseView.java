@@ -106,9 +106,10 @@ public class NurseView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setSize(700,700);
+		setMinimumSize(new Dimension(1000, 800));
+		//setSize(700,700);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		initializeGUI();
 	}
@@ -126,7 +127,7 @@ public class NurseView extends JFrame{
 
 
 		//Main panel background
-				contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
+				contentPanel = new JPanel(new MigLayout("align 50% 50%") );		//initialize jpanel and set its layout
 					contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
 					contentPanel.setBackground(new Color(231,239,255));
 					btnReturn = new JButton("Sign Out");

@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -92,6 +94,13 @@ public class AuthorityView extends JFrame{
 		contentPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );		//initialize jpanel and set its layout
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
 		add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
+		
+		//add scrolling to main container
+		JScrollPane scroll = new JScrollPane(contentPanel
+				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scroll.getVerticalScrollBar().setUnitIncrement(10);
+			scroll.getHorizontalScrollBar().setUnitIncrement(10);
+			add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 		//Sign out panel
 		btnReturn = new JButton("Sign Out");

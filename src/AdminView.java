@@ -118,6 +118,12 @@ public class AdminView extends JFrame {
 			welcomeLabel = new JLabel();
 				welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
+		//add scrolling to main container
+		JScrollPane scroll = new JScrollPane(contentPanel
+				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scroll.getVerticalScrollBar().setUnitIncrement(10);
+			scroll.getHorizontalScrollBar().setUnitIncrement(10);
+			add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 				
 				
 //Inner Panels

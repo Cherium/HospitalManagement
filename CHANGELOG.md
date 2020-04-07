@@ -9,7 +9,11 @@ Example: 10 mar 21:13 SAJID\
     * moved referral stuff inside booking panel
     * changed referral label into textfield
         * check is made for an empty textbox
-    *added colours and aligned components
+    * added colours and aligned components
+* adding scrolling for all main portals
+* gave colour and layout to patient, nurse, and receptionist
+
+
 
 ## 6 APRIL Jenny
 # 21:13

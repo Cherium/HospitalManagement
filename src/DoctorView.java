@@ -179,6 +179,13 @@ public class DoctorView {
 	 */
 	public void initGUI() {
 		JPanel mainPane = new JPanel(new MigLayout());
+		
+		//add scrolling to main container
+		JScrollPane scroll = new JScrollPane(mainPane
+				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scroll.getVerticalScrollBar().setUnitIncrement(10);
+			scroll.getHorizontalScrollBar().setUnitIncrement(10);
+			frame.add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
 
 	}
 

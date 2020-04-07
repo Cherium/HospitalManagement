@@ -68,11 +68,12 @@ public class LoginView {
 	{
 		//sets frame containers attributes
 		frame = new JFrame(title);
-			frame.setPreferredSize(new Dimension(460, 200));
-			frame.setMinimumSize(new Dimension(460, 200));
-			frame.setMaximumSize(new Dimension(460, 200));
+			frame.setPreferredSize(new Dimension(460, 460));
+			frame.setMinimumSize(new Dimension(460, 460));
+			frame.setMaximumSize(new Dimension(460, 460));
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
+			frame.setResizable(false);
 
 		initializeGUI();
 	}
@@ -89,8 +90,8 @@ public class LoginView {
 	{
 		
 		//Main panel background
-		JPanel contentPanel = new JPanel(new MigLayout("","[center]", "[center]"));		//initialize jpanel and set its layout
-			contentPanel.setBorder(new EmptyBorder(10, 10, 5, 5));	//set insets for the panel		
+		JPanel contentPanel = new JPanel(new MigLayout("align 50% 50%","[center]", "[center]"));		//initialize jpanel and set its layout
+			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
 			contentPanel.setBackground(new Color(179, 173, 191));
 			frame.add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 

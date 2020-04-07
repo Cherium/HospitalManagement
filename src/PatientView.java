@@ -100,10 +100,13 @@ public class PatientView extends JFrame{
 	{
 		//create frame container
 		setTitle(title);
-		setSize(700,700);
+		setMinimumSize(new Dimension(1000, 800));
+		//setPreferredSize(new Dimension(1000, 1000));
+		setMaximumSize(new Dimension(1005, 1005));
+		//setSize(700,700);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		initializeGUI();
 	}
@@ -122,7 +125,7 @@ public class PatientView extends JFrame{
 	{
 
 //Main panel background
-		contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
+		contentPanel = new JPanel(new MigLayout("align 50% 50%") );		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
 			contentPanel.setBackground(new Color(231,239,255));
 			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
