@@ -277,14 +277,14 @@ public class PatientModel extends UserSuperClass {
         HashMap<String, ArrayList<LocalDateTime> > patAppts = pat.getAppointments();
         
         //if test type already exists
-        if(patAppts.containsKey("Lab Test" ) )
+        if(patAppts.containsKey("labtest" ) )
         {
         	//append to list
-        	patAppts.get("Lab Test").add(temp);
+        	patAppts.get("labtest").add(temp);
         }
         else //appt type is not a key in hashmap; add it
         {
-        	patAppts.put("Lab Test", new ArrayList<LocalDateTime>(List.of(temp)) );
+        	patAppts.put("labtest", new ArrayList<LocalDateTime>(List.of(temp)) );
         }
     }
 

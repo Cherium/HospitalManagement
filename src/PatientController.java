@@ -326,6 +326,9 @@ public class PatientController {
 			
 			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, this.model);
 			view.showDialogToUser("Booked Lab Appointment!");
+			
+			//update list of appointments to set in cancel combobox
+			view.getCancelAppt().setModel( new DefaultComboBoxModel(model.printApptList() ));
 			return -1;
 		}
 		
