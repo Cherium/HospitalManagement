@@ -20,7 +20,7 @@ public class DoctorModel extends UserSuperClass {
 	private ArrayList<String> assignedNurseUsernames = new ArrayList<String>(5);
 	private ArrayList<String> scheduledPatientsUsernames = new ArrayList<String>(5);
 	// private Schedule schedule;
-	private HashMap<String, ArrayList<LocalDateTime>> appointments;	//patient appointments with this doctor
+	private HashMap<String, ArrayList<LocalDateTime>> appointments = new HashMap<String, ArrayList<LocalDateTime>>();	//patient appointments with this doctor
 
 	
 	//constructor
