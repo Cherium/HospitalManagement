@@ -94,6 +94,20 @@ public class PatientModel extends UserSuperClass {
 	}
 	
 	/**
+	 * Get list of departments in the system other than ER
+	 *@author SM
+	 *@return list of departments other than ER
+	 */
+	public String[] getDeptList() {
+		
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+		temp.remove("ER");
+		
+		
+		return temp.toArray(new String[0]);
+	}
+	
+	/**
 	 * Compares a user selected appointment time against the current time for fine purposes
 	 * @author Sajid C
 	 * @param indexToCancel

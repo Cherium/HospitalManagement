@@ -38,7 +38,20 @@ public class ReceptionistModel extends UserSuperClass {
 	}
 
 	
-
+	/**
+	 * Get list of departments in the system other than ER
+	 *@author SM
+	 *@return list of departments other than ER
+	 */
+	public String[] getDeptList() {
+		
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+		temp.remove("ER");
+		
+		
+		return temp.toArray(new String[0]);
+	}
+	
 	/**
 	 * generate a list of all patients 'names' in the system. Also create a list of patient usernames for hashmap lookup later on
 	 * @author Sajid C

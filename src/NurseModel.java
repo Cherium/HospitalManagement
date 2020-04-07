@@ -48,6 +48,19 @@ public class NurseModel extends UserSuperClass {
 		
 	}
 
+	/**
+	 * Get list of departments in the system other than ER
+	 *@author SM
+	 *@return list of departments other than ER
+	 */
+	public String[] getDeptList() {
+		
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+		temp.remove("ER");
+		
+		
+		return temp.toArray(new String[0]);
+	}
 	
 	/**
 	 * Gets a department from a doctor's username

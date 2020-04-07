@@ -20,7 +20,7 @@ public class Database {
 
 		//Can later be expanded by the appropriate user that has rights to add a department
 		private ArrayList<String> departmentList = new ArrayList<>
-					(List.of("Cardiology", "Nephrology", "Neurology", "Receptionist", "ER"));
+					(List.of("Cardiology", "General", "Nephrology", "Neurology", "ER"));
 		
 		
 		private ArrayList<DoctorModel> docsToLoad = new ArrayList<DoctorModel>();
