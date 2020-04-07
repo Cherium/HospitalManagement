@@ -69,19 +69,7 @@ public class CreateNewReceptionistModel extends UserSuperClass {
 		{
 			return "Please enter a name!";
 		}
-		
-		//check that a department was chosen
-		if(department.compareTo("") == 0)
-		{
-			return "Please select a department!";
-		}
-		
-		//check that at least one doctor was selected
-		if(doctorToAdd == null)
-		{
-			return "Please assign at least one doctor!";
-		}
-		
+
 		
 		/**store in database if all checks pass*/
 		

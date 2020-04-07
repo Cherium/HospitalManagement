@@ -25,11 +25,7 @@ public class CreateNewReceptionistController {
 	
 	public void initView()
 	{
-		//list of nurses to set in combobox
-		view.getDoctorDropDown().setModel( new DefaultComboBoxModel(model.getDoctorList()) );
-		
-		//list of departments to set in combobox
-		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
+
 	}
 	
 	
@@ -37,45 +33,17 @@ public class CreateNewReceptionistController {
 	//	need interaction with the model'
 	public void initListeners() 
 	{
+	
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle create button pressed
-		view.getAddDoctor().addActionListener(e -> addAssignedDoctor() );		//handle 'add' button pressed
-		
-		
-		
 	}
 
-	
-
-	
-	
-	
-    //add doctor to GUI Textbox if it already isn't in the Textbox
-    //note that a nurse can only be assigned 1 doctor
-	public void addAssignedDoctor() 
-	{
-		//retrieve chosen doctor from the GUI ComboBox
-		String doctorChosen = view.getDoctorDropDown().getItemAt(view.getDoctorDropDown().getSelectedIndex() );
-		
-
-		//set it in the model for use when 'Create account' is clicked
-		model.setDoctorToAdd(doctorChosen);
-			
-		
-		
-		
-	}
 
 	
 	//get and store information entered in GUI
 	public void parseEntry() 
 	{
 		
-	// Get input from view and pass to model
-		
-		//get the department chosen and set it in model
-		model.setDepartment(view.getDepartmentDropDown().getItemAt(
-				view.getDepartmentDropDown().getSelectedIndex()) );
-		
+	// Get input from view and pass to model	
 //TODO could also change get methods in view to return .getText versions
 		model.setName(view.getNameInput().getText());
 		model.setUsername(view.getUsernameInput().getText());

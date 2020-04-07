@@ -80,8 +80,6 @@ public class CreateNewReceptionistView  extends JDialog{
 				//Labels
 					JLabel name = new JLabel("Name:");
 					JLabel username = new JLabel("Username:");
-					JLabel department = new JLabel("Department:");
-					JLabel assignedNurses = new JLabel("Assigned Doctor:");
 					JLabel pwd = new JLabel("Password:");
 					JLabel pwd2 = new JLabel("Re-enter Password:");
 				
@@ -93,30 +91,12 @@ public class CreateNewReceptionistView  extends JDialog{
 					passwordInput = new JPasswordField();
 					passwordInputConfirm = new JPasswordField();
 					
-				//Buttons
-					addDoctor = new JButton("add");
-					
-
-					
-				//ComboBox drop down lists	
-					doctorDropDown = new JComboBox<String>();
-					departmentDropDown = new JComboBox<String>();
-						departmentDropDown.insertItemAt("", 0);
-						departmentDropDown.addActionListener(e -> disableNurseSelection() );
-					
 				//Add components to panel in order	
 					contentPanel.add(name, "right");								//add name label to the right side of the current column
 					contentPanel.add(nameInput, "width 80:160:300, sg a, wrap");	//set width of textfield, set component group to a(optional) and wrap to the next row for the next component(username)
 					
 					contentPanel.add(username, "right");
 					contentPanel.add(usernameInput, "sg a,wrap");
-					
-					contentPanel.add(department, "right");
-					contentPanel.add(departmentDropDown, "sg a,wrap");
-					
-					contentPanel.add(assignedNurses, "right");
-					contentPanel.add(doctorDropDown, "sg a");
-					contentPanel.add(addDoctor, "wrap");
 					
 					
 					contentPanel.add(pwd, "right");

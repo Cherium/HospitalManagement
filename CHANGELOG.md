@@ -7,6 +7,7 @@ Example: 10 mar 21:13 SAJID\
 * Added 'general' as a department as per Requirements meeting doc
 * Removed ER from patients,receptionists, nurses department choices as per the req meeting doc
 * fixed 'Admin cant create a New Doctor with an ER department' bug
+* fixed 'Receptionist doesnt need a department or assigned doc for creation' bug
 
 ## 7 apr 07:51 Sajid
 * Patient and Nurse
