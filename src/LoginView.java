@@ -71,7 +71,6 @@ public class LoginView {
 			frame.setPreferredSize(new Dimension(460, 200));
 			frame.setMinimumSize(new Dimension(460, 200));
 			frame.setMaximumSize(new Dimension(460, 200));
-			//frame.setSize(460,200);
 			frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 			frame.setLocationRelativeTo(null);
 

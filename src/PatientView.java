@@ -61,12 +61,15 @@ public class PatientView extends JFrame{
 	private JButton btnAddReferral;
 	private JButton bookAptBtn;
 	private JButton cancelApptBtn;
+	private JButton btnSelectFile;
+	private JButton btnUploadReferral;
 	
 	private JTextField nameText;
 	private JTextField addrText;
 	private JTextField phText;
 	private JTextField emailText;
 	private JTextField amountText;
+	private JTextField fileName;
 	
 	private ArrayList<JTextField> infoFields = new ArrayList<>(5);	//add all JTextFields into an Array to add listeners later
 	
@@ -119,15 +122,19 @@ public class PatientView extends JFrame{
 	{
 
 //Main panel background
-		contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
+		contentPanel = new JPanel(new MigLayout("debug") );		//initialize jpanel and set its layout
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+			contentPanel.setBackground(new Color(231,239,255));
 			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 		
 			btnReturn = new JButton("Sign Out");
 				btnReturn.addActionListener(e -> setVisible(false) );
+				btnReturn.setForeground(Color.WHITE);
+				btnReturn.setBackground(new Color(154,50,50));
 
 			welcomeLabel = new JLabel();
-				welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));	
+				welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
+				welcomeLabel.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 36));
 				
 			//add scrolling to main container
 			JScrollPane scroll = new JScrollPane(contentPanel
@@ -139,8 +146,10 @@ public class PatientView extends JFrame{
 
 //Inner Panels
 			
-			infoPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
+			infoPanel = new JPanel(new MigLayout("debug, wrap 2", "[align right] 16 [align left]") );
+				infoPanel.setMinimumSize(new Dimension(450, 50));	//extends jpanel in this sg to have 1/2 the width of booking panel
 				infoPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
+				infoPanel.setBackground(new Color(255, 247, 231));
 				
 		//Labels
 				JLabel nameLabel = new JLabel("Name:");
@@ -189,11 +198,6 @@ public class PatientView extends JFrame{
 					blood.addItem("AB+"); blood.addItem("AB-");
 					blood.addItem("O+"); blood.addItem("O-");
 
-			// JPanel, for having the combo boxes in one line
-			JPanel bdayP = new JPanel();
-			bdayP.add(year);
-			bdayP.add(month);
-			bdayP.add(day);
 
 		//Add components to inner panel
 					infoPanel.add(nameLabel);
@@ -234,6 +238,7 @@ public class PatientView extends JFrame{
 		//Inner Panel		
 			JPanel credentialPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
 				credentialPanel.setBorder(BorderFactory.createTitledBorder("Patient Credentials"));
+				credentialPanel.setBackground(new Color(255, 247, 231));
 			
 		//Labels
 				JLabel usernameTitleLabel = new JLabel("Username:");
@@ -261,12 +266,12 @@ public class PatientView extends JFrame{
 			setupReferralPanel();
 				
 				
-		//Inner Panel
-				
+			//inner panel
 			JPanel bookPanel = new JPanel(new MigLayout("") );
 				bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 				bookPanel.setPreferredSize(new Dimension(900, 50));
-				bookPanel.setMaximumSize(new Dimension(905, 125));
+				bookPanel.setMaximumSize(new Dimension(905, 300));
+				bookPanel.setBackground(new Color(255, 247, 231));
 				bookAptBtn = new JButton("Book Appointment");
 				
 				apptType = new JComboBox<String>();
@@ -291,27 +296,37 @@ public class PatientView extends JFrame{
 					day.setEnabled(false);
 					initDaysinBox();
 					
+				fileName = new JTextField();		
+				btnSelectFile = new JButton("Select file");
+				btnUploadReferral = new JButton("Upload");
+					
 				bookPanel.add(new JLabel("Type:"));
 				bookPanel.add(apptType);
 				
 				bookPanel.add(new JLabel("Department:"), "gapleft 35, align right" );
-				bookPanel.add(departmentDropDown, "growx, align left, sg a");
+				bookPanel.add(departmentDropDown, "growx, align left, sg e");
 				
-				bookPanel.add(new JLabel("Lab Date: "), "align right");
+				bookPanel.add(new JLabel("Lab Date: "), "gapleft 30, align right");
 				bookPanel.add(year, "sg c, split");
 				bookPanel.add(month, "sg c, split");
-				bookPanel.add(day, "sg c, wrap");
+				bookPanel.add(day, "sg c, span, pushx, wrap");	//span final column to edge of JPanel and push to extend column all the way to edge
 				
 				bookPanel.add(new JLabel("Select Doctor: "), "skip 2, align right");
-				bookPanel.add(chooseDoc, "sg a, align left");
+				bookPanel.add(chooseDoc, "sg e, align left");
 				
 				bookPanel.add(new JLabel("Time: "), "align right");
 				bookPanel.add(labTime, "sg c, wrap");
 				
 				bookPanel.add(new JLabel("Select Appointment: "), "skip 2 , align right");
-				bookPanel.add(chooseAppt, "span 2, growx");
+				bookPanel.add(chooseAppt, "sg e, wrap");
 				
-				bookPanel.add(bookAptBtn, "align right");
+				bookPanel.add(new JLabel("Referral:"), "skip 2, align right");
+				bookPanel.add(fileName, "sg e, align left");
+				bookPanel.add(btnSelectFile, "sg b, split, span 2, align left");
+				bookPanel.add(btnUploadReferral, "sg b, wrap 20");
+				
+				
+				bookPanel.add(bookAptBtn, "spanx, align right");
 				
 				
 				
@@ -320,15 +335,14 @@ public class PatientView extends JFrame{
 		//Inner Panel
 			
 			JPanel cancelPanel = new JPanel(new MigLayout("") );
-				cancelPanel.setBorder(BorderFactory.createTitledBorder("Cancel An Appointment: "));
-				cancelPanel.setPreferredSize(new Dimension(450, 50));
-				cancelPanel.setMaximumSize(new Dimension(905, 125));				
+				cancelPanel.setBorder(BorderFactory.createTitledBorder("List of Upcoming Appointments"));
+				cancelPanel.setBackground(new Color(255, 247, 231));
 				
 				cancelAppt = new JComboBox<String>();
 				cancelApptBtn = new JButton("Cancel Appointment");
 				
-				cancelPanel.add(cancelAppt, "wrap");
-				cancelPanel.add(cancelApptBtn, "align right");
+				cancelPanel.add(cancelAppt);
+				cancelPanel.add(cancelApptBtn, "gapleft 10");
 				
 				
 				
@@ -340,7 +354,7 @@ public class PatientView extends JFrame{
 			contentPanel.add(infoPanel, "sg a");
 			contentPanel.add(credentialPanel, "sg a, wrap");
 			contentPanel.add(bookPanel, "span, wrap");
-			contentPanel.add(cancelPanel, "wrap");
+			contentPanel.add(cancelPanel, "span, growx, wrap");
 			contentPanel.add(referralPanel);
 			
 
@@ -1069,6 +1083,60 @@ public class PatientView extends JFrame{
 	
 	public JButton getBtnAddReferral() {
 		return btnAddReferral;
+	}
+
+
+
+
+
+
+	public JButton getBtnSelectFile() {
+		return btnSelectFile;
+	}
+
+
+
+
+
+
+	public void setBtnSelectFile(JButton btnSelectFile) {
+		this.btnSelectFile = btnSelectFile;
+	}
+
+
+
+
+
+
+	public JButton getBtnUploadReferral() {
+		return btnUploadReferral;
+	}
+
+
+
+
+
+
+	public void setBtnUploadReferral(JButton btnUploadReferral) {
+		this.btnUploadReferral = btnUploadReferral;
+	}
+
+
+
+
+
+
+	public JTextField getFileName() {
+		return fileName;
+	}
+
+
+
+
+
+
+	public void setFileName(JTextField fileName) {
+		this.fileName = fileName;
 	}
 	
 

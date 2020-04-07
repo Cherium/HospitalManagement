@@ -143,6 +143,12 @@ public class PatientController {
 		
 		//cancel a selected appointment
 		view.getCancelApptBtn().addActionListener(e -> cancelAppt() );
+		
+		//Select a file via a JFileChooser
+		//view.getBtnSelectFile().addActionListener(e -> selectReferral());
+
+		//Upload a referral for a patient
+		//view.getBtnUploadReferral().addActionListener(e -> assignReferral());
 
 
 	}
