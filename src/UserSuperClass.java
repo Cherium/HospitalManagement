@@ -200,7 +200,13 @@ public class UserSuperClass {
 			}
 			
 			
-
+			public String[] blankAvailability()
+			{
+				String[] temp = {"00:00","00:00","00:00","00:00","00:00","00:00","00:00"
+						,"00:00","00:00","00:00","00:00","00:00","00:00","00:00",};
+				return temp;
+			}
+			
 			
 			
 	/**Getters and setters*/		

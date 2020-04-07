@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -90,7 +91,7 @@ public class CreateNewPatientModel extends UserSuperClass {
 		//store in database if all checks pass
 		Main.dbase.put(username
 				, new PatientModel(username, pwd, name, address, phoneNumber, email, 0
-						, dob, bloodType, sex, "", null));
+						, dob, bloodType, sex, "", new ArrayList<String>() ));
 		return "Account successfully created!";
 		
 	}
