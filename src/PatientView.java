@@ -556,7 +556,7 @@ public class PatientView extends JFrame{
 	 * @return birthdate of user as a string
 	 */
 	public String getBirthday() {
-		return (String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() +"/"+(String) day.getSelectedItem();
+		return (String) year.getSelectedItem() +"-"+(String) month.getSelectedItem() +"-"+(String) day.getSelectedItem();
 	}
 	
 
