@@ -193,7 +193,7 @@ public class UserSuperClass {
 				
 				//convert date object to LocalDateTime object
 				LocalDate temp = LocalDate.parse(dateString, formatter);
-				
+
 				//convert LocalDateTime object to unix timestamp string(seconds)
 				return temp;
 				

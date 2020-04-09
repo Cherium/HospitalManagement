@@ -85,6 +85,7 @@ public class PatientView extends JFrame{
 	private JComboBox<String> chooseDoc;
 	private JComboBox<String> labTime;
 	private JComboBox<String> year, month, day;
+	private JComboBox<String> yearfw, monthfw, dayfw;
 	private JComboBox<String> cancelAppt;
 	
 	private String[] referrals = {""};
@@ -293,15 +294,15 @@ public class PatientView extends JFrame{
 				chooseDoc = new JComboBox<String>();
 				labTime = new JComboBox<String>(times);
 					labTime.setEnabled(false);
-				year = initYearComboForward();
-					year.setEnabled(false);
-					year.addActionListener(e -> initDaysinBox());
-				month = initMonthCombo();
-					month.setEnabled(false);
-					month.addActionListener(e -> initDaysinBox());
-				day = initDayCombo();
-					day.setEnabled(false);
-					initDaysinBox();
+				yearfw = initYearComboForward();
+					yearfw.setEnabled(false);
+					yearfw.addActionListener(e -> initDaysinBoxfw());
+				monthfw = initMonthCombo();
+					monthfw.setEnabled(false);
+					monthfw.addActionListener(e -> initDaysinBoxfw());
+				dayfw = initDayCombo();
+					dayfw.setEnabled(false);
+					initDaysinBoxfw();
 					
 				fileName = new JTextField();		
 				btnSelectFile = new JButton("Select file");
@@ -314,9 +315,9 @@ public class PatientView extends JFrame{
 				bookPanel.add(departmentDropDown, "growx, align left, sg e");
 				
 				bookPanel.add(new JLabel("Lab Date: "), "gapleft 30, align right");
-				bookPanel.add(year, "sg c, split");
-				bookPanel.add(month, "sg c, split");
-				bookPanel.add(day, "sg c, span, pushx, wrap");	//span final column to edge of JPanel and push to extend column all the way to edge
+				bookPanel.add(yearfw, "sg c, split");
+				bookPanel.add(monthfw, "sg c, split");
+				bookPanel.add(dayfw, "sg c, span, pushx, wrap");	//span final column to edge of JPanel and push to extend column all the way to edge
 				
 				bookPanel.add(new JLabel("Select Doctor: "), "skip 2, align right");
 				bookPanel.add(chooseDoc, "sg e, align left");
@@ -406,18 +407,18 @@ public class PatientView extends JFrame{
 			chooseAppt.setEnabled(false);
 			chooseDoc.setEnabled(false);
 			
-			year.setEnabled(true);
-			month.setEnabled(true);
-			day.setEnabled(true);
+			yearfw.setEnabled(true);
+			monthfw.setEnabled(true);
+			dayfw.setEnabled(true);
 			labTime.setEnabled(true);			
 		} else {
 			departmentDropDown.setEnabled(true);
 			chooseAppt.setEnabled(true);
 			chooseDoc.setEnabled(true);
 			
-			year.setEnabled(false);
-			month.setEnabled(false);
-			day.setEnabled(false);
+			yearfw.setEnabled(false);
+			monthfw.setEnabled(false);
+			dayfw.setEnabled(false);
 			labTime.setEnabled(false);	
 		}
 	}
@@ -431,10 +432,8 @@ public class PatientView extends JFrame{
 	public JComboBox<String> initYearCombo() {
 		JComboBox<String> temp = new JComboBox<String>();
 		for (int i = 0; i < 120; i++) {
-			temp.addItem((LocalDate.now().getYear()-i)+"");
+			temp.addItem(Integer.toString(LocalDate.now().getYear()-i) );
 		}
-		temp.setBackground(Color.WHITE);
-		
 		return temp;
 	}
 	
@@ -475,9 +474,9 @@ public class PatientView extends JFrame{
 		int dy = LocalDate.now().getDayOfMonth();
 		
 		//selected values
-		int selYr = Integer.parseInt(year.getItemAt(year.getSelectedIndex()).toString() );
-		int selMn = Integer.parseInt(month.getItemAt(month.getSelectedIndex()).toString() );
-		int selDay = Integer.parseInt(day.getItemAt(day.getSelectedIndex()).toString() );
+		int selYr = Integer.parseInt(yearfw.getItemAt(yearfw.getSelectedIndex()).toString() );
+		int selMn = Integer.parseInt(monthfw.getItemAt(monthfw.getSelectedIndex()).toString() );
+		int selDay = Integer.parseInt(dayfw.getItemAt(dayfw.getSelectedIndex()).toString() );
 		
 		if(selMn == mn && selDay > dy)
 			return true;
@@ -538,6 +537,37 @@ public class PatientView extends JFrame{
 				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
 					+"/"+ Integer.toString(i));
 				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	/**
+	 * populate days menu with days based on current month selection
+	 * @author Sajid C
+	 */
+	public void initDaysinBoxfw()
+	{//
+		
+		dayfw.removeAllItems();
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) yearfw.getSelectedItem() +"/"+(String) monthfw.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				dayfw.addItem(Integer.toString(i));
 			}
 			catch(Exception e)
 			{
@@ -1196,6 +1226,60 @@ public class PatientView extends JFrame{
 
 	public void setFileName(JTextField fileName) {
 		this.fileName = fileName;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getYearfw() {
+		return yearfw;
+	}
+
+
+
+
+
+
+	public void setYearfw(JComboBox<String> yearfw) {
+		this.yearfw = yearfw;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getMonthfw() {
+		return monthfw;
+	}
+
+
+
+
+
+
+	public void setMonthfw(JComboBox<String> monthfw) {
+		this.monthfw = monthfw;
+	}
+
+
+
+
+
+
+	public JComboBox<String> getDayfw() {
+		return dayfw;
+	}
+
+
+
+
+
+
+	public void setDayfw(JComboBox<String> dayfw) {
+		this.dayfw = dayfw;
 	}
 	
 

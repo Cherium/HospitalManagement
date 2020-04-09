@@ -58,9 +58,11 @@ public class PatientController {
 		view.getAmountDue().setText(model.convertToDollar() );
 		view.getUsernameLabel().setText(model.getUsername() );
 		view.getAge().setText(Integer.toString(model.getAge()));
+
 		view.getYear().setSelectedItem(Integer.toString(model.getBirthday().getYear()));
 		view.getMonth().setSelectedItem(Integer.toString(model.getBirthday().getMonthValue()));
 		view.getDay().setSelectedItem(Integer.toString(model.getBirthday().getDayOfMonth()));
+		
 		view.getBlood().setSelectedItem(model.getBlood());
 		view.getSex().setSelectedItem(model.getSex());
 
@@ -319,9 +321,9 @@ public class PatientController {
 			}
 			//add appointment to selected patients list
 			//a lab test is stored with a time list
-			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();
-			String month = view.getMonth().getItemAt(view.getMonth().getSelectedIndex()).toString();
-			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
+			String year = view.getYearfw().getItemAt(view.getYear().getSelectedIndex()).toString();
+			String month = view.getMonthfw().getItemAt(view.getMonth().getSelectedIndex()).toString();
+			String day = view.getDayfw().getItemAt(view.getDay().getSelectedIndex()).toString();
 			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
 			
 			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, this.model);
