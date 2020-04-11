@@ -179,6 +179,7 @@ public class DoctorView {
 	 */
 	public void initGUI() {
 		JPanel mainPane = new JPanel(new MigLayout());
+		mainPane.setBackground(new Color(231,239,255));
 		
 		//add scrolling to main container
 		JScrollPane scroll = new JScrollPane(mainPane
@@ -215,6 +216,8 @@ public class DoctorView {
 
 		// Sign out button, returns to login screen when clicked
 		btnSignOut = new JButton("Sign out");
+		btnSignOut.setBackground(new Color(154,50,50));
+		btnSignOut.setForeground(Color.WHITE);
 		backPanel.add(btnSignOut);
 		btnSignOut.addActionListener(e -> frame.setVisible(false));
 

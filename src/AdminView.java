@@ -93,7 +93,7 @@ public class AdminView extends JFrame {
 		//sets frame containers attributes
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(800,800);
+		setMinimumSize(new Dimension(1000, 800));
 		setLocationRelativeTo(null);
 		
 		initializeGUI();
@@ -108,15 +108,19 @@ public class AdminView extends JFrame {
 	public void initializeGUI()
 	{
 //Main panel background
-		contentPanel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
-			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+		contentPanel = new JPanel(new MigLayout("align 50% 50%") );		//initialize jpanel and set its layout
+			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel
+			contentPanel.setBackground(new Color(231,239,255));
 			add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 		
 			btnReturn = new JButton("Sign Out");
 				btnReturn.addActionListener(e -> setVisible(false) );
-
+				btnReturn.setBackground(new Color(154,50,50));
+				btnReturn.setForeground(Color.WHITE);
+				
 			welcomeLabel = new JLabel();
 				welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 36));
+				welcomeLabel.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 36));
 		
 		//add scrolling to main container
 		JScrollPane scroll = new JScrollPane(contentPanel
@@ -130,6 +134,7 @@ public class AdminView extends JFrame {
 	
 			JPanel accountPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );
 				accountPanel.setBorder(BorderFactory.createTitledBorder("Account Management"));
+				accountPanel.setBackground(new Color(255, 247, 231));
 			
 	//Labels
 				JLabel chooseRole = new JLabel("Choose Role to Manage:");
@@ -155,6 +160,7 @@ public class AdminView extends JFrame {
 	
 	//inner bottom panel
 	schedPanel = new JPanel(new MigLayout("") );
+	schedPanel.setBackground(new Color(255, 247, 231));
 	schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
 	schedPanel.setPreferredSize(new Dimension(325, 200));
 
@@ -170,6 +176,7 @@ public class AdminView extends JFrame {
 
 //inner panel
 JPanel availChangePanel = createAvailabilityChangePanel();
+	availChangePanel.setBackground(new Color(255, 247, 231));
 	reqAvailChangeBtn = new JButton("Send Request");
 	availChangePanel.add(reqAvailChangeBtn, "span, align right");
 				
@@ -177,6 +184,7 @@ JPanel availChangePanel = createAvailabilityChangePanel();
 				
 				
 			JPanel deptPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );
+				deptPanel.setBackground(new Color(255, 247, 231));
 				deptPanel.setBorder(BorderFactory.createTitledBorder("Department Management"));
 			
 	//Labels

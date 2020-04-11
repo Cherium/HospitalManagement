@@ -1,5 +1,7 @@
 import java.awt.Font;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -73,7 +75,7 @@ public class AuthorityView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setSize(600,420);
+		setMinimumSize(new Dimension(1000, 800));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -90,9 +92,11 @@ public class AuthorityView extends JFrame{
 		//Welcome Panel set up		
 		welcomeL = new JLabel();
 			welcomeL.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			welcomeL.setFont(new Font("Serif", Font.BOLD + Font.ITALIC, 36));
 
-		contentPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );		//initialize jpanel and set its layout
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel		
+		contentPanel = new JPanel(new MigLayout("align 50% 50%, wrap 2", "[align right] 16 [align left]") );		//initialize jpanel and set its layout
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));	//set insets for the panel
+		contentPanel.setBackground(new Color(231,239,255));
 		add(contentPanel, BorderLayout.CENTER);					//add the panel as the container for the frame
 		
 		//add scrolling to main container
@@ -105,6 +109,8 @@ public class AuthorityView extends JFrame{
 		//Sign out panel
 		btnReturn = new JButton("Sign Out");
 			btnReturn.addActionListener(e -> setVisible(false) );
+			btnReturn.setBackground(new Color(154,50,50));
+			btnReturn.setForeground(Color.WHITE);
 
 
 		//All other JLabels necessary
@@ -127,6 +133,7 @@ public class AuthorityView extends JFrame{
 		
 		//Compile non-Department stats JLabels in a single panel
 		statPanel= new JPanel(new MigLayout("wrap 2", "[] 16 []") );
+			statPanel.setBackground(new Color(255, 247, 231));
 			statPanel.setBorder(BorderFactory.createTitledBorder("Statistics here"));
 
 
