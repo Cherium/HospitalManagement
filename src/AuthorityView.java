@@ -75,7 +75,7 @@ public class AuthorityView extends JFrame{
 	{
 		//sets frame containers attributes
 		setTitle(title);
-		setMinimumSize(new Dimension(1000, 800));
+		setMinimumSize(new Dimension(500, 500));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
@@ -202,10 +202,9 @@ public class AuthorityView extends JFrame{
 
 		
 		
-		
-		contentPanel.add(welcomeL, "center, wrap");
-		contentPanel.add(btnReturn, "center, wrap");
-		contentPanel.add(statPanel, BorderLayout.CENTER);
+		contentPanel.add(btnReturn, "align left, wrap");
+		contentPanel.add(welcomeL, "wrap");
+		contentPanel.add(statPanel, "align left");
 		setVisible(true);
 
 				

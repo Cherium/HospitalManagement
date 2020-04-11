@@ -93,7 +93,7 @@ public class AdminView extends JFrame {
 		//sets frame containers attributes
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setMinimumSize(new Dimension(1000, 800));
+		setMinimumSize(new Dimension(800, 650));
 		setLocationRelativeTo(null);
 		
 		initializeGUI();
@@ -154,9 +154,9 @@ public class AdminView extends JFrame {
 	//Add components to inner panel		
 				accountPanel.add(chooseRole, "right");
 				accountPanel.add(rolesDropDown, "wrap");
-				accountPanel.add(crtAccount);
-				accountPanel.add(delAccount);
-				accountPanel.add(editAccount);
+				accountPanel.add(crtAccount, "sg c");
+				accountPanel.add(delAccount, "sg c");
+				accountPanel.add(editAccount, "sg c");
 	
 	//inner bottom panel
 	schedPanel = new JPanel(new MigLayout("") );
@@ -171,7 +171,7 @@ public class AdminView extends JFrame {
 			, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	schedListScroll.setPreferredSize(new Dimension(400, 200));
 	
-	schedPanel.add(schedListScroll, "sg d");
+	schedPanel.add(schedListScroll);
 
 
 //inner panel
@@ -215,16 +215,15 @@ JPanel availChangePanel = createAvailabilityChangePanel();
 
 //Add inner panel to main container, in order
 		
-		contentPanel.add(btnReturn,"wrap 30px");
+		contentPanel.add(btnReturn,"wrap");
 		contentPanel.add(welcomeLabel, "wrap");
 		//contentPanel.add(accountPanel, "grow, wrap");	
-		contentPanel.add(accountPanel, "wrap");			//print label, wrap to the next row which will be 200 pixels lower
-		contentPanel.add(deptPanel, "wrap");
-		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
-		contentPanel.add(availChangePanel, " sg b");
+		contentPanel.add(accountPanel, "sg a");			//print label, wrap to the next row which will be 200 pixels lower
+		contentPanel.add(deptPanel, "sg a, wrap");
+		contentPanel.add(schedPanel, "sg b, growx");
+		contentPanel.add(availChangePanel, " sg b, growx");
 
-			
-			
+
 		setVisible(true);
 	}
 
