@@ -273,20 +273,8 @@ public class Database {
 		 */
 		public void exportDbase() throws IOException
 		{
-/*attempt 1			
-			File tmp = new File(getClass().getResource("/temp/").getPath() );
-			tmp.mkdir();
-			//https://stackoverflow.com/questions/9658297/java-how-to-create-a-file-in-a-directory-using-relative-path/9658353
-			File dbase = new File(tmp, "dbasee.txt");
-			try {
-				dbase.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-*/			
 
-/*attempt two
+
 			//https://www.baeldung.com/java-how-to-create-a-file
 			//create a path object (that may not yet exist) and try to create the specified file at the specified path
 			String path = System.getProperty("user.dir");
@@ -294,13 +282,22 @@ public class Database {
 			if(!Files.exists(tempFolder))
 				Files.createDirectory(tempFolder);
 			
-			Path tempDbase = Paths.get("../temp/dbase.txt");
-			if(!Files.exists(tempDbase))
+			
+			Path tempDbase = Paths.get(tempFolder.toString()+"/"+"dbase.txt");
+			if(!Files.exists(tempDbase)) {
 				Files.createFile(tempDbase);
+				System.out.println("created");
+				
+			}	
+			else {
+				System.out.println("exists");
+				
+			}
+				
 			
 			//create a writer to the dbase file
 			BufferedWriter writer = Files.newBufferedWriter(tempDbase, Charset.forName("UTF-8"));
-*/			
+			
 			StringBuilder tmp = new StringBuilder();	//builds dbase.txt
 			
 			for(Map.Entry<String, UserSuperClass> i: users.entrySet())
@@ -314,7 +311,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -328,7 +325,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -342,10 +339,10 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for appointments
-//					writeToFile("../temp/" + user.getUsername() +"Appt.txt", user.toStringAppt() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Appt.txt", user.toStringAppt() );
 					
 					//write entry for patient record
-//					writeToFile("../temp/" + user.getUsername() +".txt", user.toStringRecord() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +".txt", user.toStringRecord() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -359,7 +356,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -373,7 +370,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -387,26 +384,26 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
 			}
 
 			tmp.deleteCharAt(tmp.length()-1);
-			//writer.write(tmp.toString() );
-			//writer.close();
+			writer.write(tmp.toString() );
+			writer.close();
 
 			//check that the temporary external database can load into the program without errors, and if errors exist, keep the old database
 //			try {
-				//importDatabase("../temp/");
+//				importDatabase("../temp/");
 //				System.out.println("Successful Internal Database Extraction");
 //				
 //				
 //			} catch (Exception e) {
 //				System.out.println("Unsuccessful Internal Database Extraction");
 //				e.printStackTrace();
-//				// TODO: handle exception
+//				
 //			}
 	
 		}

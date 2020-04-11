@@ -42,12 +42,12 @@ public class Main {
 		
 		
 		//test
-//		try {
-//			dbaseClass.exportDbase();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			dbaseClass.exportDbase();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
