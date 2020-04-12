@@ -3,6 +3,12 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 12 APRIL 15:57 Jenny
+* Changed format of the right action panel for Doctor. 
+* Removed the Select Day button as there is no functionality built in. 
+* Disabled button for adding treatment until a patient is selected. 
+* Changed text in treatment field to indicate selection of a patient. 
+
 ## 7 APRIL 17:10 Jenny
 * Fixed issue where booking a lab test from the doctor doesn't add the appointment to the patient (the appointment doesn't show up in the drop down menu). 
 

@@ -286,6 +286,7 @@ public class DoctorView {
 		scheduleMonthly = new JPanel();
 		scheduleWeekly = new JPanel();
 
+
 		scheduleContainer.add(scheduleWeekly);
 		scheduleContainer.add(scheduleMonthly);
 
@@ -365,64 +366,23 @@ public class DoctorView {
 	 * 
 	 */
 	public void initializeButtonsRight() {
+		buttonContainer = new JPanel(new MigLayout("wrap 1, alignx center, fillx"));
 
-		buttonContainer = new JPanel();
-		buttonContainer.setAlignmentY(Component.TOP_ALIGNMENT);
-		GridBagLayout gbl_buttonContainer = new GridBagLayout();
-		gbl_buttonContainer.columnWidths = new int[] { 0, 0 };
-		gbl_buttonContainer.rowHeights = new int[] { 35, 0, 0, 35, 0, 0, 0 };
-		gbl_buttonContainer.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_buttonContainer.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		buttonContainer.setLayout(gbl_buttonContainer);
-		buttonContainer.setMaximumSize(new Dimension(200, 1000));
-		buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
-
-		buttonContainer.setBorder(new LineBorder(new Color(255, 200, 0)));
-
-		// Button that views all patients currenly scheduled under this doctor
+		JLabel optionlbl = new JLabel("Select Action:");
 		JButton btnPatients = new JButton("View patients");
-		GridBagConstraints gbc_btnPatients = new GridBagConstraints();
-		gbc_btnPatients.insets = new Insets(0, 5, 5, 5);
-		gbc_btnPatients.gridx = 0;
-		gbc_btnPatients.gridy = 0;
-		buttonContainer.add(btnPatients, gbc_btnPatients);
-
-		// Combobox that shows a given nurses schedule when selected
-		// Currently does nothing
-		// Comboboxes are messed up under box layout, which is why this is in grid bag
+		JLabel nurselbl = new JLabel("Nurse schedules:");
 		nurseComboBox = new JComboBox<String>();
-
-		// Label for the above combo box
-		JLabel lblNurses = new JLabel("Assigned nurses:");
-		lblNurses.setHorizontalAlignment(SwingConstants.LEFT);
-		GridBagConstraints gbc_lblNurses = new GridBagConstraints();
-		gbc_lblNurses.insets = new Insets(5, 5, 5, 5);
-		gbc_lblNurses.gridx = 0;
-		gbc_lblNurses.gridy = 1;
-		buttonContainer.add(lblNurses, gbc_lblNurses);
-
-		// Setting up default for the combobox
 		nurseComboBox.setBackground(Color.WHITE);
 		nurseComboBox.setSelectedIndex(-1);
-		GridBagConstraints gbc_nurseComboBox = new GridBagConstraints();
-		gbc_nurseComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_nurseComboBox.insets = new Insets(5, 5, 5, 5);
-		gbc_nurseComboBox.gridx = 0;
-		gbc_nurseComboBox.gridy = 2;
-		buttonContainer.add(nurseComboBox, gbc_nurseComboBox);
+		JButton btnChange = new JButton("Modify Schedules");
 
-		// Button that allows the doctor to view his own schedule
 		btnOwn = new JButton("View own schedule");
 		btnOwn.setEnabled(false);
-		btnOwn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				nurseComboBox.setSelectedIndex(-1);
-				btnOwn.setEnabled(false);
-				scheduleContainer.setVisible(true);
-				patientPanel.setVisible(false);
-				modifyScheduleContainer.setVisible(false);
-			}
+		btnOwn.addActionListener(e -> {
+			scheduleContainer.setVisible(true);
+			modifyScheduleContainer.setVisible(false);
+			patientPanel.setVisible(false);
+			btnOwn.setEnabled(false);
 		});
 
 		btnPatients.addActionListener(new ActionListener() {
@@ -436,22 +396,12 @@ public class DoctorView {
 			}
 		});
 
-		// Action event on the nurse combo box, once a nurse is selected only then
-		// can the doctor have the option to returning to his own schedule
-		// Is set after the creation of the button
 		nurseComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnOwn.setEnabled(true);
 			}
 		});
 
-		GridBagConstraints gbc_btnOwn = new GridBagConstraints();
-		gbc_btnOwn.insets = new Insets(5, 5, 5, 5);
-		gbc_btnOwn.gridx = 0;
-		gbc_btnOwn.gridy = 3;
-		buttonContainer.add(btnOwn, gbc_btnOwn);
-
-		JButton btnChange = new JButton("Make changes");
 		btnChange.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -461,10 +411,17 @@ public class DoctorView {
 				btnOwn.setEnabled(true);
 			}
 		});
+		
+		buttonContainer.add(optionlbl);
+		buttonContainer.add(btnPatients, "grow");
+		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
+		buttonContainer.add(nurselbl);
+		buttonContainer.add(nurseComboBox, "grow");
+		buttonContainer.add(btnOwn, "grow");
+		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
+		buttonContainer.add(btnChange, "grow");
 
-		gbc_btnOwn.gridy = 4;
-		buttonContainer.add(btnChange, gbc_btnOwn);
-		buttonContainer.setPreferredSize(buttonContainer.getPreferredSize());
+
 	}
 
 	/**
@@ -488,11 +445,6 @@ public class DoctorView {
 		// Button starts out disabled as schedule starts out on current week
 		btnBack.setEnabled(false);
 		btnPaneSchedule.add(btnBack);
-
-		// Button that selects a day from a day picker
-		// Not implemented. May remove function altogether
-		JButton btnDaySelecter = new JButton("Select day");
-		btnPaneSchedule.add(btnDaySelecter);
 
 		// Button that changes schedule between weekly and monthly views
 		// Currently only weekly view is setup
@@ -674,8 +626,8 @@ public class DoctorView {
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
 		scheduleWeekly.repaint();
-		scheduleWeekly.setLayout(new MigLayout("wrap 8",
-				"[align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center] 20 [align center]"));
+		scheduleWeekly.setLayout(new MigLayout("wrap 8, gap 15px 15px",
+				"[align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center]"));
 		scheduleWeekly.setBackground(Color.WHITE);
 		scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -685,19 +637,19 @@ public class DoctorView {
 
 		setWeekDateLabels(getNow());
 		for (JLabel wd : weekYYYYMMDD) {
-			scheduleWeekly.add(wd);
+			scheduleWeekly.add(wd, "sg a");
 			wd.setEnabled(schDays[weekYYYYMMDD.indexOf(wd)]);
 			wd.setEnabled(true);
 		}
-		scheduleWeekly.add(Box.createHorizontalGlue());
+		scheduleWeekly.add(Box.createHorizontalGlue(), "sg a");
 		for (JLabel lbl : sunToSatWeek) {
-			scheduleWeekly.add(lbl);
+			scheduleWeekly.add(lbl, "sg a");
 			lbl.setEnabled(schDays[sunToSatWeek.indexOf(lbl)]);
 			lbl.setEnabled(true);
 		}
 
 		for (int i = 0; i < 12; i++) {
-			scheduleWeekly.add(new JLabel((i + 8) + ":00"));
+			scheduleWeekly.add(new JLabel((i + 8) + ":00"), "sg a, alignx right");
 			for (int j = 0; j < 7; j++) {
 				JLabel templbl = new JLabel("  ");
 				templbl.setBackground(Color.WHITE);
@@ -707,7 +659,7 @@ public class DoctorView {
 					templbl.setBackground(Color.ORANGE);
 				}
 				templbl.setOpaque(true);
-				scheduleWeekly.add(templbl);
+				scheduleWeekly.add(templbl, "sg a");
 				templbl.setEnabled(ava[i + 8][j]);
 				if (!ava[i + 8][j]) {
 					templbl.setBackground(Color.LIGHT_GRAY);
@@ -718,7 +670,6 @@ public class DoctorView {
 		}
 
 		scheduleWeekly.setPreferredSize(new Dimension(2000, 1000));
-
 	}
 
 	/**
@@ -867,7 +818,7 @@ public class DoctorView {
 		appointmentPanel.add(year, "sg c, split");
 		appointmentPanel.add(month, "sg c, split");
 		appointmentPanel.add(day, "sg c");
-		appointmentPanel.add(new JLabel("Time: "), "skip 1, gapleft 10, split");
+		appointmentPanel.add(new JLabel("Time: "), "gapleft 10, split");
 		appointmentPanel.add(labTime, "sg c");
 
 		appointmentPanel.add(btnBookApt, "skip 2, align right");
@@ -945,8 +896,7 @@ public class DoctorView {
 		selectedPatient.add(new JLabel("Detailed Treatment History"));
 		pastTreatments = new JTextArea(0, 200);
 		pastTreatments.setLineWrap(true);
-		pastTreatments.setText(
-				"Past treatment histories and doctors who recommended treatment.\nTreatment 1: Rest\n\t\t- Doctor: First Last\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra tempus gravida. Vivamus mollis erat sed libero maximus tempor. Aliquam sed orci non sem fringilla gravida. Duis maximus vitae lacus ut scelerisque. Donec quis mauris eget sapien fringilla tempor ut id nunc. Maecenas a diam non neque ornare porta. Sed volutpat in urna et scelerisque. Nulla consequat justo mauris, in aliquet dolor rutrum eget. Vivamus mauris metus, vehicula nec efficitur ac, ullamcorper quis neque. Nulla augue nisi, porttitor quis nisl in, condimentum euismod nisi. Nunc et leo bibendum nisi ultrices sollicitudin vulputate vitae nisi. Cras nec purus vestibulum, vehicula magna a, pharetra est. Sed tristique, nisi nec suscipit sagittis, tellus dolor tempor ipsum, a eleifend magna purus et neque. Curabitur porta non nisl posuere bibendum. Nam sit amet neque quis enim vehicula scelerisque quis id massa.\nIn ut placerat est. Fusce eu scelerisque lorem. Fusce at mi maximus, condimentum erat et, semper lectus. Donec mollis aliquam nibh, et consequat metus pretium ultrices. Morbi blandit placerat orci. Aliquam erat volutpat. Aliquam id metus orci. Maecenas sagittis mollis nisl, eu ornare nulla lacinia a. Cras congue tristique neque, vitae hendrerit odio. Morbi convallis leo sit amet nisi elementum, in tempor augue bibendum.\nDuis sit amet tempor enim. Proin eleifend, metus vel sodales consectetur, quam magna pellentesque lacus, eget lacinia leo nisl eu nisi. Vivamus aliquam urna ut enim ultricies varius. Duis sed tempor libero, non aliquet sapien. Pellentesque accumsan semper efficitur. Vestibulum vel augue eget sapien tincidunt eleifend. Cras vel molestie metus. Vivamus consequat suscipit mauris, id eleifend mauris pharetra in. Nunc hendrerit augue ultrices egestas commodo. Donec vitae ex turpis. Aenean lectus sem, faucibus nec mollis sed, gravida nec ligula.\nVestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam tempus, neque sit amet convallis gravida, risus tellus euismod metus, et cursus augue dui quis urna. Praesent sed dolor volutpat, tincidunt lorem in, tempor sem. Vivamus at venenatis dui, et scelerisque sem. Duis massa orci, fermentum non lobortis blandit, scelerisque ut arcu. Etiam vel purus eu enim molestie interdum. Etiam dictum mi sit amet diam consectetur venenatis. Donec rutrum odio magna, vel elementum lectus pulvinar at. Proin vel sapien bibendum, viverra velit eget, dignissim elit. Praesent posuere consectetur tellus, et ullamcorper dolor malesuada sed. Etiam ac enim placerat, feugiat purus vitae, imperdiet diam. Mauris at tempor sapien. Pellentesque pellentesque ex sem, eget efficitur elit hendrerit ac. Curabitur imperdiet ac mi eu hendrerit. Nulla venenatis augue ac tristique accumsan. Quisque condimentum neque eget lobortis viverra.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\nEtiam eu aliquam arcu, vel lobortis metus. Donec sit amet diam placerat, fringilla nunc vel, tristique sem. Suspendisse mattis scelerisque viverra. Nunc cursus sodales augue, ut molestie nunc aliquet vel. Sed elementum ornare ligula sed volutpat. Ut metus mauris, feugiat luctus nunc a, maximus accumsan libero. In vulputate lorem eros, ac feugiat justo condimentum a. Curabitur laoreet nulla feugiat est semper, ac hendrerit nulla pellentesque. Aenean ac porttitor metus. Maecenas fermentum rutrum ex, sed vestibulum velit convallis a. Aliquam quis lacus sem. Proin euismod porta ligula. Cras in neque posuere, hendrerit ipsum id, egestas sapien. Nulla accumsan, risus at tincidunt tristique, quam justo consequat nulla, non tempor velit justo non ipsum. Ut urna dui, semper suscipit nisl ullamcorper, tincidunt dictum ante.\n");
+		pastTreatments.setText("Select a patient from the left");
 		pastTreatments.setEnabled(false);
 		JScrollPane sp1 = new JScrollPane(pastTreatments);
 		selectedPatient.add(sp1, "span 1 10, height 300");
@@ -959,6 +909,7 @@ public class DoctorView {
 		selectedPatient.add(sp2, "span 1 10, height 175");
 
 		btnAddTreatmentNotes = new JButton("Add treatment notes");
+		btnAddTreatmentNotes.setEnabled(false);
 		selectedPatient.add(btnAddTreatmentNotes);
 
 		patientPanel.add(selectedPatient, BorderLayout.CENTER);

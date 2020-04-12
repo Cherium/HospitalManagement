@@ -84,6 +84,9 @@ public class DoctorController {
 
 		view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
 
+		view.getButtonOwn().setEnabled(false);
+
+
 	}
 	
 	/**
@@ -118,7 +121,7 @@ public class DoctorController {
 			}
 		});
 
-		// Shown own schedule after viewing nurse's schedule
+		// Show own schedule after viewing nurse's schedule
 		view.getButtonOwn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -135,6 +138,8 @@ public class DoctorController {
 				}
 				view.setScheduleNameLabels(model.getName());
 
+
+
 			}
 		});
 
@@ -142,6 +147,7 @@ public class DoctorController {
 		view.getListPatients().addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent a) {
+				view.getButtonTreatmentNotes().setEnabled(true);
 				setUpPatientView();
 			}
 		});
