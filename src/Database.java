@@ -26,8 +26,10 @@ public class Database {
 		
 		
 		private ArrayList<DoctorModel> docsToLoad = new ArrayList<DoctorModel>();
+		private String path = System.getProperty("user.dir");
+		private Path tempFolder = Paths.get(path+"/temp/");
+		private Path exDbaseFolder = Paths.get(path+"/externalDatabase/");
 
-		
 		
 		
 		/**
@@ -38,14 +40,20 @@ public class Database {
 		public Database(String filePath) {
 			
 			users = new HashMap<String, UserSuperClass>();
-			importDatabase(filePath);
-//			try {
-//				importExternalDatabase(filePath);
-//
-//			}
-//			catch(IOException e ){
-//				
-//			}
+			if(!Files.exists(exDbaseFolder)) {
+				importDatabase(filePath);		
+			}else {
+				try {
+					importExternalDatabase(exDbaseFolder.toString());
+					
+				}catch(IOException e) {
+					System.out.println("import not successfull");
+				}
+			}
+		
+			
+			
+
 		}
 
 		
@@ -58,6 +66,7 @@ public class Database {
 		 * @param filePath filename to import when initializing database
 		 */
 		public void importDatabase(String filePath) {
+			System.out.println("I am working now the internal database");
 
 			
 			
@@ -272,6 +281,7 @@ public class Database {
 		
 		public void importExternalDatabase(String filePath) throws IOException {
 			Path path = Paths.get(filePath);
+			System.out.println("I am working now the external database");
 			FileInputStream fis = new FileInputStream(filePath+"/"+"dbase.txt");
 
 			Scanner sc = new Scanner(fis);
@@ -479,6 +489,43 @@ public class Database {
 			sc.close();
 		}
 		
+		public void TempToExternalDatabase() throws IOException{
+			
+			String[] filename;
+
+		
+			File src = new File(tempFolder.toString());
+			File dest = new File(exDbaseFolder.toString());
+			
+			if(!Files.exists(exDbaseFolder)) {
+				src.renameTo(dest);
+			}else {
+				filename = dest.list() ;
+				while(filename.length != 0) {
+					filename = dest.list() ;
+					for (String p : filename) {
+						  File currentFile = new File(dest.getPath(),p);
+						  currentFile.delete();
+					}
+				}
+				dest.delete();
+				src.renameTo(dest);
+				
+				
+			}
+		}
+		
+		public void exitProgram()   {
+			try {
+				exportDbase();
+				TempToExternalDatabase();
+			}
+			catch(IOException e) {
+				System.out.println("export unsuccessful ");
+			}
+			
+		}
+		
 		
 		
 		
@@ -646,18 +693,18 @@ public class Database {
 			writer.close();
 		
 			//check that the temporary external database can load into the program without errors, and if errors exist, keep the old database
-			try {
-				
-				importExternalDatabase(tempFolder.toString());
-				System.out.println("Successful Internal Database Extraction");
-				
-				
-			} catch (Exception e) {
-				System.out.println("Unsuccessful Internal Database Extraction");
-				e.printStackTrace();
-				importDatabase("dbase/dbase.txt");
-				
-			}
+//			try {
+//				
+//				importExternalDatabase(tempFolder.toString());
+//				System.out.println("Successful Internal Database Extraction");
+//				
+//				
+//			} catch (Exception e) {
+//				System.out.println("Unsuccessful Internal Database Extraction");
+//				e.printStackTrace();
+//				importDatabase("dbase/dbase.txt");
+//				
+//			}
 	
 		}
 		

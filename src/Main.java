@@ -40,11 +40,11 @@ public class Main {
 
 		
 		
-		
+	
 		//test
 		try {
-			dbaseClass.exportDbase();
-		} catch (IOException e) {
+			dbaseClass.exitProgram();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
