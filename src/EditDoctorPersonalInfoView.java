@@ -21,7 +21,11 @@ import net.miginfocom.swing.MigLayout;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class EditDoctorPersonalInfoView extends JDialog{
-	
+	/* Variables include one contentPane to put in content, 
+	* name and username inputs, password inputs,
+	* two buttons for creating, cancelling the creation process
+	* and a final combobox for departments. 
+	*/
 	JPanel contentPanel;
 	
 	private JTextField usernameInput;
@@ -36,7 +40,12 @@ public class EditDoctorPersonalInfoView extends JDialog{
 
 	
 
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan, Sajid C
+	 * @param title title of the popup box
+	 */
 	public EditDoctorPersonalInfoView(String title) 
 	{
 		//sets frame containers attributes
@@ -115,7 +124,11 @@ public class EditDoctorPersonalInfoView extends JDialog{
 
 	
 	
-	//pop up a message-dialog box with a message passed in
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
+	 */
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);

@@ -1,15 +1,22 @@
-
-
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * MVC Model: Model that deals with the edit account functionality, interacts as the
+ * backend to support controller and view.
+ * @author Jeremy Fan
+ */
 public class EditAccountModel {
 	
+	/* 
+	* Variables include user and any inherited aspects from user.
+	*/
 	private String username;
 	private UserSuperClass user;
 
 	
-	
+	/**
+	 * store new account based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Jeremy F
+	 */
 	public String editAccount()
 	{
 		//check if the username is NOT on file

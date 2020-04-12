@@ -2,18 +2,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * MVC Model: Model that deals with the edit account functionality, interacts as the
+ * backend to support controller and view.
+ * @author Jeremy Fan
+ */
+
 public class EditDoctorModel {
 	
+	/* 
+	* Variables include user and any inherited aspects from user, department, and doctorModel
+	*/
 	private String username;
 	private UserSuperClass user;
 	private DoctorModel doctorModel;
 	private String department;
 
 	
-	
+	/**
+	 * store new account based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Jeremy F
+	 */
 	public String editSchedule()
 	{
 		//check if the username is NOT on file
@@ -31,7 +41,11 @@ public class EditDoctorModel {
 		
 	}
 
-
+	/**
+	 * store new account based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Jeremy F
+	 */
 	public String editPersonalInfo()
 	{
 		//check if the username is NOT on file
@@ -55,7 +69,12 @@ public class EditDoctorModel {
 
 		return "Account successfully edited!";}
 		}
-
+	
+	/**
+	 * store new account based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Jeremy F
+	 */
 	public String checkPersonalInfo()
 	{
 		//check if the username is NOT on file
@@ -72,6 +91,11 @@ public class EditDoctorModel {
 	
 	}
 
+	/**
+	 * store new account based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Jeremy F
+	 */
 	public String checkDoctorDepartment() {
 		//check that a department was chosen
 		if(department.compareTo("") == 0)
@@ -82,7 +106,12 @@ public class EditDoctorModel {
 		}
 	}	
 	
-	//return the department list in a string[] format for use with combobox
+	/**
+	 * return the department list in a string[] format for use with combobox
+	 * @author Sajid C
+	 */
+
+
 	public String[] getDeptList() {
 		
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();

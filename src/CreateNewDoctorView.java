@@ -30,6 +30,12 @@ import javax.swing.border.EmptyBorder;
  *
  */
 public class CreateNewDoctorView  extends JDialog{
+		/* Variables include one contentPane to put in content, 
+		* name and username inputs, password inputs,
+		* three buttons for creating, cancelling the creation process, and adding a nurse
+		* two combo boxes for nurse dropdowns and department dropdowns 
+		* and a box.
+		*/
 
 		private JPanel contentPanel = new JPanel();
 		
@@ -54,7 +60,8 @@ public class CreateNewDoctorView  extends JDialog{
 		/**
 		 * constructor
 		 * 
-		 * @param title JFrame title
+		 * @author Jeremy Fan, Sajid C
+		 * @param title title of the popup box
 		 */
 		public CreateNewDoctorView(String title)
 		{
@@ -70,10 +77,9 @@ public class CreateNewDoctorView  extends JDialog{
 		
 		
 		
-		/**
-		 * initialize the panels and components that will go inside the frame
-		 * @author Sajid C
-		 */
+		/**initialize the panels and components that will go inside the frame
+		 * @author Sajid C, Jeremy F
+		 */	
 		public void initializeGUI()
 		{
 //Main panel background
@@ -166,8 +172,8 @@ public class CreateNewDoctorView  extends JDialog{
 		
 		
 		
-		/**
-		 * clear textfield inputs
+		/**clear inputs in the panels
+		 * @author Sajid C
 		 */
 		public void clearInputs() 
 		{

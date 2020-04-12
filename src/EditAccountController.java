@@ -1,13 +1,25 @@
 import javax.swing.DefaultComboBoxModel;
+/**
+ * MVC Model: Controller that deals with the Editing Account functionality, interacts with 
+ * model and view to help edit a patient.
+ * @author Jeremy Fan
+ */
 
 public class EditAccountController {
 	
+	// Interacts with the model and view 
 	private EditAccountModel model;
 	private EditAccountView view;
 		
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view view that controller interacts with 
+	 */
 	public EditAccountController(EditAccountModel model, EditAccountView view) {
-		// TODO Auto-generated constructor stub
 		
 		this.model = model;
 		this.view = view;
@@ -17,16 +29,24 @@ public class EditAccountController {
 	
 	
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * @author Sajid C, Jeremy F
+	 */
+
 	public void initView()
 	{
 		
 	}
 	
-	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "edit button".
+	 * @author Sajid C, Jeremy F
+	 */	
+
 	public void initListeners() 
 	{
 		view.getEditButton().addActionListener(e -> parseEntry() );	
@@ -34,7 +54,11 @@ public class EditAccountController {
 
 	
 	
-	//handle the user entered input
+	/**
+	 * For model, set the username confirmation
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */	
 	public void parseEntry() {
 		
 		model.setUsername(view.getUsernameInput().getText());

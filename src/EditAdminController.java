@@ -1,23 +1,44 @@
 import javax.swing.DefaultComboBoxModel;
+/**
+ * MVC Model: Controller that deals with the Edit Admin functionality, interacts with 
+ * model and view to help edit an admin.
+ * @author Jeremy Fan
+ */
 
 public class EditAdminController {
 	
+	// Interacts with the model and view 
 	private EditAdminModel model;
 	private EditAdminView view;
     private AdminModel adminModel;
     private EditAdminPersonalInfoView personalInformationView;
 
         
-    //constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view view that controller interacts with 
+	 */	
 	public EditAdminController(EditAdminModel model, EditAdminView view) {
-		// TODO Auto-generated constructor stub
 		
 		this.model = model;
 		this.view = view;
 		initView();
 		initListeners();
     }
-    
+	
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view2 a second view that controller interacts with 
+	 */
+	
 	public EditAdminController(EditAdminModel model, EditAdminPersonalInfoView view2, AdminModel adminModel) {
 		
 		this.model = model;
@@ -26,15 +47,25 @@ public class EditAdminController {
         initView2();
 		initListeners2();
     }
-    
+	
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * @author Sajid C, Jeremy F
+	 */
 
     public void initView()
 	{
 
 	}
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "edit button".
+	 * @author Sajid C, Jeremy F
+	 */
+
 	public void initView2()
 	{
 		//list of departments to set in combobox
@@ -56,27 +87,12 @@ public class EditAdminController {
 	}
 
 	
-	
-    //handle the user entered input for schedule editing
-    /*
-	public void parseEntry() {
-		
-		model.setUsername(view.getUsernameInput().getText());
 
-		String returnMessage = model.editSchedule();
-		if(returnMessage.compareTo("That Account does not exist!") == 0)
-		{
-			view.showDialogToUser(returnMessage);
-		}
-		else
-		{
-			//view.showDialogToUser(returnMessage);
-			view.setVisible(false);
-		}
-    }
-    */
-
-	//handle the user entered input for schedule editing
+	/**
+	 * For model, set the username confirmation
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */	
 	public void parseEntry() {
 		
 		model.setUsername(view.getUsernameInput().getText());
@@ -94,7 +110,11 @@ public class EditAdminController {
 	}
 
 	
-	//handle the user entered input for editing personal information
+	/**
+	 * For model, set the username confirmation
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */	
 	public void parseEntryPersonalInfo() {
 	
 		model.setUsername(view.getUsernameInput().getText());
@@ -111,6 +131,11 @@ public class EditAdminController {
 		}
 	}
 
+	/**
+	 * For model, set the name and password confirmation based on the 
+	 * input for the frontend label 
+	 * @author Jeremy F
+	 */	
 	public void parseEntryPersonalInfoConfirmation() {
 		//the below happens once "Confirmed" button is clicked
 
@@ -130,12 +155,10 @@ public class EditAdminController {
 			char[] tempPass = personalInformationView.getPassInput().getText().toCharArray();
 		
             UserSuperClass user = Main.dbase.get(model.getUsername());
-            System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());							
             user.setName(tempName);
             user.setPassword(tempPass);
 			personalInformationView.setVisible(false);
 			personalInformationView.showDialogToUser(returnMessage);
-            System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());
         
 		}
 		

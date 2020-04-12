@@ -25,7 +25,9 @@ import javax.swing.border.EmptyBorder;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class CreateNewAdminView  extends JDialog{
-
+		/* Variables include one contentPane to put in content, name and username inputs, password inputs, 
+		* two buttons for creating and cancelling the creation process. 
+		*/
 		private JPanel contentPanel = new JPanel();
 		
 		private JTextField nameInput;
@@ -37,7 +39,12 @@ public class CreateNewAdminView  extends JDialog{
 		private JButton cancelButton;
 		private JButton createButton;
 				
-		//constructor
+		/**
+		 * constructor
+		 * 
+		 * @author Jeremy Fan, Sajid C
+		 * @param title title of the popup box
+		 */
 		public CreateNewAdminView(String title)
 		{
 			//sets frame containers attributes
@@ -52,7 +59,9 @@ public class CreateNewAdminView  extends JDialog{
 		
 		
 		
-		/**initialize the panels and components that will go inside the frame*/
+		/**initialize the panels and components that will go inside the frame
+		 * @author Sajid C, Jeremy F
+		 */		
 		public void initializeGUI()
 		{
 //Main panel background
@@ -116,14 +125,9 @@ public class CreateNewAdminView  extends JDialog{
 			setVisible(true);
 		}
 
-		
-	
-		
-		
-		
-		
-		
-		//clear inputs
+		/**clear inputs in the panels
+		 * @author Sajid C
+		 */		
 		public void clearInputs() 
 		{
 			nameInput.setText("");
@@ -131,11 +135,10 @@ public class CreateNewAdminView  extends JDialog{
 			passwordInput.setText("");
 			passwordInputConfirm.setText("");		
 		}	
-		
 	
-		
-		
-		//pop up a message-dialog box with a message passed in 
+		/**pop up a message-dialog box with a message passed in 
+		 * @author Sajid C, Jenny Z
+		 */		
 		public void showDialogToUser(String message)
 		{
 			JOptionPane.showMessageDialog(contentPanel, message);

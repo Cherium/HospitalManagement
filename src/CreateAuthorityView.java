@@ -23,9 +23,14 @@ import javax.swing.border.EmptyBorder;
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
-public class CreateAuthorityView  extends JDialog{
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * @author Sajid C, Jeremy f
+ */
 
+public class CreateAuthorityView  extends JDialog{
+		/* Variables include one contentPane to put in content, name and username inputs, password inputs, 
+		* two buttons for creating and cancelling the creation process. 
+		*/
 		private JPanel contentPanel = new JPanel();
 		
 		private JTextField nameInput;
@@ -37,7 +42,12 @@ public class CreateAuthorityView  extends JDialog{
 		private JButton cancelButton;
 		private JButton createButton;
 				
-		//constructor
+		/**
+		 * constructor
+		 * 
+		 * @author Jeremy Fan, Sadjid C
+		 * @param title title of the popup box
+		 */
 		public CreateAuthorityView(String title)
 		{
 			//sets frame containers attributes
@@ -52,7 +62,9 @@ public class CreateAuthorityView  extends JDialog{
 		
 		
 		
-		/**initialize the panels and components that will go inside the frame*/
+		/**initialize the panels and components that will go inside the frame
+		 * @author Sajid C, Jeremy F
+		 */
 		public void initializeGUI()
 		{
 //Main panel background
@@ -116,14 +128,9 @@ public class CreateAuthorityView  extends JDialog{
 			setVisible(true);
 		}
 
-		
-	
-		
-		
-		
-		
-		
-		//clear inputs
+		/**clear inputs in the panels
+		 * @author Sajid C
+		 */
 		public void clearInputs() 
 		{
 			nameInput.setText("");
@@ -132,10 +139,9 @@ public class CreateAuthorityView  extends JDialog{
 			passwordInputConfirm.setText("");		
 		}	
 		
-	
-		
-		
-		//pop up a message-dialog box with a message passed in 
+		/**pop up a message-dialog box with a message passed in 
+		 * @author Sajid C, Jenny Z
+		 */
 		public void showDialogToUser(String message)
 		{
 			JOptionPane.showMessageDialog(contentPanel, message);
@@ -147,67 +153,45 @@ public class CreateAuthorityView  extends JDialog{
 			return nameInput;
 		}
 
-
-
 		public void setNameInput(JTextField nameInput) {
 			this.nameInput = nameInput;
 		}
-
-
 
 		public JTextField getUsernameInput() {
 			return usernameInput;
 		}
 
-
-
 		public void setUsernameInput(JTextField usernameInput) {
 			this.usernameInput = usernameInput;
 		}
-
-
 
 		public JPasswordField getPasswordInput() {
 			return passwordInput;
 		}
 
-
-
 		public void setPasswordInput(JPasswordField passwordInput) {
 			this.passwordInput = passwordInput;
 		}
-
-
 
 		public JPasswordField getPasswordInputConfirm() {
 			return passwordInputConfirm;
 		}
 
-
-
 		public void setPasswordInputConfirm(JPasswordField passwordInputConfirm) {
 			this.passwordInputConfirm = passwordInputConfirm;
 		}
-
-
 
 		public JButton getCancelButton() {
 			return cancelButton;
 		}
 
-
-
 		public void setCancelButton(JButton cancelButton) {
 			this.cancelButton = cancelButton;
 		}
 
-
-
 		public JButton getCreateButton() {
 			return createButton;
 		}
-
-
 
 		public void setCreateButton(JButton createButton) {
 			this.createButton = createButton;

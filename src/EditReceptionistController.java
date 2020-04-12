@@ -1,20 +1,42 @@
 import javax.swing.DefaultComboBoxModel;
+/**
+ * MVC Model: Controller that deals with the edit receptionist functionality, interacts with 
+ * model and view to help edit receptionist.
+ * @author Jeremy Fan
+ */
 
 public class EditReceptionistController {
 	
+	// Interacts with the model, personal information view, and view 
 	private EditReceptionistModel model;
 	private EditReceptionistView view;
 	private EditReceptionistPersonalInfoView personalInformationView;
 		
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view view that controller interacts with 
+	 */
+
 	public EditReceptionistController(EditReceptionistModel model, EditReceptionistView view) {
-		// TODO Auto-generated constructor stub
 		
 		this.model = model;
 		this.view = view;
 		initView();
 		initListeners();
 	}
+
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view2 view that controller interacts with 
+	 */
 	
 	public EditReceptionistController(EditReceptionistModel model, EditReceptionistPersonalInfoView view2) {
 		
@@ -25,16 +47,21 @@ public class EditReceptionistController {
 	}
 	
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/* initialize the elements that the GUI sees from the database 
+	as soon as the view first opens for the user
+	*/
 	public void initView()
 	{
 		
 	}
 	
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "edit schedule" and "edit information" button.
+	 * @author Sajid C, Jeremy F
+	 */
 	public void initListeners() 
 	{
 		view.getEditScheduleButton().addActionListener(e -> parseEntry() );
@@ -42,8 +69,12 @@ public class EditReceptionistController {
 	}
 
 
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "confirm button".
+	 * @author Sajid C, Jeremy F
+	 */
 	public void initListeners2() 
 	{
 		personalInformationView.getConfirmButton().addActionListener(e -> parseEntryPersonalInfoConfirmation() );	
@@ -51,7 +82,11 @@ public class EditReceptionistController {
 
 	
 	
-	//handle the user entered input for schedule editing
+	/**
+	 * For model, set the the name, username, password, and password confirmation based on the 
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */
 	public void parseEntry() {
 		
 		model.setUsername(view.getUsernameInput().getText());
@@ -68,7 +103,12 @@ public class EditReceptionistController {
 		}
 	}
 
-	//handle the user entered input for editing personal information
+	/**
+	 * For model, set the username confirmation
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */		
+
 	public void parseEntryPersonalInfo() {
 		
 		model.setUsername(view.getUsernameInput().getText());
@@ -85,6 +125,12 @@ public class EditReceptionistController {
 		}
 	}
 
+	/**
+	 * For model, set the name and password confirmation based on the 
+	 * input for the frontend label 
+	 * @author Jeremy F
+	 */	
+	
 	public void parseEntryPersonalInfoConfirmation() {
 		//the below happens once "Confirmed" button is clicked
 
