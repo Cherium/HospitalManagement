@@ -2,11 +2,13 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 
 /**
@@ -270,9 +272,9 @@ public class Database {
 		
 		public void importExternalDatabase(String filePath) throws IOException {
 			Path path = Paths.get(filePath);
-			System.out.println(filePath);
-	
-			Scanner sc = new Scanner(filePath);
+			FileInputStream fis = new FileInputStream(filePath+"/"+"dbase.txt");
+
+			Scanner sc = new Scanner(fis);
 			sc.nextLine();								//ignore first line of headers
 			
 			//import database, line by line
@@ -281,7 +283,6 @@ public class Database {
 							String data = sc.nextLine();			//read in entire line
 							String[] split = data.split("\t");		//regex split into arrow on tabs
 							
-
 					//read in values in each line
 							String importRole						 = split[0];
 							String importUsername					 = split[1];
@@ -307,7 +308,9 @@ public class Database {
 							if(importRole.compareTo("doctor") == 0)
 							{
 								//read in doctor availability
-								InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								//InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
 
 								Scanner fc = new Scanner(wv);
 								
@@ -335,8 +338,8 @@ public class Database {
 							{
 
 								//read in nurse availability
-								InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
-
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
 								Scanner fc = new Scanner(wv);
 								
 								ArrayList<String> importAvail = new ArrayList<>(5);
@@ -358,7 +361,8 @@ public class Database {
 							else if(importRole.compareTo("patient")== 0)
 							{
 								//get Patient appt times
-								InputStream st = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Appt.txt");
+								//InputStream st = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Appt.txt");
+								FileInputStream st = new FileInputStream(filePath+"/"+importUsername+"Appt.txt");
 								Scanner fc = new Scanner(st);
 								
 								ArrayList<String> tempp = new ArrayList<>(5);
@@ -379,9 +383,11 @@ public class Database {
 								//get Patient record notes
 								try {
 									//https://stackoverflow.com/questions/3891375/how-to-read-a-text-file-resource-into-java-unit-test?noredirect=1&lq=1
-									String record = new String(getClass().getClassLoader()
-											.getResourceAsStream(path.getName(0)+"/"+importUsername+".txt").readAllBytes());
-									
+//									String record = new String(getClass().getClassLoader()
+//											.getResourceAsStream(path.getName(0)+"/"+importUsername+".txt").readAllBytes());
+									FileInputStream wv =new FileInputStream(filePath+"/"+importUsername+".txt");
+									String record = new String(wv.readAllBytes());
+									System.out.println(record);
 									//create a patient internally
 									PatientModel temp = new PatientModel(importUsername, importPassword, importName
 											, importAddress, importPhoneNumber, importEmail, importAmountDue
@@ -399,7 +405,8 @@ public class Database {
 							else if(importRole.compareTo("admin")== 0)
 							{
 								//read in admin availability
-								InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
 
 								Scanner fc = new Scanner(wv);
 								
@@ -423,7 +430,8 @@ public class Database {
 							else if(importRole.compareTo("authority")== 0)
 							{
 								//read in authority availability
-								InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
 
 								Scanner fc = new Scanner(wv);
 								
@@ -445,7 +453,8 @@ public class Database {
 							else if(importRole.compareTo("receptionist")== 0)
 							{
 								//read in receptionist availability
-								InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
 
 								Scanner fc = new Scanner(wv);
 								
@@ -465,7 +474,7 @@ public class Database {
 							}
 					}
 			
-					
+			System.out.println(path.getName(0));		
 			//close the scanner
 			sc.close();
 		}
@@ -478,7 +487,7 @@ public class Database {
 		/**
 		 * Create temp database files, verify these files work with importDatabase() and then save temp files as actual dbase files
 		 * --tested from main
-		 * @author Sajid C
+		 * @author Sajid C Mohammed Rakeeb
 		 * @throws IOException 
 		 */
 		public void exportDbase() throws IOException
@@ -488,14 +497,13 @@ public class Database {
 			//https://www.baeldung.com/java-how-to-create-a-file
 			//create a path object (that may not yet exist) and try to create the specified file at the specified path
 			String path = System.getProperty("user.dir");
-			System.out.println(path);
 			Path tempFolder = Paths.get(path+"/temp/");
 			
 			if(!Files.exists(tempFolder))
 				Files.createDirectory(tempFolder);
 			
 			Path realPath = tempFolder.toRealPath(LinkOption.NOFOLLOW_LINKS);
-			System.out.println(realPath.toString());
+			
 			Path tempDbase = Paths.get(tempFolder.toString()+"/"+"dbase.txt");
 			if(!Files.exists(tempDbase)) {
 				Files.createFile(tempDbase);
@@ -640,7 +648,7 @@ public class Database {
 			//check that the temporary external database can load into the program without errors, and if errors exist, keep the old database
 			try {
 				
-				importExternalDatabase(tempDbase.toString());
+				importExternalDatabase(tempFolder.toString());
 				System.out.println("Successful Internal Database Extraction");
 				
 				
