@@ -140,7 +140,11 @@ public class LoginView {
 				btnExit.setBackground(new Color(154,50,50));
 				btnExit.setForeground(Color.WHITE);
 				btnExit.setBorder(BorderFactory.createBevelBorder(1, Color.green, Color.orange, Color.red, Color.blue));
-				btnExit.addActionListener(e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)) );	//close all windows and exit program
+				btnExit.addActionListener(e -> 
+				{
+					Main.dbaseClass.exitProgram();
+					frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				} );	//close all windows and exit program
 
 			deptPanel.add(btnExit, " sg a");
 			deptPanel.add(btnNewPatient, "sg a");

@@ -485,7 +485,8 @@ public class Database {
 							}
 					}
 			
-			System.out.println(path.getName(0));		
+			System.out.println(path.getName(0));	
+			System.out.println("hihihihihihi");
 			//close the scanner
 			sc.close();
 		}
@@ -521,7 +522,8 @@ public class Database {
 				exportDbase();
 				TempToExternalDatabase();
 			}
-			catch(IOException e) {
+			catch(Exception e) {
+				e.printStackTrace();
 				System.out.println("export unsuccessful ");
 			}
 			
@@ -693,7 +695,7 @@ public class Database {
 			writer.write(tmp.toString() );
 			writer.close();
 		
-			importExternalDatabase(tempFolder.toString());
+			//importExternalDatabase(tempFolder.toString());
 			//check that the temporary external database can load into the program without errors, and if errors exist, keep the old database
 //			try {
 //				

@@ -38,16 +38,7 @@ public class Main {
 		//the rest of the program proceeds from here
 		LoginController c = new LoginController(new LoginModel(), new LoginView("Login Screen") );
 
-		
-		
-		
-		//test
-//		try {
-//			dbaseClass.exportDbase();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 	}
 
 }
