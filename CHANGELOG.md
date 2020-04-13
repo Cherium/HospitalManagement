@@ -3,8 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
-## 1 apr Mohammed
-* database exporting
+## 13 APRIL 15:55 Neil
+* Fixed an issue of Admin Null Pointer error when loading a newly created Admin 
+ account. Also adjusted window popups so that they won't load behind the previous
+windows
 
 ## 13 APRIL 09:58 Jenny
 * Changed weekly schedule view in doctor to 24 hour view.
@@ -111,6 +113,9 @@ Example: 10 mar 21:13 SAJID\
 * Taliored booking of appointments in DoctorView. Booking an appointment from Doctor is based on the assumption that the appointment is being booked with the current doctor. 
 * After booking an appointment, the list of open appointments for the doctor is updated. 
 * After booking an appointment, the appointment will immediately appear in calendar view. 
+
+## 1 apr Mohammed
+* database exporting
 
 ## 1 APRIL Jenny
 * Removed Referral inner class from PatientModel and changed referrals to strings instead, for the sake of sanity. 

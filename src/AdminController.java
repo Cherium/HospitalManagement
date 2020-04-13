@@ -45,20 +45,27 @@ public class AdminController {
 	
 
 	/**
-	 * initialize the elements that the GUI sees from the database 
-	 * as soon as the view first opens for the user.
-	 * 
-	 * @ author Sajid C
-	 */
-	public void initView()
-	{
-		view.getWelcomeLabel().setText("Hello, "+ model.getName() );
-	
-	
-		//list of 14 next shifts of this user to print to text field
-		view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()) );
+     * initialize the elements that the GUI sees from the database 
+     * as soon as the view first opens for the user.
+     * 
+     * @ author Sajid C and Neil M
+     */
+    public void initView()
+    {
+        view.getWelcomeLabel().setText("Hello, "+ model.getName() );
 
-	}
+
+        //list of 14 next shifts of this user to print to text field
+        //Null pointer error just in case
+		try 
+		{
+			view.getSchedList().setText(model.s.nextShiftsToString(model.getAvailability()));
+		} 
+		catch (NullPointerException exception){
+        }
+
+
+    }
 	
 	
 	
