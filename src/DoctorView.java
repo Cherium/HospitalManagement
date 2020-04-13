@@ -80,6 +80,8 @@ public class DoctorView {
 	private JPanel scheduleContainer;
 	private JPanel modifyScheduleContainer;
 
+	private JScrollPane scrollWeekly;
+
 	private JButton btnSignOut;
 	private JButton btnViewPatient;
 	private JButton btnMakeChanges;
@@ -252,7 +254,7 @@ public class DoctorView {
 		// button panel associated with it (on the buttom)
 		scheduleContainer = new JPanel();
 		scheduleContainer.setBorder(new LineBorder(new Color(0, 0, 0)));
-		scheduleContainer.setLayout(new MigLayout("hidemode 1"));
+		scheduleContainer.setLayout(new MigLayout("hidemode 3"));
 		contentPane.add(scheduleContainer);
 
 		// Create a container for modifying the schedule
@@ -286,8 +288,14 @@ public class DoctorView {
 		scheduleMonthly = new JPanel();
 		scheduleWeekly = new JPanel();
 
+		scrollWeekly = new JScrollPane(scheduleWeekly, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		// scrollWeekly.setLayout(new ScrollPaneLayout());
+		scrollWeekly.getVerticalScrollBar().setUnitIncrement(10);
+		scrollWeekly.setPreferredSize(new Dimension(2000,1000));
 
-		scheduleContainer.add(scheduleWeekly);
+
+		// scheduleContainer.add(scheduleWeekly);
+		scheduleContainer.add(scrollWeekly, "growx");
 		scheduleContainer.add(scheduleMonthly);
 
 		// Create buttons for manipulating the schedule
@@ -415,11 +423,13 @@ public class DoctorView {
 		buttonContainer.add(optionlbl);
 		buttonContainer.add(btnPatients, "grow");
 		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
+		buttonContainer.add(btnChange, "grow");
+		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
 		buttonContainer.add(nurselbl);
 		buttonContainer.add(nurseComboBox, "grow");
 		buttonContainer.add(btnOwn, "grow");
-		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
-		buttonContainer.add(btnChange, "grow");
+		// buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
+		// buttonContainer.add(btnChange, "grow");
 
 
 	}
@@ -626,7 +636,7 @@ public class DoctorView {
 		scheduleWeekly.removeAll();
 		scheduleWeekly.revalidate();
 		scheduleWeekly.repaint();
-		scheduleWeekly.setLayout(new MigLayout("wrap 8, gap 15px 15px",
+		scheduleWeekly.setLayout(new MigLayout("wrap 8, gap 10px 10px",
 				"[align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center] 10 [align center]"));
 		scheduleWeekly.setBackground(Color.WHITE);
 		scheduleWeekly.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -648,20 +658,20 @@ public class DoctorView {
 			lbl.setEnabled(true);
 		}
 
-		for (int i = 0; i < 12; i++) {
-			scheduleWeekly.add(new JLabel((i + 8) + ":00"), "sg a, alignx right");
+		for (int i = 0; i < 24; i++) {
+			scheduleWeekly.add(new JLabel(i + ":00"), "sg a, alignx right");
 			for (int j = 0; j < 7; j++) {
 				JLabel templbl = new JLabel("  ");
 				templbl.setBackground(Color.WHITE);
-				if (listApsWeek[i + 8][j] != null) {
-					templbl.setText(listApsWeek[i + 8][j]);
+				if (listApsWeek[i][j] != null) {
+					templbl.setText(listApsWeek[i][j]);
 					templbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 					templbl.setBackground(Color.ORANGE);
 				}
 				templbl.setOpaque(true);
 				scheduleWeekly.add(templbl, "sg a");
-				templbl.setEnabled(ava[i + 8][j]);
-				if (!ava[i + 8][j]) {
+				templbl.setEnabled(ava[i][j]);
+				if (!ava[i][j]) {
 					templbl.setBackground(Color.LIGHT_GRAY);
 				}
 				templbl.setPreferredSize(new Dimension(100, 35));
@@ -669,7 +679,7 @@ public class DoctorView {
 			}
 		}
 
-		scheduleWeekly.setPreferredSize(new Dimension(2000, 1000));
+		// scheduleWeekly.setPreferredSize(new Dimension(2000, 1000));
 	}
 
 	/**
@@ -1024,10 +1034,12 @@ public class DoctorView {
 	public void isWeekly(Boolean b) {
 		if (b) {
 			scheduleMonthly.setVisible(false);
-			scheduleWeekly.setVisible(true);
+			// scheduleWeekly.setVisible(true);
+			scrollWeekly.setVisible(true);
 		} else {
 			scheduleMonthly.setVisible(true);
-			scheduleWeekly.setVisible(false);
+			// scheduleWeekly.setVisible(false);
+			scrollWeekly.setVisible(false);
 		}
 	}
 

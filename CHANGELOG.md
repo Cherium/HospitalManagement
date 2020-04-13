@@ -3,6 +3,10 @@ __In descending date order first__ (most recent date and time first).
 Timestamp Format: __day month HOURS:MINUTES (military time) USER__  
 Example: 10 mar 21:13 SAJID\
 
+## 13 APRIL 09:58 Jenny
+* Changed weekly schedule view in doctor to 24 hour view.
+* Changed order of right action panel. 
+
 ## 12 APRIL 15:57 Jenny
 * Changed format of the right action panel for Doctor. 
 * Removed the Select Day button as there is no functionality built in. 
