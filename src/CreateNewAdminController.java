@@ -61,8 +61,9 @@ public class CreateNewAdminController {
 		{
             
 			//exit after showing success dialog
-			view.showDialogToUser(response);
 			view.setVisible(false);
+			view.showDialogToUser(response);
+
 		}
 		else
 		{

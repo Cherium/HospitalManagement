@@ -71,8 +71,9 @@ public class CreateNewReceptionistController {
 		if( response.compareTo("Account successfully created!") == 0 )
 		{
 			//exit dialog after showing success dialog
-			view.showDialogToUser(response);
 			view.setVisible(false);
+			view.showDialogToUser(response);
+
 		}
 		else
 		{

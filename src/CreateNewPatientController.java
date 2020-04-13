@@ -85,8 +85,9 @@ public class CreateNewPatientController {
 		if( response.compareTo("Account successfully created!") == 0 )
 		{
 			//exit after showing success dialog
-			view.showDialogToUser(response);
 			view.setVisible(false);
+			view.showDialogToUser(response);
+
 		}
 		else
 		{
