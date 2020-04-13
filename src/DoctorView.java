@@ -132,7 +132,7 @@ public class DoctorView {
 
 	String[] times = { "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00",
 			"11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",
-			"23:00", "24:00" };
+			"23:00"};
 
 	// private JScrollPane scroll;
 	private JList listPatients;
@@ -312,14 +312,14 @@ public class DoctorView {
 
 	////////////////////////////////////////////////////
 	/**
-	 * 
+	 * Initializes the modification panel for schedules/availabilities
 	 */
 	public void initializeModify() {
 		modifyScheduleContainer = new JPanel(new MigLayout());
 		modifyScheduleContainer.setBackground(Color.WHITE);
 		modifyScheduleContainer.setBorder(BorderFactory.createLineBorder(Color.PINK));
 
-		String[] days = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+		String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "Sunday"};
 
 		JPanel availChangePanel = new JPanel(
 				new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]"));
@@ -396,17 +396,10 @@ public class DoctorView {
 		btnPatients.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// contentPane.setVisible(false);
 				scheduleContainer.setVisible(false);
 				patientPanel.setVisible(true);
 				btnOwn.setEnabled(true);
 				modifyScheduleContainer.setVisible(false);
-			}
-		});
-
-		nurseComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				btnOwn.setEnabled(true);
 			}
 		});
 
@@ -417,6 +410,7 @@ public class DoctorView {
 				patientPanel.setVisible(false);
 				scheduleContainer.setVisible(false);
 				btnOwn.setEnabled(true);
+				nurseComboBox.setSelectedIndex(-1);
 			}
 		});
 		
@@ -1931,6 +1925,14 @@ public class DoctorView {
 
 	public JButton getBtnUpdateFerral() {
 		return btnUpdateReferral;
+	}
+
+	public JPanel getModifyPanel() {
+		return modifyScheduleContainer;
+	}
+
+	public JPanel getCalendar() {
+		return scheduleContainer;
 	}
 
 }

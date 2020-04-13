@@ -117,7 +117,12 @@ public class DoctorController {
 						view.isWeekly(false);
 					}
 					view.setScheduleNameLabels(view.getNurseComboBox().getSelectedItem().toString());
+					view.getButtonOwn().setEnabled(true);
+					view.getCalendar().setVisible(true);
+					view.getModifyPanel().setVisible(false);
+	
 				}
+
 			}
 		});
 

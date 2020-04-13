@@ -12,7 +12,12 @@ windows
 * Changed weekly schedule view in doctor to 24 hour view.
 * Changed order of right action panel. 
 # 14:08
-* Fixed issue where a Nurse account is created with the name of the assigned doctor and not the username. 
+* Fixed issue where a Nurse account is created with the name of the assigned doctor and not the username.
+# 16:10
+* Ailgned availability week days with actual week days. Before was SUN-MON-etc. for changing availability and availability was instead saved as MON-TUES-etc. Now changing avilability and viewing availability is in MON-TUES-etc. 
+* Removed 24:00 from shift times. Solved DateTimeParseException error when 24:00 was used as a shift time.  
+# 16:23
+* Fixed a bug in Doctor where in modifying schedule, click on a nurse does not switch to the nurse's schedule.
 
 
 ## 12 APRIL 15:57 Jenny
