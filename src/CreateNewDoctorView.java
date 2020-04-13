@@ -3,6 +3,12 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +22,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
 
 /**
  * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
@@ -38,7 +47,8 @@ public class CreateNewDoctorView  extends JDialog{
 		*/
 
 		private JPanel contentPanel = new JPanel();
-		
+		private JPanel schedPanel;
+
 		private JTextField nameInput;
 		private JTextField usernameInput;
 		
@@ -48,11 +58,25 @@ public class CreateNewDoctorView  extends JDialog{
 		private JButton cancelButton;
 		private JButton createButton;
 		private JButton addNurse;
+
+		JTextArea schedList;
+		JScrollPane schedListScroll;
+
+
 		
 		private JComboBox<String> nurseDropDown;
 		private JComboBox<String> departmentDropDown;
 		
 		private JTextArea box;
+
+		private JComboBox<String> year, month, day;
+	
+	private JComboBox<String>[] availTimes = new JComboBox[14];	//stores al drop-down menues for availability change; index 0= sunday start // index 13= sat end
+	
+	String[] times = {
+			"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00"
+			, "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"
+	};
 		
 		
 		
@@ -159,7 +183,22 @@ public class CreateNewDoctorView  extends JDialog{
 				buttonPanel.add(createButton, "gapleft 50");					//in the current column, place the component with a gap of 50px from the left
 				buttonPanel.add(cancelButton, "");								//place the next component in the second column
 				Panel.add(buttonPanel);											//add inner panel to the outer panel
+			//inner bottom panel
+			schedPanel = new JPanel(new MigLayout("") );
+			schedPanel.setBackground(new Color(255, 247, 231));
+			schedPanel.setBorder(BorderFactory.createTitledBorder("Default Shifts"));
+			schedPanel.setPreferredSize(new Dimension(325, 200));
+
+			schedList = new JTextArea();
+				schedList.setFont( new Font("monospaced", Font.PLAIN, 10) );	//https://stackoverflow.com/questions/40901128/how-would-i-fix-this-jtextarea-formatting-error
+			//wrap availability box in scrollpane
+			schedListScroll = new JScrollPane(schedList
+					, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			schedListScroll.setPreferredSize(new Dimension(400, 200));
 			
+			schedPanel.add(schedListScroll);
+				contentPanel.add(schedPanel, "sg b, growx");
+
 				
 			setVisible(true);
 		}
@@ -196,7 +235,106 @@ public class CreateNewDoctorView  extends JDialog{
 			JOptionPane.showMessageDialog(contentPanel, message);
 		}	
 		
+			/**
+	 * create schedule change panel- sets menus to instance variables
+	 * @author Sajid C
+	 * @return availability panel containing all labels and time menus
+	 */
+	public JPanel createAvailabilityChangePanel()
+	{
+		String[] days = {"Sunday", "", "Monday","","Tuesday","","Wednesday","","Thursday","","Friday","","Saturday"};
+
+		JPanel availChangePanel = new JPanel(new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]") );
+		availChangePanel.setPreferredSize(new Dimension(325, 200));
+		availChangePanel.setBorder(BorderFactory.createTitledBorder("Request Availability Change"));
 		
+		availChangePanel.add(new JLabel("Start"), "span 2");
+		availChangePanel.add(new JLabel("End"), " wrap");
+		
+		for (int i = 0; i < this.availTimes.length; i=i+2) 
+		{
+			availChangePanel.add(new JLabel(days[i]) );
+			availTimes[i] = new JComboBox(times);
+			availTimes[i+1] = new JComboBox(times);
+			availChangePanel.add(availTimes[i] );
+			availChangePanel.add(availTimes[i+1] );
+		}
+		
+		return availChangePanel;
+
+		
+	}
+
+	
+	/**
+	 * create a view for year
+	 * @author Sajid C
+	 * @return drop down menu for years
+	 */
+	public JComboBox<String> initYearCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 120; i++) {
+			temp.addItem((LocalDate.now().getYear()-i)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * 
+	 * create box for month
+	 * @author Sajid C
+	 * @return dropdown menu of months in a year
+	 */
+	public JComboBox<String> initMonthCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		for (int i = 0; i < 12; i++) {
+			temp.addItem((i+1)+"");
+		}
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * create box for day
+	 * @author Sajid C
+	 * @return empty list that will store days
+	 */
+	public JComboBox<String> initDayCombo() {
+		JComboBox<String> temp = new JComboBox<String>();
+		temp.setBackground(Color.WHITE);
+		
+		return temp;
+	}
+	
+	/**
+	 * populate days menu with days based on current month selection
+	 * @author Sajid C
+	 */
+	public void initDaysinBox()
+	{//
+		day.removeAllItems();
+		//https://www.youtube.com/watch?v=yylaqeWkPmM
+		//https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d")
+				.withResolverStyle(ResolverStyle.STRICT);
+		for (int i = 1; i <= 31 ; i++)
+		{
+			try
+			{
+				df.parse((String) year.getSelectedItem() +"/"+(String) month.getSelectedItem() 
+					+"/"+ Integer.toString(i));
+				day.addItem(Integer.toString(i));
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
+		}
+	}
+
 		
 		
 
@@ -323,6 +461,13 @@ public class CreateNewDoctorView  extends JDialog{
 			this.box = box;
 		}
 
+		public JTextArea getSchedList() {
+			return schedList;
+		}
+	
+		public void setSchedList(JTextArea schedList) {
+			this.schedList = schedList;
+		}
 		
 		
 		

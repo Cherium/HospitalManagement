@@ -145,7 +145,7 @@ public class EditDoctorController {
 	 * input for the frontend label 
 	 * @author Jeremy F
 	 */	
-
+	
 	public void parseEntryPersonalInfoConfirmation() {
 		//the below happens once "Confirmed" button is clicked
 
@@ -162,20 +162,42 @@ public class EditDoctorController {
 			personalInformationView.showDialogToUser(returnMessage);
 		} else if (returnMessage.compareTo("This Account is not a Doctor!") == 0) {
 			personalInformationView.showDialogToUser(returnMessage);
+
 		} else {
 			String tempName = personalInformationView.getNameInput().getText();
 			char[] tempPass = personalInformationView.getPassInput().getText().toCharArray();
-
-			if(returnDepartmentMessage.compareTo("No department selected!") == 0) {
-				personalInformationView.showDialogToUser(returnMessage);
+			String tempPassString = personalInformationView.getPassInput().getText();
+			if(tempPass.length < 4 && tempPassString.compareTo("") != 0)
+			{
+				personalInformationView.showDialogToUser("Password must be longer than 4 characters!");
 			}
+
+			else if(returnDepartmentMessage.compareTo("No department selected!") == 0) {
+				UserSuperClass user = Main.dbase.get(model.getUsername());
+				this.doctorModel = (DoctorModel) user;
+				String oldDepartment = doctorModel.getDepartment();
+				personalInformationView.showDialogToUser("Account Edited Successfully" + "\n" + "current department:" + oldDepartment);
+				personalInformationView.setVisible(false);
+			}
+
 			else {
+				
 				String tempDepartment = returnDepartmentMessage;
 				UserSuperClass user = Main.dbase.get(model.getUsername());
-				user.setName(tempName);
-				user.setPassword(tempPass);
-				this.doctorModel = (DoctorModel) user;
-				doctorModel.setDepartment(tempDepartment);
+				if (tempName.compareTo("") != 0) {
+					user.setName(tempName);
+					returnMessage = returnMessage + "\n" + "Name changed!"; 
+				} 
+				if (tempPassString.compareTo("") != 0) {
+					user.setPassword(tempPass);
+					returnMessage = returnMessage + "\n" + "Password changed!"; 
+				} 
+				if (returnDepartmentMessage.compareTo("No department selected!") != 0) {
+					this.doctorModel = (DoctorModel) user;
+					doctorModel.setDepartment(tempDepartment);
+					returnMessage = returnMessage + "\n" + "Department changed!"; 
+				}
+		
 				personalInformationView.setVisible(false);
 				personalInformationView.showDialogToUser(returnMessage);
 			}

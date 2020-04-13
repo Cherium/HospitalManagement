@@ -44,6 +44,7 @@ public class CreateNewDoctorController {
 		
 		//list of departments to set in combobox
 		view.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
+
 	}
 	
 	

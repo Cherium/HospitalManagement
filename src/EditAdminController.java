@@ -153,13 +153,28 @@ public class EditAdminController {
 		} else {
 			String tempName = personalInformationView.getNameInput().getText();
 			char[] tempPass = personalInformationView.getPassInput().getText().toCharArray();
+			String tempPassString = personalInformationView.getPassInput().getText();
+			
+			
+			if(tempPass.length < 4 && tempPassString.compareTo("") != 0)
+			{
+				personalInformationView.showDialogToUser("Password must be longer than 4 characters!");
+			}
+				
+			else {
+				UserSuperClass user = Main.dbase.get(model.getUsername());
+				if (tempName.compareTo("") != 0) {
+					user.setName(tempName);
+					returnMessage = returnMessage + "\n" + "Name changed!"; 
+				} 
+				if (tempPassString.compareTo("") != 0) {
+					user.setPassword(tempPass);
+					returnMessage = returnMessage + "\n" + "Password changed!"; 
+				} 
+				personalInformationView.setVisible(false);
+				personalInformationView.showDialogToUser(returnMessage);
+			}	
 		
-            UserSuperClass user = Main.dbase.get(model.getUsername());
-            user.setName(tempName);
-            user.setPassword(tempPass);
-			personalInformationView.setVisible(false);
-			personalInformationView.showDialogToUser(returnMessage);
-        
 		}
 		
 	}

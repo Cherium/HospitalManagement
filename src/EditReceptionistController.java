@@ -137,23 +137,39 @@ public class EditReceptionistController {
 		model.setUsername(personalInformationView.getUsernameInput().getText());
 		String returnMessage = model.checkPersonalInfo();
 
+		//get the department chosen and set it in model
+		
+
 		if(returnMessage.compareTo("That Account does not exist!") == 0)
 		{
 			personalInformationView.showDialogToUser(returnMessage);
-		} else if (returnMessage.compareTo("This Account is not a Receptionist!") == 0) {
+		} else if (returnMessage.compareTo("This Account is not an Admin!") == 0) {
 			personalInformationView.showDialogToUser(returnMessage);
 		} else {
 			String tempName = personalInformationView.getNameInput().getText();
 			char[] tempPass = personalInformationView.getPassInput().getText().toCharArray();
-			UserSuperClass user = Main.dbase.get(model.getUsername());
-			System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());							
-			user.setName(tempName);
-			user.setPassword(tempPass);		
-            personalInformationView.setVisible(false);
-            personalInformationView.showDialogToUser(returnMessage);
-			System.out.println(user.getUsername() + user.getName() + user.getPassword().toString());
+			String tempPassString = personalInformationView.getPassInput().getText();
 			
-
+			
+			if(tempPass.length < 4 && tempPassString.compareTo("") != 0)
+			{
+				personalInformationView.showDialogToUser("Password must be longer than 4 characters!");
+			}
+				
+			else {
+				UserSuperClass user = Main.dbase.get(model.getUsername());
+				if (tempName.compareTo("") != 0) {
+					user.setName(tempName);
+					returnMessage = returnMessage + "\n" + "Name changed!"; 
+				} 
+				if (tempPassString.compareTo("") != 0) {
+					user.setPassword(tempPass);
+					returnMessage = returnMessage + "\n" + "Password changed!"; 
+				} 
+				personalInformationView.setVisible(false);
+				personalInformationView.showDialogToUser(returnMessage);
+			}	
+		
 		}
 		
 	}
