@@ -165,7 +165,7 @@ public class DoctorController {
 				// Add the input box text to the selected patient record
 				// Update view
 				String updateTreatment = view.getPastTreatmentBox().getText() + "\n"
-						+ view.getCurrentTreatmentBox().getText() + "\n\t- " + model.getName() + "\n";
+						+ view.getCurrentTreatmentBox().getText() + "\n\t- " + model.getName() + ", M.D. \n";
 				view.getPastTreatmentBox().setText(updateTreatment);
 
 				saveNotes();
