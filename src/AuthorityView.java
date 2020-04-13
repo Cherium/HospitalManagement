@@ -76,6 +76,7 @@ public class AuthorityView extends JFrame{
 		//sets frame containers attributes
 		setTitle(title);
 		setMinimumSize(new Dimension(500, 500));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		

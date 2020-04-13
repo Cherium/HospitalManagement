@@ -107,7 +107,7 @@ public class PatientView extends JFrame{
 		//setSize(700,700);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		initializeGUI();
 	}

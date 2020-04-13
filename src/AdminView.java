@@ -93,6 +93,7 @@ public class AdminView extends JFrame {
 		//sets frame containers attributes
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setMinimumSize(new Dimension(800, 650));
 		setLocationRelativeTo(null);
 		
