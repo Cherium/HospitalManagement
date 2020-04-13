@@ -2,16 +2,18 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 
 /**
- * @author Sajid C
- * Create a Databsae and import CSV into that database
+ * @author Sajid C, Mohammed R
+ * Handle database importing and exporting
  */
 public class Database {
 
@@ -24,8 +26,10 @@ public class Database {
 		
 		
 		private ArrayList<DoctorModel> docsToLoad = new ArrayList<DoctorModel>();
+		private String path = System.getProperty("user.dir");
+		private Path tempFolder = Paths.get(path+"/temp/");
+		private Path exDbaseFolder = Paths.get(path+"/externalDatabase/");
 
-		
 		
 		
 		/**
@@ -36,7 +40,21 @@ public class Database {
 		public Database(String filePath) {
 			
 			users = new HashMap<String, UserSuperClass>();
-			importDatabase(filePath);
+			if(!Files.exists(exDbaseFolder)) {
+				importDatabase(filePath);		
+			}else {
+				try {
+					importExternalDatabase(exDbaseFolder.toString());
+					
+				}catch(IOException e) {
+					System.out.println("import not successfull");
+					importDatabase(filePath);
+				}
+			}
+		
+			
+			
+
 		}
 
 		
@@ -49,6 +67,7 @@ public class Database {
 		 * @param filePath filename to import when initializing database
 		 */
 		public void importDatabase(String filePath) {
+			System.out.println("I am working now the internal database");
 
 			
 			
@@ -261,6 +280,254 @@ public class Database {
 		}
 		
 		
+		public void importExternalDatabase(String filePath) throws IOException {
+			Path path = Paths.get(filePath);
+			System.out.println("I am working now the external database");
+			FileInputStream fis = new FileInputStream(filePath+"/"+"dbase.txt");
+
+			Scanner sc = new Scanner(fis);
+			sc.nextLine();								//ignore first line of headers
+			
+			//import database, line by line
+			while(sc.hasNextLine()) {
+				
+							String data = sc.nextLine();			//read in entire line
+							String[] split = data.split("\t");		//regex split into arrow on tabs
+							
+					//read in values in each line
+							String importRole						 = split[0];
+							String importUsername					 = split[1];
+							char[] importPassword					 = split[2].toCharArray();
+							String importName						 = split[3];
+							String importDepartment					 = split[4];
+							String[] importAssignedNurseUsernames	 = split[5].split(",");
+							String importAssignedDocUsername		 = split[6];
+							String importAddress						= split[7];
+							String importPhoneNumber			 			= split[8];
+							String importEmail 								= split[9];
+							float importAmountDue			 = Float.parseFloat(split[10]);
+							String importDob								= split[11];
+							String importBlood								=split[12];
+							String importSex								=split[13];
+							String[] importAssigPat							=split[14].split(",");
+
+							
+					//import fields into internal database
+							
+							
+							//if the data to import pertains to a doctor
+							if(importRole.compareTo("doctor") == 0)
+							{
+								//read in doctor availability
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								//InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
+
+								Scanner fc = new Scanner(wv);
+								
+								ArrayList<String> importAvail = new ArrayList<>(5);
+								while(fc.hasNextLine()) 
+								{
+									
+									String time = fc.nextLine();			//read in entire line
+									
+									importAvail.add(time);
+								}
+								fc.close();
+								//create a temporary doctor object using database information
+								DoctorModel temp = new DoctorModel(importUsername, importPassword, importName
+										, importDepartment, importAssignedNurseUsernames, importAssigPat, importAvail.toArray(new String[0]));
+								
+								//add that doctor to the internal database
+								users.put(importUsername, temp);
+
+								//add doctor to list to initialize appointments after importing
+								docsToLoad.add(temp);
+							}
+							
+							else if(importRole.compareTo("nurse")== 0)
+							{
+
+								//read in nurse availability
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
+								Scanner fc = new Scanner(wv);
+								
+								ArrayList<String> importAvail = new ArrayList<>(5);
+								while(fc.hasNextLine()) 
+								{
+									
+									String time = fc.nextLine();			//read in entire line
+									
+									importAvail.add(time);
+								}
+								fc.close();
+								
+								NurseModel temp = new NurseModel(importUsername, importPassword, importName
+								, importDepartment, importAssignedDocUsername, importAvail.toArray(new String[0]) );
+								
+								users.put(importUsername, temp);
+							}
+							
+							else if(importRole.compareTo("patient")== 0)
+							{
+								//get Patient appt times
+								//InputStream st = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Appt.txt");
+								FileInputStream st = new FileInputStream(filePath+"/"+importUsername+"Appt.txt");
+								Scanner fc = new Scanner(st);
+								
+								ArrayList<String> tempp = new ArrayList<>(5);
+								while(fc.hasNextLine()) 
+								{
+									
+									String time = fc.nextLine();			//read in entire line
+									String[] split2 = time.split("\t");		//regex split into arrow on tabs
+									
+									String docName = split2[0];
+									String apptTime = split2[1];
+									
+									tempp.add(docName);
+									tempp.add(apptTime);
+								}
+								fc.close();
+								
+								//get Patient record notes
+								try {
+									//https://stackoverflow.com/questions/3891375/how-to-read-a-text-file-resource-into-java-unit-test?noredirect=1&lq=1
+//									String record = new String(getClass().getClassLoader()
+//											.getResourceAsStream(path.getName(0)+"/"+importUsername+".txt").readAllBytes());
+									FileInputStream wv =new FileInputStream(filePath+"/"+importUsername+".txt");
+									String record = new String(wv.readAllBytes());
+									System.out.println(record);
+									//create a patient internally
+									PatientModel temp = new PatientModel(importUsername, importPassword, importName
+											, importAddress, importPhoneNumber, importEmail, importAmountDue
+											, importDob, importBlood, importSex, record, tempp);
+									
+									users.put(importUsername, temp);
+								} catch (IOException e) {
+									System.out.println("Could not open file");
+									e.printStackTrace();
+								}
+								
+								
+							}
+							
+							else if(importRole.compareTo("admin")== 0)
+							{
+								//read in admin availability
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
+
+								Scanner fc = new Scanner(wv);
+								
+								ArrayList<String> importAvail = new ArrayList<>(5);
+								while(fc.hasNextLine()) 
+								{
+									
+									String time = fc.nextLine();			//read in entire line
+									
+									importAvail.add(time);
+								}
+								fc.close();
+								
+								
+								
+								AdminModel temp = new AdminModel(importUsername, importPassword, importName, importAvail.toArray(new String[0]));
+								
+								users.put(importUsername, temp);
+							}
+							
+							else if(importRole.compareTo("authority")== 0)
+							{
+								//read in authority availability
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
+
+								Scanner fc = new Scanner(wv);
+								
+								ArrayList<String> importAvail = new ArrayList<>(5);
+								while(fc.hasNextLine()) 
+								{
+									
+									String time = fc.nextLine();			//read in entire line
+									
+									importAvail.add(time);
+								}
+								fc.close();
+								
+								AuthorityModel temp = new AuthorityModel(importUsername, importPassword, importName, importAvail.toArray(new String[0]));
+								
+								users.put(importUsername, temp);
+							}
+							
+							else if(importRole.compareTo("receptionist")== 0)
+							{
+								//read in receptionist availability
+								//InputStream wv = getClass().getClassLoader().getResourceAsStream(path.getName(0)+"/"+importUsername+"Avail.txt");
+								FileInputStream wv = new FileInputStream(filePath+"/"+importUsername+"Avail.txt");
+
+								Scanner fc = new Scanner(wv);
+								
+								ArrayList<String> importAvail = new ArrayList<>(5);
+								while(fc.hasNextLine()) 
+								{
+									
+									String time = fc.nextLine();			//read in entire line
+									
+									importAvail.add(time);
+								}
+								fc.close();
+								
+								ReceptionistModel temp = new ReceptionistModel(importUsername, importPassword, importName, importAvail.toArray(new String[0]));
+								
+								users.put(importUsername, temp);
+							}
+					}
+			
+			System.out.println(path.getName(0));		
+			//close the scanner
+			sc.close();
+		}
+		
+		public void TempToExternalDatabase() throws IOException{
+			
+			String[] filename;
+
+		
+			File src = new File(tempFolder.toString());
+			File dest = new File(exDbaseFolder.toString());
+			
+			if(!Files.exists(exDbaseFolder)) {
+				src.renameTo(dest);
+			}else {
+				filename = dest.list() ;
+				while(filename.length != 0) {
+					filename = dest.list() ;
+					for (String p : filename) {
+						  File currentFile = new File(dest.getPath(),p);
+						  currentFile.delete();
+					}
+				}
+				dest.delete();
+				src.renameTo(dest);
+				
+				
+			}
+		}
+		
+		public void exitProgram()   {
+			try {
+				exportDbase();
+				TempToExternalDatabase();
+			}
+			catch(IOException e) {
+				System.out.println("export unsuccessful ");
+			}
+			
+		}
+		
+		
 		
 		
 		
@@ -268,41 +535,69 @@ public class Database {
 		/**
 		 * Create temp database files, verify these files work with importDatabase() and then save temp files as actual dbase files
 		 * --tested from main
-		 * @author Sajid C
+		 * @author Sajid C, Mohammed Rakeeb
 		 * @throws IOException 
 		 */
 		public void exportDbase() throws IOException
 		{
-/*attempt 1			
-			File tmp = new File(getClass().getResource("/temp/").getPath() );
-			tmp.mkdir();
-			//https://stackoverflow.com/questions/9658297/java-how-to-create-a-file-in-a-directory-using-relative-path/9658353
-			File dbase = new File(tmp, "dbasee.txt");
-			try {
-				dbase.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-*/			
 
-/*attempt two
+
 			//https://www.baeldung.com/java-how-to-create-a-file
 			//create a path object (that may not yet exist) and try to create the specified file at the specified path
 			String path = System.getProperty("user.dir");
 			Path tempFolder = Paths.get(path+"/temp/");
+			
 			if(!Files.exists(tempFolder))
 				Files.createDirectory(tempFolder);
 			
-			Path tempDbase = Paths.get("../temp/dbase.txt");
-			if(!Files.exists(tempDbase))
+			Path realPath = tempFolder.toRealPath(LinkOption.NOFOLLOW_LINKS);
+			
+			Path tempDbase = Paths.get(tempFolder.toString()+"/"+"dbase.txt");
+			if(!Files.exists(tempDbase)) {
 				Files.createFile(tempDbase);
+				System.out.println("created");
+				
+			}	
+			else {
+				System.out.println("exists");
+			}
+			
+	
+				
 			
 			//create a writer to the dbase file
 			BufferedWriter writer = Files.newBufferedWriter(tempDbase, Charset.forName("UTF-8"));
-*/			
-			StringBuilder tmp = new StringBuilder();	//builds dbase.txt
 			
+			StringBuilder tmp = new StringBuilder();	//builds dbase.txt
+			tmp.append("role");
+			tmp.append("\t");
+			tmp.append("username");
+			tmp.append("\t");
+			tmp.append("password");
+			tmp.append("\t");
+			tmp.append("department");
+			tmp.append("\t");
+			tmp.append("nursesUsernames");
+			tmp.append("\t");
+			tmp.append("assignedDoctorUsername");
+			tmp.append("\t");
+			tmp.append("address");
+			tmp.append("\t");
+			tmp.append("phoneNumber");
+			tmp.append("\t");
+			tmp.append("email");
+			tmp.append("\t");
+			tmp.append("amountDue");
+			tmp.append("\t");
+			tmp.append("dob");
+			tmp.append("\t");
+			tmp.append("blood");
+			tmp.append("\t");
+			tmp.append("sex");
+			tmp.append("\t");
+			tmp.append("docPatUsernames");
+			tmp.append("\n");
+
 			for(Map.Entry<String, UserSuperClass> i: users.entrySet())
 			{
 				if(i.getValue().getRole().compareTo("doctor") == 0)
@@ -314,7 +609,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -328,7 +623,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -342,10 +637,10 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for appointments
-//					writeToFile("../temp/" + user.getUsername() +"Appt.txt", user.toStringAppt() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Appt.txt", user.toStringAppt() );
 					
 					//write entry for patient record
-//					writeToFile("../temp/" + user.getUsername() +".txt", user.toStringRecord() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +".txt", user.toStringRecord() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -359,7 +654,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -373,7 +668,7 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
@@ -387,26 +682,30 @@ public class Database {
 					tmp.append("\n");
 					
 					//write entry for availability
-//					writeToFile("../temp/" + user.getUsername() +"Avail.txt", user.toStringAvailability() );
+					writeToFile(tempFolder.toString() +"/"+ user.getUsername() +"Avail.txt", user.toStringAvailability() );
 					
 					System.out.println(user.toStringDbase() );
 				}
 			}
+			
 
 			tmp.deleteCharAt(tmp.length()-1);
-			//writer.write(tmp.toString() );
-			//writer.close();
-
+			writer.write(tmp.toString() );
+			writer.close();
+		
+			importExternalDatabase(tempFolder.toString());
 			//check that the temporary external database can load into the program without errors, and if errors exist, keep the old database
 //			try {
-				//importDatabase("../temp/");
+//				
+//				importExternalDatabase(tempFolder.toString());
 //				System.out.println("Successful Internal Database Extraction");
 //				
 //				
 //			} catch (Exception e) {
 //				System.out.println("Unsuccessful Internal Database Extraction");
 //				e.printStackTrace();
-//				// TODO: handle exception
+//				importDatabase("dbase/dbase.txt");
+//				
 //			}
 	
 		}
