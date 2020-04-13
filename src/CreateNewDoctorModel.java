@@ -3,42 +3,24 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class
- * @author Sajid C
- *
+ * MVC Model: Model that deals with the Create Admin functionality, interacts with 
+ * model and view to help create an administrator.
+ * @author Jeremy Fan, Sajid C
  */
+
 public class CreateNewDoctorModel extends UserSuperClass {
 	
+	/* 
+	Variables include one contentPane to put in content, name and username inputs, password inputs, availability, 
+	department, and Arraylist of nurses to add. 
+	*/
+
 	private String name;
 	private String username;
 	private String department;
 	private ArrayList<String> nurseListToAdd = new ArrayList<>(5);
 	private char[] pwd;
 	private char[] pwd2;
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * default empty constructor
-	 * 
-	 * @author Sajid C
-	 */
-	public CreateNewDoctorModel()
-	{
-		//empty constructor
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * verify entered information, store information in database, and return an appropriate debug message accordingly
@@ -111,9 +93,7 @@ public class CreateNewDoctorModel extends UserSuperClass {
 		Main.dbase.put(username, new DoctorModel(username,pwd, name,  department, temp.toArray(new String[0]), new String[0], new String[0] ) );
 		return "Account successfully created!";
 	}
-	
-	
-	
+
 	/**
 	 * return the list of nurses names currently in the database, as a String array for the purpose of combobox elements
 	 * @author Sajid C
@@ -143,8 +123,14 @@ public class CreateNewDoctorModel extends UserSuperClass {
 	}
 
 	
-	//return the department list in a string[] format for use with combobox
-	public String[] getDeptList() {
+	/**
+	 * retrieve from main database a list of departments as a String array for 
+	 * input into the combobox elements in Views
+	 * @author Sajid C
+	 * @return list of department
+	 */	
+	
+	 public String[] getDeptList() {
 		
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
 		if(temp.get(0).compareTo("") != 0)

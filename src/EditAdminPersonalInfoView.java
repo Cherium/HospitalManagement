@@ -19,9 +19,14 @@ import net.miginfocom.swing.MigLayout;
  * 
  * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
  * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
+ * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * @author Jeremy F
+ * */
 public class EditAdminPersonalInfoView extends JDialog{
-	
+	/* Variables include one contentPane to put in content, 
+	* name and username inputs, password inputs,
+	* two buttons for creating, cancelling the creation process
+	*/
 	JPanel contentPanel;
 	
 	private JTextField usernameInput;
@@ -34,8 +39,12 @@ public class EditAdminPersonalInfoView extends JDialog{
 	
 
 	
-
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan, Sajid C
+	 * @param title title of the popup box
+	 */
 	public EditAdminPersonalInfoView(String title) 
 	{
 		//sets frame containers attributes
@@ -49,9 +58,10 @@ public class EditAdminPersonalInfoView extends JDialog{
 	}
 
 	
-	/**initialize the panels and components that will go inside the frame*/
+	/**initialize the panels and components that will go inside the frame
+	 * @author Sajid C, Jeremy F
+	 */	
 	public void initializeGUI() {
-		// TODO Auto-generated method stub
 		
 //Main panel background
 		JPanel Panel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
@@ -110,7 +120,11 @@ public class EditAdminPersonalInfoView extends JDialog{
 
 	
 	
-	//pop up a message-dialog box with a message passed in
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
+	 */
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);

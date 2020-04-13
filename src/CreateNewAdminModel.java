@@ -4,18 +4,28 @@ import java.util.Map;
 import java.time.LocalDateTime;
 
 /**
- *
+ * MVC Model: Model that deals with the Create Admin functionality, interacts with 
+ * model and view to help create an administrator.
+ * @author Jeremy Fan
  */
+
 public class CreateNewAdminModel extends UserSuperClass {
 	
+	/* 
+	Variables include one contentPane to put in content, name and username inputs, password inputs, availability, 
+	for two buttons for creating and cancelling the creation process. 
+	*/
 	private String name;
 	private String username;
 	private char[] pwd;
     private char[] pwd2;
     private String[] avail;
 	
-	
-	
+	/**
+	 * store new authority based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Sajid C, Jeremy F
+	 */
 	
 	public String storeInDatabase()
 	{

@@ -14,10 +14,6 @@ public class CreateNewDoctorController {
 	private CreateNewDoctorModel model;
 	private CreateNewDoctorView view;
 	
-	
-	
-	
-	
 	/**
 	 * Constructor- sets references to associated view and model of this MVC construct
 	 * 
@@ -66,12 +62,6 @@ public class CreateNewDoctorController {
 		
 	}
 
-	
-
-	
-	
-	
-
 	/**
 	 * add nurse to GUI Textbox if it already isn't in the Textbox
 	 * 
@@ -96,8 +86,6 @@ public class CreateNewDoctorController {
 		
 	}
 
-	
-	
 	/**
 	 * get and store information entered in GUI
 	 * 
@@ -110,15 +98,11 @@ public class CreateNewDoctorController {
 		
 		//get the department chosen and set it in model
 		model.setDepartment(view.getDepartmentDropDown().getItemAt(
-				view.getDepartmentDropDown().getSelectedIndex()) );
-		
-//TODO could also change get methods in view to return .getText versions
+				view.getDepartmentDropDown().getSelectedIndex()) );		
 		model.setName(view.getNameInput().getText());
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());
-		
-		
 		
 		//try to update database with the user entered information,
 		//	or return an error message if cannot

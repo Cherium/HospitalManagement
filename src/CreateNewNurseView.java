@@ -25,12 +25,12 @@ import javax.swing.border.EmptyBorder;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class CreateNewNurseView  extends JDialog{
-/*
-	public static void main(String[] args)
-	{
-		new CreateNewDoctorView("hehe");
-	}
-*/
+		/* Variables include one contentPane to put in content, 
+		* name and username inputs, password inputs,
+		* three buttons for creating, cancelling the creation process, and adding a doctor
+		* two combo boxes for doctor dropdowns and department dropdowns 
+		*/
+
 		private JPanel contentPanel = new JPanel();
 		
 		private JTextField nameInput;
@@ -49,7 +49,13 @@ public class CreateNewNurseView  extends JDialog{
 			
 		
 		
-		//constructor
+		/**
+		 * constructor
+		 * 
+		 * @author Jeremy Fan, Sajid C
+		 * @param title title of the popup box
+		 */
+
 		public CreateNewNurseView(String title)
 		{
 			//sets frame containers attributes
@@ -64,7 +70,9 @@ public class CreateNewNurseView  extends JDialog{
 		
 		
 		
-		/**initialize the panels and components that will go inside the frame*/
+		/**initialize the panels and components that will go inside the frame
+		 * @author Sajid C, Jeremy F
+		 */			
 		public void initializeGUI()
 		{
 //Main panel background
@@ -155,7 +163,9 @@ public class CreateNewNurseView  extends JDialog{
 		
 		
 		
-		//clear inputs
+		/**clear inputs in the panels
+		 * @author Sajid C
+		 */
 		public void clearInputs() 
 		{
 			nameInput.setText("");
@@ -167,15 +177,21 @@ public class CreateNewNurseView  extends JDialog{
 	
 		
 		
-		//pop up a message-dialog box with a message passed in 
+		/**
+		 * pop up a message-dialog box with a message passed in 
+		 * @author Jenny Z
+		 * @param message message to show user
+		 */		
 		public void showDialogToUser(String message)
 		{
 			JOptionPane.showMessageDialog(contentPanel, message);
 		}	
 		
+		/**
+		 * disable the nurse selection option for when the ER department is chosen by the User
+		 * @author Sajid C, Jeremy F
+		 */
 		
-		
-		//disable the nurse selection option for when the ER department is chosen by the User
 		public void disableNurseSelection()
 		{
 			if (departmentDropDown.getSelectedItem().equals("ER")) {

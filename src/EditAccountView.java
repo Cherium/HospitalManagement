@@ -19,7 +19,10 @@ import net.miginfocom.swing.MigLayout;
  * with the model.)
  * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.*/
 public class EditAccountView extends JDialog{
-	
+		/* Variables include one contentPane to put in content, 
+		* name and username inputs, password inputs,
+		* two buttons for creating and cancelling the creation process.
+		*/
 	JPanel contentPanel;
 	
 	
@@ -34,7 +37,12 @@ public class EditAccountView extends JDialog{
 	
 	
 	
-	//constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan, Sajid C
+	 * @param title title of the popup box
+	 */
 	public EditAccountView(String title) 
 	{
 		//sets frame containers attributes
@@ -48,9 +56,10 @@ public class EditAccountView extends JDialog{
 	}
 
 	
-	/**initialize the panels and components that will go inside the frame*/
+	/**initialize the panels and components that will go inside the frame
+	 * @author Sajid C, Jeremy F
+	 */	
 	public void initializeGUI() {
-		// TODO Auto-generated method stub
 		
 //Main panel background
 		JPanel Panel = new JPanel(new MigLayout("") );		//initialize jpanel and set its layout
@@ -99,7 +108,11 @@ public class EditAccountView extends JDialog{
 
 	
 	
-	//pop up a message-dialog box with a message passed in
+	/**
+	 * pop up a message-dialog box with a message passed in 
+	 * @author Jenny Z
+	 * @param message message to show user
+	 */
 	public void showDialogToUser(String message)
 	{
 		JOptionPane.showMessageDialog(contentPanel, message);

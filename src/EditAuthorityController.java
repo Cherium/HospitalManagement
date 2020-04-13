@@ -1,23 +1,44 @@
 import javax.swing.DefaultComboBoxModel;
+/**
+ * MVC Model: Controller that deals with the Edit Authority functionality, interacts with 
+ * model and view to help edit authority.
+ * @author Jeremy Fan
+ */
 
 public class EditAuthorityController {
 	
+	// Interacts with the model and view 
 	private EditAuthorityModel model;
 	private EditAuthorityView view;
     private AuthorityModel authorityModel;
     private EditAuthorityPersonalInfoView personalInformationView;
 
         
-    //constructor
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view view that controller interacts with 
+	 */	
 	public EditAuthorityController(EditAuthorityModel model, EditAuthorityView view) {
-		// TODO Auto-generated constructor stub
 		
 		this.model = model;
 		this.view = view;
 		initView();
 		initListeners();
     }
-    
+	
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view2 a second view that controller interacts with 
+	 */
+
 	public EditAuthorityController(EditAuthorityModel model, EditAuthorityPersonalInfoView view2, AuthorityModel authorityModel) {
 		
 		this.model = model;
@@ -27,55 +48,63 @@ public class EditAuthorityController {
 		initListeners2();
     }
     
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "create button".
+	 * @author Sajid C, Jeremy F
+	 */
 
     public void initView()
 	{
 
 	}
 	
-	//initialize the elements that the GUI sees from the database 
-	//	as soon as the view first opens for the user
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "create button".
+	 * @author Sajid C, Jeremy F
+	 */
+
 	public void initView2()
 	{
 		//list of departments to set in combobox
 		//personalInformationView.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
 	}
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "get edit information".
+	 * @author Sajid C, Jeremy F
+	 */
+
 	public void initListeners() 
 	{
 		view.getEditInformationButton().addActionListener(e -> parseEntryPersonalInfo() );
 	}
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "confirm information".
+	 * @author Sajid C, Jeremy F
+	 */
+
 	public void initListeners2() 
 	{
 		personalInformationView.getConfirmButton().addActionListener(e -> parseEntryPersonalInfoConfirmation() );	
 	}
 
 	
-	
-    //handle the user entered input for schedule editing
-    /*
-	public void parseEntry() {
-		
-		model.setUsername(view.getUsernameInput().getText());
 
-		String returnMessage = model.editSchedule();
-		if(returnMessage.compareTo("That Account does not exist!") == 0)
-		{
-			view.showDialogToUser(returnMessage);
-		}
-		else
-		{
-			//view.showDialogToUser(returnMessage);
-			view.setVisible(false);
-		}
-    }
-    */
+	/**
+	 * For model, set the username confirmation
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */		
 
-	//handle the user entered input for editing personal information
 	public void parseEntryPersonalInfo() {
 	
 		model.setUsername(view.getUsernameInput().getText());
@@ -91,6 +120,12 @@ public class EditAuthorityController {
 			view.setVisible(false);
 		}
 	}
+
+	/**
+	 * For model, set the name and password confirmation based on the 
+	 * input for the frontend label 
+	 * @author Jeremy F
+	 */	
 
 	public void parseEntryPersonalInfoConfirmation() {
 		//the below happens once "Confirmed" button is clicked

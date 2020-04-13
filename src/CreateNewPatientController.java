@@ -64,9 +64,6 @@ public class CreateNewPatientController {
 	 * @author Sajid C
 	 */
 	public void parseEntry() {
-		
-//TODO could also change get methods in view to return .getText versions		
-		// Get input from view and pass to model
 		model.setName(view.getNameInput().getText());
 		model.setAddress(view.getAddress().getText() );
 		model.setPhoneNumber(view.getPhone().getText() );

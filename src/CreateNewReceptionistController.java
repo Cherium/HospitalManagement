@@ -1,17 +1,26 @@
 import javax.swing.DefaultComboBoxModel;
 
-//import javax.swing.JPasswordField;
+/**
+ * Controller for this MVC construct
+ * Handles all interaction between the associated model class and the view class.
+ * @author Jeremy F
+ */
 
 public class CreateNewReceptionistController {
 	
+	// Interacts with the model and view 
 	private CreateNewReceptionistModel model;
 	private CreateNewReceptionistView view;
 	
-	
-	
-	
-	
-	
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view view that controller interacts with 
+	 */
+
 	public CreateNewReceptionistController(CreateNewReceptionistModel model, CreateNewReceptionistView view) {
 
 		this.model = model;
@@ -20,31 +29,35 @@ public class CreateNewReceptionistController {
 		initListeners();
 	}
 	
-	
-	
-	
 	public void initView()
 	{
 
 	}
 	
 	
-	//initialize 'only' the listeners the GUI handles 'that
-	//	need interaction with the model'
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something
+	 * In this case, add an action to the "create button".
+	 * @author Sajid C, Jeremy F
+	 */
+
 	public void initListeners() 
 	{
-	
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle create button pressed
 	}
 
 
 	
-	//get and store information entered in GUI
+	/**
+	 * For model, set the the name, username, password, and password confirmation based on the 
+	 * input for the frontend label 
+	 * @author Sajid C, Jeremy F
+	 */	
+
 	public void parseEntry() 
 	{
 		
-	// Get input from view and pass to model	
-//TODO could also change get methods in view to return .getText versions
 		model.setName(view.getNameInput().getText());
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());

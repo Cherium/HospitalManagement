@@ -3,11 +3,18 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-/**handles all calculations, database queries, and the overall work needed to be done for handling this associated role
- * Does NOT interact with the view class directly, and also does NOT interact with the Controller class(The Controller
- * class interacts with this class, not the other way around.)*/
+/**
+ * MVC Model: Model that deals with the Create Nurse functionality, interacts as the
+ * backend to support controller and view.
+ * @author Jeremy Fan
+ */
+
 public class CreateNewNurseModel extends UserSuperClass {
 	
+	/* 
+	* Variables include name and username inputs, 
+	* department of nurse, assigned doctor, and password inputs.
+	*/
 	private String name;
 	private String username;
     private String department;
@@ -16,24 +23,12 @@ public class CreateNewNurseModel extends UserSuperClass {
 	private char[] pwd2;
 	
 	
-	
-	
-	
-	
-	
-	public CreateNewNurseModel()
-	{
-		//empty constructor
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	//verify entered information and return an appropriate debug message accordingly
+
+	/**
+	 * store new authority based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Sajid C, Jeremy F
+	 */
 	public String storeInDatabase()
 	{
 		//check if username already exists in database
@@ -91,7 +86,11 @@ public class CreateNewNurseModel extends UserSuperClass {
 	}
 	
 	
-	//return the list of nurses names currently in the database, as a String array for the purpose of combobox elements
+	/**
+	 * return the list of doctor names currently in the database, as a String array for the purpose of combobox elements
+	 * @author Sajid C
+	 * @return list of doctor 
+	 */	
 	public String[] getDoctorList() {
 		
 		ArrayList<String> temp = new ArrayList<>(10);
@@ -116,7 +115,12 @@ public class CreateNewNurseModel extends UserSuperClass {
 	}
 
 	
-	//return the department list in a string[] format for use with combobox
+	/**
+	 * retrieve from main database a list of departments as a String array for 
+	 * input into the combobox elements in Views
+	 * @author Sajid C
+	 * @return list of department
+	 */		
 	public String[] getDeptList() {
 		
 		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
