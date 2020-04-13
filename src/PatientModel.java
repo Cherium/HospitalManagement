@@ -185,6 +185,9 @@ public class PatientModel extends UserSuperClass {
 	 */
 	public String[] printApptList()
 	{
+		usernameToCancel.clear();
+		timeToCancel.clear();
+		
 		ArrayList<String> apptList = new ArrayList<String>(5);
 
 		//add all appointments in patient list to the list, formatted as 'appt with - apt time'
