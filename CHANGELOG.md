@@ -9,6 +9,9 @@ Example: 10 mar 21:13 SAJID\
 ## 13 APRIL 09:58 Jenny
 * Changed weekly schedule view in doctor to 24 hour view.
 * Changed order of right action panel. 
+# 14:08
+* Fixed issue where a Nurse account is created with the name of the assigned doctor and not the username. 
+
 
 ## 12 APRIL 15:57 Jenny
 * Changed format of the right action panel for Doctor. 

@@ -75,11 +75,22 @@ public class CreateNewNurseModel extends UserSuperClass {
 		if(doctorToAdd == null)
 		{
 			return "Please assign at least one doctor!";
-		}
+		} 
 		
 		
 		/**store in database if all checks pass*/
 		
+		for(Map.Entry<String, UserSuperClass> i: Main.dbase.entrySet())
+		{
+			//if entry 'i' in DBase has 'name' that matches User selected nurse name
+			if(doctorToAdd.equals(i.getValue().getName()) )
+			{
+				//add the associated username to temp
+				doctorToAdd = i.getKey();
+			}
+		}
+
+
 		//Create a new nurse with all information collected and store in database
 		Main.dbase.put(username, new NurseModel(username, pwd, name,  department, doctorToAdd, new String[0] ) );
 		return "Account successfully created!";

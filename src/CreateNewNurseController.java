@@ -55,7 +55,6 @@ public class CreateNewNurseController {
 	public void initListeners() 
 	{
 		view.getCreateButton().addActionListener(e -> parseEntry() );		//handle create button pressed
-		view.getAddDoctor().addActionListener(e -> addAssignedDoctor() );		//handle 'add' button pressed
 		
 		
 		
@@ -99,6 +98,7 @@ public class CreateNewNurseController {
 		model.setUsername(view.getUsernameInput().getText());
 		model.setPwd(view.getPasswordInput().getPassword());
 		model.setPwd2(view.getPasswordInputConfirm().getPassword());
+		model.setDoctorToAdd(view.getDoctorDropDown().getSelectedItem().toString());
 		
 		
 		
