@@ -105,8 +105,8 @@ public class DoctorController {
 					int index = view.getNurseComboBox().getSelectedIndex();
 					NurseModel nmd = (NurseModel) Main.dbase.get(model.getAssignedNurseUsernames().get(index));
 					
-					// view.setShifts(convertToShiftTime(nmd.getAvailability()));
-					// view.setScheduledDays(convertToScheduledDays(nmd.getAvailability()));
+					view.setShifts(convertToShiftTime(nmd.getAvailability()));
+					view.setScheduledDays(convertToScheduledDays(nmd.getAvailability()));
 					view.setAppointments(convertAppointments(new HashMap<String, ArrayList<LocalDateTime>>()));
 								
 					view.initializeWeeklySchedule();
@@ -400,7 +400,7 @@ public class DoctorController {
 	 */
 	public void updateAvailability() {
 		
-		String[] newHours= new String[14];
+		String[] newHours = new String[14];
 		
 
 		//retrieve all comboBoxes storing hour values as Strings
@@ -408,7 +408,8 @@ public class DoctorController {
 		for(JComboBox<String> j: view.getAvailTimes())
 		{
 			//get String from box and add to String array
-			newHours[i++] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+			newHours[i] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+			i++;
 		}
 		
 		if (view.getCheckBox().isSelected()) {
@@ -417,7 +418,7 @@ public class DoctorController {
 		} else {
 			// else update availability for the nurse
 			int index = view.getNursesList().getSelectedIndex();
-			Main.dbase.get(model.getAssignedNurseUsernames().get(index)).s.updateSchedule(newHours);
+			Main.dbase.get(model.getAssignedNurseUsernames().get(index)).setAvailability(model.s.updateSchedule(newHours));;
 		}
 		
 		//show success to user
