@@ -319,7 +319,7 @@ public class DoctorView {
 		modifyScheduleContainer.setBackground(Color.WHITE);
 		modifyScheduleContainer.setBorder(BorderFactory.createLineBorder(Color.PINK));
 
-		String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "Sunday"};
+		String[] days = {"Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
 
 		JPanel availChangePanel = new JPanel(
 				new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]"));
