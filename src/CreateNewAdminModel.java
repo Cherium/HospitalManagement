@@ -64,7 +64,7 @@ public class CreateNewAdminModel extends UserSuperClass {
 		}
 				
 		/**store in database if all checks pass*/
-		Main.dbase.put(username, new AdminModel(username, pwd, name, new String[0]));
+		Main.dbase.put(username, new AdminModel(username, pwd, name, blankLDTAvailability()));
 		return "Account successfully created!";
 	}
 	
