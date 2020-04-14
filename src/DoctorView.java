@@ -1137,6 +1137,12 @@ public class DoctorView {
 		JOptionPane.showMessageDialog(getFrame().getContentPane(), message);
 	}	
 
+	public void setAdminView() {
+		scheduleContainer.setVisible(false);
+		buttonContainer.setVisible(false);
+		modifyScheduleContainer.setVisible(true);
+	}
+
 	/** Getter and Setter Methods */
 
 	/**
