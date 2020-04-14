@@ -33,8 +33,8 @@ public class EditNurseModel {
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
 		//new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
-		new EditNurseController(new EditNurseModel(), new EditNurseView("Nurse Portal"));
-
+		//new EditNurseController(new EditNurseModel(), new EditNurseView("Nurse Portal"));
+		new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
 		return "Account successfully edited!";
         }
 		
