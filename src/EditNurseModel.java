@@ -30,10 +30,11 @@ public class EditNurseModel {
 			return "That Account does not exist!";
 		}
 		else { 
-		//otherwise edit the account in the HashMap
-		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
-		return "Account successfully edited!";
+			//otherwise edit the account in the HashMap
+			this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+			NurseController n = new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
+			n.adminView();
+			return "Account successfully edited!";
         }
 		
 	}
