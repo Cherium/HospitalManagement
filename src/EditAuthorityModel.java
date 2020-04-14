@@ -20,20 +20,26 @@ public class EditAuthorityModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editPersonalInfo()
+	public int editPersonalInfo()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		this.authorityModel = (AuthorityModel) Main.dbase.get(username);	
+			try {
+				this.authorityModel = (AuthorityModel) Main.dbase.get(username);	
 
-        new EditAuthorityController( new EditAuthorityModel(), new EditAuthorityPersonalInfoView("Authority Information Portal"), new AuthorityModel(authorityModel.getUsername(), authorityModel.getPassword(),authorityModel.getName(),authorityModel.getAllPatientsUsernames()));
-        return "Account successfully edited!";
+				new EditAuthorityController( new EditAuthorityModel(), new EditAuthorityPersonalInfoView("Authority Information Portal"), new AuthorityModel(authorityModel.getUsername(), authorityModel.getPassword(),authorityModel.getName(),authorityModel.getAllPatientsUsernames()));
+				return 1;
+			} catch (Exception e) {
+				//TODO: handle exception
+				return 0;
+			}
+			
             }
 		}
 	

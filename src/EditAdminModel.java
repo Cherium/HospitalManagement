@@ -22,19 +22,23 @@ public class EditAdminModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editSchedule()
+	public int editSchedule()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
-		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		AdminController a = new AdminController( ((AdminModel) user) , new AdminView("Admin Portal") );
-        a.adminView();
-		return "Account successfully edited!";
+			this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+			try {
+				AdminController a = new AdminController( ((AdminModel) user) , new AdminView("Admin Portal") );
+				a.adminView();
+				return 1;
+			} catch (Exception e) {
+				return 0;
+			}
         }
 		
 	}
@@ -44,21 +48,27 @@ public class EditAdminModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editPersonalInfo()
+	public int editPersonalInfo()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
-		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		this.adminModel = (AdminModel) Main.dbase.get(username);	
-        new EditAdminController( new EditAdminModel(), new EditAdminPersonalInfoView("Admin Information Portal"), new AdminModel(adminModel.getUsername(), adminModel.getPassword(),adminModel.getName(), adminModel.getAvailability()));
-        return "Account successfully edited!";
-            }
+			this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+			try {
+				this.adminModel = (AdminModel) Main.dbase.get(username);	
+				new EditAdminController( new EditAdminModel(), new EditAdminPersonalInfoView("Admin Information Portal"), new AdminModel(adminModel.getUsername(), adminModel.getPassword(),adminModel.getName(), adminModel.getAvailability()));
+				return 1;
+			} catch (Exception e) {
+				return 0;
+
+			}
+			
 		}
+	}
 	
 	/**
 	 * store new account based on name, username and password given that it passes

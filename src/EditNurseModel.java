@@ -22,20 +22,27 @@ public class EditNurseModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editSchedule()
+	public int editSchedule()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 			//otherwise edit the account in the HashMap
 			this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-			NurseController n = new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
-			n.adminView();
-			return "Account successfully edited!";
-        }
+			try {
+				NurseController n = new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
+				n.adminView();
+				return 1;
+	
+
+			} catch (Exception e) {
+				return 0;
+			}
+			
+       }
 		
 	}
 
@@ -44,21 +51,28 @@ public class EditNurseModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editPersonalInfo()
+	public int editPersonalInfo()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
-		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new EditNurseController( new EditNurseModel(), new EditNursePersonalInfoView("Nurse Information Portal") );
-		//new EditNurseController( new EditNurseModel(), new EditNursePersonalInfoView("Nurse Information Portal"), new NurseModel(nurseModel.getUsername(), nurseModel.getPassword(), nurseModel.getName(), nurseModel.getDepartment(), nurseModel.getAssignedDocUsername(), nurseModel.getAvailability() ));
-
-		return "Account successfully edited!";}
+			this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+			try {
+				new EditNurseController( new EditNurseModel(), new EditNursePersonalInfoView("Nurse Information Portal") );
+				//new EditNurseController( new EditNurseModel(), new EditNursePersonalInfoView("Nurse Information Portal"), new NurseModel(nurseModel.getUsername(), nurseModel.getPassword(), nurseModel.getName(), nurseModel.getDepartment(), nurseModel.getAssignedDocUsername(), nurseModel.getAvailability() ));
+		
+				return 1;
+		
+			} catch (Exception e) {
+				return 0;
+			}
+		
 		}
+	}
 
 	/**
 	 * store new account based on name, username and password given that it passes

@@ -17,19 +17,23 @@ public class EditAccountModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editAccount()
+	public int editAccount()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new PatientController( ((PatientModel) user) , new PatientView("Patient Portal") );
+		try {
+			new PatientController( ((PatientModel) user) , new PatientView("Patient Portal") );
 
-		return "Account successfully edited!";
+			return 1;
+		} catch (Exception e) {
+			return 0;
+		}
         }
 		
 	}

@@ -123,16 +123,22 @@ public class EditNurseController {
 		
 		model.setUsername(view.getUsernameInput().getText());
 
-		String returnMessage = model.editSchedule();
-		if(returnMessage.compareTo("That Account does not exist!") == 0)
+		int returnVal = model.editSchedule();
+		if(returnVal == -1)
 		{
-			view.showDialogToUser(returnMessage);
+			view.showDialogToUser("Account does not exist!");
+		} else if (returnVal == 0) {
+			view.showDialogToUser("Account is not a authority");
 		}
 		else
 		{
 			//view.showDialogToUser(returnMessage);
 			view.setVisible(false);
 		}
+
+
+
+
 	}
 
 
@@ -146,10 +152,12 @@ public class EditNurseController {
 		
 		model.setUsername(view.getUsernameInput().getText());
 
-		String returnMessage = model.editPersonalInfo();
-		if(returnMessage.compareTo("That Account does not exist!") == 0)
+		int returnVal = model.editPersonalInfo();
+		if(returnVal == -1)
 		{
-			view.showDialogToUser(returnMessage);
+			view.showDialogToUser("Account does not exist!");
+		} else if (returnVal == 0) {
+			view.showDialogToUser("Account is not a nurse");
 		}
 		else
 		{

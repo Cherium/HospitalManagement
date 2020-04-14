@@ -24,21 +24,27 @@ public class EditDoctorModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editSchedule()
+	public int editSchedule()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
-		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		DoctorController why = new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
-		why.adminEditSchedule();
-		//new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit Doctor Portal"));
+			try {
+				this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+				DoctorController why = new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
+				why.adminEditSchedule();
+				//new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit Doctor Portal"));
+	
+				return 1;
+	
 
-		return "Account successfully edited!";
+			} catch (Exception e) {
+				return 0;
+			}
         }
 		
 	}
@@ -48,23 +54,26 @@ public class EditDoctorModel {
 	 * a series of tests
 	 * @author Jeremy F
 	 */
-	public String editPersonalInfo()
+	public int editPersonalInfo()
 	{
 		//check if the username is NOT on file
 		if(!Main.dbase.containsKey(username) )
 		{
-			return "That Account does not exist!";
+			return -1;
 		}
 		else { 
 		//otherwise edit the account in the HashMap
-		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		this.doctorModel = (DoctorModel) Main.dbase.get(username);	
-		new EditDoctorController( new EditDoctorModel(), new EditDoctorPersonalInfoView("Doctor Information Portal"), new DoctorModel(doctorModel.getUsername(), doctorModel.getPassword(), doctorModel.getName(), doctorModel.getDepartment(), doctorModel.getAssignedNurseUsernames(), doctorModel.getAvailability() ));
-	
+			try {
+				this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
+				this.doctorModel = (DoctorModel) Main.dbase.get(username);	
+				new EditDoctorController( new EditDoctorModel(), new EditDoctorPersonalInfoView("Doctor Information Portal"), new DoctorModel(doctorModel.getUsername(), doctorModel.getPassword(), doctorModel.getName(), doctorModel.getDepartment(), doctorModel.getAssignedNurseUsernames(), doctorModel.getAvailability() ));
 
-
-		return "Account successfully edited!";}
+				return 1;
+			} catch (Exception e) {
+				return 0;
+			}
 		}
+	}
 	
 	/**
 	 * store new account based on name, username and password given that it passes

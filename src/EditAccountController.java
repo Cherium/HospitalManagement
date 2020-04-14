@@ -63,10 +63,12 @@ public class EditAccountController {
 		
 		model.setUsername(view.getUsernameInput().getText());
 		
-		String returnMessage = model.editAccount();
-		if(returnMessage.compareTo("That Account does not exist!") == 0)
+		int returnVal = model.editAccount();
+		if(returnVal == -1)
 		{
-			view.showDialogToUser(returnMessage);
+			view.showDialogToUser("Account does not exist!");
+		} else if (returnVal == 0) {
+			view.showDialogToUser("Account is not a patient");
 		}
 		else
 		{
