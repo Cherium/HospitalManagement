@@ -59,9 +59,17 @@ public class NurseModel extends UserSuperClass {
 	 */
 	public String[] getDeptList() {
 		
-		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
-		temp.remove("ER");
-		
+		//deep copy
+				ArrayList<String> temp = new ArrayList<String>( Main.dbaseClass.getDepartmentList().size() );
+				for(String i: Main.dbaseClass.getDepartmentList() )
+				{
+					if(i.compareTo("ER") != 0)
+					{
+						temp.add(i);
+					}
+				}
+				//ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+				//temp.remove("ER");
 		
 		return temp.toArray(new String[0]);
 	}
