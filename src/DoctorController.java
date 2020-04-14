@@ -322,16 +322,20 @@ public class DoctorController {
 		// array
 		// use it search hashmap for the patient
 		int selectedIndex = view.getListPatients().getSelectedIndex();
-		PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(selectedIndex));
+		if(selectedIndex > -1)
+		{
+			PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(selectedIndex));
 
-		// update patient label info in view
-		view.getPatientInformation()
-				.setText("Name:\t" + pat.getName() + "\nAge:\t" + pat.getAge() + "\nSex:\t" + pat.getSex()
-						+ "\nBlood Type:\t" + pat.getBlood() + "\nAddress:\t" + pat.getAddress() + "\nPhone:\t"
-						+ pat.getPhoneNumber() + "\nEmail:\t" + pat.getEmail() + "\n");
+			// update patient label info in view
+			view.getPatientInformation()
+					.setText("Name:\t" + pat.getName() + "\nAge:\t" + pat.getAge() + "\nSex:\t" + pat.getSex()
+							+ "\nBlood Type:\t" + pat.getBlood() + "\nAddress:\t" + pat.getAddress() + "\nPhone:\t"
+							+ pat.getPhoneNumber() + "\nEmail:\t" + pat.getEmail() + "\n");
 
-		// update past history box in view
-		view.getPastTreatmentBox().setText(pat.getRecordNotes());
+			// update past history box in view
+			view.getPastTreatmentBox().setText(pat.getRecordNotes());
+		}
+		
 
 	}
 

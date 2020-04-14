@@ -55,7 +55,8 @@ public class DoctorModel extends UserSuperClass {
 			//add the doctors scheduled patients
 			for(String i: assigPats)
 			{
-				this.scheduledPatientsUsernames.add(i);
+				if(i.compareTo("null") != 0 )
+					this.scheduledPatientsUsernames.add(i);
 			}
 			
 			this.availability = arrayToLDTArray(avail);
@@ -177,12 +178,21 @@ public class DoctorModel extends UserSuperClass {
 		bob.append("\t");
 		bob.append("null");
 		bob.append("\t");
-		for(int i =0 ;i <this.scheduledPatientsUsernames.size() ;i++){
-			int size = this.scheduledPatientsUsernames.size();
-			bob.append(this.scheduledPatientsUsernames.get(i));	
-			if(this.scheduledPatientsUsernames.size() >1 && size - i != this.scheduledPatientsUsernames.size() -1 ) {	
-				bob.append(",");
+		
+		if(this.scheduledPatientsUsernames.size() > 0 )
+		{
+			for(int i =0 ;i <this.scheduledPatientsUsernames.size() ;i++){
+				int size = this.scheduledPatientsUsernames.size();
+				bob.append(this.scheduledPatientsUsernames.get(i));	
+				if(this.scheduledPatientsUsernames.size() >1 && size - i != this.scheduledPatientsUsernames.size() -1 ) {	
+					bob.append(",");
+				}
 			}
+			
+		}
+		else
+		{
+			bob.append("null");
 		}
 		
 
