@@ -48,6 +48,10 @@ public class NurseModel extends UserSuperClass {
 		
 	}
 
+	public NurseModel(String username, char[] password, String name
+	, String department, String assignedDocUsername, LocalDateTime[] availability) {
+	}
+
 	/**
 	 * Get list of departments in the system other than ER
 	 *@author SM

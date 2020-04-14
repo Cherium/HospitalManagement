@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -31,6 +32,7 @@ public class EditNursePersonalInfoView extends JDialog{
 	private JTextField passInput;
 	private JButton confirmButton;
 	private JButton cancelButton;
+	private JComboBox<String> departmentDropDown;
 
 	
 	
@@ -76,6 +78,11 @@ public class EditNursePersonalInfoView extends JDialog{
 		JLabel username = new JLabel("Confirm Username:");
 		JLabel name = new JLabel("Set New Name:");
 		JLabel pass = new JLabel("Set New Password:");
+		JLabel department = new JLabel("Department:");
+
+		//ComboBox drop down lists	
+		departmentDropDown = new JComboBox<String>();
+		departmentDropDown.insertItemAt("", 0);
 	
 	//TextFields
 		usernameInput = new JTextField();
@@ -89,7 +96,9 @@ public class EditNursePersonalInfoView extends JDialog{
 		contentPanel.add(nameInput, "width 80:160:300 ,wrap");	//set width of the component, wrap to next row for the next component to be added
 		contentPanel.add(pass, "right");
 		contentPanel.add(passInput, "width 80:160:300 ,wrap");	//set width of the component, wrap to next row for the next component to be added
-		
+		contentPanel.add(department, "right");
+		contentPanel.add(departmentDropDown, "sg a,wrap");
+
 	JPanel buttonPanel = new JPanel(new MigLayout("wrap 2") );
 		
 	//Buttons
@@ -169,6 +178,14 @@ public class EditNursePersonalInfoView extends JDialog{
 
 	public void setUsernameInput(JTextField usernameInput) {
 		this.usernameInput = usernameInput;
+	}
+
+	public JComboBox<String> getDepartmentDropDown() {
+		return departmentDropDown;
+	}
+
+	public void setDepartmentDropDown(JComboBox<String> departmentDropDown) {
+		this.departmentDropDown = departmentDropDown;
 	}
 
 }

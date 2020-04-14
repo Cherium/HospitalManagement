@@ -93,6 +93,7 @@ public class CreateNewNurseModel extends UserSuperClass {
 
 		//Create a new nurse with all information collected and store in database
 		Main.dbase.put(username, new NurseModel(username, pwd, name,  department, doctorToAdd, blankLDTAvailability() ) );
+
 		return "Account successfully created!";
 	}
 	

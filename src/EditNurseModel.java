@@ -1,4 +1,6 @@
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 /**
  * MVC Model: Model that deals with the edit account functionality, interacts as the
  * backend to support controller and view.
@@ -11,6 +13,8 @@ public class EditNurseModel {
 	*/
 	private String username;
 	private UserSuperClass user;
+	private NurseModel nurseModel;
+	private String department;
 
 	
 	/**
@@ -28,8 +32,9 @@ public class EditNurseModel {
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
-        
+		//new NurseController( ((NurseModel) user) , new NurseView("Nurse Portal") );
+		new EditNurseController(new EditNurseModel(), new EditNurseView("Nurse Portal"));
+
 		return "Account successfully edited!";
         }
 		
@@ -51,6 +56,8 @@ public class EditNurseModel {
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
 		new EditNurseController( new EditNurseModel(), new EditNursePersonalInfoView("Nurse Information Portal") );
+		//new EditNurseController( new EditNurseModel(), new EditNursePersonalInfoView("Nurse Information Portal"), new NurseModel(nurseModel.getUsername(), nurseModel.getPassword(), nurseModel.getName(), nurseModel.getDepartment(), nurseModel.getAssignedDocUsername(), nurseModel.getAvailability() ));
+
 		return "Account successfully edited!";}
 		}
 
@@ -75,6 +82,38 @@ public class EditNurseModel {
 	
 	}
 
+	/**
+	 * store new account based on name, username and password given that it passes
+	 * a series of tests
+	 * @author Jeremy F
+	 */
+	public String checkNurseDepartment() {
+		//check that a department was chosen
+		if(department.compareTo("") == 0)
+		{
+			return "No department selected!";
+		} else {
+			return getDepartment();
+		}
+	}	
+	
+	/**
+	 * return the department list in a string[] format for use with combobox
+	 * @author Sajid C
+	 */
+
+
+	public String[] getDeptList() {
+		
+		ArrayList<String> temp = Main.dbaseClass.getDepartmentList();
+		if(temp.get(0).compareTo("") != 0)
+		{
+			temp.add(0, "");
+		}
+		
+		
+		return temp.toArray(new String[0]);
+	}
 	
 	
 	
@@ -99,5 +138,11 @@ public class EditNurseModel {
 	public void setUser(UserSuperClass user) {
 		this.user = user;
 	}
+	public String getDepartment() {
+		return department;
+	}
 
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 }

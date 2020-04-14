@@ -58,11 +58,7 @@ public class EditDoctorController {
 
 	}
 	
-	/**
-	 * initialize the view from the view class that need to interact with model
-	 * In this case, add an action to the department dropdown box
-	 * @author Sajid C, Jeremy F
-	 */
+	
 	public void initView2()
 	{
 		//list of departments to set in combobox

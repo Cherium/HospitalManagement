@@ -11,6 +11,7 @@ public class EditNurseController {
 	private EditNurseModel model;
 	private EditNurseView view;
 	private EditNursePersonalInfoView personalInformationView;
+	private NurseModel nurseModel;
 		
 	/**
 	 * constructor
@@ -41,7 +42,26 @@ public class EditNurseController {
 		
 		this.model = model;
 		this.personalInformationView = view2;
-		initView();
+		initView2();
+		initListeners2();
+	}
+
+	/**
+	 * constructor
+	 * 
+	 * @author Jeremy Fan
+	 * 
+	 * @param model model that controller interacts with 
+	 * @param view view that controller interacts with 
+	 * @param nurseModel nurseModel that the edit code will interact with
+	 */
+	
+	public EditNurseController(EditNurseModel model, EditNursePersonalInfoView view2, NurseModel nurseModel) {
+		
+		this.model = model;
+		this.personalInformationView = view2;
+		this.nurseModel = nurseModel;
+		initView2();
 		initListeners2();
 	}
 	
@@ -53,6 +73,18 @@ public class EditNurseController {
 	{
 		
 	}
+
+	/**
+	 * initialize the view from the view class that need to interact with model
+	 * In this case, add an action to the department dropdown box
+	 * @author Sajid C, Jeremy F
+	 */
+	public void initView2()
+	{
+		//list of departments to set in combobox
+		personalInformationView.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
+	}
+	
 	
 	
 	/**
@@ -138,7 +170,10 @@ public class EditNurseController {
 		String returnMessage = model.checkPersonalInfo();
 
 		//get the department chosen and set it in model
-		
+		//get the department chosen and set it in model
+		model.setDepartment(personalInformationView.getDepartmentDropDown().getItemAt(
+			personalInformationView.getDepartmentDropDown().getSelectedIndex()) );
+		String returnDepartmentMessage = model.checkNurseDepartment();
 
 		if(returnMessage.compareTo("That Account does not exist!") == 0)
 		{
@@ -154,6 +189,14 @@ public class EditNurseController {
 			if(tempPass.length < 4 && tempPassString.compareTo("") != 0)
 			{
 				personalInformationView.showDialogToUser("Password must be longer than 4 characters!");
+			}
+
+			else if(returnDepartmentMessage.compareTo("No department selected!") == 0) {
+				UserSuperClass user = Main.dbase.get(model.getUsername());
+				this.nurseModel = (NurseModel) user;
+				String oldDepartment = nurseModel.getDepartment();
+				personalInformationView.showDialogToUser("Account Edited Successfully" + "\n" + "current department:" + oldDepartment);
+				personalInformationView.setVisible(false);
 			}
 				
 			else {
