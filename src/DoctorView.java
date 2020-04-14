@@ -84,7 +84,7 @@ public class DoctorView {
 
 	private JButton btnSignOut;
 	private JButton btnViewPatient;
-	private JButton btnMakeChanges;
+	// private JButton btnMakeChanges;
 	private JButton btnAddTreatmentNotes;
 	private JButton btnOwn;
 	private JButton btnToggle;
@@ -1137,6 +1137,13 @@ public class DoctorView {
 		JOptionPane.showMessageDialog(getFrame().getContentPane(), message);
 	}	
 
+	public void setAdminView() {
+		modifyScheduleContainer.setVisible(true);
+		scheduleContainer.setVisible(false);
+		buttonContainer.setVisible(false);
+		selfCheck.setEnabled(false);
+	}
+
 	/** Getter and Setter Methods */
 
 	/**
@@ -1281,22 +1288,6 @@ public class DoctorView {
 	 */
 	public void setBtnViewPatient(JButton btnViewPatient) {
 		this.btnViewPatient = btnViewPatient;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public JButton getBtnMakeChanges() {
-		return btnMakeChanges;
-	}
-
-	/**
-	 * 
-	 * @param btnMakeChanges
-	 */
-	public void setBtnMakeChanges(JButton btnMakeChanges) {
-		this.btnMakeChanges = btnMakeChanges;
 	}
 
 	/**
