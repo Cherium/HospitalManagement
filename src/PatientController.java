@@ -321,9 +321,9 @@ public class PatientController {
 			}
 			//add appointment to selected patients list
 			//a lab test is stored with a time list
-			String year = view.getYearfw().getItemAt(view.getYear().getSelectedIndex()).toString();
-			String month = view.getMonthfw().getItemAt(view.getMonth().getSelectedIndex()).toString();
-			String day = view.getDayfw().getItemAt(view.getDay().getSelectedIndex()).toString();
+			String year = view.getYearfw().getSelectedItem().toString();
+			String month = view.getMonthfw().getSelectedItem().toString();
+			String day = view.getDayfw().getSelectedItem().toString();
 			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
 			
 			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, this.model);
