@@ -43,6 +43,8 @@ public class AdminView extends JFrame {
 	
 	private JPanel contentPanel;
 	private JPanel schedPanel;
+	private JPanel accountPanel;
+	private JPanel deptPanel;
 
 	
 	private JButton btnReturn;
@@ -133,7 +135,7 @@ public class AdminView extends JFrame {
 				
 //Inner Panels
 	
-			JPanel accountPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );
+			accountPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );
 				accountPanel.setBorder(BorderFactory.createTitledBorder("Account Management"));
 				accountPanel.setBackground(new Color(255, 247, 231));
 			
@@ -184,7 +186,7 @@ JPanel availChangePanel = createAvailabilityChangePanel();
 				
 				
 				
-			JPanel deptPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );
+			deptPanel = new JPanel(new MigLayout("wrap 2", "[] 16 []") );
 				deptPanel.setBackground(new Color(255, 247, 231));
 				deptPanel.setBorder(BorderFactory.createTitledBorder("Department Management"));
 			
@@ -219,9 +221,9 @@ JPanel availChangePanel = createAvailabilityChangePanel();
 		contentPanel.add(btnReturn,"wrap");
 		contentPanel.add(welcomeLabel, "wrap");
 		//contentPanel.add(accountPanel, "grow, wrap");	
-		contentPanel.add(accountPanel, "sg a");			//print label, wrap to the next row which will be 200 pixels lower
-		contentPanel.add(deptPanel, "sg a, wrap");
-		contentPanel.add(schedPanel, "sg b, growx");
+		contentPanel.add(accountPanel, "sg a, hidemode 3");			//print label, wrap to the next row which will be 200 pixels lower
+		contentPanel.add(deptPanel, "sg a, wrap, hidemode 3");
+		contentPanel.add(schedPanel, "sg b, growx, hidemode 3");
 		contentPanel.add(availChangePanel, " sg b, growx");
 
 
@@ -344,7 +346,11 @@ JPanel availChangePanel = createAvailabilityChangePanel();
 		}
 	}
 
-
+	public void setAdminView() {
+		accountPanel.setVisible(false);
+		deptPanel.setVisible(false);
+		schedPanel.setVisible(false);
+	}
 	
 	
 /**Getter and Setter Methods*/

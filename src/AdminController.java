@@ -156,4 +156,8 @@ public class AdminController {
 		
 		
 	}
+
+	public void adminView() {
+		view.setAdminView();
+	}
 }

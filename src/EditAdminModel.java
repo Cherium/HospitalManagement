@@ -32,8 +32,8 @@ public class EditAdminModel {
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new AdminController( ((AdminModel) user) , new AdminView("Admin Portal") );
-        
+		AdminController a = new AdminController( ((AdminModel) user) , new AdminView("Admin Portal") );
+        a.adminView();
 		return "Account successfully edited!";
         }
 		
