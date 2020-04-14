@@ -141,7 +141,7 @@ public class CreateNewPatientView  extends JDialog{
 					blood.addItem("A+"); blood.addItem("A-");
 					blood.addItem("B+"); blood.addItem("B-");
 					blood.addItem("AB+"); blood.addItem("AB-");
-					blood.addItem("O+"); blood.addItem("O+");
+					blood.addItem("O+"); blood.addItem("O-");
 				
 					
 					
