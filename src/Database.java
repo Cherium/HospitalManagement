@@ -279,7 +279,13 @@ public class Database {
 			
 		}
 		
-		
+		/**
+		 * 
+		 * import information from the external database File
+		 * @author Sajid C, Mohammed R
+		 * @param filePath filename to import when initializing database
+		 * @throws IOException
+		 */
 		public void importExternalDatabase(String filePath) throws IOException {
 			Path path = Paths.get(filePath);
 			System.out.println("I am working now the external database");
@@ -491,6 +497,11 @@ public class Database {
 			sc.close();
 		}
 		
+		/**
+		 * Check if the temporary verified database created exist then make it the final database
+		 * @author Mohammed Rakeeb
+		 * @throws IOException
+		 */
 		public void TempToExternalDatabase() throws IOException{
 			
 			String[] filename;
@@ -517,19 +528,69 @@ public class Database {
 			}
 		}
 		
+		/**
+		 * method called during exiting the program it creates the external temporary verified database and then moves to the final external Database Folder.
+		 *  And throws exception if any error occurs in the process .In the exception the corrupted database is deleted 
+		 *  Tested from the main class
+		 *  @author Mohammed Rakeeb
+		 *  
+		 */
 		public void exitProgram()   {
 			try {
 				exportDbase();
 				TempToExternalDatabase();
 			}
 			catch(Exception e) {
+				deleteFolder();
 				e.printStackTrace();
 				System.out.println("export unsuccessful ");
 			}
 			
 		}
 		
-		
+		/**
+		 * The method is used to handle the exception when the created external database gets corrupted. 
+		 * The method deletes the corrupted database so that the program can use the default database.
+		 * Not tested 
+		 * @author Mohammed Rakeeb
+		 */
+		public void deleteFolder() {
+			File tempDbase = new File(tempFolder.toString());
+			File exterDbase = new File(exDbaseFolder.toString());
+			
+			//check if the temp Folder exists then delete it 
+			if(Files.exists(tempFolder)) {
+				
+				//first delete the internal contents of the directory if any before deleting the dir
+
+				String [] filename = tempDbase.list() ;
+				while(filename.length != 0) {
+					
+					for (String p : filename) {
+						  File currentFile = new File(tempDbase.getPath(),p);
+						  currentFile.delete();
+					}
+					filename = tempDbase.list() ;
+				}
+				//delete the dir
+				tempDbase.delete();	
+			}
+			
+			//check if the externalDatabaseFolder exists then delete it 
+			else if (Files.exists(exDbaseFolder)) {
+				//first delete the internal contents of the directory if any before deleting the dir
+				String [] filename = exterDbase.list() ;
+				while(filename.length != 0) {
+					for (String p : filename) {
+						  File currentFile = new File(exterDbase.getPath(),p);
+						  currentFile.delete();
+					}
+					filename = exterDbase.list() ;
+				}
+				//delete the dir
+				exterDbase.delete();
+			}
+		}		
 		
 		
 		
