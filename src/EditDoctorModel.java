@@ -34,9 +34,9 @@ public class EditDoctorModel {
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		//new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
+		new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
 		
-		new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit Doctor Portal"));
+		//new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit Doctor Portal"));
 
 		return "Account successfully edited!";
         }
@@ -59,7 +59,7 @@ public class EditDoctorModel {
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
 		this.doctorModel = (DoctorModel) Main.dbase.get(username);	
-		new DoctorController( ((DoctorModel) user) , new DoctorView("Patient Portal") );
+		new EditDoctorController( new EditDoctorModel(), new EditDoctorPersonalInfoView("Doctor Information Portal"), new DoctorModel(doctorModel.getUsername(), doctorModel.getPassword(), doctorModel.getName(), doctorModel.getDepartment(), doctorModel.getAssignedNurseUsernames(), doctorModel.getAvailability() ));
 	
 
 
