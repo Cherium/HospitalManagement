@@ -204,7 +204,8 @@ public class DoctorModel extends UserSuperClass {
 			bob.append("\n");
 			
 		}
-		bob.deleteCharAt(bob.length()-1);	//delete final new line
+		if(bob.length() > 0)
+			bob.deleteCharAt(bob.length()-1);	//delete final new line
 		return bob.toString();
 	}
 	

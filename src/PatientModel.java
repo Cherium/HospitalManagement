@@ -484,7 +484,8 @@ public class PatientModel extends UserSuperClass {
 
 			}
 		}
-		bob.deleteCharAt(bob.length()-1);
+		if(bob.length() > 0)
+			bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
 	
