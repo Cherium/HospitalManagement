@@ -311,4 +311,8 @@ public class ReceptionistController {
 		view.getEmail().setText(pat.getEmail() );
 	}
 
+	public void adminView() {
+		view.setAdminView();
+	}
+
 }
