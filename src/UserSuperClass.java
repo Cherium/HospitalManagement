@@ -208,6 +208,20 @@ public class UserSuperClass {
 			}
 			
 			
+			public String[] blankLDTAvailability()
+			{
+				String[] temp = new String[14];
+				
+				for (int i = 0; i < temp.length; i++) 
+				{
+					LocalDateTime temp2 = LocalDate.now().atTime(0, 0);
+					temp[i] = temp2.toString();
+				}
+				
+				return temp;
+			}
+			
+			
 			
 	/**Getters and setters*/		
 		
