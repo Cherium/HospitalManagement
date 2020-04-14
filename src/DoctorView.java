@@ -711,12 +711,13 @@ public class DoctorView {
 			}
 			for (int js = 0; js < 7; js++) {
 				JList<String> oneDayList = new JList<String>(apts.get(i * 7 + js));
+				if (!schDays[js]) 
+					oneDayList = new JList<String>();
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 						ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				scroll.setPreferredSize(new Dimension(100, 50));
 				scheduleMonthly.add(scroll);
 				oneDayList.setEnabled(schDays[js]);
-				oneDayList.setEnabled(true);
 			}
 		}
 
