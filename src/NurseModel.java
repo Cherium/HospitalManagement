@@ -225,7 +225,8 @@ public class NurseModel extends UserSuperClass {
 			bob.append("\n");
 			
 		}
-		bob.deleteCharAt(bob.length()-1);
+		if(bob.length() > 0)
+			bob.deleteCharAt(bob.length()-1);
 		return bob.toString();
 	}
 /**Getters and Setters*/
