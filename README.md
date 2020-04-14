@@ -8,6 +8,7 @@ The following instructions will get you a functional copy of the software runnin
 
 ### Prerequisites
 
+* Windows 7 or higher
 * Java JDK version 11 or higher.
 * The latest version of Eclipse.
 * The most recent version of Windows Builder (and all corresponding items in the release) should be downloaded in Eclipse prior to launching the program.
@@ -26,17 +27,6 @@ The following instructions will get you a functional copy of the software runnin
 7. Right click the project -> refresh
 8. Click Run in Eclipse and the GUI should load.
 
-## Functionality
-
-In its current iteration, the program can run various GUI windows for most of the roles required. The login page allows for account credential verifcation and new patient account creation, that all checks against an existing, imported, database.
-
-The Doctor portal page allows for viewing various GUI elements as well as a functioning combobox that displays the assigned nurses of the doctor to the user. The Doctor can view the list of patients assigned to them, including detailed patient history, which is imported from an existing database. The Doctor can also append notes to a patients file and save those changes, which then sync with the database.
-
-The Admin portal allows for the creation of new doctors, including setting up all their required attributes. It also allows allows for the creation of patients, as well as the deletion of any user based on their username. The admin portal can also create new departments for the hospital. All changes are integrated with the database.
-
-The patient portal allows the user to view their personal information. It also allows them to edit their information. The patient can change their passwords as well. This change is synced with the database and takes effect immediately.
-
-The remaining portals have assigned portals, however the portals only display name information for that set user.
 
 ## Built With
 
@@ -44,9 +34,11 @@ The software is built using Java, with love.
 
 ## Authors
 * **Sajid Choudhry**
+* **Qian Ni Zhang**
+* **Mohammed Rakeeb**
 * **Jeremy Fan**
 * **Neil Mariano**
-* **Qian Ni Zhang**
+
 
 See the list of [contributors] (https://github.com/Cherium/HospitalManagement/graphs/contributors) who made this project possible.
 
