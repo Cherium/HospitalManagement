@@ -320,4 +320,7 @@ public class NurseController {
 		view.getEmail().setText(pat.getEmail() );
 	}
 
+	public void adminView() {
+		view.setAdminView();
+	}
 }

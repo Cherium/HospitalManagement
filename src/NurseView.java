@@ -44,6 +44,7 @@ public class NurseView extends JFrame{
 	private JPanel infoPanel;
 	private JPanel listPanel;
 	private JPanel schedPanel;
+	private JPanel bookPanel;
 	
 	
 	private JLabel welcomeLabel;
@@ -147,7 +148,7 @@ public class NurseView extends JFrame{
 
 		
 		//inner panel
-		listPanel= new JPanel(new MigLayout("") );
+		listPanel= new JPanel(new MigLayout("hidemode 3") );
 			listPanel.setBorder(BorderFactory.createTitledBorder("Select Patient"));
 			listPanel.setBackground(new Color(255, 247, 231));
 			JLabel assigD = new JLabel("Assigned Doctor: ");
@@ -164,7 +165,7 @@ public class NurseView extends JFrame{
 		
 		
 		//inner panel
-		infoPanel = new JPanel(new MigLayout("wrap 2", "[align right] 16 [align left]") );
+		infoPanel = new JPanel(new MigLayout("wrap 2, hidemode 3", "[align right] 16 [align left]") );
 			infoPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 			infoPanel.setPreferredSize(new Dimension(450, 200));
 			infoPanel.setBackground(new Color(255, 247, 231));
@@ -209,7 +210,7 @@ public class NurseView extends JFrame{
 		
 		
 		//inner panel
-		JPanel bookPanel = new JPanel(new MigLayout("") );
+		bookPanel = new JPanel(new MigLayout("hidemode 3") );
 			bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 			bookPanel.setPreferredSize(new Dimension(900, 50));
 			bookPanel.setMaximumSize(new Dimension(905, 300));
@@ -273,7 +274,7 @@ public class NurseView extends JFrame{
 			
 	
 		//inner panel
-		schedPanel = new JPanel(new MigLayout("") );
+		schedPanel = new JPanel(new MigLayout("hidemode 3") );
 			schedPanel.setBorder(BorderFactory.createTitledBorder("Upcoming Shifts"));
 			schedPanel.setPreferredSize(new Dimension(325, 200));
 			schedPanel.setBackground(new Color(255, 247, 231));
@@ -304,12 +305,12 @@ public class NurseView extends JFrame{
 		
 		
 		//add to main panel
-		contentPanel.add(btnReturn, "wrap");
-		contentPanel.add(welcomeLabel, "wrap");
-		contentPanel.add(listPanel, "sg b");
-		contentPanel.add(infoPanel, "sg b, wrap");
-		contentPanel.add(bookPanel, "span, growx");
-		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
+		contentPanel.add(btnReturn, "wrap, hidemode 3");
+		contentPanel.add(welcomeLabel, "wrap, hidemode 3");
+		contentPanel.add(listPanel, "sg b, hidemode 3");
+		contentPanel.add(infoPanel, "sg b, wrap, hidemode 3");
+		contentPanel.add(bookPanel, "span, growx, hidemode 3");
+		contentPanel.add(schedPanel, "sg b, hidemode 3"/*, "span"*/);
 		contentPanel.add(availChangePanel, " sg b");
 		setVisible(true);
 		
@@ -526,7 +527,12 @@ public class NurseView extends JFrame{
 	}
 
 
-
+	public void setAdminView() {
+		listPanel.setVisible(false);
+		infoPanel.setVisible(false);
+		bookPanel.setVisible(false);
+		schedPanel.setVisible(false);
+	}
 
 
 

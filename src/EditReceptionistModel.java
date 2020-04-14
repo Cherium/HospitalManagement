@@ -27,8 +27,8 @@ public class EditReceptionistModel {
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new ReceptionistController( ((ReceptionistModel) user) , new ReceptionistView("Receptionist Portal") );
-        
+		ReceptionistController r = new ReceptionistController( ((ReceptionistModel) user) , new ReceptionistView("Receptionist Portal") );
+        r.adminView();
 		return "Account successfully edited!";
         }
 		

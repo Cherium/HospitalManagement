@@ -34,8 +34,8 @@ public class EditDoctorModel {
 		else { 
 		//otherwise edit the account in the HashMap
 		this.user = Main.dbase.get(username);							//retrieve the User object of the logged-in user
-		new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
-		
+		DoctorController why = new DoctorController( ((DoctorModel) user) , new DoctorView("Doctor Portal") );
+		why.adminEditSchedule();
 		//new EditDoctorController(new EditDoctorModel(), new EditDoctorView("Edit Doctor Portal"));
 
 		return "Account successfully edited!";

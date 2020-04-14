@@ -432,4 +432,7 @@ public class DoctorController {
 		
 	}
 
+	public void adminEditSchedule() {
+		view.setAdminView();
+	}
 }

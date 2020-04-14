@@ -44,7 +44,7 @@ public class ReceptionistView extends JFrame{
 	private JPanel infoPanel;
 	private JPanel listPanel;
 	private JPanel schedPanel;
-	
+	private JPanel bookPanel;
 	
 	private JLabel welcomeLabel;
 	private JLabel usernameLabel;
@@ -216,7 +216,7 @@ public class ReceptionistView extends JFrame{
 		
 		
 		//inner panel
-		JPanel bookPanel = new JPanel(new MigLayout("") );
+		bookPanel = new JPanel(new MigLayout("") );
 			bookPanel.setBorder(BorderFactory.createTitledBorder("Book an appointment"));
 			bookPanel.setPreferredSize(new Dimension(900, 50));
 			bookPanel.setMaximumSize(new Dimension(905, 300));
@@ -278,24 +278,6 @@ public class ReceptionistView extends JFrame{
 			
 			bookPanel.add(bookAptBtn, "spanx, align right");
 			
-//		JPanel referPanel = new JPanel(new MigLayout("hidemode 3"));
-//			referPanel.setBorder(BorderFactory.createTitledBorder("Upload Referral"));
-//			referPanel.setPreferredSize(new Dimension(900, 50));
-//			referPanel.setMaximumSize(new Dimension(905, 125));
-//			
-//			fileName = new JLabel();
-//			fileName.setVisible(false);
-//
-//			btnSelectFile = new JButton("Select file");
-//
-//			btnUploadReferral = new JButton("Upload");
-//
-//
-//			referPanel.add(new JLabel("Referral: "));
-//			referPanel.add(fileName);
-//			referPanel.add(btnSelectFile, "wrap");
-//			referPanel.add(btnUploadReferral);
-//		
 		
 		//inner panel
 		schedPanel = new JPanel(new MigLayout("") );
@@ -331,11 +313,11 @@ public class ReceptionistView extends JFrame{
 		//add to main panel
 		contentPanel.add(btnReturn, "wrap");
 		contentPanel.add(welcomeLabel, "wrap");
-		contentPanel.add(listPanel, "sg b");
-		contentPanel.add(infoPanel, "sg b, wrap");
+		contentPanel.add(listPanel, "sg b, hidemode 3");
+		contentPanel.add(infoPanel, "sg b, wrap, hidemode 3");
 		//contentPanel.add(referPanel, "span, growx");
-		contentPanel.add(bookPanel, "span, growx");
-		contentPanel.add(schedPanel, "sg b"/*, "span"*/);
+		contentPanel.add(bookPanel, "span, growx, hidemode 3");
+		contentPanel.add(schedPanel, "sg b, hidemode 3"/*, "span"*/);
 		contentPanel.add(availChangePanel, " sg b");
 		setVisible(true);
 		
@@ -555,7 +537,12 @@ public class ReceptionistView extends JFrame{
 	}
 	
 	
-
+	public void setAdminView() {
+		infoPanel.setVisible(false);
+		listPanel.setVisible(false);
+		schedPanel.setVisible(false);
+		bookPanel.setVisible(false);
+	}
 
 
 
