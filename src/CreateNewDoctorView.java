@@ -47,7 +47,6 @@ public class CreateNewDoctorView  extends JDialog{
 		*/
 
 		private JPanel contentPanel = new JPanel();
-		private JPanel schedPanel;
 
 		private JTextField nameInput;
 		private JTextField usernameInput;
@@ -183,11 +182,6 @@ public class CreateNewDoctorView  extends JDialog{
 				buttonPanel.add(createButton, "gapleft 50");					//in the current column, place the component with a gap of 50px from the left
 				buttonPanel.add(cancelButton, "");								//place the next component in the second column
 				Panel.add(buttonPanel);											//add inner panel to the outer panel
-			//inner bottom panel
-			schedPanel = new JPanel(new MigLayout("") );
-			schedPanel.setBackground(new Color(255, 247, 231));
-			schedPanel.setBorder(BorderFactory.createTitledBorder("Default Shifts"));
-			schedPanel.setPreferredSize(new Dimension(325, 200));
 
 			schedList = new JTextArea();
 				schedList.setFont( new Font("monospaced", Font.PLAIN, 10) );	//https://stackoverflow.com/questions/40901128/how-would-i-fix-this-jtextarea-formatting-error
@@ -195,9 +189,7 @@ public class CreateNewDoctorView  extends JDialog{
 			schedListScroll = new JScrollPane(schedList
 					, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			schedListScroll.setPreferredSize(new Dimension(400, 200));
-			
-			schedPanel.add(schedListScroll);
-				contentPanel.add(schedPanel, "sg b, growx");
+
 
 				
 			setVisible(true);
