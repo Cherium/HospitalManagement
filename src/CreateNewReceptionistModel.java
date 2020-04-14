@@ -69,7 +69,7 @@ public class CreateNewReceptionistModel extends UserSuperClass {
 		/**store in database if all checks pass*/
 		
 		//Create a new nurse with all information collected and store in database
-		Main.dbase.put(username, new ReceptionistModel(username, pwd, name, new String [0]));
+		Main.dbase.put(username, new ReceptionistModel(username, pwd, name, blankLDTAvailability() ));
 		return "Account successfully created!";
 	}
 	
