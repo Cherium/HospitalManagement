@@ -35,8 +35,8 @@ The software is built using Java, with love.
 ## Authors
 * **Sajid Choudhry**
 * **Qian Ni Zhang**
-* **Mohammed Rakeeb**
 * **Jeremy Fan**
+* **Mohammed Rakeeb**
 * **Neil Mariano**
 
 
