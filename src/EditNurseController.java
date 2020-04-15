@@ -124,7 +124,7 @@ public class EditNurseController {
 		if (returnVal == -1) {
 			view.showDialogToUser("Account does not exist!");
 		} else if (returnVal == 0) {
-			view.showDialogToUser("Account is not a authority");
+			view.showDialogToUser("Account is not a nurse");
 		} else {
 			// view.showDialogToUser(returnMessage);
 			view.setVisible(false);
