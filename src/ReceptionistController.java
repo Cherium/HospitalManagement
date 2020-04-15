@@ -104,10 +104,10 @@ public class ReceptionistController {
 		view.getReqAvailChangeBtn().addActionListener(e -> updateAvailability() );
 		
 		//department is changed
-		view.getDepartmentDropDown().addActionListener(e -> updateDocBox() );
+		view.getDepartmentDropDown().addActionListener(e -> updateDocBox(1) );
 		
 		//doctor box is changed	//TODO test this
-		view.getChooseDoc().addActionListener(e -> updateDocBox());
+		view.getChooseDoc().addActionListener(e -> updateDocBox(2));
 		
 		//book a patients apointment
 		view.getBookAptBtn().addActionListener(e -> bookAppointment() );
@@ -166,24 +166,43 @@ public class ReceptionistController {
 	}
 
 
-	//
 	/**
 	 * update doctor box and Appointments box when department box option changes - Booking panel
 	 * 
 	 * @author Sajid C
+	 * @param sel the dropbox to update
 	 */
-	public void updateDocBox() {
-		// get current selected department option
-		String choice = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex() );
+	public void updateDocBox(int sel) {
 		
-		//update doctor box according to choice
-		view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList(choice))));
+		//department was changed and doctor and appointments needs to be updated
+		if(sel == 1)
+		{
+			// get current selected department option
+			String choice = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex() );
+			
+			//update doctor box according to choice
+			view.getChooseDoc().setModel(new DefaultComboBoxModel(model.getObjectsNames(model.getDocList(choice))));
+			
+			//update appointments box according to selected doctor
+			String newDoc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
+			System.out.println("New Doc: "+newDoc);
+			///??
+			view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(newDoc) ));
+		}
 		
-		//update appointments box according to selected doctor
-		String newDoc = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
-		System.out.println("New Doc: "+newDoc);
-		///??
-		view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(newDoc) ));
+		//doctor was changed and appointments needs to be updated
+		if(sel == 2)
+		{
+			// get current selected department option
+			String choice = view.getDepartmentDropDown().getItemAt(view.getDepartmentDropDown().getSelectedIndex() );
+			
+			//get current doc choice
+			String docChoice = view.getChooseDoc().getItemAt(view.getChooseDoc().getSelectedIndex() );
+			
+			//update appointments box according to selected doctor
+			view.getChooseAppt().setModel( new DefaultComboBoxModel(model.getOpenSlots(docChoice) ));
+		}
+		
 	}
 	
 	
