@@ -27,6 +27,17 @@ The following instructions will get you a functional copy of the software runnin
 7. Right click the project -> refresh
 8. Click Run in Eclipse and the GUI should load.
 
+## Credentials
+
+The following sample credential usernames and passwords can be used to log in to the system for testing. Remaining users can be found in the `src/dbase/dbase.txt` file:
+* Format: username, password <-- associated role
+    * jusur, jusur <-- doctor
+    * brim, brim <-- patient
+    * yunoh,yunoh <-- admin
+    * igomo,igomo <-- nurse
+    * deuu,deuu <-- receptionist
+    * nirvis,nirvis <-- hospital authority
+    
 
 ## Built With
 
