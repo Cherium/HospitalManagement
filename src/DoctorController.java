@@ -15,8 +15,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 /**
- * Controller for this MVC construct
- * Handles all interaction between the associated model class and the view class.
+ * Controller for this MVC construct Handles all interaction between the
+ * associated model class and the view class.
+ * 
  * @author Jenny Z, Sajid C
  *
  */
@@ -25,13 +26,13 @@ public class DoctorController {
 	private DoctorModel model;
 	private DoctorView view;
 
-	
 	/**
-	 * Constructor- sets references to associated view and model of this MVC construct
+	 * Constructor- sets references to associated view and model of this MVC
+	 * construct
 	 * 
 	 * @author Sajid C
 	 * @param model the associated model with this controller
-	 * @param view the associated view with this controller
+	 * @param view  the associated view with this controller
 	 */
 	public DoctorController(DoctorModel m, DoctorView v) {
 		this.model = m;
@@ -39,20 +40,19 @@ public class DoctorController {
 		initView();
 		initListeners();
 	}
-	
 
 	/**
-	 * initialize the elements that the GUI sees from the database 
-	 * as soon as the view first opens for the user.
+	 * initialize the elements that the GUI sees from the database as soon as the
+	 * view first opens for the user.
 	 * 
 	 * @ author Jenny Z, Sajid C
 	 */
 	public void initView() {
 		// Set up the appointments in DoctorModel
-		// Cannot do this in constructor as doctors are read from the database before patient
+		// Cannot do this in constructor as doctors are read from the database before
+		// patient
 		model.setAppointments(model.s.updateHashMap(model.getScheduledPatientsUsernames(), model.getUsername()));
 
-		// model.s.nextOpenSlots(model.getAvailability(), model.getAppointments());	//debug
 		view.setShifts(convertToShiftTime(model.getAvailability()));
 		view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
 		view.setAppointments(convertAppointments(model.getAppointments()));
@@ -86,9 +86,8 @@ public class DoctorController {
 
 		view.getButtonOwn().setEnabled(false);
 
-
 	}
-	
+
 	/**
 	 * initialize the listeners from the view class that need to interact with model
 	 * and give functionality to these listeners once they 'hear' something
@@ -104,11 +103,11 @@ public class DoctorController {
 
 					int index = view.getNurseComboBox().getSelectedIndex();
 					NurseModel nmd = (NurseModel) Main.dbase.get(model.getAssignedNurseUsernames().get(index));
-					
+
 					view.setShifts(convertToShiftTime(nmd.getAvailability()));
 					view.setScheduledDays(convertToScheduledDays(nmd.getAvailability()));
 					view.setAppointments(convertAppointments(new HashMap<String, ArrayList<LocalDateTime>>()));
-								
+
 					view.initializeWeeklySchedule();
 					view.initializeMonthlySchedule();
 					if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -120,7 +119,7 @@ public class DoctorController {
 					view.getButtonOwn().setEnabled(true);
 					view.getCalendar().setVisible(true);
 					view.getModifyPanel().setVisible(false);
-	
+
 				}
 
 			}
@@ -133,7 +132,7 @@ public class DoctorController {
 				view.setShifts(convertToShiftTime(model.getAvailability()));
 				view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
 				view.setAppointments(convertAppointments(model.getAppointments()));
-				
+
 				view.initializeWeeklySchedule();
 				view.initializeMonthlySchedule();
 				if (view.getBtnToggle().getText().equals("Monthly view")) {
@@ -142,8 +141,6 @@ public class DoctorController {
 					view.isWeekly(false);
 				}
 				view.setScheduleNameLabels(model.getName());
-
-
 
 			}
 		});
@@ -186,7 +183,9 @@ public class DoctorController {
 	}
 
 	/**
-	 * Add referral(s) to patient file. Checks if a file has been uploaded or if there is input in both of the textfields.
+	 * Add referral(s) to patient file. Checks if a file has been uploaded or if
+	 * there is input in both of the textfields.
+	 * 
 	 * @author Jenny
 	 */
 	private void assignReferral() {
@@ -197,15 +196,15 @@ public class DoctorController {
 			String fileName = view.getFileNameJLabel().getText();
 			String departmentInput = view.getDepartmentInput().getText();
 			String nameInput = view.getNameInput().getText();
-	
+
 			if (view.getFileNameJLabel().isVisible()) {
 				pat.getReferrals().add(fileName);
-				view.showDialogToUser(fileName+" uploaded for "+pat.getName());
-			} 
-	
+				view.showDialogToUser(fileName + " uploaded for " + pat.getName());
+			}
+
 			if ((departmentInput.length() > 0) && (nameInput.length() > 0)) {
-				pat.getReferrals().add(departmentInput+" : "+nameInput);
-				view.showDialogToUser("Referral generated for "+pat.getName());
+				pat.getReferrals().add(departmentInput + " : " + nameInput);
+				view.showDialogToUser("Referral generated for " + pat.getName());
 			}
 
 			if (!view.getFileNameJLabel().isVisible() && (departmentInput.length() == 0) && (nameInput.length() == 0)) {
@@ -224,6 +223,7 @@ public class DoctorController {
 
 	/**
 	 * Select a referral file via a JFileChooser
+	 * 
 	 * @author Jenny
 	 */
 	private void selectReferral() {
@@ -241,10 +241,11 @@ public class DoctorController {
 	}
 
 	//
-	// 
+	//
 	/**
-	 * Convert the HashMap of appointments to a LinkedHashMap with keys as appointment times.
-	 * This is the list of appointments for weekly and monthly view.
+	 * Convert the HashMap of appointments to a LinkedHashMap with keys as
+	 * appointment times. This is the list of appointments for weekly and monthly
+	 * view.
 	 * 
 	 * @author Jenny Z
 	 * @param appointments- list of appointments that this user has
@@ -262,13 +263,14 @@ public class DoctorController {
 		return lhm;
 	}
 
-	// Get an array of size 7 that correspond to the days the doctor is scheduled to work
+	// Get an array of size 7 that correspond to the days the doctor is scheduled to
+	// work
 	// Booleans in the form of {SUNDAY, MONDAY, ..., SATURDAY}
 	// This is for the monthly view
 	private Boolean[] convertToScheduledDays(LocalDateTime[] availability) {
 		Boolean[] days = new Boolean[7];
 		for (int i = 0; i < 7; i++) {
-			if (availability[i*2].equals(availability[i*2+1])) {
+			if (availability[i * 2].equals(availability[i * 2 + 1])) {
 				days[i] = false;
 			} else {
 				days[i] = true;
@@ -277,31 +279,29 @@ public class DoctorController {
 		return days;
 	}
 
-	// Get an array of size 14 that correspond to the start and end of a scheduled shift time
-	// of a day. 
-	// Int correspond to start and end times in the form of {SUNDAY_start, SUNDAY_end, ..., SATURDAY_end}
+	// Get an array of size 14 that correspond to the start and end of a scheduled
+	// shift time
+	// of a day.
+	// Int correspond to start and end times in the form of {SUNDAY_start,
+	// SUNDAY_end, ..., SATURDAY_end}
 	// This is for the weekly view
 	private int[] convertToShiftTime(LocalDateTime[] availability) {
 		int[] times = new int[14];
 		for (int i = 0; i < 7; i++) {
 			// If the two times are the same, this means that the doctor has the day off
-			if (availability[i*2].equals(availability[i*2+1])) {
-				times[i*2] = -1;
-				times[i*2+1] = -1;
+			if (availability[i * 2].equals(availability[i * 2 + 1])) {
+				times[i * 2] = -1;
+				times[i * 2 + 1] = -1;
 			} else {
-				times[i*2] = availability[i*2].getHour();
-				times[i*2+1] = availability[i*2+1].getHour();
+				times[i * 2] = availability[i * 2].getHour();
+				times[i * 2 + 1] = availability[i * 2 + 1].getHour();
 			}
 		}
 
 		return times;
 	}
 
-
-	
-	
-	
-	// 
+	//
 	/**
 	 * append new notes to current notes in patient tab on button press
 	 * 
@@ -322,8 +322,7 @@ public class DoctorController {
 		// array
 		// use it search hashmap for the patient
 		int selectedIndex = view.getListPatients().getSelectedIndex();
-		if(selectedIndex > -1)
-		{
+		if (selectedIndex > -1) {
 			PatientModel pat = (PatientModel) Main.dbase.get(model.getScheduledPatientsUsernames().get(selectedIndex));
 
 			// update patient label info in view
@@ -335,7 +334,6 @@ public class DoctorController {
 			// update past history box in view
 			view.getPastTreatmentBox().setText(pat.getRecordNotes());
 		}
-		
 
 	}
 
@@ -345,19 +343,22 @@ public class DoctorController {
 	 * @return ease-of-use early exit flag
 	 */
 	public int bookAppointment() {
-		
-		//get selected appointment type
+
+		// get selected appointment type
 		String appointmentType = view.getApptType().getItemAt(view.getApptType().getSelectedIndex()).toString();
-		
-		//get selected patient
+
+		// get selected patient
 		int selectedIndex = view.getListPatients().getSelectedIndex();
-		
-		//ensure a patient was selected
-		if(selectedIndex == -1) {view.showDialogToUser("Select a Patient!"); return -1;}
-		
-		if(appointmentType.compareTo("Doctor Appointment") == 0)
-		{
-			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex()).toString();
+
+		// ensure a patient was selected
+		if (selectedIndex == -1) {
+			view.showDialogToUser("Select a Patient!");
+			return -1;
+		}
+
+		if (appointmentType.compareTo("Doctor Appointment") == 0) {
+			String selectAppointment = view.getChooseAppt().getItemAt(view.getChooseAppt().getSelectedIndex())
+					.toString();
 			int selectPatient = view.getListPatients().getSelectedIndex();
 			model.storeAppointmentInPatient(selectAppointment, selectPatient);
 
@@ -366,31 +367,29 @@ public class DoctorController {
 			view.setShifts(convertToShiftTime(model.getAvailability()));
 			view.setScheduledDays(convertToScheduledDays(model.getAvailability()));
 			view.setAppointments(convertAppointments(model.getAppointments()));
-	
+
 			view.initializeWeeklySchedule();
 			view.initializeMonthlySchedule();
 
 			view.getChooseAppt().setModel(new DefaultComboBoxModel(model.getOpenSlots(model.getName())));
 			view.showDialogToUser("Booked follow-up appointment!");
 			return -1;
-		}
-		else	//appointment is lab test
+		} else // appointment is lab test
 		{
-			
-			//check that selected date is greater than current date
-			if(! view.isFutureDate() )
-			{
+
+			// check that selected date is greater than current date
+			if (!view.isFutureDate()) {
 				view.showDialogToUser("Choose a Future Date!");
 				return -1;
 			}
-			//add appointment to selected patients list
-			//a lab test is stored with a time list
+			// add appointment to selected patients list
+			// a lab test is stored with a time list
 			String year = view.getYear().getItemAt(view.getYear().getSelectedIndex()).toString();
 			String month = view.getMonth().getItemAt(view.getMonth().getSelectedIndex()).toString();
 			String day = view.getDay().getItemAt(view.getDay().getSelectedIndex()).toString();
 			String time = view.getLabTime().getItemAt(view.getLabTime().getSelectedIndex()).toString();
-			
-			model.storeLabApptInPatient(year+"-"+month+"-"+day+" "+time, selectedIndex);
+
+			model.storeLabApptInPatient(year + "-" + month + "-" + day + " " + time, selectedIndex);
 			view.showDialogToUser("Booked Lab Appointment!");
 			return -1;
 		}
@@ -403,33 +402,32 @@ public class DoctorController {
 	 * 
 	 */
 	public void updateAvailability() {
-		
-		String[] newHours = new String[14];
-		
 
-		//retrieve all comboBoxes storing hour values as Strings
+		String[] newHours = new String[14];
+
+		// retrieve all comboBoxes storing hour values as Strings
 		int i = 0;
-		for(JComboBox<String> j: view.getAvailTimes())
-		{
-			//get String from box and add to String array
-			newHours[i] = j.getItemAt(j.getSelectedIndex() ).toString() ;
+		for (JComboBox<String> j : view.getAvailTimes()) {
+			// get String from box and add to String array
+			newHours[i] = j.getItemAt(j.getSelectedIndex()).toString();
 			i++;
 		}
-		
+
 		if (view.getCheckBox().isSelected()) {
-			//update availability for this User
-			model.setAvailability(model.s.updateSchedule(newHours) );
+			// update availability for this User
+			model.setAvailability(model.s.updateSchedule(newHours));
 		} else {
 			// else update availability for the nurse
 			int index = view.getNursesList().getSelectedIndex();
-			Main.dbase.get(model.getAssignedNurseUsernames().get(index)).setAvailability(model.s.updateSchedule(newHours));;
+			Main.dbase.get(model.getAssignedNurseUsernames().get(index))
+					.setAvailability(model.s.updateSchedule(newHours));
+			;
 		}
-		
-		//show success to user
+
+		// show success to user
 		view.showDialogToUser("Availability Request Approved");
-		// initView();	//reset availabilty shown to patient
-		
-		
+		// initView(); //reset availabilty shown to patient
+
 	}
 
 	public void adminEditSchedule() {

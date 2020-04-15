@@ -54,13 +54,16 @@ import javax.swing.plaf.BorderUIResource.BevelBorderUIResource;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * Creates all the components that are needed to view the GUI for this role. Contains nothing from the controller or view class.
- * Does NOT interact with the associated model class. The controller interacts with this view class, but not the other way around (the view class
- * does not interact with the controller)
+ * Creates all the components that are needed to view the GUI for this role.
+ * Contains nothing from the controller or view class. Does NOT interact with
+ * the associated model class. The controller interacts with this view class,
+ * but not the other way around (the view class does not interact with the
+ * controller)
  * 
- * Contains listeners that DO NOT need interaction with the model (ex. a back button listener that closes the view does not need interaction
- * with the model.)
- * Remaining button/field listeners that DO need to interact withe the model are initialized in the controller class.
+ * Contains listeners that DO NOT need interaction with the model (ex. a back
+ * button listener that closes the view does not need interaction with the
+ * model.) Remaining button/field listeners that DO need to interact withe the
+ * model are initialized in the controller class.
  * 
  * @author Jenny Z, Sajid C
  *
@@ -130,9 +133,9 @@ public class DoctorView {
 	private int[] shiftTimes;
 	private String name;
 
-	String[] times = { "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00","08:00", "09:00", "10:00",
-			"11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00",
-			"23:00"};
+	String[] times = { "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
+			"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00",
+			"22:00", "23:00" };
 
 	// private JScrollPane scroll;
 	private JList listPatients;
@@ -152,10 +155,9 @@ public class DoctorView {
 	 * #################################################################
 	 */
 
-	
 	/**
-	 *  Constructor
-	 *  
+	 * Constructor
+	 * 
 	 * @param title
 	 */
 	public DoctorView(String title) {
@@ -177,21 +179,21 @@ public class DoctorView {
 
 	/**
 	 * Initialize the view
+	 * 
 	 * @author Jenny Z
 	 */
 	public void initGUI() {
 		JPanel mainPane = new JPanel(new MigLayout());
-		mainPane.setBackground(new Color(231,239,255));
-		
-		//add scrolling to main container
-		JScrollPane scroll = new JScrollPane(mainPane
-				, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			scroll.getVerticalScrollBar().setUnitIncrement(10);
-			scroll.getHorizontalScrollBar().setUnitIncrement(10);
-			frame.add(scroll, BorderLayout.CENTER);					//add the panel as the container for the frame
+		mainPane.setBackground(new Color(231, 239, 255));
+
+		// add scrolling to main container
+		JScrollPane scroll = new JScrollPane(mainPane, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		scroll.getHorizontalScrollBar().setUnitIncrement(10);
+		frame.add(scroll, BorderLayout.CENTER); // add the panel as the container for the frame
 
 	}
-
 
 	/**
 	 * initialize the panels and components that will go inside the frame
@@ -218,7 +220,7 @@ public class DoctorView {
 
 		// Sign out button, returns to login screen when clicked
 		btnSignOut = new JButton("Sign out");
-		btnSignOut.setBackground(new Color(154,50,50));
+		btnSignOut.setBackground(new Color(154, 50, 50));
 		btnSignOut.setForeground(Color.WHITE);
 		backPanel.add(btnSignOut);
 		btnSignOut.addActionListener(e -> frame.setVisible(false));
@@ -288,11 +290,11 @@ public class DoctorView {
 		scheduleMonthly = new JPanel();
 		scheduleWeekly = new JPanel();
 
-		scrollWeekly = new JScrollPane(scheduleWeekly, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollWeekly = new JScrollPane(scheduleWeekly, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		// scrollWeekly.setLayout(new ScrollPaneLayout());
 		scrollWeekly.getVerticalScrollBar().setUnitIncrement(10);
-		scrollWeekly.setPreferredSize(new Dimension(2000,1000));
-
+		scrollWeekly.setPreferredSize(new Dimension(2000, 1000));
 
 		// scheduleContainer.add(scheduleWeekly);
 		scheduleContainer.add(scrollWeekly, "growx");
@@ -319,7 +321,7 @@ public class DoctorView {
 		modifyScheduleContainer.setBackground(Color.WHITE);
 		modifyScheduleContainer.setBorder(BorderFactory.createLineBorder(Color.PINK));
 
-		String[] days = {"Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+		String[] days = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
 		JPanel availChangePanel = new JPanel(
 				new MigLayout("wrap 3", "[align right] 20 [align right] 40 [grow, align left]"));
@@ -348,8 +350,6 @@ public class DoctorView {
 		modifyScheduleContainer.add(availChangePanel, "dock east");
 		modifyScheduleContainer.setVisible(false);
 	}
-
-	
 
 	/**
 	 * 
@@ -413,18 +413,15 @@ public class DoctorView {
 				nurseComboBox.setSelectedIndex(-1);
 			}
 		});
-		
+
 		buttonContainer.add(optionlbl);
 		buttonContainer.add(btnPatients, "grow");
-		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
+		buttonContainer.add(Box.createRigidArea(new Dimension(0, 15)));
 		buttonContainer.add(btnChange, "grow");
-		buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
+		buttonContainer.add(Box.createRigidArea(new Dimension(0, 15)));
 		buttonContainer.add(nurselbl);
 		buttonContainer.add(nurseComboBox, "grow");
 		buttonContainer.add(btnOwn, "grow");
-		// buttonContainer.add(Box.createRigidArea(new Dimension(0,15)));
-		// buttonContainer.add(btnChange, "grow");
-
 
 	}
 
@@ -673,7 +670,6 @@ public class DoctorView {
 			}
 		}
 
-		// scheduleWeekly.setPreferredSize(new Dimension(2000, 1000));
 	}
 
 	/**
@@ -711,7 +707,7 @@ public class DoctorView {
 			}
 			for (int js = 0; js < 7; js++) {
 				JList<String> oneDayList = new JList<String>(apts.get(i * 7 + js));
-				if (!schDays[js]) 
+				if (!schDays[js])
 					oneDayList = new JList<String>();
 				JScrollPane scroll = new JScrollPane(oneDayList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 						ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -728,53 +724,52 @@ public class DoctorView {
 
 	/**
 	 * Calculates the set of years encompassing the next 3 months
+	 * 
 	 * @return set of years encompassing the next 3 months in a JComboBox
 	 */
-	public JComboBox<String> initYearComboForward()
-	{
+	public JComboBox<String> initYearComboForward() {
 		LocalDate date3MonthsAway = LocalDate.now().plusMonths(3);
 		LocalDate now = LocalDate.now();
-		
+
 		JComboBox<String> temp = new JComboBox<String>();
-		temp.addItem(Integer.toString(now.getYear()) );
-		while(now.isBefore(date3MonthsAway) )
-		{
-			if(now.getYear() == date3MonthsAway.getYear() )
+		temp.addItem(Integer.toString(now.getYear()));
+		while (now.isBefore(date3MonthsAway)) {
+			if (now.getYear() == date3MonthsAway.getYear())
 				now = now.plusDays(1);
-			else
-			{
-				temp.addItem(Integer.toString(now.getYear()) );
+			else {
+				temp.addItem(Integer.toString(now.getYear()));
 				now = now.plusDays(1);
 			}
-		}		
+		}
 		return temp;
 	}
-	
+
 	/**
 	 * Check that selected lab date is in the future
+	 * 
 	 * @return true if selected lab date is in the future
 	 */
-	public boolean isFutureDate()
-	{
-		//current values
+	public boolean isFutureDate() {
+		// current values
 		int yr = LocalDate.now().getYear();
 		int mn = LocalDate.now().getMonthValue();
 		int dy = LocalDate.now().getDayOfMonth();
-		
-		//selected values
-		int selYr = Integer.parseInt(year.getItemAt(year.getSelectedIndex()).toString() );
-		int selMn = Integer.parseInt(month.getItemAt(month.getSelectedIndex()).toString() );
-		int selDay = Integer.parseInt(day.getItemAt(day.getSelectedIndex()).toString() );
-		
-		if(selMn == mn && selDay > dy)
+
+		// selected values
+		int selYr = Integer.parseInt(year.getItemAt(year.getSelectedIndex()).toString());
+		int selMn = Integer.parseInt(month.getItemAt(month.getSelectedIndex()).toString());
+		int selDay = Integer.parseInt(day.getItemAt(day.getSelectedIndex()).toString());
+
+		if (selMn == mn && selDay > dy)
 			return true;
-		else if(selMn == mn && selDay <= dy)
+		else if (selMn == mn && selDay <= dy)
 			return false;
-		else if(selMn < mn)
+		else if (selMn < mn)
 			return false;
 		else
 			return true;
 	}
+
 	/**
 	 * Set up the patients view in doctor
 	 */
@@ -849,11 +844,12 @@ public class DoctorView {
 					departmentInput.setText("");
 
 			}
+
 			@Override
 			public void focusLost(FocusEvent fe) {
 				if (departmentInput.getText().length() == 0) {
 					departmentInput.setText("Input Department/Lab test");
-				} 
+				}
 			}
 		});
 
@@ -864,11 +860,12 @@ public class DoctorView {
 					nameInput.setText("");
 
 			}
+
 			@Override
 			public void focusLost(FocusEvent fe) {
 				if (nameInput.getText().length() == 0) {
 					nameInput.setText("Input Doctor/Test type");
-				} 
+				}
 			}
 		});
 
@@ -886,10 +883,6 @@ public class DoctorView {
 		topPanel.add(referralPanel, "span");
 
 		patientPanel.add(topPanel, BorderLayout.NORTH);
-
-
-
-
 
 		JPanel selectedPatient = new JPanel(new MigLayout("wrap 1"));
 		selectedPatient.setBorder(BorderFactory.createTitledBorder("Patient"));
@@ -994,7 +987,10 @@ public class DoctorView {
 	}
 
 	/**
-	 * Filters out a list of appointments starting from the first day (of the first month) of the current month. Returns a list of appointments (as a list of list of names of patients) for a period of 35 days
+	 * Filters out a list of appointments starting from the first day (of the first
+	 * month) of the current month. Returns a list of appointments (as a list of
+	 * list of names of patients) for a period of 35 days
+	 * 
 	 * @return
 	 */
 	public ArrayList<String[]> filterAppointmentsMonth() {
@@ -1024,6 +1020,7 @@ public class DoctorView {
 
 	/**
 	 * Sets the weekly/monthly schedule view
+	 * 
 	 * @param b
 	 */
 	public void isWeekly(Boolean b) {
@@ -1040,6 +1037,7 @@ public class DoctorView {
 
 	/**
 	 * Sets the name labels for the schedule
+	 * 
 	 * @param name
 	 */
 	public void setScheduleNameLabels(String name) {
@@ -1112,10 +1110,10 @@ public class DoctorView {
 	 * 
 	 */
 	public void initDaysinBox() {//
-		
+
 		day.removeAllItems();
-									// https://www.youtube.com/watch?v=yylaqeWkPmM
-									// https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
+		// https://www.youtube.com/watch?v=yylaqeWkPmM
+		// https://stackoverflow.com/questions/33666456/java8-datetimeformatter-parse-date-with-both-single-digit-and-double-digit-day
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("uuuu/M/d").withResolverStyle(ResolverStyle.STRICT);
 		for (int i = 1; i <= 31; i++) {
 			try {
@@ -1129,13 +1127,13 @@ public class DoctorView {
 	}
 
 	/**
-	 * pop up a message-dialog box with a message passed in 
+	 * pop up a message-dialog box with a message passed in
+	 * 
 	 * @param message message to show user
 	 */
-	public void showDialogToUser(String message)
-	{
+	public void showDialogToUser(String message) {
 		JOptionPane.showMessageDialog(getFrame().getContentPane(), message);
-	}	
+	}
 
 	public void setAdminView() {
 		scheduleContainer.setVisible(false);
@@ -1784,7 +1782,6 @@ public class DoctorView {
 	public void setApptType(JComboBox<String> apty) {
 		this.apptType = apty;
 	}
-	
 
 	/**
 	 * 
@@ -1801,7 +1798,7 @@ public class DoctorView {
 	public void setChooseAppt(JComboBox<String> ca) {
 		this.chooseAppt = ca;
 	}
-	
+
 	/**
 	 * 
 	 * @return

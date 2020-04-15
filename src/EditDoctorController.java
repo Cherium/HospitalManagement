@@ -1,29 +1,31 @@
 import javax.swing.DefaultComboBoxModel;
+
 /**
- * MVC Model: Controller that deals with the edit doctor functionality, interacts with 
- * model and view to help edit doctor.
+ * MVC Model: Controller that deals with the edit doctor functionality,
+ * interacts with model and view to help edit doctor.
+ * 
  * @author Jeremy Fan
  */
 
 public class EditDoctorController {
-	
-	// Interacts with the model, personal information view, and view 
+
+	// Interacts with the model, personal information view, and view
 	private EditDoctorModel model;
 	private EditDoctorView view;
 	private EditDoctorPersonalInfoView personalInformationView;
 	private DoctorModel doctorModel;
-		
+
 	/**
 	 * constructor
 	 * 
 	 * @author Jeremy Fan
 	 * 
-	 * @param model model that controller interacts with 
-	 * @param view view that controller interacts with 
+	 * @param model model that controller interacts with
+	 * @param view  view that controller interacts with
 	 */
 
 	public EditDoctorController(EditDoctorModel model, EditDoctorView view) {
-		
+
 		this.model = model;
 		this.view = view;
 		initView();
@@ -35,130 +37,118 @@ public class EditDoctorController {
 	 * 
 	 * @author Jeremy Fan
 	 * 
-	 * @param model model that controller interacts with 
-	 * @param view view that controller interacts with 
+	 * @param model       model that controller interacts with
+	 * @param view        view that controller interacts with
 	 * @param doctorModel doctorModel that the edit code will interact with
 	 */
-	
+
 	public EditDoctorController(EditDoctorModel model, EditDoctorPersonalInfoView view2, DoctorModel doctorModel) {
-		
+
 		this.model = model;
 		this.personalInformationView = view2;
 		this.doctorModel = doctorModel;
 		initView2();
 		initListeners2();
 	}
-	
-	
-	/* initialize the elements that the GUI sees from the database 
-	as soon as the view first opens for the user
-	*/
-	public void initView()
-	{
 
-	}
-	
-	
-	public void initView2()
-	{
-		//list of departments to set in combobox
-		personalInformationView.getDepartmentDropDown().setModel( new DefaultComboBoxModel(model.getDeptList()) );
-	}
-	
-	/**
-	 * initialize the listeners from the view class that need to interact with model
-	 * and give functionality to these listeners once they 'hear' something
-	 * In this case, add an action to the "edit schedule" and "edit information" button.
-	 * @author Sajid C, Jeremy F
+	/*
+	 * initialize the elements that the GUI sees from the database as soon as the
+	 * view first opens for the user
 	 */
-	public void initListeners() 
-	{
-		view.getEditScheduleButton().addActionListener(e -> parseEntry() );
-		view.getEditInformationButton().addActionListener(e -> parseEntryPersonalInfo() );
+	public void initView() {
+
 	}
 
+	public void initView2() {
+		// list of departments to set in combobox
+		personalInformationView.getDepartmentDropDown().setModel(new DefaultComboBoxModel(model.getDeptList()));
+	}
 
 	/**
 	 * initialize the listeners from the view class that need to interact with model
-	 * and give functionality to these listeners once they 'hear' something
-	 * In this case, add an action to the "confirm button".
+	 * and give functionality to these listeners once they 'hear' something In this
+	 * case, add an action to the "edit schedule" and "edit information" button.
+	 * 
+	 * @author Sajid C, Jeremy F
+	 */
+	public void initListeners() {
+		view.getEditScheduleButton().addActionListener(e -> parseEntry());
+		view.getEditInformationButton().addActionListener(e -> parseEntryPersonalInfo());
+	}
+
+	/**
+	 * initialize the listeners from the view class that need to interact with model
+	 * and give functionality to these listeners once they 'hear' something In this
+	 * case, add an action to the "confirm button".
+	 * 
 	 * @author Sajid C, Jeremy F
 	 */
 
-	public void initListeners2() 
-	{
-		personalInformationView.getConfirmButton().addActionListener(e -> parseEntryPersonalInfoConfirmation() );	
+	public void initListeners2() {
+		personalInformationView.getConfirmButton().addActionListener(e -> parseEntryPersonalInfoConfirmation());
 	}
 
-	
-	
 	/**
-	 * For model, set the the name, username, password, and password confirmation based on the 
-	 * input for the frontend label 
+	 * For model, set the the name, username, password, and password confirmation
+	 * based on the input for the frontend label
+	 * 
 	 * @author Sajid C, Jeremy F
 	 */
 	public void parseEntry() {
-		
+
 		model.setUsername(view.getUsernameInput().getText());
 
 		int returnVal = model.editSchedule();
-		if(returnVal == -1)
-		{
+		if (returnVal == -1) {
 			view.showDialogToUser("Account does not exist!");
 		} else if (returnVal == 0) {
 			view.showDialogToUser("Account is not a doctor");
-		}
-		else
-		{
-			//view.showDialogToUser(returnMessage);
+		} else {
+			// view.showDialogToUser(returnMessage);
 			view.setVisible(false);
 		}
 	}
 
 	/**
-	 * For model, set the username confirmation
-	 * input for the frontend label 
+	 * For model, set the username confirmation input for the frontend label
+	 * 
 	 * @author Sajid C, Jeremy F
-	 */		
-
+	 */
 
 	public void parseEntryPersonalInfo() {
-	
+
 		model.setUsername(view.getUsernameInput().getText());
 
 		int returnVal = model.editPersonalInfo();
-		if(returnVal == -1)
-		{
+		if (returnVal == -1) {
 			view.showDialogToUser("Account does not exist!");
 		} else if (returnVal == 0) {
 			view.showDialogToUser("Account is not a authority");
-		}
-		else
-		{
-			//view.showDialogToUser(returnMessage);
+		} else {
+			// view.showDialogToUser(returnMessage);
 			view.setVisible(false);
 		}
 	}
 
 	/**
-	 * For model, set the name and password confirmation based on the 
-	 * input for the frontend label 
+	 * For model, set the name and password confirmation based on the input for the
+	 * frontend label
+	 * 
 	 * @author Jeremy F
-	 */	
-	
+	 */
+
 	public void parseEntryPersonalInfoConfirmation() {
-		//the below happens once "Confirmed" button is clicked
+		// the below happens once "Confirmed" button is clicked
 
 		model.setUsername(personalInformationView.getUsernameInput().getText());
 		String returnMessage = model.checkPersonalInfo();
 
-		//get the department chosen and set it in model
-		model.setDepartment(personalInformationView.getDepartmentDropDown().getItemAt(
-			personalInformationView.getDepartmentDropDown().getSelectedIndex()) );
+		// get the department chosen and set it in model
+		model.setDepartment(personalInformationView.getDepartmentDropDown()
+				.getItemAt(personalInformationView.getDepartmentDropDown().getSelectedIndex()));
 		String returnDepartmentMessage = model.checkDoctorDepartment();
 
-		if(returnMessage.compareTo("That Account does not exist!") == 0)
-		{
+		if (returnMessage.compareTo("That Account does not exist!") == 0) {
 			personalInformationView.showDialogToUser(returnMessage);
 		} else if (returnMessage.compareTo("This Account is not a Doctor!") == 0) {
 			personalInformationView.showDialogToUser(returnMessage);
@@ -167,42 +157,42 @@ public class EditDoctorController {
 			String tempName = personalInformationView.getNameInput().getText();
 			char[] tempPass = personalInformationView.getPassInput().getText().toCharArray();
 			String tempPassString = personalInformationView.getPassInput().getText();
-			if(tempPass.length < 4 && tempPassString.compareTo("") != 0)
-			{
+			if (tempPass.length < 4 && tempPassString.compareTo("") != 0) {
 				personalInformationView.showDialogToUser("Password must be longer than 4 characters!");
 			}
 
-			else if(returnDepartmentMessage.compareTo("No department selected!") == 0) {
+			else if (returnDepartmentMessage.compareTo("No department selected!") == 0) {
 				UserSuperClass user = Main.dbase.get(model.getUsername());
 				this.doctorModel = (DoctorModel) user;
 				String oldDepartment = doctorModel.getDepartment();
-				personalInformationView.showDialogToUser("Account Edited Successfully" + "\n" + "current department:" + oldDepartment);
+				personalInformationView
+						.showDialogToUser("Account Edited Successfully" + "\n" + "current department:" + oldDepartment);
 				personalInformationView.setVisible(false);
 			}
 
 			else {
-				
+
 				String tempDepartment = returnDepartmentMessage;
 				UserSuperClass user = Main.dbase.get(model.getUsername());
 				if (tempName.compareTo("") != 0) {
 					user.setName(tempName);
-					returnMessage = returnMessage + "\n" + "Name changed!"; 
-				} 
+					returnMessage = returnMessage + "\n" + "Name changed!";
+				}
 				if (tempPassString.compareTo("") != 0) {
 					user.setPassword(tempPass);
-					returnMessage = returnMessage + "\n" + "Password changed!"; 
-				} 
+					returnMessage = returnMessage + "\n" + "Password changed!";
+				}
 				if (returnDepartmentMessage.compareTo("No department selected!") != 0) {
 					this.doctorModel = (DoctorModel) user;
 					doctorModel.setDepartment(tempDepartment);
-					returnMessage = returnMessage + "\n" + "Department changed!"; 
+					returnMessage = returnMessage + "\n" + "Department changed!";
 				}
-		
+
 				personalInformationView.setVisible(false);
 				personalInformationView.showDialogToUser(returnMessage);
 			}
 		}
-		
+
 	}
 
 }
