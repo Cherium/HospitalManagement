@@ -1,11 +1,29 @@
 role	username	password	name	department	nursesUsernames	assignedDoctorUsername	address	phoneNumber	email	amountDue	dob	blood	sex	docPatUsernames
 doctor	doctor	doctor	Jane Brown	Cardiology	nancy,drew	null	null	0	null	0	0	null	null	patient,patient2
-nurse	nurse	nurse	Cathy Joy	Cardiology	null	doctor	null	0	null	0	0	null	null	null
+doctor	doctor2	doctor2	Bo Ferris	Neurology	nurse	null	null	0	null	0	null	null	null	patient2
+doctor	zeilim	zeilim	Zeilim Rhada	General	narno,hime	null	null	0	null	0	null	null	null	brim,alcor
+doctor	jusur	jusur	Jusur Bhannir	Nephrology	igomo,ofla	null	null	0	null	0	null	null	null	geriok,mohvuf
+doctor	brua	brua	Brua Orbwhisper	ER	ruzoz,lozhe	null	null	0	null	0	null	null	null	zamak,thia
 patient	patient	patient	Dave Smith	null	null	null	99 University Way	4039999999	patient@ucalgary.ca	25	1990-10-10	AB-	Male	null
 patient	patient2	patient2	Danielle Peters	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	brim	brim	Brim Chirkorsk	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	alcor	alcor	Alcor Forestcutter	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	geriok	geriok	Geriok Lunskultuut	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	mohvuf	mohvuf	Mohvuf Donzihr	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	zamak	zamak	Zamak Mavalbe	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
+patient	thia	thia	Thia Miao	null	null	null	3 Mulberry Lane	5878324453	pc@gmail.com	20	2018-9-2	A+	Female	null
 admin	admin	admin	Admy Aden	null	null	null	null	0	null	0	0	null	null	null
+admin	yunoh	yunoh	Yunoh Pasta	null	null	null	null	0	null	0	0	null	null	null
+nurse	nurse	nurse	Cathy Joy	Cardiology	null	doctor	null	0	null	0	0	null	null	null
 nurse	nancy	nancy	Henry Ford	Cardiology	null	doctor	null	0	null	0	0	null	null	null
 nurse	drew	drew	Jason Chan	Cardiology	null	doctor	null	0	null	0	0	null	null	null
+nurse	narno	narno	Narno Groz	Cardiology	null	zeilim	null	0	null	0	0	null	null	null
+nurse	hime	hime	Hime Glukav	Cardiology	null	zeilim	null	0	null	0	0	null	null	null
+nurse	igomo	igomo	Igomo Battlemantle	Cardiology	null	jusur	null	0	null	0	0	null	null	null
+nurse	ofla	ofla	Ofla Battlemoon	Cardiology	null	jusur	null	0	null	0	0	null	null	null
+nurse	ruzoz	ruzoz	Ruzoz Zuhpicruhr	Cardiology	null	brua	null	0	null	0	0	null	null	null
+nurse	lozhe	lozhe	Lozhe Muhpukt	Cardiology	null	brua	null	0	null	0	0	null	null	null
 receptionist	recipe	recipe	Dina Cho	null	null	null	null	0	null	0	0	null	null	null
-doctor	doctor2	doctor2	Bo Ferris	Neurology	nurse	null	null	0	null	0	null	null	null	patient2
+receptionist	deuu	deuu	Deuu Grayhorn	null	null	null	null	0	null	0	0	null	null	null
 authority	authority	authority	Jenson Jendaughter	null	null	null	null	0	null	0	null	null	null	null
+authority	nirvis	nirvis	Nirvis Stedovu	null	null	null	null	0	null	0	null	null	null	null

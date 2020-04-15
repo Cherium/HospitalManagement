@@ -201,11 +201,15 @@ import java.util.concurrent.ThreadLocalRandom;
             // Assuming that the list of appointments is unique to PatientModel only
 
             PatientModel pat = (PatientModel) Main.dbase.get(p);
-            ArrayList<LocalDateTime> apts = pat.getAppointments().get(docU);
 
-            // check that there are appointments between this patient and doctor, failsafe
+        	ArrayList<LocalDateTime> apts = pat.getAppointments().get(docU);
+        	
+        	// check that there are appointments between this patient and doctor, failsafe
             if (apts != null)
                 hm.put(p, apts);
+        	
+
+            
 
         }
 
